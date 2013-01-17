@@ -295,6 +295,15 @@ class BU_Slideshow {
 	}
 	
 	/**
+	 * Returns array of all slideshows defined.
+	 * 
+	 * @return array
+	 */
+	static public function get_slideshows() {
+		return get_option(self::$meta_key, array());
+	}
+	
+	/**
 	 * Replaces specified slideshow with slideshow data passed to it.
 	 * 
 	 * @param array $args
