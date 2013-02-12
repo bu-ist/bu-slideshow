@@ -1,0 +1,161 @@
+.bu-slideshow-container {
+	overflow:hidden;
+	position:relative;
+
+	.bu-slideshow {
+		width:100% !important;
+		height:auto !important;
+		list-style:none !important;
+		margin:0;
+		padding:0;
+		position:relative !important;
+
+		.animate-default {
+			left:-100%;
+			position:absolute;
+			-webkit-transition-duration: 1s;
+			-moz-transition-duration: 1s;
+			-o-transition-duration: 1s;
+			-ms-transition-duration: 1s;
+			transition-duration: 1s;
+		}
+
+		.animate-slide-in {
+			left:0;
+			-webkit-transition-duration: 1s;
+			-moz-transition-duration: 1s;
+			-o-transition-duration: 1s;
+			-ms-transition-duration: 1s;
+			transition-duration: 1s;
+		}
+
+		.animate-slide-out {
+			left:100%;
+			-webkit-transition-duration: 1s;
+			-moz-transition-duration: 1s;
+			-o-transition-duration: 1s;
+			-ms-transition-duration: 1s;
+			transition-duration: 1s;
+		}
+	
+		li {
+			list-style-type: none !important;
+			width:100% !important;
+			height:auto !important;
+
+			img {
+				max-width:100%;
+				
+				.animate-default;
+			}
+
+			.bu-slide-caption {
+				position:relative;
+				z-index:12;
+				width:35%;
+				float:right;
+				display:inline;
+				background:rgba(0, 0, 0, 0.75);
+				list-style:none;
+				margin:0;
+				padding:0;
+
+				.animate-default;
+
+				p {
+					color:#ffffff;
+					font-size:.75em;
+					padding:0 1.25em;
+					line-height:1.4;
+				}
+
+				a {
+					color:#f3cf00;
+					text-decoration:none;
+
+					:hover {
+						text-decoration:underline;
+					}
+				}
+
+				.bu-slide-caption-title {
+					font-size:1.2em;
+					font-family:'Helvetica','Arial',sans-serif;
+					color:#f3cf00;
+					margin:0;
+					padding:1em;
+				}
+			}
+		}
+
+		
+
+		.animate-in {
+				
+			img {
+				.animate-slide-in;
+			}
+
+			.bu-slide-caption {
+				.animate-slide-in;
+			}
+
+		}
+
+		.animate-out {
+
+			img {
+				.animate-slide-out;
+			}
+
+			.bu-slide-caption {
+				.animate-slide-out;
+			}
+
+		}
+	}
+
+	.bu-slideshow-navigation {
+		bottom:1em;
+		left:0;
+		list-style:none;
+		margin:0;
+		padding:0;
+		position:absolute;
+		text-align:center;
+		width:100%;
+		z-index:13;
+
+		li {
+			display:inline;
+
+			a {
+				display:inline-block;
+				text-indent:-9999em;
+				border-radius:50%;
+				padding:2px;
+				background:#ffffff;
+				border:3px solid rgba(0, 0, 0, 0.35);
+				height:12px;
+				width:12px;
+
+				:hover span {
+					background:#909090;
+					text-decoration:underline;
+				}
+			}
+
+			span {
+				display:block;
+				height:100%;
+				width:100%;
+				border-radius:50%;
+			}
+
+			.activeSlide a span {
+				background:#cdcdcd;
+			}
+		}
+	}
+	
+}

@@ -2,29 +2,25 @@ jQuery(document).ready(function($) {
 
 	$('.bu-slideshow-container').each(function(){
 		var container = $(this);
-		var rotator = container.find('ol.bu-slideshow');
-		var pagerId = container.find('ol.bu-slideshow-navigation').attr('id');
+		var rotator = container.find('ul.bu-slideshow');
+		var pagerId = container.find('ul.bu-slideshow-navigation').attr('id');
 		
-		rotator.cycle({
-			pager: '#' + pagerId,
-			pause: 1,
-			containerResize: false,
-			slideResize: false,
-			fit: 1,
-			timeout: 6000,
-			pagerAnchorBuilder: function(idx, slide) { 
-				return '#' + pagerId + ' li:eq(' + idx + ') a'; 
-			}
-		});
+		var options = {
+			autoplay: true
+		};
+		var sequence = container.sequence(options).data('sequence');
+		sequence.afterLoaded = function() {
+			resize_slideshow();
+		}
 		
 		/* prevents edge cases where slideshow nav appears too high  */
-		setTimeout(resize_slideshow, 100);
+		//setTimeout(resize_slideshow, 1000);
 	})
 
 	function resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this);
-			var rotator = container.find('ol.bu-slideshow');
+			var rotator = container.find('ul.bu-slideshow');
 			
 			var imgHeight = rotator.find('li img:visible').height();
 			

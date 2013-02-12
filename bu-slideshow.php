@@ -74,13 +74,14 @@ class BU_Slideshow {
 	
 	/**
 	 * Prepares styles and scripts for front end. Scripts are printed in footer when needed,
-	 * see conditional_scritp_load().
+	 * see conditional_script_load().
 	 * 
 	 * Define BU_SLIDESHOW_CUSTOM_CSS in a theme to prevent default CSS from loading.
 	 */
 	static public function public_scripts_styles() {
-		wp_register_script('jquery-cycle', BU_SLIDESHOW_BASEURL . 'interface/js/jquery.cycle.lite.js', array('jquery'), false, true);
-		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-cycle'), false, true);
+		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/modernizr-dev.js', array(), false, true);
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr'), false, true);
+		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr'), false, true);
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
@@ -108,7 +109,7 @@ class BU_Slideshow {
 		global $bu_slideshow_loadscripts;
 		
 		if ($bu_slideshow_loadscripts) {
-			$conditional_scripts = array('jquery-cycle', 'bu-slideshow');
+			$conditional_scripts = array('modernizr', 'jquery-sequence', 'bu-slideshow');
 			apply_filters('bu_slideshow_conditional_scripts', $conditional_scripts);
 			
 			foreach($conditional_scripts as $script) {
@@ -553,7 +554,8 @@ class BU_Slideshow {
 		* Following is a more graceful way to load the js on-demand, but it won't work til after we 
 		* migrate to a more recent WP version. (3.3+)
 		* 
-		* wp_enqueue_script('jquery-cycle');
+		* wp_enqueue_script('modernizr');
+		* wp_enqueue_script('jquery-sequence');
 		* wp_enqueue_script('bu-slideshow');
 		*/
 		
@@ -594,27 +596,30 @@ class BU_Slideshow {
 			return;
 		}
 		
-		$html = '<section class="bu-slideshow-container">
-			<ol class="bu-slideshow" id="bu-slideshow-' . $id . '" aria-hidden="true">';
+		$show_id = 'bu-slideshow-' . $id;
+		
+		$html = '<div class="bu-slideshow-container">
+			<ul class="bu-slideshow" id="' . $show_id . '" aria-hidden="true">';
 		
 		foreach ($show["slides"] as $i => $slide) {
-			$html .= self::get_slide_markup($slide);
+			$html .= self::get_slide_markup($slide, $i, $show_id);
 		}
 
-		$html .= '</ol>';
+		$html .= '</ul>';
 		
-		if ($atts['show_nav']) {
+		// slideshow nav
+		/*if ($atts['show_nav']) {
 			
-			$html .= '<ol class="bu-slideshow-navigation" id="bu-slideshow-nav-' . $id . '" aria-hidden="true">';
+			$html .= '<ul class="bu-slideshow-navigation" id="bu-slideshow-nav-' . $id . '" aria-hidden="true">';
 			for ($i = 1; $i <= count($show["slides"]); $i++) {
 				$html .= '<li><a href="#"><span>' . $i . '</span></a></li> ';
 			}
 
-			$html .= '</ol>';
+			$html .= '</ul>';
 			
-		}
+		}*/
 			
-		$html .= '</section>';	
+		$html .= '</div>';	
 		
 		return $html;
 	}
@@ -625,7 +630,7 @@ class BU_Slideshow {
 	 * @param array $slide
 	 * @return string
 	 */
-	static public function get_slide_markup($slide) {
+	static public function get_slide_markup($slide, $index, $show_id) {
 		/*
 		 * <li class="slide">
 				<img src="<?php echo TW_THEME_URI; ?>/images/temp/feature-1.jpg" alt="A technician repairing a computer" />
@@ -645,8 +650,10 @@ class BU_Slideshow {
 		
 		$img_arr = wp_get_attachment_image_src($slide['image_id'], $slide['image_size']);
 		$img_alt = self::get_image_alt($slide['image_id']);
+		$slide_class = $index === 1 ? ' animate-in' : '';
+		$slide_id = $show_id . '_' . $index;
 		
-		$html = '<li class="slide">';
+		$html = '<li id="' . $slide_id . '" class="slide ' . $slide_class . '">';
 		$html .= '<img src="' . esc_url($img_arr[0]) . '" alt="' . esc_attr($img_alt) . '" />';
 		$html .= '<div class="bu-slide-caption">';
 		
