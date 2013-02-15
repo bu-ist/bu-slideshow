@@ -566,7 +566,8 @@ class BU_Slideshow {
 		
 		$att_defaults = array(
 			'show_id' => 0,
-			'show_nav' => 1
+			'show_nav' => 1,
+			'transition' => 'slide'
 		);
 		$atts = shortcode_atts($att_defaults, $atts);
 		
@@ -597,9 +598,12 @@ class BU_Slideshow {
 		}
 		
 		$show_id = 'bu-slideshow-' . $id;
+		$classes = array('bu-slideshow');
+		$classes[] = 'transition-' . $atts['transition'];
+		$class_str = join(' ', $classes);
 		
 		$html = '<div class="bu-slideshow-container">
-			<ul class="bu-slideshow" id="' . $show_id . '" aria-hidden="true">';
+			<ul class="' . $class_str . '" id="' . $show_id . '" aria-hidden="true">';
 		
 		foreach ($show["slides"] as $i => $slide) {
 			$html .= self::get_slide_markup($slide, $i, $show_id);
@@ -631,19 +635,15 @@ class BU_Slideshow {
 	 * @return string
 	 */
 	static public function get_slide_markup($slide, $index, $show_id) {
-		/*
-		 * <li class="slide">
-				<img src="<?php echo TW_THEME_URI; ?>/images/temp/feature-1.jpg" alt="A technician repairing a computer" />
-				<!-- <div class="container"> -->
-					<div class="hero-caption">
-						<p class="hero-caption-title">Caption Title Goes here</p>
-						<p>Suspendisse mi nulla, accumsan eget ultricies quis, congue vel leo. Integer non metus nec ante vulputate venenatis. <a href="">Nunc laoreet</a>, est id consectetur consectetur.</p>
-					</div>
-				<!-- </div> -->
-			</li>
-		 */
+
 		if (empty($slide) || !is_array($slide)) {
 			return '';
+		}
+		
+		$haslink = false;
+		
+		if (!empty($slide['caption']['link'])) {
+			$haslink = true;
 		}
 		
 		$slide['caption'] = stripslashes_deep($slide['caption']);
@@ -654,11 +654,18 @@ class BU_Slideshow {
 		$slide_id = $show_id . '_' . $index;
 		
 		$html = '<li id="' . $slide_id . '" class="slide ' . $slide_class . '">';
-		$html .= '<img src="' . esc_url($img_arr[0]) . '" alt="' . esc_attr($img_alt) . '" />';
+		$html .= '<div class="bu-slide-container">';
+		if ($haslink) {
+			$html .= '<a href="' . esc_url($slide['caption']['link']) . '">';
+			$html .= '<img src="' . esc_url($img_arr[0]) . '" alt="' . esc_attr($img_alt) . '" /></a>';
+		} else {
+			$html .= '<img src="' . esc_url($img_arr[0]) . '" alt="' . esc_attr($img_alt) . '" />';
+		}
 		$html .= '<div class="bu-slide-caption">';
 		
 		$html .= '<p class="bu-slide-caption-title">';
-		if (!empty($slide['caption']['link'])) {
+		
+		if ($haslink) {
 			$html .= '<a href="' . esc_url($slide['caption']['link']) . '">';
 			$html .= esc_html(strip_tags($slide['caption']['title'])) . '</a></p>';
 		} else {
@@ -669,7 +676,7 @@ class BU_Slideshow {
 			$text = self::trim_slide_caption($slide['caption']['text']);
 			$html .= '<p class="bu-slide-caption-text">' . wp_kses_data($text) . '</p>';
 		}
-		$html .= '</div></li>';
+		$html .= '</div></div></li>';
 		
 		return $html;
 	}

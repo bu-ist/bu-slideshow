@@ -10,85 +10,59 @@
   padding: 0;
   position: relative !important;
 }
-.bu-slideshow-container .bu-slideshow .animate-default {
-  left: -100%;
-  position: absolute;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
-}
-.bu-slideshow-container .bu-slideshow .animate-slide-in {
-  left: 0;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
-}
-.bu-slideshow-container .bu-slideshow .animate-slide-out {
-  left: 100%;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
-}
 .bu-slideshow-container .bu-slideshow li {
   list-style-type: none !important;
   width: 100% !important;
   height: auto !important;
 }
-.bu-slideshow-container .bu-slideshow li img {
-  max-width: 100%;
-  left: -100%;
-  position: absolute;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
+.bu-slideshow-container .bu-slideshow li .bu-slide-container {
+  width: 100%;
 }
-.bu-slideshow-container .bu-slideshow li .bu-slide-caption {
-  position: relative;
-  z-index: 12;
-  width: 35%;
-  float: right;
-  display: inline;
+.bu-slideshow-container .bu-slideshow li .bu-slide-container img {
+  max-width: 100%;
+}
+.bu-slideshow-container .bu-slideshow li .bu-slide-container .bu-slide-caption {
   background: rgba(0, 0, 0, 0.75);
+  bottom: 10%;
+  display: inline;
   list-style: none;
   margin: 0;
   padding: 0;
-  left: -100%;
   position: absolute;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
+  right: 10%;
+  width: 35%;
+  z-index: 12;
 }
-.bu-slideshow-container .bu-slideshow li .bu-slide-caption p {
+.bu-slideshow-container .bu-slideshow li .bu-slide-container .bu-slide-caption p {
   color: #ffffff;
   font-size: .75em;
   padding: 0 1.25em;
   line-height: 1.4;
 }
-.bu-slideshow-container .bu-slideshow li .bu-slide-caption a {
+.bu-slideshow-container .bu-slideshow li .bu-slide-container .bu-slide-caption a {
   color: #f3cf00;
   text-decoration: none;
 }
-.bu-slideshow-container .bu-slideshow li .bu-slide-caption a :hover {
+.bu-slideshow-container .bu-slideshow li .bu-slide-container .bu-slide-caption a :hover {
   text-decoration: underline;
 }
-.bu-slideshow-container .bu-slideshow li .bu-slide-caption .bu-slide-caption-title {
+.bu-slideshow-container .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
   font-size: 1.2em;
   font-family: 'Helvetica', 'Arial', sans-serif;
   color: #f3cf00;
   margin: 0;
   padding: 1em;
 }
-.bu-slideshow-container .bu-slideshow .animate-in img {
+.bu-slideshow-container .animate-slide-default {
+  left: -100%;
+  position: absolute;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.bu-slideshow-container .animate-slide-in {
   left: 0;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -96,7 +70,49 @@
   -ms-transition-duration: 1s;
   transition-duration: 1s;
 }
-.bu-slideshow-container .bu-slideshow .animate-in .bu-slide-caption {
+.bu-slideshow-container .animate-slide-out {
+  left: 100%;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.bu-slideshow-container .animate-fade-default {
+  opacity: 0;
+  position: absolute;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
+}
+.bu-slideshow-container .animate-fade-in {
+  opacity: 1.0;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
+}
+.bu-slideshow-container .animate-fade-out {
+  opacity: 0;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
+}
+.bu-slideshow-container .transition-slide .bu-slide-container {
+  left: -100%;
+  position: absolute;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.bu-slideshow-container .transition-slide .animate-in .bu-slide-container {
   left: 0;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -104,7 +120,7 @@
   -ms-transition-duration: 1s;
   transition-duration: 1s;
 }
-.bu-slideshow-container .bu-slideshow .animate-out img {
+.bu-slideshow-container .transition-slide .animate-out .bu-slide-container {
   left: 100%;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -112,13 +128,30 @@
   -ms-transition-duration: 1s;
   transition-duration: 1s;
 }
-.bu-slideshow-container .bu-slideshow .animate-out .bu-slide-caption {
-  left: 100%;
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  transition-duration: 1s;
+.bu-slideshow-container .transition-fade .bu-slide-container {
+  opacity: 0;
+  position: absolute;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
+}
+.bu-slideshow-container .transition-fade .animate-in .bu-slide-container {
+  opacity: 1.0;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
+}
+.bu-slideshow-container .transition-fade .animate-out .bu-slide-container {
+  opacity: 0;
+  -webkit-transition-duration: 1.5s;
+  -moz-transition-duration: 1.5s;
+  -o-transition-duration: 1.5s;
+  -ms-transition-duration: 1.5s;
+  transition-duration: 1.5s;
 }
 .bu-slideshow-container .bu-slideshow-navigation {
   bottom: 1em;

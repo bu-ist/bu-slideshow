@@ -2,21 +2,25 @@ jQuery(document).ready(function($) {
 
 	$('.bu-slideshow-container').each(function(){
 		var container = $(this);
-		var rotator = container.find('ul.bu-slideshow');
 		var pagerId = container.find('ul.bu-slideshow-navigation').attr('id');
 		
 		var options = {
-			autoplay: true
+			autoPlay: true,
+			autoPlayDirection: -1,
+			fallback: {
+				theme : 'slide'
+			}
 		};
 		var sequence = container.sequence(options).data('sequence');
 		sequence.afterLoaded = function() {
 			resize_slideshow();
 		}
-		
-		/* prevents edge cases where slideshow nav appears too high  */
-		//setTimeout(resize_slideshow, 1000);
+
 	})
 
+	/**
+	 * @todo more flexible detection of content, don't rely on images to set height
+	 */
 	function resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this);
