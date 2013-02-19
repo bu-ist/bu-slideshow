@@ -597,31 +597,29 @@ class BU_Slideshow {
 			return;
 		}
 		
-		$show_id = 'bu-slideshow-' . $id;
+		$show_id = esc_attr('bu-slideshow-' . $id);
 		$classes = array('bu-slideshow');
-		$classes[] = 'transition-' . $atts['transition'];
-		$class_str = join(' ', $classes);
+		$classes[] = 'transition-' . $atts['transition']; // deliberately allowing custom values here
+		$class_str = esc_attr(join(' ', $classes));
 		
-		$html = '<div class="bu-slideshow-container">
+		$html = '<div class="bu-slideshow-container" id="bu-slideshow-' . $id . '">';
+		$html .= '<div class="bu-slideshow-slides">
 			<ul class="' . $class_str . '" id="' . $show_id . '" aria-hidden="true">';
 		
 		foreach ($show["slides"] as $i => $slide) {
 			$html .= self::get_slide_markup($slide, $i, $show_id);
 		}
 
-		$html .= '</ul>';
+		$html .= '</ul></div>';
 		
 		// slideshow nav
-		/*if ($atts['show_nav']) {
+		if ($atts['show_nav']) {
 			
-			$html .= '<ul class="bu-slideshow-navigation" id="bu-slideshow-nav-' . $id . '" aria-hidden="true">';
-			for ($i = 1; $i <= count($show["slides"]); $i++) {
-				$html .= '<li><a href="#"><span>' . $i . '</span></a></li> ';
-			}
-
-			$html .= '</ul>';
+			$html .= self::get_nav_markup(count($show['slides']), $id);
 			
-		}*/
+			
+			
+		}
 			
 		$html .= '</div>';	
 		
@@ -650,7 +648,8 @@ class BU_Slideshow {
 		
 		$img_arr = wp_get_attachment_image_src($slide['image_id'], $slide['image_size']);
 		$img_alt = self::get_image_alt($slide['image_id']);
-		$slide_class = $index === 1 ? ' animate-in' : '';
+		//$slide_class = $index === 0 ? ' animate-in' : '';
+		$slide_class = '';
 		$slide_id = $show_id . '_' . $index;
 		
 		$html = '<li id="' . $slide_id . '" class="slide ' . $slide_class . '">';
@@ -677,6 +676,18 @@ class BU_Slideshow {
 			$html .= '<p class="bu-slide-caption-text">' . wp_kses_data($text) . '</p>';
 		}
 		$html .= '</div></div></li>';
+		
+		return $html;
+	}
+	
+	static public function get_nav_markup($num_slides, $id) {
+		$html = '<ul class="bu-slideshow-navigation" id="bu-slideshow-nav-' . $id . '" aria-hidden="true">';
+		for ($i = 1; $i <= $num_slides; $i++) {
+			$a_class = $i === 1 ? ' active' : '';
+			$html .= sprintf('<li><a href="#" id="pager-%s" class="%s"><span>%s</span></a></li> ', $i, $a_class, $i);;
+		}
+
+		$html .= '</ul>';
 		
 		return $html;
 	}

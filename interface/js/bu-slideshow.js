@@ -1,21 +1,68 @@
 jQuery(document).ready(function($) {
-
-	$('.bu-slideshow-container').each(function(){
-		var container = $(this);
-		var pagerId = container.find('ul.bu-slideshow-navigation').attr('id');
+	window.buSlideshows = {};
+	var container, pagerId, options, args, rotator, imgHeight;
+	
+	function buSlideshow(args) {
+		var self = {};
 		
-		var options = {
+		if (!args.show) {
+			throw new TypeError('Did not pass a valid Sequence object.');
+		}
+		
+		self.sequence = args.show;
+		
+		self.init = function() {
+			self.sequence.afterLoaded = resize_slideshow;
+			self.sequence.afterNextFrameAnimatesIn = function() {
+				if (!self.hasPager) {
+					return;
+				}
+				
+				self.pager.setActive();
+			}
+		}
+		
+		
+		self.hasPager = args.pager ? true : false;
+		if (self.hasPager) {
+			self.pager = $('#' + args.pager);
+		}
+		
+		self.pager.find('li a').bind('click', function() {
+			var id = $(this).attr('id').replace('pager-', '');
+			self.sequence.goTo(id);
+		});
+		
+		self.pager.setActive = function() {
+			var currentId = self.sequence.currentFrameID;
+			self.pager.find('a').removeClass('active');
+			self.pager.find('a#pager-' + currentId).addClass('active');
+		}
+		
+		
+		self.init();
+		
+		return self;
+	}
+
+	$('.bu-slideshow-container').each(function(index, el){
+		var $this = $(this);
+		container = $this.find('.bu-slideshow-slides');
+		pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
+		
+		options = {
 			autoPlay: true,
 			autoPlayDirection: -1,
 			fallback: {
 				theme : 'slide'
 			}
 		};
-		var sequence = container.sequence(options).data('sequence');
-		sequence.afterLoaded = function() {
-			resize_slideshow();
-		}
-
+		args = {
+			'show' : container.sequence(options).data('sequence'),
+			'pager' : pagerId
+		};
+		buSlideshows[index] = buSlideshow(args);
+		
 	})
 
 	/**

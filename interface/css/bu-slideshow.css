@@ -181,12 +181,12 @@
   background: #909090;
   text-decoration: underline;
 }
+.bu-slideshow-container .bu-slideshow-navigation li a .active span {
+  background: #cdcdcd;
+}
 .bu-slideshow-container .bu-slideshow-navigation li span {
   display: block;
   height: 100%;
   width: 100%;
   border-radius: 50%;
-}
-.bu-slideshow-container .bu-slideshow-navigation li .activeSlide a span {
-  background: #cdcdcd;
 }
