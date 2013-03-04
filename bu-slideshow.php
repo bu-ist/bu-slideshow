@@ -567,7 +567,8 @@ class BU_Slideshow {
 		$att_defaults = array(
 			'show_id' => 0,
 			'show_nav' => 1,
-			'transition' => 'slide'
+			'transition' => 'slide',
+			'nav_style' => 'icon'
 		);
 		$atts = shortcode_atts($att_defaults, $atts);
 		
@@ -594,7 +595,7 @@ class BU_Slideshow {
 		
 		$show = self::get_slideshow($id);
 		if (!$show) {
-			return;
+			return '';
 		}
 		
 		$show_id = esc_attr('bu-slideshow-' . $id);
@@ -614,11 +615,12 @@ class BU_Slideshow {
 		
 		// slideshow nav
 		if ($atts['show_nav']) {
-			
-			$html .= self::get_nav_markup(count($show['slides']), $id);
-			
-			
-			
+			$nav_args = array(
+				'num_slides' => count($show['slides']),
+				'id' => $id,
+				'style' => $atts['nav_style']
+			);
+			$html .= self::get_nav_markup($nav_args);
 		}
 			
 		$html .= '</div>';	
@@ -680,14 +682,15 @@ class BU_Slideshow {
 		return $html;
 	}
 	
-	static public function get_nav_markup($num_slides, $id) {
-		$html = '<ul class="bu-slideshow-navigation" id="bu-slideshow-nav-' . $id . '" aria-hidden="true">';
+	static public function get_nav_markup($args) {
+		extract($args);
+		$html = sprintf('<div class="bu-slideshow-navigation-container"><ul class="bu-slideshow-navigation %s" id="bu-slideshow-nav-%s" aria-hidden="true">', 'nav-' . $style, $id);
 		for ($i = 1; $i <= $num_slides; $i++) {
 			$a_class = $i === 1 ? ' active' : '';
 			$html .= sprintf('<li><a href="#" id="pager-%s" class="%s"><span>%s</span></a></li> ', $i, $a_class, $i);;
 		}
 
-		$html .= '</ul>';
+		$html .= '</ul></div>';
 		
 		return $html;
 	}

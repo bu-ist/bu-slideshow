@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 		
 		self.init = function() {
 			self.sequence.afterLoaded = resize_slideshow;
-			self.sequence.afterNextFrameAnimatesIn = function() {
+			self.sequence.beforeNextFrameAnimatesIn = function() {
 				if (!self.hasPager) {
 					return;
 				}
@@ -26,19 +26,19 @@ jQuery(document).ready(function($) {
 		self.hasPager = args.pager ? true : false;
 		if (self.hasPager) {
 			self.pager = $('#' + args.pager);
+		
+			self.pager.find('li a').bind('click', function() {
+				var id = $(this).attr('id').replace('pager-', '');
+				self.sequence.goTo(id);
+				return false;
+			});
+
+			self.pager.setActive = function() {
+				var currentId = self.sequence.currentFrameID;
+				self.pager.find('a').removeClass('active');
+				self.pager.find('a#pager-' + currentId).addClass('active');
+			}
 		}
-		
-		self.pager.find('li a').bind('click', function() {
-			var id = $(this).attr('id').replace('pager-', '');
-			self.sequence.goTo(id);
-		});
-		
-		self.pager.setActive = function() {
-			var currentId = self.sequence.currentFrameID;
-			self.pager.find('a').removeClass('active');
-			self.pager.find('a#pager-' + currentId).addClass('active');
-		}
-		
 		
 		self.init();
 		
