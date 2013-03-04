@@ -1,0 +1,247 @@
+.bu-slideshow-container {
+	overflow:hidden;
+	position:relative;
+
+	.bu-slideshow {
+		width:100% !important;
+		height:auto !important;
+		list-style:none !important;
+		margin:0;
+		padding:0;
+		position:relative !important;
+	
+		li {
+			list-style-type: none !important;
+			width:100% !important;
+			height:auto !important;
+
+			// these styles are the base values from which animate-in values animate
+			.bu-slide-container {
+				width:100%;
+
+				img {
+					max-width:100%;
+				}
+
+				.bu-slide-caption {
+					background:rgba(0, 0, 0, 0.75);
+					bottom: 20%;
+					display:inline;
+					list-style:none;
+					margin:0;
+					padding:0;
+					position:absolute;
+					right: 10%;
+					width:35%;
+					z-index:12;
+
+					p {
+						color:#ffffff;
+						font-size:.75em;
+						padding:0 1.25em;
+						line-height:1.4;
+					}
+
+					a {
+						color:#f3cf00;
+						text-decoration:none;
+
+						:hover {
+							text-decoration:underline;
+						}
+					}
+
+					.bu-slide-caption-title {
+						font-size:1.2em;
+						font-family:'Helvetica','Arial',sans-serif;
+						color:#f3cf00;
+						margin:0;
+						padding:1em;
+					}
+				}
+			}
+		}
+	}
+
+	.animate-slide-default {
+		left:-100%;
+		position:absolute;
+		-webkit-transition-duration: 1s;
+		-moz-transition-duration: 1s;
+		-o-transition-duration: 1s;
+		-ms-transition-duration: 1s;
+		transition-duration: 1s;
+	}
+
+	.animate-slide-in {
+		left:0;
+		-webkit-transition-duration: 1s;
+		-moz-transition-duration: 1s;
+		-o-transition-duration: 1s;
+		-ms-transition-duration: 1s;
+		transition-duration: 1s;
+	}
+
+	.animate-slide-out {
+		left:100%;
+		-webkit-transition-duration: 1s;
+		-moz-transition-duration: 1s;
+		-o-transition-duration: 1s;
+		-ms-transition-duration: 1s;
+		transition-duration: 1s;
+	}
+
+	.animate-fade-default {
+		opacity:0;
+		position:absolute;
+		-webkit-transition-duration: 1.5s;
+		-moz-transition-duration: 1.5s;
+		-o-transition-duration: 1.5s;
+		-ms-transition-duration: 1.5s;
+		transition-duration: 1.5s;
+	}
+
+	.animate-fade-in {
+		opacity:1.0;
+		-webkit-transition-duration: 1.5s;
+		-moz-transition-duration: 1.5s;
+		-o-transition-duration: 1.5s;
+		-ms-transition-duration: 1.5s;
+		transition-duration: 1.5s;
+	}
+
+	.animate-fade-out {
+		opacity:0;
+		-webkit-transition-duration: 1.5s;
+		-moz-transition-duration: 1.5s;
+		-o-transition-duration: 1.5s;
+		-ms-transition-duration: 1.5s;
+		transition-duration: 1.5s;
+	}
+
+	.transition-slide {
+
+		.bu-slide-container {
+			.animate-slide-default;
+		}
+
+		.animate-in {
+				
+			.bu-slide-container {
+				.animate-slide-in;
+			}
+
+		}
+
+		.animate-out {
+
+			.bu-slide-container {
+				.animate-slide-out;
+			}
+
+		}
+
+	}
+
+	.transition-fade {
+
+		.bu-slide-container {
+			.animate-fade-default;
+		}
+
+		.animate-in {
+				
+			.bu-slide-container {
+				.animate-fade-in;
+			}
+
+		}
+
+		.animate-out {
+
+			.bu-slide-container {
+				.animate-fade-out;
+			}
+
+		}
+	}
+
+	.bu-slideshow-navigation-container {
+
+		.bu-slideshow-navigation {
+			bottom:1em;
+			left:0;
+			list-style:none;
+			margin:0;
+			padding:0;
+			position:absolute;
+			text-align:center;
+			width:100%;
+			z-index:13;
+
+			li {
+				display:inline;
+			}
+
+		}
+
+		.nav-icon {
+
+			li {
+
+				a {
+					display:inline-block;
+					text-indent:-9999em;
+					border-radius:50%;
+					padding:2px;
+					background:#ffffff;
+					border:3px solid rgba(0, 0, 0, 0.35);
+					height:12px;
+					width:12px;
+
+					span {
+						display:block;
+						height:100%;
+						width:100%;
+						border-radius:50%;
+					}
+
+					&:hover span {
+						background:#909090;
+					}
+
+					&.active span {
+						background:#cdcdcd;
+					}
+				}
+			}
+		}
+
+		.nav-number {
+
+			li {
+				list-style-type: none;
+				margin-left: 1em;
+
+				a {
+					background-color:#e1e1e1;
+					color: #999999;
+					display:inline-block;
+					font-size:1.1em;
+					line-height: normal;
+					opacity:0.75;
+					padding:.3em .7em .25em;
+					text-decoration:none;
+
+					&:hover, &.active {
+						background-color:#dddddd;
+						color: #666666;
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+	}
+	
+}

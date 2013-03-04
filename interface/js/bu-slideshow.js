@@ -1,30 +1,77 @@
 jQuery(document).ready(function($) {
-
-	$('.bu-slideshow-container').each(function(){
-		var container = $(this);
-		var rotator = container.find('ol.bu-slideshow');
-		var pagerId = container.find('ol.bu-slideshow-navigation').attr('id');
+	window.buSlideshows = {};
+	var container, pagerId, options, args, rotator, imgHeight;
+	
+	function buSlideshow(args) {
+		var self = {};
 		
-		rotator.cycle({
-			pager: '#' + pagerId,
-			pause: 1,
-			containerResize: false,
-			slideResize: false,
-			fit: 1,
-			timeout: 6000,
-			pagerAnchorBuilder: function(idx, slide) { 
-				return '#' + pagerId + ' li:eq(' + idx + ') a'; 
+		if (!args.show) {
+			throw new TypeError('Did not pass a valid Sequence object.');
+		}
+		
+		self.sequence = args.show;
+		
+		self.init = function() {
+			self.sequence.afterLoaded = resize_slideshow;
+			self.sequence.beforeNextFrameAnimatesIn = function() {
+				if (!self.hasPager) {
+					return;
+				}
+				
+				self.pager.setActive();
 			}
-		});
+		}
 		
-		/* prevents edge cases where slideshow nav appears too high  */
-		setTimeout(resize_slideshow, 100);
+		
+		self.hasPager = args.pager ? true : false;
+		if (self.hasPager) {
+			self.pager = $('#' + args.pager);
+		
+			self.pager.find('li a').bind('click', function() {
+				var id = $(this).attr('id').replace('pager-', '');
+				self.sequence.goTo(id);
+				return false;
+			});
+
+			self.pager.setActive = function() {
+				var currentId = self.sequence.currentFrameID;
+				self.pager.find('a').removeClass('active');
+				self.pager.find('a#pager-' + currentId).addClass('active');
+			}
+		}
+		
+		self.init();
+		
+		return self;
+	}
+
+	$('.bu-slideshow-container').each(function(index, el){
+		var $this = $(this);
+		container = $this.find('.bu-slideshow-slides');
+		pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
+		
+		options = {
+			autoPlay: true,
+			autoPlayDirection: -1,
+			fallback: {
+				theme : 'slide'
+			}
+		};
+		args = {
+			'show' : container.sequence(options).data('sequence'),
+			'pager' : pagerId
+		};
+		buSlideshows[index] = buSlideshow(args);
+		
 	})
 
+	/**
+	 * @todo more flexible detection of content, don't rely on images to set height
+	 */
 	function resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this);
-			var rotator = container.find('ol.bu-slideshow');
+			var rotator = container.find('ul.bu-slideshow');
 			
 			var imgHeight = rotator.find('li img:visible').height();
 			
