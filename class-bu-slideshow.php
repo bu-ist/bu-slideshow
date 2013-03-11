@@ -3,7 +3,7 @@ require_once plugin_dir_path(__FILE__) . 'bu-slideshow.php';
 
 class BU_Slideshow_Instance {
 	
-	public $view = 'public';
+	public $view;
 	public $name;
 	public $id;
 	public $slides;
@@ -11,7 +11,8 @@ class BU_Slideshow_Instance {
 	static $defaults = array(
 		'name' => 'Untitled Slideshow',
 		'id' => 1,
-		'slides' => array()
+		'slides' => array(),
+		'view' => 'public'
 	);
 	
 	static $classes = array('bu-slideshow');
@@ -24,12 +25,8 @@ class BU_Slideshow_Instance {
 	 */
 	public function __construct($args) {
 		
-		$defaults = array(
-			'id' => 0,
-			'view' => 'public'
-		);
-		$args = wp_parse_args($args, $defaults);
-		extract(array_intersect_key($args, $defaults));
+		$args = wp_parse_args($args, self::$defaults);
+		extract(array_intersect_key($args, self::$defaults));
 		
 		$id = intval($id);
 		
@@ -41,7 +38,7 @@ class BU_Slideshow_Instance {
 			$all_slideshows = get_option(BU_Slideshow::$meta_key, array());
 			$slideshow = $all_slideshows[$id];
 		} else {
-			$slideshow = self::$defaults;
+			$slideshow = $args;
 		}
 		
 		$this->init($slideshow);
@@ -118,7 +115,7 @@ class BU_Slideshow_Instance {
 	 */
 	public function update() {
 		
-		$all_slideshows = get_option(BU_Slideshow::$meta_key, array());
+		$all_slideshows = BU_Slideshow::get_slideshows();
 
 		$updated_show = array(
 			"name" => $this->name,

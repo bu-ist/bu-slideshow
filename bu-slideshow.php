@@ -20,6 +20,16 @@ class BU_Slideshow {
 	static $preview_url = 'admin.php?page=bu-preview-slideshow';
 	static $min_cap = 'edit_posts';
 	
+	static $shortcode_defaults = array(
+		'show_id' => 0,
+		'show_nav' => 1,
+		'transition' => 'slide',
+		'nav_style' => 'icon',
+		'autoplay' => 1,
+		'show_arrows' => 0
+	);
+	static $transitions = array('fade', 'slide'); // prepackaged transitions
+	
 	static public function init() {
 		global $pagenow;
 		
@@ -251,11 +261,16 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Returns next unassigned numeric slideshow id.
+	 * Returns next unassigned numeric slideshow id. Slideshow ids begin at 1.
 	 * @return int
 	 */
 	static public function get_new_id() {
 		$all_slideshows = self::get_slideshows();
+		
+		if (empty($all_slideshows)) {
+			return 1;
+		}
+		
 		$keys = array_keys($all_slideshows);
 		asort($keys);
 		$last_index = implode('', array_slice($keys, -1, 1));
@@ -513,14 +528,7 @@ class BU_Slideshow {
 		$bu_slideshow_loadscripts = 1;
 		/* end hack for old WP */
 		
-		$att_defaults = array(
-			'show_id' => 0,
-			'show_nav' => 1,
-			'transition' => 'slide',
-			'nav_style' => 'icon',
-			'autoplay' => 1,
-			'show_arrows' => 0
-		);
+		$att_defaults = self::$shortcode_defaults;
 		
 		$falsish = array('0', 'false', 'no', 'none');
 		
@@ -570,6 +578,17 @@ class BU_Slideshow {
 		}
 		
 		return strval($img_alt);
+	}
+	
+	static public function get_selector() {
+		$all_slideshows = self::get_slideshows();
+		
+		ob_start();
+		include BU_SLIDESHOW_BASEDIR . 'interface/slideshow-selector.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;
 	}
 	
 }
