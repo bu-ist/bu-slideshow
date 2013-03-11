@@ -13,7 +13,7 @@
 		
 	<?php } ?>
 		<h4>Note</h4>
-		<p>The slideshow may look different on your site's pages, depending on your site's theme.</p>
+		<p>This preview uses the default settings. When you add this slideshow to a page, you will be able to customize the display settings.</p>
 		<p>Return to <a href="<?php echo self::$manage_url; ?>">Manage Slideshows</a></p>
 	</div>
 	<?php 

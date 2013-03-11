@@ -22,7 +22,6 @@ jQuery(document).ready(function($){
 	}
 	
 	/** Manage slideshows page 
-	 * @todo implement preview 
 	 */
 	if (slideShowTable.length && slidesContainer.length) {
 		$('.bu-slideshow-delete').live('click', function() {
@@ -188,8 +187,7 @@ jQuery(document).ready(function($){
 		function addSlide(order) {
 			var data = {
 				"action": "bu_add_slide",
-				"order": order,
-				"ajax": '1'
+				"order": order
 			};
 			
 			$.post(ajaxurl, data, function(response) {

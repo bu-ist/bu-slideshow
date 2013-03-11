@@ -20,25 +20,47 @@ jQuery(document).ready(function($) {
 				
 				self.pager.setActive();
 			}
+			
+			self.hasPager = args.pager ? true : false;
+			if (self.hasPager) {
+				self.initPager();
+			}
+			
+			self.hasArrows = args.arrows ? true : false;
+			if (self.hasArrows) {
+				self.initArrows();
+			}
+			
 		}
 		
-		
-		self.hasPager = args.pager ? true : false;
-		if (self.hasPager) {
+		self.initPager = function() {
 			self.pager = $('#' + args.pager);
-		
+
 			self.pager.find('li a').bind('click', function() {
 				var id = $(this).attr('id').replace('pager-', '');
+				self.sequence.nextFrameID = id;
 				self.sequence.goTo(id);
 				return false;
 			});
 
-			self.pager.setActive = function() {
-				var currentId = self.sequence.currentFrameID;
+			self.pager.setActive = function(nextId) {
+				nextId = self.sequence.nextFrameID;	
 				self.pager.find('a').removeClass('active');
-				self.pager.find('a#pager-' + currentId).addClass('active');
+				self.pager.find('a#pager-' + nextId).addClass('active');
 			}
-		}
+		};
+		
+		self.initArrows = function() {
+			self.arrows = $('#' + args.arrows);
+			
+			self.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
+				self.sequence.prev();
+				return false;
+			}).end().find('.bu-slideshow-arrow-right').bind('click', function() {
+				self.sequence.next();
+				return false;
+			});
+		};
 		
 		self.init();
 		
@@ -46,42 +68,58 @@ jQuery(document).ready(function($) {
 	}
 
 	$('.bu-slideshow-container').each(function(index, el){
-		var $this = $(this);
+		var $this = $(this), autoplay = false, container, pagerId, arrowId, options, args;
 		container = $this.find('.bu-slideshow-slides');
 		pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
+		arrowId = $this.find('div.bu-slideshow-arrows').attr('id');
+		
+		if ($this.hasClass('autoplay')) {
+			autoplay = true;
+		}
 		
 		options = {
-			autoPlay: true,
-			autoPlayDirection: -1,
+			autoPlay: autoplay,
 			fallback: {
 				theme : 'slide'
 			}
 		};
 		args = {
 			'show' : container.sequence(options).data('sequence'),
-			'pager' : pagerId
+			'pager' : pagerId,
+			'arrows' : arrowId
 		};
 		buSlideshows[index] = buSlideshow(args);
 		
 	})
 
 	/**
-	 * @todo more flexible detection of content, don't rely on images to set height
+	 * Resizes slideshow and all slides to height of highest slide
 	 */
 	function resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
-			var container = $(this);
-			var rotator = container.find('ul.bu-slideshow');
+			var container = $(this), slides, numSlides, height = 0, currentHeight = 0;
 			
-			var imgHeight = rotator.find('li img:visible').height();
+			slides = container.find('li .bu-slide-container'),
+			numSlides = slides.length,
 			
-			/** todo abstract this imgHeight max to an option that can be set */
-			if (imgHeight > 500) {
-				imgHeight = 500;
+			slides.each(function(i, el) {
+				currentHeight = $(el).height();
+				if (currentHeight > height) {
+					height = currentHeight;
+				}
+			});
+			
+			/** todo abstract this height max to an option that can be set */
+			if (height > 500) {
+				height = 500;
 			}
 			
-			container.css('height', imgHeight + 'px');
-			rotator.css('height', imgHeight + 'px');
+			slides.each(function(i, el) {
+				$(el).css('height', height + 'px');
+			});
+			
+			container.css('height', height + 'px');
+			container.find('ul.bu-slideshow').css('height', height + 'px');
 		});
 		
 	}
@@ -89,7 +127,5 @@ jQuery(document).ready(function($) {
 	$(window).resize(function() {
 		resize_slideshow();
 	});
-	
-	resize_slideshow();
 	
 });
