@@ -24,9 +24,9 @@
 		color:@white-fade;
 		cursor:pointer;
 		display:block;
-		font-size: 4em;
+		font-size: 3em;
 		line-height:normal;
-		padding:0 0.1em;
+		padding:0 0.2em 0.2em;
 		position: absolute;
 		text-decoration:none;
 		top:50%;
@@ -121,7 +121,7 @@
 		}
 
 		.animate-slide-default {
-			left:-100%;
+			left:100%;
 			position:absolute;
 			-webkit-transition-duration: 1s;
 			-moz-transition-duration: 1s;
@@ -140,7 +140,7 @@
 		}
 
 		.animate-slide-out {
-			left:100%;
+			left:-100%;
 			-webkit-transition-duration: 1s;
 			-moz-transition-duration: 1s;
 			-o-transition-duration: 1s;
@@ -253,10 +253,13 @@
 					text-indent:-9999em;
 					border-radius:50%;
 					padding:2px;
-					background:#ffffff;
-					border:3px solid rgba(0, 0, 0, 0.35);
-					height:12px;
-					width:12px;
+					background: @white-fallback-fade;
+					background: @white-fade;
+					border:3px solid;
+					border-color: @semi-opaque-fallback-fade;
+					border-color: @semi-opaque-fade;
+					height:0.8em;
+					width:0.8em;
 
 					span {
 						display:block;
@@ -267,7 +270,8 @@
 					}
 
 					&:hover span, &:active span, &.active span {
-						background-color:#cdcdcd;
+						background-color: @semi-opaque-fallback-fade;
+						background-color: @semi-opaque-fade;
 						-moz-transition-property:background-color;
 						-webkit-transition-property:background-color;
 						transition-property:background-color;
@@ -282,22 +286,26 @@
 
 			li {
 				list-style-type: none;
-				margin-left: 0.5em;
+				margin-left: 0.3em;
 
 				a {
-					background-color:#e1e1e1;
-					color: #999999;
+					background-color: @semi-opaque-fallback-fade;
+					background-color: @semi-opaque-fade;
+					color: @white-fallback-fade;
+					color: @white-fade;
 					display:inline-block;
-					font-size:1.1em;
+					font-size:0.9em;
 					line-height: normal;
 					opacity:0.75;
-					padding:.3em .7em .25em;
+					padding:.5em .7em .25em;
 					text-decoration:none;
 					.mediumTransition;
 
 					&:hover, &.active {
-						background-color:#dddddd;
-						color: #666666;
+						background-color:@semi-opaque-fallback;
+						background-color:@semi-opaque;
+						color: @white-fallback;
+						color: @white;
 						opacity: 1;
 						-moz-transition-property:background-color color opacity;
 						-webkit-transition-property:background-color color opacity;
