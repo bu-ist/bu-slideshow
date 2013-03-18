@@ -1,8 +1,8 @@
 <li class="bu-slideshow-slide">
-	<a href="#" class="bu-slide-expand bu-slide-control" title="Click to edit this slide">+</a>
 	<div class="bu-slide-header">
 		<p><span class="bu-slide-header-thumb"><?php echo $img_thumb; ?></span></p>
 		<p><span class="bu-slide-title"><?php echo esc_attr($slide["caption"]["title"]); ?></span></p>
+		<a href="#" class="bu-slide-expand bu-slide-control" title="Click to edit this slide"></a>
 	</div>
 	<div class="bu-slide-edit-container">
 		<a class="bu-slide-delete-button button" href="#">delete slide</a>

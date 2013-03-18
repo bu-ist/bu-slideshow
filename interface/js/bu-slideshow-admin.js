@@ -84,13 +84,15 @@ jQuery(document).ready(function($){
 		$('.bu-slide-edit-container').hide();
 		
 		$('.bu-slide-expand').live('click', function() {
-			var clicked = $(this);
-			clicked.parent('.bu-slideshow-slide').find('.bu-slide-edit-container, .bu-slide-header').toggle();
+			var clicked = $(this), editor;
+			editor = clicked.parents('.bu-slideshow-slide').find('.bu-slide-edit-container');
 			
 			if (clicked.hasClass('open')) {
-				clicked.removeClass('open').html('+');
+				clicked.removeClass('open');
+				editor.slideUp(300);
 			} else {
-				clicked.addClass('open').html('&mdash;');
+				clicked.addClass('open');
+				editor.slideDown(300);
 			}
 			
 			return false;

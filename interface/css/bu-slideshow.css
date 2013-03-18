@@ -1,6 +1,8 @@
 .mediumTransition {
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
 .slowTransition {
@@ -68,6 +70,7 @@
   -moz-transition-property: border-right-color;
   -webkit-transition-property: border-right-color;
   transition-property: border-right-color;
+  *background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left:hover,
 .bu-slideshow-container .bu-slideshow-arrow-left:active {
@@ -118,6 +121,7 @@
   -moz-transition-property: border-left-color;
   -webkit-transition-property: border-left-color;
   transition-property: border-left-color;
+  *background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right:hover,
 .bu-slideshow-container .bu-slideshow-arrow-right:active {
@@ -336,6 +340,8 @@
   border-radius: 50%;
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span,
@@ -348,6 +354,8 @@
   transition-property: background-color;
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li {
@@ -367,6 +375,8 @@
   text-decoration: none;
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a:hover,
@@ -380,6 +390,8 @@
   transition-property: background-color color opacity;
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
 html.touch .bu-slideshow-arrow-left,
