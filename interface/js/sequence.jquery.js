@@ -24,12 +24,6 @@ Sequence also relies on the following open source scripts:
 	Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
 	Available under the BSD and MIT licenses: www.modernizr.com/license/
 
-***
-*
-* Modified for BU Wordpress:
-* -'on' handlers changed to 'live', since 'on' isn't in jQuery 1.4.x
-*
-***
 */
 
 (function($) {
@@ -423,7 +417,7 @@ Sequence also relies on the following open source scripts:
 			}
 
 			if(self.settings.pauseOnHover && self.settings.autoPlay && !self.hasTouch) { //if using pauseOnHover and autoPlay on non touch devices
-				self.sequence.live({
+				self.sequence.on({
 				    mouseenter: function() { //when the mouse enter the Sequence element...
 				    	self.mouseover = true;
 				        if(!self.isHardPaused) { //if Sequence is hard paused (via a pause button)...
@@ -461,7 +455,7 @@ Sequence also relies on the following open source scripts:
 				var isMoving = false;
 
 				function cancelTouch() {
-					self.sequence.live("touchmove", onTouchMove);
+					self.sequence.on("touchmove", onTouchMove);
 					startX = null;
 					isMoving = false;
 				}	
@@ -498,11 +492,11 @@ Sequence also relies on the following open source scripts:
 						startX = e.originalEvent.touches[0].pageX;
 						startY = e.originalEvent.touches[0].pageY;
 						isMoving = true;
-						self.sequence.live("touchmove", onTouchMove);
+						self.sequence.on("touchmove", onTouchMove);
 					}
 				}
 
-				self.sequence.live("touchstart", onTouchStart);
+				self.sequence.on("touchstart", onTouchStart);
 			}
 			//END EVENTS
 		}

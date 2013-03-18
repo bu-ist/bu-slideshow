@@ -3,101 +3,150 @@
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
+.slowTransition {
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
+}
 .bu-slideshow-container {
   overflow: hidden;
   position: relative;
 }
-.bu-slideshow-container .arrowStyles {
-  background-color: #686868;
-  background-color: rgba(0, 0, 0, 0.55);
-  color: #cdcdcd;
-  color: rgba(255, 255, 255, 0.7);
+.bu-slideshow-container .arrowBgStyles {
+  background-color: transparent;
   cursor: pointer;
   display: block;
-  font-size: 3em;
+  height: 4em;
   line-height: normal;
-  padding: 0 0.2em 0.2em;
   position: absolute;
-  text-decoration: none;
   top: 50%;
+  width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
 }
-.bu-slideshow-container .arrowStyles:hover,
-.bu-slideshow-container .arrowStyles:active {
+.bu-slideshow-container .arrowBgStyles:hover,
+.bu-slideshow-container .arrowBgStyles:active {
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
-  -moz-transition-property: background-color color;
-  -webkit-transition-property: background-color color;
-  transition-property: background-color color;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-property: background-color;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+}
+.bu-slideshow-container .arrowStyles {
+  border-style: solid;
+  border-width: 0.75em;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  top: 1.4em;
+  width: 0;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left {
-  background-color: #686868;
-  background-color: rgba(0, 0, 0, 0.55);
-  color: #cdcdcd;
-  color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
   cursor: pointer;
   display: block;
-  font-size: 3em;
+  height: 4em;
   line-height: normal;
-  padding: 0 0.2em 0.2em;
   position: absolute;
-  text-decoration: none;
   top: 50%;
+  width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
+  border-right-color: #686868;
+  border-right-color: rgba(0, 0, 0, 0.55);
+  border-radius: 0 4px 4px 0;
   left: 0;
+  -moz-transition-property: border-right-color;
+  -webkit-transition-property: border-right-color;
+  transition-property: border-right-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left:hover,
 .bu-slideshow-container .bu-slideshow-arrow-left:active {
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
-  -moz-transition-property: background-color color;
-  -webkit-transition-property: background-color color;
-  transition-property: background-color color;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-property: background-color;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+}
+.bu-slideshow-container .bu-slideshow-arrow-left:hover {
+  border-right-color: #cdcdcd;
+  border-right-color: rgba(255, 255, 255, 0.7);
+}
+.bu-slideshow-container .bu-slideshow-arrow-left:after {
+  border-style: solid;
+  border-width: 0.75em;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  top: 1.4em;
+  width: 0;
+  border-left-color: transparent;
+  border-right-color: inherit;
+  right: 1em;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right {
-  background-color: #686868;
-  background-color: rgba(0, 0, 0, 0.55);
-  color: #cdcdcd;
-  color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
   cursor: pointer;
   display: block;
-  font-size: 3em;
+  height: 4em;
   line-height: normal;
-  padding: 0 0.2em 0.2em;
   position: absolute;
-  text-decoration: none;
   top: 50%;
+  width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
+  border-left-color: #686868;
+  border-left-color: rgba(0, 0, 0, 0.55);
+  border-radius: 4px 0 0 4px;
   right: 0;
+  -moz-transition-property: border-left-color;
+  -webkit-transition-property: border-left-color;
+  transition-property: border-left-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right:hover,
 .bu-slideshow-container .bu-slideshow-arrow-right:active {
+  -moz-transition-duration: 0.6s;
+  -webkit-transition-duration: 0.6s;
+  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
-  -moz-transition-property: background-color color;
-  -webkit-transition-property: background-color color;
-  transition-property: background-color color;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
+  -moz-transition-property: background-color;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+}
+.bu-slideshow-container .bu-slideshow-arrow-right:hover {
+  border-left-color: #cdcdcd;
+  border-left-color: rgba(255, 255, 255, 0.7);
+}
+.bu-slideshow-container .bu-slideshow-arrow-right:after {
+  border-style: solid;
+  border-width: 0.75em;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  top: 1.4em;
+  width: 0;
+  border-left-color: inherit;
+  border-right-color: transparent;
+  left: 1em;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow {
   width: 100% !important;
@@ -128,7 +177,7 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  right: 10%;
+  right: 6%;
   width: 35%;
   z-index: 12;
 }
@@ -332,4 +381,17 @@
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+}
+html.touch .bu-slideshow-arrow-left,
+html.touch .bu-slideshow-arrow-right {
+  background-color: #464646;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+html.touch .bu-slideshow-arrow-left {
+  border-right-color: #cdcdcd;
+  border-right-color: rgba(255, 255, 255, 0.7);
+}
+html.touch .bu-slideshow-arrow-right {
+  border-left-color: #cdcdcd;
+  border-left-color: rgba(255, 255, 255, 0.7);
 }

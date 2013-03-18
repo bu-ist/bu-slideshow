@@ -192,7 +192,7 @@ class BU_Slideshow_Instance {
 				
 				// forward/back arrows
 				if ($args['show_arrows']) {
-					$html .= sprintf('<div class="bu-slideshow-arrows" id="%s_arrows"><a class="bu-slideshow-arrow-left" href="#">&#x2039;</a><a class="bu-slideshow-arrow-right" href="#">&#x203a;</a></div>', $show_id);
+					$html .= sprintf('<div class="bu-slideshow-arrows" id="%s_arrows"><a class="bu-slideshow-arrow-left" href="#"></a><a class="bu-slideshow-arrow-right" href="#"></a></div>', $show_id);
 				}
 
 				$html .= '</div>';	

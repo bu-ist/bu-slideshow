@@ -50,6 +50,34 @@ jQuery(document).ready(function($){
 		
 	}
 	
+	/* Insert slideshow button and Inserting shortcode into editor */
+	if ($('#bu_slideshow_modal_button').length) {
+		var modal = buModal('#bu_slideshow_modal_wrap');
+		
+		$('#bu_slideshow_modal_button').click(function() {
+			modal.open();
+		});
+		
+		$('#bu_insert_slideshow').live('click', function(e) {
+			var selector = slideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector'), options, html;
+			selector.ui.parent().find('.error').remove();
+			options = selector.getOptions();
+
+			if (!parseInt(options.show_id)) {
+				displayError('You must select a slideshow.', selector.ui.parent());
+				return false;
+			}
+
+			html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '"]';
+
+			console.log(html);
+			window.send_to_editor("<br />" + html + "<br />");
+			selector.reset();
+			modal.close();
+			return false;
+		});
+	}
+	
 	/* Edit Slideshow page */
 	if (slideEditor.length) {
 		

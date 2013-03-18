@@ -28,7 +28,10 @@ class BU_Slideshow {
 		'autoplay' => 1,
 		'show_arrows' => 0
 	);
-	static $transitions = array('fade', 'slide'); // prepackaged transitions
+	static $transitions = array('slide', 'fade'); // prepackaged transitions
+	static $nav_styles = array('icon', 'number');
+	
+	static $editor_screens = array('page', 'post'); // edit screens 
 	
 	static public function init() {
 		global $pagenow;
@@ -37,8 +40,10 @@ class BU_Slideshow {
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
+		add_action('media_buttons_context', array(__CLASS__, 'add_media_button'),99);
+		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
 		
-		if ('media-upload.php' == $pagenow || 'async-upload.php' == $pagenow) {
+		if ('media-upload.php' === $pagenow || 'async-upload.php' === $pagenow) {
 			self::media_upload_custom();
 		}
 		
@@ -55,7 +60,12 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Loads admin scripts/styles on plugin's pages
+	 * Loads admin scripts/styles on plugin's pages. Add a page's id using by hooking
+	 * the bu_slideshow_selector_pages filter to load the selector scripts/styles.
+	 * 
+	 * Scripts/styles loaded only as needed for various modules: slideshow admin pages,
+	 * the selector UI, and the modal that contains selector UI.
+	 * 
 	 * @global type $current_screen
 	 */
 	static public function admin_scripts_styles() {
@@ -66,7 +76,21 @@ class BU_Slideshow {
 			'admin_page_bu-edit-slideshow'
 		);
 		
-		if (in_array($current_screen->id, $admin_pages)) {
+		$selector_pages = array();
+		$selector_pages = apply_filters('bu_slideshow_selector_pages', $selector_pages);
+		
+		if (in_array($current_screen->id, $selector_pages)) {
+			self::selector_scripts_styles();
+		}
+		
+		if (self::using_editor()) {
+			wp_register_script('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/js/bu-modal.js', array('jquery'), false, true);
+			wp_register_style('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/css/bu-modal.css');
+			wp_enqueue_script('bu-modal');
+			wp_enqueue_style('bu-modal');
+		}
+		
+		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
 			wp_register_script('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-admin.js', array('jquery'), false, true);
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
@@ -91,8 +115,10 @@ class BU_Slideshow {
 	 */
 	static public function public_scripts_styles() {
 		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/modernizr-dev.js', array(), false, true);
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr'), false, true);
-		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr'), false, true);
+		/* patch for jQuery to make sequence work with old jQuery */
+		wp_register_script('bu-sequence-patch', BU_SLIDESHOW_BASEURL . 'interface/js/bu-sequence-patch.js', array('jquery'), false, true);
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr', 'bu-sequence-patch'), false, true);
+		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr', 'bu-sequence-patch'), false, true);
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
@@ -104,6 +130,17 @@ class BU_Slideshow {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
 			wp_enqueue_style('bu-slideshow');
 		}
+	}
+	
+	/**
+	 * Load scripts and styles for the selector UI
+	 */
+	static public function selector_scripts_styles() {
+		wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector.js', array('jquery'), false, true);
+		wp_enqueue_script('bu-slideshow-selector');
+		
+		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css');
+		wp_enqueue_style('bu-slideshow-selector');
 	}
 	
 	/**
@@ -120,7 +157,7 @@ class BU_Slideshow {
 		global $bu_slideshow_loadscripts;
 		
 		if ($bu_slideshow_loadscripts) {
-			$conditional_scripts = array('modernizr', 'jquery-sequence', 'bu-slideshow');
+			$conditional_scripts = array('modernizr', 'bu-sequence-patch', 'jquery-sequence', 'bu-slideshow');
 			apply_filters('bu_slideshow_conditional_scripts', $conditional_scripts);
 			
 			foreach($conditional_scripts as $script) {
@@ -539,6 +576,10 @@ class BU_Slideshow {
 		
 		$atts = shortcode_atts($att_defaults, $atts);
 		
+		if (!in_array($atts['nav_style'], self::$nav_styles)) {
+			$atts['nav_style'] = $att_defaults['nav_style'];
+		}
+		
 		// liberally accept args
 		foreach (array('show_nav', 'autoplay', 'show_arrows') as $var) {
 			if (in_array(strtolower($atts[$var]), $falsish)) {
@@ -549,7 +590,7 @@ class BU_Slideshow {
 		$show = new BU_Slideshow_Instance(array('id' => $atts['show_id'], 'view' => 'public'));
 		
 		$html = $show->get($atts);
-
+		
 		echo $html;
 	}
 	
@@ -580,15 +621,91 @@ class BU_Slideshow {
 		return strval($img_alt);
 	}
 	
-	static public function get_selector() {
+	/**
+	 * Returns markup for the Slideshow selector UI.
+	 * 
+	 * @param array $args
+	 * @return string
+	 */
+	static public function get_selector($args = array()) {
 		$all_slideshows = self::get_slideshows();
+		$defaults = self::$shortcode_defaults;
+		$empty_ok = array('show_nav', 'autoplay');
 		
+		foreach ($defaults as $key => $def) {
+			if (in_array($key, $empty_ok)) {
+				if (!isset($args[$key])) {
+					$args[$key] = $def;
+				}
+			} else if (!isset($args[$key]) || !$args[$key]) {
+				$args[$key] = $def;
+			}
+		}
+
 		ob_start();
 		include BU_SLIDESHOW_BASEDIR . 'interface/slideshow-selector.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 		
 		return $html;
+	}
+	
+	/**
+	 * Returns true if the current screen should integrate the 'insert slideshow' 
+	 * functionality in the WP editor. Allows for filtering of screens.
+	 * 
+	 * @global object $current_screen
+	 * @return boolean
+	 */
+	static public function using_editor() {
+		global $current_screen;
+		
+		$screens = apply_filters('bu_slideshow_editor_screens', self::$editor_screens);
+		if (!is_array($screens)) {
+			$screens = array();
+		}
+		
+		if (in_array($current_screen->id, $screens)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Adds modal UI to footer, for display in thickbox.
+	 */
+	static public function admin_footer() {
+		if (self::using_editor()):
+		?>
+
+		<div id="bu_slideshow_modal_wrap" style="display:none;">
+			<div class="postboxheader"><a class="close_btn" href=""><img title="close window" src="<?php echo BU_SLIDESHOW_BASEURL . 'interface/img/tb-close.png'; ?>"/></a></div>
+			<div class="wrap postbox">
+				
+				<h2>Insert Slideshow</h2>
+				<?php echo self::get_selector(); ?>
+				<p><a href="#" id="bu_insert_slideshow" class="button-primary">Insert Slideshow</a></p>
+			<div>
+		</div>
+				
+		<?php
+		endif;
+	}
+	
+	/**
+	 * Adds 'Add Slideshow' button above editor
+	 * 
+	 * @param string $context
+	 * @return string
+	 */
+	static public function add_media_button($context) {
+		if (self::using_editor()) {
+			$html = '<a id="bu_slideshow_modal_button" title="Insert Slideshow" href="#">Insert Slideshow</a>';
+			$context = $context . $html;
+		}
+		
+		return $context;
 	}
 	
 }
@@ -605,6 +722,11 @@ if (!function_exists('bu_get_slideshow')) {
 			return '';
 		}
 		
-		return BU_Slideshow::shortcode_handler($args);
+		ob_start();
+		BU_Slideshow::shortcode_handler($args);
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;
 	}
 }

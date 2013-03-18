@@ -22,3 +22,12 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 #bu-slideshow-manage li:last-child {border-bottom:none;}
 #bu-slideshow-manage span {display:inline-block;}
 #bu-slideshow-manage .bu-slideshow-delete {color:red;}
+
+/* insert slideshow button */
+#bu_slideshow_modal_button {
+	background:url(../img/insert-slideshow-icon.png) transparent no-repeat 10px 4px;
+	display:inline-block;
+	height:12px;
+	text-indent: -9999px;
+	width:13px;
+}
