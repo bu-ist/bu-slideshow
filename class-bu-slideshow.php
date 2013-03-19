@@ -164,14 +164,16 @@ class BU_Slideshow_Instance {
 
 				$show_id = esc_attr(self::$id_prefix . $this->id);
 				
-				$container_class = $args['autoplay'] ? ' autoplay' : '';
+				$container_class = 'bu-slideshow-container';
+				$container_class .= $this->name ? ' ' . str_replace(' ', '-', $this->name) : '';
+				$container_class .= $args['autoplay'] ? ' autoplay' : '';
 
 				// deliberately allowing custom values here
 				$ul_classes = self::$classes;
 				$ul_classes[] = 'transition-' . $args['transition']; 
 				$ul_class_str = esc_attr(join(' ', $ul_classes));
 
-				$html = sprintf('<div class="bu-slideshow-container%s" id="%s">', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id));
+				$html = sprintf('<div class="%s" id="%s">', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id));
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {
