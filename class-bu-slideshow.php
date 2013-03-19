@@ -171,7 +171,7 @@ class BU_Slideshow_Instance {
 				$ul_classes[] = 'transition-' . $args['transition']; 
 				$ul_class_str = esc_attr(join(' ', $ul_classes));
 
-				$html = sprintf('<div class="bu-slideshow-container%s" id="bu-slideshow-%s">',$container_class, $this->id);
+				$html = sprintf('<div class="bu-slideshow-container%s" id="%s">', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id));
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {

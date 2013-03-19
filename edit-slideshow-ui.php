@@ -1,5 +1,4 @@
 <div class="wrap">
-	<?php //var_dump($this); ?>
 	<p><a href="<?php echo BU_Slideshow::$manage_url; ?>">&laquo; Back to Manage Slideshows</a></p>
 	<h2>Edit Slideshow: <?php echo esc_html($this->name); ?></h2>
 	
