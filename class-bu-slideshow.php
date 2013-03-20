@@ -1,61 +1,31 @@
 <?php
 require_once plugin_dir_path(__FILE__) . 'bu-slideshow.php';
+require_once plugin_dir_path(__FILE__) . 'class-bu-slide.php';
 
 class BU_Slideshow_Instance {
 	
 	public $view;
-	public $name;
-	public $id;
-	public $slides;
-	
-	static $defaults = array(
-		'name' => 'Untitled Slideshow',
-		'id' => 1,
-		'slides' => array(),
-		'view' => 'public'
-	);
+	public $name = 'Untitled Slideshow';
+	public $id = 1;
+	public $slides = array();
 	
 	static $classes = array('bu-slideshow');
 	static $id_prefix = 'bu-slideshow-';
-	static $slide_excerpt_length = 20;
+	static $views = array('admin', 'public');
 
 	/**
-	 * Retrieves or creates new slideshow.
 	 * @param array $args
 	 */
-	public function __construct($args) {
-		
-		$args = wp_parse_args($args, self::$defaults);
-		extract(array_intersect_key($args, self::$defaults));
-		
-		$id = intval($id);
-		
-		if (!is_int($id)) {
-			return new WP_Error('invalid arguments', 'Invalid arguments supplied to slideshow constructor.');
-		}
-			
-		if (BU_Slideshow::slideshow_exists($id)) {
-			$all_slideshows = get_option(BU_Slideshow::$meta_key, array());
-			$slideshow = $all_slideshows[$id];
-		} else {
-			$slideshow = $args;
+	public function __construct($args = array()) {
+		if (!is_array($args)) {
+			$args = array();
 		}
 		
-		$this->init($slideshow);
-		$this->set_view($view);
-	}
-	
-	/**
-	 * Populates slideshow properties
-	 * @param array $args
-	 */
-	protected function init($args = array()) {
-		if (!is_array($args) || empty($args)) {
-			return new WP_Error('invalid arguments', 'Invalid arguments supplied to slideshow init.');
-		}
+		$id = BU_Slideshow::get_new_id();
+		$this->id = $id;
 		
-		foreach ($args as $key => $val) {
-			$this->$key = $val;
+		if (isset($args['view'])) {
+			$this->set_view($args['view']);
 		}
 	}
 	
@@ -64,12 +34,7 @@ class BU_Slideshow_Instance {
 	 * @param string $view
 	 */
 	public function set_view($view) {
-		$views = array(
-			'admin',
-			'public'
-		);
-		
-		if (!in_array($view, $views)) {
+		if (!in_array($view, self::$views)) {
 			return;
 		}
 		
@@ -101,7 +66,7 @@ class BU_Slideshow_Instance {
 		
 		// sanity check
 		foreach ($slides as $i => $slide) {
-			if (!is_array($slide)) {
+			if ((get_class($slide) !== 'BU_Slide')) {
 				unset($slides[$i]);
 			}
 		}
@@ -116,22 +81,7 @@ class BU_Slideshow_Instance {
 	public function update() {
 		
 		$all_slideshows = BU_Slideshow::get_slideshows();
-
-		$updated_show = array(
-			"name" => $this->name,
-			"id" => $this->id,
-			"slides" => array()
-		);
-		
-		foreach ($this->slides as $i => $slide) {
-			$slide['caption']['title'] = trim(strip_tags($slide['caption']['title']));
-			$slide['caption']['link'] = trim(esc_url($slide['caption']['link']));
-			$slide['caption']['text'] = trim(wp_kses_data($slide['caption']['text']));
-			
-			$updated_show["slides"][$i] = $slide;
-		}
-		
-		$all_slideshows[$this->id] = $updated_show;
+		$all_slideshows[$this->id] = $this;
 		
 		update_option(BU_Slideshow::$meta_key, $all_slideshows);
 		
@@ -152,7 +102,7 @@ class BU_Slideshow_Instance {
 				
 				ob_start();
 				
-				include BU_SLIDESHOW_BASEDIR . 'edit-slideshow-ui.php';
+				include BU_SLIDESHOW_BASEDIR . 'interface/edit-slideshow-ui.php';
 				
 				$html = ob_get_contents();
 				ob_end_clean();
@@ -165,7 +115,7 @@ class BU_Slideshow_Instance {
 				$show_id = esc_attr(self::$id_prefix . $this->id);
 				
 				$container_class = 'bu-slideshow-container';
-				$container_class .= $this->name ? ' ' . str_replace(' ', '-', $this->name) : '';
+				$container_class .= $this->name ? ' ' . str_replace(' ', '-', stripslashes($this->name)) : '';
 				$container_class .= $args['autoplay'] ? ' autoplay' : '';
 
 				// deliberately allowing custom values here
@@ -177,8 +127,13 @@ class BU_Slideshow_Instance {
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {
-					$slide_args = array('slide' => $slide, 'order' => $i);
-					$html .= $this->get_slide($slide_args);
+					$id_prefix = self::$id_prefix . $this->id;
+					
+					$slide->set_order($i);
+					$slide->set_view($this->view);
+					
+					$slide_args = array('id_prefix' => $id_prefix);
+					$html .= $slide->get($slide_args);
 				}
 
 				$html .= '</ul></div>';
@@ -210,104 +165,6 @@ class BU_Slideshow_Instance {
 	}
 	
 	/**
-	 * Returns markup for one slide. If view is public, this is the slide markup;
-	 * if view is admin, this is the markup to edit slide.
-	 * @param array $args
-	 * @return string
-	 */
-	public function get_slide($args){
-		
-		$defaults = array(
-			'slide' => null,
-			'order' => 0
-		);
-		extract(wp_parse_args($args, $defaults));
-		
-		switch ($this->view) {
-			
-			case 'admin':
-				
-				if (!is_array($slide)) {
-					$slide = array(
-						"image_id" => 0,
-						"image_size" => 'full',
-						"caption" => array(
-							"title" => 'Untitled Slide',
-							"link" => '',
-							"text" => ''
-						)
-					);
-				} else {
-					$slide['caption'] = stripslashes_deep($slide['caption']);
-				}
-
-				$img_thumb = '';
-
-				if ($slide['image_id']) {
-					$img_thumb = wp_get_attachment_image($slide['image_id'], 'bu-slideshow-thumb');
-				}
-
-				ob_start();
-				include BU_SLIDESHOW_BASEDIR . 'interface/single-slide-admin.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-				
-				return $html;
-				
-				break;
-			
-			case 'public':
-
-				$haslink = false;
-
-				if (!empty($slide['caption']['link'])) {
-					$haslink = true;
-				}
-
-				$slide['caption'] = stripslashes_deep($slide['caption']);
-
-				$img_arr = wp_get_attachment_image_src($slide['image_id'], $slide['image_size']);
-				$img_alt = BU_Slideshow::get_image_alt($slide['image_id']);
-
-				$slide_id = self::$id_prefix . $this->id . '_' . $order;
-
-				$html = sprintf('<li id="%s" class="slide">', $slide_id);
-				$html .= '<div class="bu-slide-container">';
-				$img_str = sprintf('<img src="%s" alt="%s" /></a>', esc_url($img_arr[0]), esc_attr($img_alt));
-				
-				if ($haslink) {
-					$html .= sprintf('<a href="%s">%s</a>', esc_url($slide['caption']['link']), $img_str);
-				} else {
-					$html .= $img_str;
-				}
-				
-				$html .= '<div class="bu-slide-caption">';
-
-				$html .= '<p class="bu-slide-caption-title">';
-				$title_str = esc_html(strip_tags($slide['caption']['title']));
-				
-				if ($haslink) {
-					$html .= sprintf('<a href="%s">%s</a></p>', esc_url($slide['caption']['link']), $title_str);
-				} else {
-					$html .= $title_str . '</p>';
-				}
-
-				if (!empty($slide['caption']['text'])) {
-					$text = $this->trim_slide_caption($slide['caption']['text']);
-					$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data($text));
-				}
-				$html .= '</div></div></li>';
-
-				return $html;
-				
-				break;
-			
-			default:
-				break;
-		}
-	}
-	
-	/**
 	 * Returns markup for slideshow navigation.
 	 * @param array $args
 	 * @return string
@@ -325,20 +182,6 @@ class BU_Slideshow_Instance {
 		$html .= '</ul></div>';
 		
 		return $html;
-	}
-
-	/**
-	 * Trims the caption text displayed, if neccesary
-	 * @param string $text
-	 * @return string
-	 */
-	protected function trim_slide_caption($text) {
-		$words = explode(' ', $text);
-		if (count($words) > self::$slide_excerpt_length) {
-			$text = implode(' ', array_splice($words, 0, self::$slide_excerpt_length)) . '...';
-		}
-		
-		return $text;
 	}
 	
 }

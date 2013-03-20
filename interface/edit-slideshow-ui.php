@@ -1,6 +1,6 @@
 <div class="wrap">
 	<p><a href="<?php echo BU_Slideshow::$manage_url; ?>">&laquo; Back to Manage Slideshows</a></p>
-	<h2>Edit Slideshow: <?php echo esc_html($this->name); ?></h2>
+	<h2>Edit Slideshow: <?php echo esc_html(stripslashes($this->name)); ?></h2>
 	
 	<?php if (isset($msg) && $msg) { ?>
 	<div class="updated"><p><?php echo $msg; ?></p></div>
@@ -10,7 +10,7 @@
 		<form id="bu-slideshow-editform" method="post" action="">
 			<p>
 				<label for="bu_slideshow_name"><strong>Slideshow Name: </strong></label>
-				<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo esc_attr($this->name); ?>" />
+				<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo esc_attr(stripslashes($this->name)); ?>" />
 			</p>
 			
 			<p><strong>Slides:</strong><br />
@@ -22,10 +22,13 @@
 			<div class="bu-slideshow-slidelist">
 				<ul>
 				<?php foreach ($this->slides as $index => $slide) {
-					echo $this->get_slide(array('slide' => $slide, 'order' => $index));
+					$slide->set_order($index);
+					$slide->set_view('admin');
+					echo $slide->get();
 				}
 				if (count($this->slides) < 1) {
-					echo $this->get_slide(array('slide' => null, 'index' => 0));
+					$slide = new BU_Slide(array('view' => 'admin'));
+					echo $slide->get();
 				} ?>
 				</ul>
 			</div>

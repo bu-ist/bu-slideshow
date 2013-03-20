@@ -12,29 +12,28 @@ jQuery(document).ready(function($) {
 		self.sequence = args.show;
 		
 		self.init = function() {
-			self.sequence.afterLoaded = resize_slideshow;
+			self.sequence.afterLoaded = bu_resize_slideshow;
 			self.sequence.beforeNextFrameAnimatesIn = function() {
-				if (!self.hasPager) {
-					return;
+				if (self.pager) {
+					self.pager.setActive();
 				}
-				
-				self.pager.setActive();
 			}
 			
-			self.hasPager = args.pager ? true : false;
-			if (self.hasPager) {
+			self.pager = $('#' + args.pager).length ? $('#' + args.pager) : false;
+			
+			if (self.pager) {
 				self.initPager();
 			}
 			
-			self.hasArrows = args.arrows ? true : false;
-			if (self.hasArrows) {
+			self.arrows = $('#' + args.arrows).length ? $('#' + args.arrows) : false;
+			
+			if (self.arrows) {
 				self.initArrows();
 			}
 			
 		}
 		
 		self.initPager = function() {
-			self.pager = $('#' + args.pager);
 
 			self.pager.find('li a').bind('click', function() {
 				var id = $(this).attr('id').replace('pager-', '');
@@ -45,13 +44,12 @@ jQuery(document).ready(function($) {
 
 			self.pager.setActive = function(nextId) {
 				nextId = self.sequence.nextFrameID;	
-				self.pager.find('a').removeClass('active');
-				self.pager.find('a#pager-' + nextId).addClass('active');
+				this.find('a').removeClass('active');
+				this.find('a#pager-' + nextId).addClass('active');
 			}
 		};
 		
 		self.initArrows = function() {
-			self.arrows = $('#' + args.arrows);
 			
 			self.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
 				self.sequence.prev();
@@ -95,7 +93,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Resizes slideshow and all slides to height of highest slide
 	 */
-	function resize_slideshow() {
+	function bu_resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this), slides, numSlides, height = 0, currentHeight = 0;
 			
@@ -109,11 +107,6 @@ jQuery(document).ready(function($) {
 				}
 			});
 			
-			/** todo abstract this height max to an option that can be set */
-			if (height > 500) {
-				height = 500;
-			}
-			
 			slides.each(function(i, el) {
 				$(el).css('height', height + 'px');
 			});
@@ -125,7 +118,7 @@ jQuery(document).ready(function($) {
 	}
 	
 	$(window).resize(function() {
-		resize_slideshow();
+		bu_resize_slideshow();
 	});
 	
 });

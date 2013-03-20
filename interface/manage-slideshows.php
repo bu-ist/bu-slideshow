@@ -6,7 +6,7 @@
 			<?php foreach($slideshows as $id => $show) { ?>
 			
 			<li>
-				<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php echo esc_html($show["name"]); ?></a></span>
+				<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php echo esc_html(stripslashes($show->name)); ?></a></span>
 				<span class="alignright">
 					<a class="button" href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>">Edit</a> 
 					<a href="<?php echo self::$preview_url . '&amp;bu_slideshow_id=' . $id; ?>" class="bu-slideshow-preview button">Preview</a> 
@@ -17,7 +17,8 @@
 			if (count($slideshows) < 1) { ?>
 				
 			<li>
-				<td>No slideshows yet. <a class="button" href="<?php echo self::$add_url; ?>">Add a slideshow</a></td>
+				<p>No slideshows yet.</p>
+				<p><a class="button" href="<?php echo self::$add_url; ?>">Add a slideshow</a></p>
 			</li>
 			
 			<?php } ?>

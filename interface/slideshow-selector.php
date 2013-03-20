@@ -8,12 +8,11 @@
 	<div class="col1">
 		<p>
 			<label for="bu_slideshow_selected">Select Slideshow:</label><br/>
-			<?php //var_dump($all_slideshows); ?>
 			<select name="bu_slideshow_selected" id="bu_slideshow_selected"">
 				<option value="0"<?php if (!$args['show_id']) echo ' selected="selected"'; ?>></option>
 				<?php foreach ($all_slideshows as $show) {
-					$sel = intval($args['show_id']) === $show['id'] ? ' selected="selected"' : '';
-					printf('<option value="%d"%s>%s</option>', esc_attr($show['id']), $sel, esc_html($show['name']));
+					$sel = intval($args['show_id']) === $show->id ? ' selected="selected"' : '';
+					printf('<option value="%d"%s>%s</option>', esc_attr($show->id), $sel, esc_html($show->name));
 				} ?>
 			</select>
 		</p>

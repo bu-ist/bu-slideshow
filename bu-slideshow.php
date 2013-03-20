@@ -11,6 +11,7 @@ define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
+require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 
 class BU_Slideshow {
 	static $meta_key = 'bu_slideshows';
@@ -247,7 +248,7 @@ class BU_Slideshow {
 			}
 		}
 		
-		require_once BU_SLIDESHOW_BASEDIR . 'add-slideshow.php';
+		require_once BU_SLIDESHOW_BASEDIR . 'interface/add-slideshow.php';
 	}
 	
 	/**
@@ -256,7 +257,7 @@ class BU_Slideshow {
 	static public function manage_slideshow_page() {
 		$slideshows = self::get_slideshows();
 
-		require_once BU_SLIDESHOW_BASEDIR . 'manage-slideshows.php';
+		require_once BU_SLIDESHOW_BASEDIR . 'interface/manage-slideshows.php';
 	}
 	
 	/**
@@ -273,11 +274,11 @@ class BU_Slideshow {
 			
 		}
 		
-		require_once BU_SLIDESHOW_BASEDIR . 'preview-slideshow.php';
+		require_once BU_SLIDESHOW_BASEDIR . 'interface/preview-slideshow.php';
 	}
 	
 	/**
-	 * Creates a new, empty slideshow and saves it. IDs begin at 1.
+	 * Creates a new, empty slideshow and returns it. IDs begin at 1.
 	 * @param string $name
 	 * @return array 
 	 */
@@ -288,13 +289,11 @@ class BU_Slideshow {
 		
 		$all_slideshows = self::get_slideshows();
 		
-		$index = self::get_new_id();
+		$show = new BU_Slideshow_Instance();
+		$show->set_name(trim($name));
+		$show->update();
 		
-		$new_sshow = new BU_Slideshow_Instance(array('id' => $index));
-		$new_sshow->set_name(trim($name));
-		$new_sshow->update();
-		
-		return $new_sshow;
+		return $show;
 	}
 	
 	/**
@@ -443,14 +442,28 @@ class BU_Slideshow {
 					$msg .= 'Could not find slideshow. ';
 				} else {
 					
-					$show_args = array(
-						'id' => intval($_POST['bu_slideshow_id']),
-						'view' => 'admin'
-					);
-					$show = new BU_Slideshow_Instance($show_args);
+					$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
+					$show->set_view('admin');
+					
 					$show->set_name($_POST['bu_slideshow_name']);
 					
-					$show->set_slides($_POST['bu_slides']);
+					//$show->set_slides($_POST['bu_slides']);
+					$slides = array();
+					foreach ($_POST['bu_slides'] as $i => $arr) {
+						$args = array(
+							'view' => 'admin',
+							'order' => $i,
+							'image_id' => $arr['image_id'],
+							'image_size' => $arr['image_size'],
+							'caption' => array(
+								'title' => $arr['caption']['title'],
+								'link' => $arr['caption']['link'],
+								'text' => $arr['caption']['text']
+							)
+						);
+						$slides[] = new BU_Slide($args);
+					}
+					$show->set_slides($slides);
 					
 					if ($show->update()) {
 						$msg .= "Slideshow updated successfully. ";
@@ -484,7 +497,8 @@ class BU_Slideshow {
 			return;
 		}
 		
-		$show = new BU_Slideshow_Instance(array('id' => $id, 'view' => 'admin'));
+		$show = self::get_slideshow($id);
+		$show->set_view('admin');
 		echo $show->get();
 	}
 	
@@ -497,8 +511,8 @@ class BU_Slideshow {
 			return;
 		}
 		
-		$slide = new BU_Slideshow_Instance(array('view' => 'admin'));
-		echo $slide->get_slide(array('order' => $_POST['order']));
+		$slide = new BU_Slide(array('view' => 'admin', 'order' => $_POST['order']));
+		echo $slide->get();
 		exit;
 	}
 	
@@ -576,6 +590,11 @@ class BU_Slideshow {
 		
 		$atts = shortcode_atts($att_defaults, $atts);
 		
+		if (!self::slideshow_exists(intval($atts['show_id']))) {
+			echo '';
+			return;
+		}
+		
 		if (!in_array($atts['nav_style'], self::$nav_styles)) {
 			$atts['nav_style'] = $att_defaults['nav_style'];
 		}
@@ -587,7 +606,8 @@ class BU_Slideshow {
 			} 
 		}
 		
-		$show = new BU_Slideshow_Instance(array('id' => $atts['show_id'], 'view' => 'public'));
+		$show = self::get_slideshow(intval($atts['show_id']));
+		$show->set_view('public');
 		
 		$html = $show->get($atts);
 		
@@ -694,7 +714,7 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Adds 'Add Slideshow' button above editor
+	 * Adds 'Insert Slideshow' button above editor
 	 * 
 	 * @param string $context
 	 * @return string
