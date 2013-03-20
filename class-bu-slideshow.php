@@ -99,7 +99,7 @@ class BU_Slideshow_Instance {
 		switch ($this->view) {
 			
 			case 'admin':
-				
+				$msg = $args['msg'] ? $args['msg'] : '';
 				ob_start();
 				
 				include BU_SLIDESHOW_BASEDIR . 'interface/edit-slideshow-ui.php';

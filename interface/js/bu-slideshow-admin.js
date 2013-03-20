@@ -3,7 +3,7 @@
 
 jQuery(document).ready(function($){
 	
-	var newSlideshowForm = $('#bu-slideshow-newform'), slideShowTable = $('#bu-slideshow-manage'),
+	var newSlideshowForm = $('#bu-slideshow-newform'), slideShowList = $('#bu-slideshow-manage'),
 		slidesContainer = $('#bu-slideshow-slides'), slideEditor = $('#bu-slideshow-edit'),
 		manageUrl = 'admin.php?page=bu-slideshow';
 	
@@ -21,32 +21,83 @@ jQuery(document).ready(function($){
 		});
 	}
 	
-	/** Manage slideshows page 
+	/** 
+	 * Manage slideshows page 
 	 */
-	if (slideShowTable.length && slidesContainer.length) {
-		$('.bu-slideshow-delete').live('click', function() {
-			var result = confirm('Are you sure you want to delete this slideshow? This action cannot be undone.');
-			if (result) {
-				var showId = $(this).attr('data-slideshow-id'), that = $(this), nonce = $('#bu_slideshow_nonce').val();
-					
+	if (slideShowList.length && slidesContainer.length) {
+		var slideShowMgr = function(args) {
+			var that = {};
+			
+			that.container = slidesContainer;
+			
+			that.list = $(args.list);
+			if (!that.list.length) {
+				throw TypeError('Invalid element supplied to slideshow manager.');
+			}
+			
+			that.nonce = $('#bu_slideshow_nonce').val();
+			
+			that.numShows = function() {
+				return that.list.find('li').length;
+			}
+			
+			that.addEmptyMsg = function() {
+				that.getUrl('add_url', function(addUrl) {
+					var html = '<li><p>No slideshows yet.</p>' +
+						'<p><a class="button" href="' + addUrl + '">Add a slideshow</a></p></li>';
+					that.list.append(html);
+				});
+				
+			}
+			
+			that.getUrl = function(url, cb) {
 				var data = {
-					"action": 'bu_delete_slideshow',
-					"id": showId,
-					"bu_slideshow_nonce": nonce
+					"action" : "bu_slideshow_get_url",
+					"url" : url
 				};
 				$.post(ajaxurl, data, function(response) {
-					if (response && response !== '0') {
-						that.parent().parent('li').remove();
-						slidesContainer.find('.error').remove();
-					} else {
-						displayError('Could not delete slideshow.', slidesContainer);
-						return false;
-					}
-				})
+					cb(response);
+				});
 			}
+			
+			that.list.find('.bu-slideshow-delete').live('click', function() {
+				var result = confirm('Are you sure you want to delete this slideshow? This action cannot be undone.');
+				
+				if (result) {
+					var $this = $(this), showId, data;
+					showId = $this.attr('data-slideshow-id');
 
-			return false;
-		});
+					data = {
+						"action": 'bu_delete_slideshow',
+						"id": showId,
+						"bu_slideshow_nonce": that.nonce
+					};
+					
+					$.post(ajaxurl, data, function(response) {
+						that.deleteResponse($this, response);
+						
+					})
+				}
+
+				return false;
+			});
+			
+			that.deleteResponse = function(el, r) {
+				if (r && r !== '0') {
+					el.parent().parent('li').remove();
+					that.container.find('.error').remove();
+
+					if (!that.numShows()) {
+						that.addEmptyMsg();
+					}
+				} else {
+					displayError('Could not delete slideshow.', that.container);
+					return false;
+				}
+			}
+		}
+		
+		slideShowMgr({'list': '#bu-slideshow-manage'});
 		
 	}
 	

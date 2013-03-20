@@ -51,6 +51,7 @@ class BU_Slideshow {
 		add_action('wp_ajax_bu_delete_slideshow', array(__CLASS__, 'delete_slideshow_ajax'));
 		add_action('wp_ajax_bu_add_slide', array(__CLASS__, 'add_slide_ajax'));
 		add_action('wp_ajax_bu_get_slide_thumb', array(__CLASS__, 'get_slide_thumb_ajax'));
+		add_action('wp_ajax_bu_slideshow_get_url', array(__CLASS__, 'get_url'));
 		
 		add_shortcode('bu_slideshow', array(__CLASS__, 'shortcode_handler'));
 		
@@ -142,6 +143,24 @@ class BU_Slideshow {
 		
 		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css');
 		wp_enqueue_style('bu-slideshow-selector');
+	}
+	
+	/**
+	 * Helper for retrieving plugin admin URLs via ajax
+	 */
+	static public function get_url() {
+		$urls = array(
+			'manage_url' => self::$manage_url,
+			'edit_url' => self::$edit_url,
+			'add_url' => self::$add_url,
+			'preview_url' => self::$preview_url
+		);
+		if (isset($_POST['url'])) {
+			if (array_key_exists($_POST['url'], $urls)) {
+				echo $urls[$_POST['url']];
+			}
+		}
+		exit;
 	}
 	
 	/**
@@ -481,7 +500,7 @@ class BU_Slideshow {
 			$id = intval($_GET['bu_slideshow_id']);
 			
 			if (self::slideshow_exists($id)) {
-				self::edit_slideshow_ui($id);
+				self::edit_slideshow_ui($id, $msg);
 				return;
 			}
 			
@@ -499,7 +518,7 @@ class BU_Slideshow {
 		
 		$show = self::get_slideshow($id);
 		$show->set_view('admin');
-		echo $show->get();
+		echo $show->get(array('msg' => $msg));
 	}
 	
 	/**
