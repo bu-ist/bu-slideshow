@@ -180,7 +180,7 @@
   display: inline;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 1.4em 1.25em 0;
   position: absolute;
   right: 6%;
   width: 35%;
@@ -189,7 +189,6 @@
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption p {
   color: #ffffff;
   font-size: 1em;
-  padding: 0 1.25em;
   line-height: 1.4;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a {
@@ -203,8 +202,8 @@
   font-size: 1.2em;
   font-family: 'Helvetica', 'Arial', sans-serif;
   color: #f3cf00;
-  margin: 0;
-  padding: 1em;
+  margin-bottom: 1em;
+  padding: 0;
 }
 .bu-slideshow-container .bu-slideshow-slides .animate-slide-default {
   left: 100%;
