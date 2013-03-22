@@ -95,13 +95,13 @@ jQuery(document).ready(function($) {
 	 */
 	function bu_resize_slideshow() {
 		$('.bu-slideshow-container').each(function(){
-			var container = $(this), slides, numSlides, height = 0, currentHeight = 0;
-			
-			slides = container.find('li .bu-slide-container'),
-			numSlides = slides.length,
-			
+			var container = $(this), slides = container.find('li .bu-slide-container'), $el, height = 0, currentHeight = 0;
+
+			// this sucks but it handles consistent slide height and responsive height
 			slides.each(function(i, el) {
-				currentHeight = $(el).height();
+				$el = $(el);
+				$el.css('height', 'auto');
+				currentHeight = $el.height();
 				if (currentHeight > height) {
 					height = currentHeight;
 				}
@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
 			
 			slides.each(function(i, el) {
 				$(el).css('height', height + 'px');
-			});
+			})
 			
 			container.css('height', height + 'px');
 			container.find('ul.bu-slideshow').css('height', height + 'px');

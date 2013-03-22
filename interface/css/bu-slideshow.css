@@ -167,6 +167,7 @@
   height: auto !important;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container {
+  height: auto;
   width: 100%;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container img {
