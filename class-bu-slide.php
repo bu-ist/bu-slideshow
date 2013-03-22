@@ -73,45 +73,19 @@ class BU_Slide {
 			
 			case 'public':
 
-				//$slide_id = self::$id_prefix . $this->id . '_' . $order;
 				$slide_id = $args['id_prefix'] . '_' . $this->order;
 				$haslink = false;
 
-				if (!empty($this->caption['link'])) {
-					$haslink = true;
-				}
-
 				$this->caption = stripslashes_deep($this->caption);
-
-				$img_arr = wp_get_attachment_image_src($this->image_id, $this->image_size);
-				$img_alt = BU_Slideshow::get_image_alt($this->image_id);
 
 				$html = sprintf('<li id="%s" class="slide">', $slide_id);
 				$html .= '<div class="bu-slide-container">';
-				$img_str = sprintf('<img src="%s" alt="%s" /></a>', esc_url($img_arr[0]), esc_attr($img_alt));
 				
-				if ($haslink) {
-					$html .= sprintf('<a href="%s">%s</a>', esc_url($this->caption['link']), $img_str);
-				} else {
-					$html .= $img_str;
-				}
+				$html .= $this->get_image_html();
 				
-				$html .= '<div class="bu-slide-caption">';
-
-				$html .= '<p class="bu-slide-caption-title">';
-				$title_str = esc_html(strip_tags($this->caption['title']));
+				$html .= $this->get_caption_html();
 				
-				if ($haslink) {
-					$html .= sprintf('<a href="%s">%s</a></p>', esc_url($this->caption['link']), $title_str);
-				} else {
-					$html .= $title_str . '</p>';
-				}
-
-				if (!empty($this->caption['text'])) {
-					$text = $this->trim_slide_caption($this->caption['text']);
-					$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data($text));
-				}
-				$html .= '</div></div></li>';
+				$html .= '</div></li>';
 
 				return $html;
 				
@@ -120,6 +94,58 @@ class BU_Slide {
 			default:
 				break;
 		}
+	}
+	
+	public function get_caption_html() {
+		$html = '';
+		// If no title or text, bail
+		if ( ( !isset($this->caption['title']) || empty($this->caption['title']) ) && 
+				( !isset($this->caption['text']) || empty($this->caption['text']) ) ) {
+			return $html;
+		}
+		
+		$html .= '<div class="bu-slide-caption">';
+		
+		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
+			$html .= '<p class="bu-slide-caption-title">';
+			
+			$title_str = esc_html(strip_tags($this->caption['title']));
+			
+			if (isset($this->caption['link']) && $this->caption['link']) {
+				$html .= sprintf('<a href="%s">%s</a></p>', esc_url($this->caption['link']), $title_str);
+			} else {
+				$html .= $title_str . '</p>';
+			}
+		}
+
+		if (isset($this->caption['text']) && !empty($this->caption['text'])) {
+			$text = $this->trim_slide_caption($this->caption['text']);
+			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data($text));
+		}
+		$html .= '</div>';
+		
+		return $html;
+	}
+	
+	public function get_image_html() {
+		$html = '';
+		
+		if ($this->image_id) {
+			$img_arr = wp_get_attachment_image_src($this->image_id, $this->image_size);
+
+			if (is_array($img_arr) && !empty($img_arr)) {
+				$img_alt = BU_Slideshow::get_image_alt($this->image_id);
+				$img_str = sprintf('<img src="%s" alt="%s" />', esc_url($img_arr[0]), esc_attr($img_alt));
+
+				if (isset($this->caption['link']) && $this->caption['link']) {
+					$html .= sprintf('<a href="%s">%s</a>', esc_url($this->caption['link']), $img_str);
+				} else {
+					$html .= $img_str;
+				}
+			}
+		}
+		
+		return $html;
 	}
 	
 	/**
