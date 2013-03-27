@@ -715,18 +715,13 @@ class BU_Slideshow {
 	 * Adds modal UI to footer, for display in thickbox.
 	 */
 	static public function admin_footer() {
-		if (self::using_editor()):
-		?>
-
-		<div id="bu_slideshow_modal_wrap" style="display:none;">
-			<div class="postboxheader"><a class="close_btn" href=""><img title="close window" src="<?php echo BU_SLIDESHOW_BASEURL . 'interface/img/tb-close.png'; ?>"/></a></div>
-			<div class="wrap postbox">
+		if (self::using_editor()):   ?>
+			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 				
 				<h2>Insert Slideshow</h2>
 				<?php echo self::get_selector(); ?>
 				<p><a href="#" id="bu_insert_slideshow" class="button-primary">Insert Slideshow</a></p>
-			<div>
-		</div>
+			</div>
 				
 		<?php
 		endif;

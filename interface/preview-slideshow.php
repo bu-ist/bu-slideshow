@@ -18,5 +18,5 @@
 	</div>
 	<?php 
 	/* load scripts for shortcode */
-	do_action('wp_footer'); ?>
+	BU_Slideshow::conditional_script_load(); ?>
 </div>

@@ -10,7 +10,7 @@
 
 .bu_modal {
 	left: 50%;
-	position:absolute;
+	position:fixed;
 	top:50%;
 	z-index:10;
 }

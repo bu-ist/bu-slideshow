@@ -8,7 +8,7 @@
 	<div class="col1">
 		<p>
 			<label for="bu_slideshow_selected">Select Slideshow:</label><br/>
-			<select name="bu_slideshow_selected" id="bu_slideshow_selected"">
+			<select name="bu_slideshow_selected" id="bu_slideshow_selected">
 				<option value="0"<?php if (!$args['show_id']) echo ' selected="selected"'; ?>></option>
 				<?php foreach ($all_slideshows as $show) {
 					$sel = intval($args['show_id']) === $show->id ? ' selected="selected"' : '';
