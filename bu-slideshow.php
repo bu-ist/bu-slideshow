@@ -14,6 +14,8 @@ require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 
 class BU_Slideshow {
+	static $wp_version;
+	
 	static $meta_key = 'bu_slideshows';
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -37,6 +39,8 @@ class BU_Slideshow {
 	static public function init() {
 		global $pagenow;
 		
+		self::$wp_version = get_bloginfo('version');
+		
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
@@ -55,10 +59,12 @@ class BU_Slideshow {
 		
 		add_shortcode('bu_slideshow', array(__CLASS__, 'shortcode_handler'));
 		
-		/* revise conditional script loading after we update WP version, remove this action
-		 * (see comments below)
+		/**
+		 * Back compat for WP < 3.3
 		 */
-		add_action('wp_footer', array(__CLASS__, 'conditional_script_load'));
+		if (version_compare(self::$wp_version, '3.3', '<')) {
+			add_action('wp_footer', array(__CLASS__, 'conditional_script_load'));
+		}
 	}
 	
 	/**
@@ -78,7 +84,7 @@ class BU_Slideshow {
 			'admin_page_bu-edit-slideshow'
 		);
 		
-		$selector_pages = array();
+		$selector_pages = self::$editor_screens;
 		$selector_pages = apply_filters('bu_slideshow_selector_pages', $selector_pages);
 		
 		if (in_array($current_screen->id, $selector_pages)) {
@@ -110,23 +116,31 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Prepares styles and scripts for front end. Scripts are printed in footer when needed,
-	 * see conditional_script_load().
+	 * Prepares styles and scripts for front end. Scripts are registered here and enqueued in shortcode handler
+	 * (or in WP < 3.3, printed in footer; see conditional_script_load()).
 	 * 
-	 * Define BU_SLIDESHOW_CUSTOM_CSS in a theme to prevent default CSS from loading.
+	 * Define BU_SLIDESHOW_CUSTOM_CSS in a theme to prevent default CSS from loading. You will
+	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
 		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/modernizr-dev.js', array(), false, true);
-		/* patch for jQuery to make sequence work with old jQuery */
-		wp_register_script('bu-sequence-patch', BU_SLIDESHOW_BASEURL . 'interface/js/bu-sequence-patch.js', array('jquery'), false, true);
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr', 'bu-sequence-patch'), false, true);
-		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr', 'bu-sequence-patch'), false, true);
+		
+		/* patch for jQuery < 1.71 to make sequence.js work, only used in WP < 3.3 */
+		if (version_compare(self::$wp_version, '3.3', '<')) {
+			wp_register_script('bu-sequence-patch', BU_SLIDESHOW_BASEURL . 'interface/js/bu-sequence-patch.js', array('jquery'), false, true);
+			wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr', 'bu-sequence-patch'), false, true);
+			wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr', 'bu-sequence-patch'), false, true);
+		} else {
+			wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr'), false, true);
+			wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr'), false, true);
+		}
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
 			wp_enqueue_style('bu-slideshow');
 		}
 		
+		/* enqueue public styles on preview page */
 		global $current_screen;
 		if ($current_screen && $current_screen->id === 'admin_page_bu-preview-slideshow') {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
@@ -168,8 +182,8 @@ class BU_Slideshow {
 	 * are never enqueued, so a filter is available should another script need to 
 	 * prevent these from loading.
 	 * 
-	 * When we update WP to something more recent than 3.3, the shortcode handler can
-	 * just call wp_enqueue_script() directly and this method can be removed.
+	 * This method is only used in WP < 3.3; later version simply enqueue scripts
+	 * in the shortcode handler.
 	 * 
 	 * @global int|bool $bu_slideshow_loadscripts
 	 */
@@ -583,20 +597,18 @@ class BU_Slideshow {
 	 * from doing anything awkward
 	 */
 	static public function shortcode_handler($atts) {
-		/*
-		* Following is a more graceful way to load the js on-demand, but it won't work til after we 
-		* migrate to a more recent WP version. (3.3+)
-		* 
-		* wp_enqueue_script('modernizr');
-		* wp_enqueue_script('jquery-sequence');
-		* wp_enqueue_script('bu-slideshow');
-		*/
-		
-		/* set flag so that scripts are loaded only when shortcode present (old fashioned way, 
-		 * remove after we update WP) */
-		global $bu_slideshow_loadscripts;
-		$bu_slideshow_loadscripts = 1;
-		/* end hack for old WP */
+
+		/**
+		 * Trigger loading of plugin scripts in footer in older versions of WP.
+		 */
+		if (version_compare(self::$wp_version, '3.3', '<')) {
+			global $bu_slideshow_loadscripts;
+			$bu_slideshow_loadscripts = 1;
+		} else {
+			wp_enqueue_script('modernizr');
+			wp_enqueue_script('jquery-sequence');
+			wp_enqueue_script('bu-slideshow');
+		}
 		
 		$att_defaults = self::$shortcode_defaults;
 		

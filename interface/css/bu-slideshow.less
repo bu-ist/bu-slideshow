@@ -32,6 +32,7 @@
 		display:block;
 		height: 4em;
 		line-height:normal;
+		min-width:2.2em;
 		position: absolute;
 		top:50%;
 		width: 5%;
@@ -130,6 +131,8 @@
 			li {
 				left: 0; // flexi indents lists with left positioning.
 				list-style-type: none !important;
+				margin-left: 0;
+				margin-right: 0;
 				width:100% !important;
 				height:auto !important;
 
@@ -302,6 +305,7 @@
 			li {
 				display:inline;
 				left:0; // flexi indents lists with left positioning, so.
+				margin:0; // make sure theme list styles don't accidentally separate
 			}
 
 		}
