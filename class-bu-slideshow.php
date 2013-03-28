@@ -176,7 +176,7 @@ class BU_Slideshow_Instance {
 		$num_slides = count($this->slides);
 		for ($i = 1; $i <= $num_slides; $i++) {
 			$a_class = $i === 1 ? ' active' : '';
-			$html .= sprintf('<li><a href="#" id="pager-%s" class="%s"><span>%s</span></a></li> ', $i, $a_class, $i);;
+			$html .= sprintf('<li><a href="#" id="pager-%s" class="%s" aria-hidden="true"><span>%s</span></a></li> ', $i, $a_class, $i);;
 		}
 
 		$html .= '</ul></div>';
