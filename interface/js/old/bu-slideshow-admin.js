@@ -1,3 +1,6 @@
+/* after we upgrade WP some enterprising person should come through and 
+ * update the jQuery syntax too. */
+
 jQuery(document).ready(function($){
 	
 	var newSlideshowForm = $('#bu-slideshow-newform'), slideShowList = $('#bu-slideshow-manage'),
@@ -6,7 +9,7 @@ jQuery(document).ready(function($){
 	
 	/** New slideshow page */
 	if (newSlideshowForm.length) {
-		newSlideshowForm.on('submit', function() {
+		newSlideshowForm.submit(function() {
 			var name = $('#bu-new-slideshow-name').val();
 
 			if (!name.length) {
@@ -58,7 +61,7 @@ jQuery(document).ready(function($){
 				});
 			}
 			
-			that.list.on('click', '.bu-slideshow-delete', function() {
+			that.list.find('.bu-slideshow-delete').live('click', function() {
 				var result = confirm('Are you sure you want to delete this slideshow? This action cannot be undone.');
 				
 				if (result) {
@@ -73,6 +76,7 @@ jQuery(document).ready(function($){
 					
 					$.post(ajaxurl, data, function(response) {
 						that.deleteResponse($this, response);
+						
 					})
 				}
 
@@ -102,11 +106,11 @@ jQuery(document).ready(function($){
 	if ($('#bu_slideshow_modal_button').length && typeof buModal === 'function') {
 		var modal = buModal({ 'el' : '#bu_slideshow_modal_wrap' });
 		
-		$('#bu_slideshow_modal_button').on('click', function() {
+		$('#bu_slideshow_modal_button').click(function() {
 			modal.open();
 		});
 		
-		$('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
+		$('#bu_insert_slideshow').live('click', function(e) {
 			var selector = slideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector'), options, html;
 			selector.ui.parent().find('.error').remove();
 			options = selector.getOptions();
@@ -130,7 +134,7 @@ jQuery(document).ready(function($){
 		
 		$('.bu-slide-edit-container').hide();
 		
-		$('#bu-slideshow-slidelist').on('click', '.bu-slide-expand', function() {
+		$('.bu-slide-expand').live('click', function() {
 			var clicked = $(this), editor;
 			editor = clicked.parents('.bu-slideshow-slide').find('.bu-slide-edit-container');
 			
@@ -145,13 +149,13 @@ jQuery(document).ready(function($){
 			return false;
 		});
 		
-		$('#bu-slideshow-slidelist').on('keyup', '.bu-slideshow-title-input', function() {
+		$('.bu-slideshow-title-input').live('keyup', function() {
 			var input = $(this);
 			input.parents('.bu-slideshow-slide').find('.bu-slide-title').text(input.val());
 		})
 		
 		/* don't allow saving until slide reindexing is complete */
-		$('#bu-slideshow-editform').on('submit', function() {
+		$('#bu-slideshow-editform').live('submit', function() {
 			
 			var name = $('#bu_slideshow_name').val().replace(' ', '');
 			if (!name) {
@@ -165,7 +169,7 @@ jQuery(document).ready(function($){
 		
 		/* update slide input names so that new order is saved */
 		function reindexSlides(event, ui) {
-			$('#bu-slideshow-editform-submit').prop('disabled', 'disabled');
+			$('#bu-slideshow-editform-submit').attr('disabled', 'disabled');
 			window.reindexingSlides = true;
 			
 			var regEx = /bu_slides\[([0-9]*)\](.*)/;
@@ -180,7 +184,7 @@ jQuery(document).ready(function($){
 				});
 			});
 			
-			$('#bu-slideshow-editform-submit').prop('disabled', false);
+			$('#bu-slideshow-editform-submit').removeAttr('disabled');
 			window.reindexingSlides = false;
 		}
 		
@@ -198,14 +202,14 @@ jQuery(document).ready(function($){
 		});
 		
 		// Add new slide button
-		$('#bu-slideshow-add-slide').on('click', function() {
+		$('#bu-slideshow-add-slide').click(function() {
 			var order = slideEditor.find('#bu-slideshow-slidelist li').length;
 			addSlide(order);
 			return false;
 		});
 		
 		// Delete slide button
-		$('#bu-slideshow-slidelist').on('click', '.bu-slide-delete-button', function() {
+		$('.bu-slide-delete-button').live('click', function() {
 			$(this).parents().parent('.bu-slideshow-slide').remove();
 			reindexSlides();
 				
@@ -241,7 +245,7 @@ jQuery(document).ready(function($){
 			// trigger appropriate media upload UI/handling
 			select : function() {
 				if (this.newEditor) {
-					this.newHandleImageSelect();
+					//return false;
 				} else {
 					this.oldHandleImageSelect();
 				}
@@ -260,9 +264,6 @@ jQuery(document).ready(function($){
 				this.removeButton.hide();
 			},
 			
-			/**
-			 * Media uploader for WP < 3.5
-			 */
 			oldHandleImageSelect : function() {
 				
 				var that = this;
@@ -275,21 +276,29 @@ jQuery(document).ready(function($){
 					regex = /wp-image-([0-9]*)/i;
 					r = regex.exec(imgClass);
 					imgId = r[1]
-					
+
+					that.imgIdField.val(imgId);
+
 					regex = /size-([a-zA-Z]*)/i;
 					r = regex.exec(imgClass);
 					imgSize = r[1];
-					
-					that.setImageDetails(imgId, imgSize);
 
-					that.getImgThumb(imgId);
+					that.imgSizeField.val(imgSize);
+
+					data = {
+						"action": 'bu_get_slide_thumb',
+						"image_id": imgId
+					};
+					$.post(ajaxurl, data, function(response) {
+						that.handleImgThumbResponse(response);
+					})
 
 					tb_remove();
 				}
 			},
 			
 			handleImgThumbResponse : function(response) {
-				var thumb, $el;
+				var thumb;
 				
 				if (!response || response === '0') {
 					displayError('Could not load image thumbnail.', this.slide);
@@ -297,112 +306,28 @@ jQuery(document).ready(function($){
 					response = $.parseJSON(response);
 
 					this.thumbContainers.each(function(index, el) {
-						$el = $(el);
-						thumb = $el.find('img');
+						thumb = $(el).find('img');
 						if (thumb.length) {
 							thumb.attr('src', response[0]);
 						} else {
-							$el.append('<img src="' + response[0] + '" alt="thumbnail for this slide\'s image" />');
+							$(el).append('<img src="' + response[0] + '" alt="thumbnail for this slide\'s image" />');
 						}
 					});
 					
 					this.removeButton.show();
 				}
-			},
-			
-			/**
-			 * Media uploader for WP 3.5+
-			 */
-			newHandleImageSelect : function() {
-				var that = this;
-				
-				if (typeof buUploadFrame !== 'object') {
-					
-					var oldBrowseContent = wp.media.view.MediaFrame.Select.prototype.browseContent;
-					
-					that.modifyWPSelectFrame();
-				
-					buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
-						'multiple' : false,
-						'title' : 'Select Image',
-						'button' : { 'text' : 'Select Image' }
-					});
-					
-					// restore original functionality in case other scripts on page use uploader
-					wp.media.view.MediaFrame.Select.prototype.browseContent = oldBrowseContent;
-
-					buUploadFrame.on('select', function() {
-						var img, props, state, imgId;
-						
-						state = buUploadFrame.state();
-						img = state.get('selection').first();
-						props = state.display(img).attributes;
-						imgId = img.toJSON().id;
-						
-						that.getImgThumb(imgId);
-						that.setImageDetails(imgId, props.size)
-					});
-				}
-				
-				buUploadFrame.open();
-			},
-			
-			/**
-			 * Patches the Select media frame to add the attachment details in the sidebar.
-			 */
-			modifyWPSelectFrame : function() {
-				
-				wp.media.view.MediaFrame.Select.prototype.browseContent = function( content ) {
-					var state = this.state(), selection = state.get('selection');
-
-					this.$el.removeClass('hide-toolbar');
-
-					content.view = new wp.media.view.AttachmentsBrowser({
-						controller: this,
-						collection: state.get('library'),
-						model:      state,
-						sortable:   state.get('sortable'),
-						search:     state.get('searchable'),
-						filters:    state.get('filterable'),
-						display:    true,
-						dragInfo:   state.get('dragInfo'),
-						selection:  selection,
-						sortable:   true,
-						search:     false,
-						dragInfo:   true,
-
-						AttachmentView: wp.media.view.Attachment.EditLibrary
-					});
-				}
-				
-			},
-			
-			getImgThumb : function(imgId) {
-				var that = this, data;
-				
-				data = {
-					"action": 'bu_get_slide_thumb',
-					"image_id": imgId
-				};
-				$.post(ajaxurl, data, function(response) {
-					that.handleImgThumbResponse(response);
-				})
-			},
-			
-			setImageDetails : function(id, size) {
-				this.imgIdField.val(id);
-				this.imgSizeField.val(size);
 			}
 			
 		}
 		
-		$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-add-img', function(e) {
+		$('.bu-slideshow-add-img').live('click', function(e) {
+			e.preventDefault();
 			window.buUploaders.init(this);
 			window.buUploaders.select();
-			//return false;
+			return false;
 		});
 		
-		$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-remove-img', function() {
+		$('.bu-slideshow-remove-img').live('click', function() {
 			window.buUploaders.init(this);
 			window.buUploaders.remove();
 			return false;
@@ -435,6 +360,7 @@ jQuery(document).ready(function($){
 		var html = '<div class="error"><p>' + msg + '</p></div>';
 		
 		target.append(html);
+		
 	}
 	
 });

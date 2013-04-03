@@ -24,19 +24,19 @@ jQuery(document).ready(function($) {
 		
 		that.bindHandlers = function() {
 			// ESC to close
-			$(document).on('keyup', function(e) {
+			$(document).keyup(function(e) {
 				if (that.isOpen && e.which === 27) {
 					that.close();
 				}
 			});
 			
 			// click overlay to close
-			that.ui.bg.on('click', function() {
+			that.ui.bg.click(function() {
 				that.close();
 				return false;
 			});
 			
-			that.closeButton.on('click', function() {
+			that.closeButton.click(function() {
 				that.close();
 				return false;
 			});

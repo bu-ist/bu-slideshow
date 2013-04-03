@@ -19,7 +19,7 @@
 			<p>
 				<a href="#" id="bu-slideshow-add-slide" class="button">Add New Slide</a>
 			</p>
-			<div class="bu-slideshow-slidelist">
+			<div id="bu-slideshow-slidelist">
 				<ul>
 				<?php foreach ($this->slides as $index => $slide) {
 					$slide->set_order($index);

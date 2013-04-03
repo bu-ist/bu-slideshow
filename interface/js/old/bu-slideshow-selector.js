@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 			}
 		}
 		
-		that.transitionSelect.on('change', function(){
+		that.transitionSelect.live('change', function(){
 			that.manageCustomField();
 		});
 		
@@ -52,21 +52,22 @@ jQuery(document).ready(function($){
 			return options;
 		}
 		
+		/**
+		 * @todo replace 'attr' with 'prop' for jQuery 1.6+
+		 */
 		that.reset = function() {
 			var slideSel, transSel, navSel;
 			
 			slideSel = that.ui.find('#bu_slideshow_selected');
 			slideSel.val(slideSel.find('option:first').val());
-			
 			transSel = that.ui.find('#bu_slideshow_select_transition');
 			transSel.val(transSel.find('option:first').val());
-			
 			navSel = that.ui.find('#bu_slideshow_nav_style');
 			navSel.val(navSel.find('option:first').val());
 			
-			that.ui.find('#bu_slideshow_show_nav').prop('checked', true);
+			that.ui.find('#bu_slideshow_show_nav').attr('checked', 'checked');
 			that.ui.find('#bu_slideshow_custom_transition').val('');
-			that.ui.find('#bu_slideshow_autoplay').prop('checked', true);
+			that.ui.find('#bu_slideshow_autoplay').attr('checked', 'checked');
 		}
 		
 		return that;

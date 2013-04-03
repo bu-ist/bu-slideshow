@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 		
 		self.initPager = function() {
 
-			self.pager.find('li a').on('click', function() {
+			self.pager.find('li a').bind('click', function() {
 				var id = $(this).attr('id').replace('pager-', '');
 				self.sequence.nextFrameID = id;
 				self.sequence.goTo(id);
@@ -51,10 +51,10 @@ jQuery(document).ready(function($) {
 		
 		self.initArrows = function() {
 			
-			self.arrows.find('.bu-slideshow-arrow-left').on('click', function() {
+			self.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
 				self.sequence.prev();
 				return false;
-			}).end().find('.bu-slideshow-arrow-right').on('click', function() {
+			}).end().find('.bu-slideshow-arrow-right').bind('click', function() {
 				self.sequence.next();
 				return false;
 			});
@@ -67,7 +67,6 @@ jQuery(document).ready(function($) {
 
 	$('.bu-slideshow-container').each(function(index, el){
 		var $this = $(this), autoplay = false, container, pagerId, arrowId, options, args;
-		
 		container = $this.find('.bu-slideshow-slides');
 		pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
 		arrowId = $this.find('div.bu-slideshow-arrows').attr('id');
@@ -118,7 +117,7 @@ jQuery(document).ready(function($) {
 		
 	}
 	
-	$(window).on('resize', function() {
+	$(window).resize(function() {
 		bu_resize_slideshow();
 	});
 	
