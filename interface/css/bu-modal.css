@@ -34,7 +34,9 @@
 }
 
 .bu_modal .postboxheader a.close_btn {
+    color: #EFEFEF;
     display: block;
     float: right;
     padding: 4px;
+    text-decoration: none;
 }

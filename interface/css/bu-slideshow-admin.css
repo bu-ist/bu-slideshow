@@ -83,8 +83,19 @@ li.bu-slideshow-slide input[type=text] {border:1px solid #d0d0d0;display:inline-
 .bu-slide-thumb {display:block;margin-top:20px;}
 .bu-slide-caption-container {float:right;margin-top:30px;padding-bottom:30px;}
 li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
-.bu-slide-delete-button {background: none repeat scroll 0 0 #FFFFFF;color:#ff0000;position: absolute;right:20px;bottom:10px;}
-.bu-slide-delete-button:hover, .bu-slide-delete-button:active {background-color:#ff0000; color:#ffffff;text-shadow: none;}
+.bu-slide-delete-button, .wp-core-ui .bu-slide-delete-button {
+	background: none repeat scroll 0 0 #FFFFFF;
+	color:#ff0000;
+	position: absolute;
+	right:20px;
+	bottom:10px;
+}
+.bu-slide-delete-button:hover, .bu-slide-delete-button:active,
+.wp-core-ui .bu-slide-delete-button:hover, .wp-core-ui .bu-slide-delete-button:active {
+	background:#ff0000;
+	color:#ffffff;
+	text-shadow: none;
+}
 .sortable-placeholder {border:2px #cdcdcd dashed;padding:10px 20px;}
 
 /* Manage slideshows */
@@ -94,33 +105,9 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 #bu-slideshow-manage span {display:inline-block;}
 #bu-slideshow-manage .bu-slideshow-delete {color:red;}
 
-/* close modal button */
-.close_btn {
-	background:url(../img/sprite.png) transparent no-repeat -46px 4px;
-	background-size:100px 50px;
-	height:15px;
-	text-indent:-9999px;
-	width:15px;
-}
-
-/* insert slideshow button */
-#bu_slideshow_modal_button {
-	background:url(../img/sprite.png) transparent no-repeat 10px 4px;
-	background-size: 100px 50px;
-	display:inline-block;
-	height:12px;
-	text-indent: -9999px;
-	width:13px;
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-	
-	.close_btn {
-		background-image:url('../img/sprite@2X.png');
-	}
-
-	#bu_slideshow_modal_button {
-		background-image:url('../img/sprite@2X.png');
-	}
-	
+/* insert slideshow button (only needs styling on WP < 3.5) */
+#media-buttons #bu_slideshow_modal_button {
+	display: inline-block;
+    margin: 0 0 0 10px;
+    padding: 2px 6px;
 }

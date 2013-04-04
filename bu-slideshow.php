@@ -816,7 +816,7 @@ class BU_Slideshow {
 	 */
 	static public function add_media_button($context) {
 		if (self::using_editor()) {
-			$html = '<a id="bu_slideshow_modal_button" title="Insert Slideshow" href="#">Insert Slideshow</a>';
+			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow'), __('Add Slideshow'));
 			$context = $context . $html;
 		}
 		
