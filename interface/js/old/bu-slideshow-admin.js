@@ -104,14 +104,15 @@ jQuery(document).ready(function($){
 	
 	/* Insert slideshow button and Inserting shortcode into editor */
 	if ($('#bu_slideshow_modal_button').length && typeof buModal === 'function') {
-		var modal = buModal({ 'el' : '#bu_slideshow_modal_wrap' });
+		var modal = buModal({ 'el' : '#bu_slideshow_modal_wrap' }),
+			selector = slideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 		
 		$('#bu_slideshow_modal_button').click(function() {
 			modal.open();
 		});
 		
 		$('#bu_insert_slideshow').live('click', function(e) {
-			var selector = slideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector'), options, html;
+			var options, html;
 			selector.ui.parent().find('.error').remove();
 			options = selector.getOptions();
 

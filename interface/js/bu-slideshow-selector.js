@@ -1,9 +1,15 @@
 jQuery(document).ready(function($){
 	
-	$('.bu-slideshow-selector').each(function() {
-		var that = $(this);
-		that.customField = that.find('#bu_slideshow_custom_transition');
-		that.transitionSelect = that.find('#bu_slideshow_select_transition');
+	window.slideshowSelector = function(el) {
+		var that = {};
+		
+		that.ui = $(el);
+		if (!that.ui.length) {
+			return TypeError('No selector element found.');
+		}
+		
+		that.customField = that.ui.find('#bu_slideshow_custom_transition');
+		that.transitionSelect = that.ui.find('#bu_slideshow_select_transition');
 		that.manageCustomField = function() {
 			if (that.transitionSelect.val() === 'custom') {
 				that.customField.show();
@@ -12,20 +18,11 @@ jQuery(document).ready(function($){
 			}
 		}
 		
-		that.transitionSelect.on('change', function(){
+		that.transitionSelect.on('change', function() {
 			that.manageCustomField();
-		});
+		})
 		
 		that.manageCustomField();
-	});
-	
-	window.slideshowSelector = function(el) {
-		var that = {};
-		
-		that.ui = $(el);
-		if (!that.ui.length) {
-			return TypeError('No selector element found.');
-		}
 		
 		that.getOptions = function() {
 			var options = {};
