@@ -197,16 +197,16 @@
   line-height: 1.4;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a {
-  color: #f3cf00;
+  color: #bcbcbc;
   text-decoration: none;
 }
-.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a :hover {
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a:hover {
   text-decoration: underline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
   font-size: 1.2em;
   font-family: 'Helvetica', 'Arial', sans-serif;
-  color: #f3cf00;
+  color: #bcbcbc;
   margin-bottom: 1em;
   padding: 0;
 }
