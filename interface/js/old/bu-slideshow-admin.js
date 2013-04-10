@@ -103,10 +103,12 @@ jQuery(document).ready(function($){
 	}
 	
 	/* Insert slideshow button and Inserting shortcode into editor */
-	if ($('#bu_slideshow_modal_button').length && typeof buModal === 'function') {
-		var modal = buModal({ 'el' : '#bu_slideshow_modal_wrap' }),
-			selector = slideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
+	if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' 
+		&& typeof SlideshowSelector === 'function') {
 		
+		var modal = new BuModal({ 'el' : '#bu_slideshow_modal_wrap' }),
+			selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
+
 		$('#bu_slideshow_modal_button').click(function() {
 			modal.open();
 		});
@@ -357,7 +359,7 @@ jQuery(document).ready(function($){
 	 * Removes any existing errors and displays new one.
 	 */
 	function displayError(msg, target) {
-		$('.error').remove();
+		target.find('.error').remove();
 		var html = '<div class="error"><p>' + msg + '</p></div>';
 		
 		target.append(html);

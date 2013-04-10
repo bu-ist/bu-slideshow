@@ -3,7 +3,7 @@
 	
 	<div id="bu-slideshow-new">
 		
-		<?php if (isset($msg)) { ?>
+		<?php if (isset($msg) && !empty($msg)) { ?>
 		<div class="updated"><p><?php echo $msg; ?></p></div>
 		<?php } ?>
 		

@@ -1,72 +1,85 @@
 jQuery(document).ready(function($){
 	
-	window.slideshowSelector = function(el) {
-		var that = {};
+	window.SlideshowSelector = function(el) {
 		
-		that.ui = $(el);
-		if (!that.ui.length) {
-			return TypeError('No selector element found.');
+		if ( !(this instanceof SlideshowSelector)) {
+			return new ReferenceError('Contstructor invoked as regular function. Use "new" operator.');
 		}
 		
-		that.customField = that.ui.find('#bu_slideshow_custom_transition');
-		that.transitionSelect = that.ui.find('#bu_slideshow_select_transition');
-		that.manageCustomField = function() {
-			if (that.transitionSelect.val() === 'custom') {
-				that.customField.show();
-			} else {
-				that.customField.hide();
-			}
+		this.ui = $(el);
+		if (!this.ui.length) {
+			return new TypeError('No selector element found.');
 		}
 		
-		that.transitionSelect.on('change', function() {
+		this.init();
+		this.manageCustomField();
+	};
+	
+	SlideshowSelector.prototype.init = function() {
+		this.customField = this.ui.find('#bu_slideshow_custom_transition');
+		this.transitionSelect = this.ui.find('#bu_slideshow_select_transition');
+		
+		this.addHandlers();
+	};
+	
+	SlideshowSelector.prototype.addHandlers = function() {
+		var that = this;
+		
+		this.transitionSelect.on('change', function() {
 			that.manageCustomField();
-		})
-		
-		that.manageCustomField();
-		
-		that.getOptions = function() {
-			var options = {};
-			
-			options.show_id = that.ui.find('#bu_slideshow_selected').val();
-			options.show_nav = that.ui.find('#bu_slideshow_show_nav').is(':checked') ? 1 : 0;
-			options.transition = that.ui.find('#bu_slideshow_select_transition').val();
-			options.custom_transition = that.ui.find('#bu_slideshow_custom_transition').val().replace(' ', '');
-			options.nav_style = that.ui.find('#bu_slideshow_nav_style').val();
-			options.autoplay = that.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
-			
-			if (options.transition === 'custom') {
-				options.transition = options.custom_transition;
-				var rplcd = {
-					'[' : '',
-					']' : '',
-					'"' : ''
-				};
-				for (var r in rplcd) {
-					options.transition = options.transition.replace(r, rplcd.r);
-				}
+		});
+	};
+	
+	SlideshowSelector.prototype.manageCustomField = function() {
+		if (this.transitionSelect.val() === 'custom') {
+			this.customField.show();
+		} else {
+			this.customField.hide();
+		}
+	};
+	
+	SlideshowSelector.prototype.getOptions = function() {
+		var options = {};
+
+		options.show_id = this.ui.find('#bu_slideshow_selected').val();
+		options.show_nav = this.ui.find('#bu_slideshow_show_nav').is(':checked') ? 1 : 0;
+		options.transition = this.ui.find('#bu_slideshow_select_transition').val();
+		options.custom_transition = this.ui.find('#bu_slideshow_custom_transition').val().replace(' ', '');
+		options.nav_style = this.ui.find('#bu_slideshow_nav_style').val();
+		options.autoplay = this.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
+
+		if (options.transition === 'custom') {
+			options.transition = options.custom_transition;
+			var rplcd = {
+				'[' : '',
+				']' : '',
+				'"' : ''
+			};
+			for (var r in rplcd) {
+				options.transition = options.transition.replace(r, rplcd.r);
 			}
-			
-			return options;
 		}
+
+		return options;
+	};
+	
+	SlideshowSelector.prototype.reset = function() {
+		var slideSel, transSel, navSel;
+
+		slideSel = this.ui.find('#bu_slideshow_selected');
+		slideSel.val(slideSel.find('option:first').val());
+
+		transSel = this.ui.find('#bu_slideshow_select_transition');
+		transSel.val(transSel.find('option:first').val());
+
+		navSel = this.ui.find('#bu_slideshow_nav_style');
+		navSel.val(navSel.find('option:first').val());
 		
-		that.reset = function() {
-			var slideSel, transSel, navSel;
-			
-			slideSel = that.ui.find('#bu_slideshow_selected');
-			slideSel.val(slideSel.find('option:first').val());
-			
-			transSel = that.ui.find('#bu_slideshow_select_transition');
-			transSel.val(transSel.find('option:first').val());
-			
-			navSel = that.ui.find('#bu_slideshow_nav_style');
-			navSel.val(navSel.find('option:first').val());
-			
-			that.ui.find('#bu_slideshow_show_nav').prop('checked', true);
-			that.ui.find('#bu_slideshow_custom_transition').val('');
-			that.ui.find('#bu_slideshow_autoplay').prop('checked', true);
-		}
-		
-		return that;
-	}
+		this.ui.find('#bu_slideshow_custom_transition').hide();
+
+		this.ui.find('#bu_slideshow_show_nav').prop('checked', true);
+		this.ui.find('#bu_slideshow_custom_transition').val('');
+		this.ui.find('#bu_slideshow_autoplay').prop('checked', true);
+	};
 	
 });

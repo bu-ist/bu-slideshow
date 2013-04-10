@@ -118,17 +118,19 @@ class BU_Slideshow_Instance {
 			case 'public':
 
 				$show_id = esc_attr(self::$id_prefix . $this->id);
+				$show_name = $this->name ? ' ' . str_replace(' ', '-', strtolower(stripslashes($this->name))) : '';
 				
 				$container_class = 'bu-slideshow-container';
-				$container_class .= $this->name ? ' ' . str_replace(' ', '-', stripslashes($this->name)) : '';
+				$container_class .= $show_name;
 				$container_class .= $args['autoplay'] ? ' autoplay' : '';
 
 				// deliberately allowing custom values here
 				$ul_classes = self::$classes;
 				$ul_classes[] = 'transition-' . $args['transition']; 
 				$ul_class_str = esc_attr(join(' ', $ul_classes));
+				$name_att = $show_name ? sprintf(' data-slideshow-name="%s"', $show_name) : '';
 
-				$html = sprintf('<div class="%s" id="%s">', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id));
+				$html = sprintf('<div class="%s" id="%s"%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att);
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {
