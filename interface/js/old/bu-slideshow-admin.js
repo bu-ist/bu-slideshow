@@ -44,8 +44,8 @@ jQuery(document).ready(function($){
 			
 			that.addEmptyMsg = function() {
 				that.getUrl('add_url', function(addUrl) {
-					var html = '<li><p>No slideshows yet.</p>' +
-						'<p><a class="button" href="' + addUrl + '">Add a slideshow</a></p></li>';
+					var html = '<li><p>' + buSlideshowLocalAdmin.noSlideshowsMsg + '</p>' +
+						'<p><a class="button" href="' + addUrl + '">' + buSlideshowLocalAdmin.addButtonText + '</a></p></li>';
 					that.list.append(html);
 				});
 				
@@ -62,7 +62,7 @@ jQuery(document).ready(function($){
 			}
 			
 			that.list.find('.bu-slideshow-delete').live('click', function() {
-				var result = confirm('Are you sure you want to delete this slideshow? This action cannot be undone.');
+				var result = confirm(buSlideshowLocalAdmin.deleteConfirm);
 				
 				if (result) {
 					var $this = $(this), showId, data;
@@ -92,7 +92,7 @@ jQuery(document).ready(function($){
 						that.addEmptyMsg();
 					}
 				} else {
-					displayError('Could not delete slideshow.', that.container);
+					displayError(buSlideshowLocalAdmin.deleteError, that.container);
 					return false;
 				}
 			}
@@ -119,7 +119,7 @@ jQuery(document).ready(function($){
 			options = selector.getOptions();
 
 			if (!parseInt(options.show_id)) {
-				displayError('You must select a slideshow.', selector.ui.parent());
+				displayError(buSlideshowLocalAdmin.noneSelectedError, selector.ui.parent());
 				return false;
 			}
 
@@ -163,7 +163,7 @@ jQuery(document).ready(function($){
 			var name = $('#bu_slideshow_name').val().replace(' ', '');
 			if (!name) {
 				
-				displayError('The name field for the slideshow cannot be empty.', $(this));
+				displayError(buSlideshowLocalAdmin.emptyNameError, $(this));
 				return false;
 			}
 			
@@ -248,7 +248,7 @@ jQuery(document).ready(function($){
 			// trigger appropriate media upload UI/handling
 			select : function() {
 				if (this.newEditor) {
-					//return false;
+					return false;
 				} else {
 					this.oldHandleImageSelect();
 				}
@@ -304,7 +304,7 @@ jQuery(document).ready(function($){
 				var thumb;
 				
 				if (!response || response === '0') {
-					displayError('Could not load image thumbnail.', this.slide);
+					displayError(buSlideshowLocalAdmin.thumbFailError, this.slide);
 				} else {
 					response = $.parseJSON(response);
 
@@ -313,7 +313,7 @@ jQuery(document).ready(function($){
 						if (thumb.length) {
 							thumb.attr('src', response[0]);
 						} else {
-							$(el).append('<img src="' + response[0] + '" alt="thumbnail for this slide\'s image" />');
+							$(el).append('<img src="' + response[0] + '" alt="' + buSlideshowLocalAdmin.thumbAltText + '" />');
 						}
 					});
 					
@@ -344,7 +344,7 @@ jQuery(document).ready(function($){
 			
 			$.post(ajaxurl, data, function(response) {
 				if (!response) {
-					displayError('Could not create new slide.', $('#bu-slideshow-slidelist'));
+					displayError(buSlideshowLocalAdmin.addSlideFailError, $('#bu-slideshow-slidelist'));
 					return;
 				} else {
 					var r = $(response);

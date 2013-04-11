@@ -138,6 +138,8 @@ class BU_Slideshow {
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_script('thickbox');
 			
+			self::localize('bu-slideshow-admin');
+			
 			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css');
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
@@ -216,6 +218,36 @@ class BU_Slideshow {
 		
 		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css');
 		wp_enqueue_style('bu-slideshow-selector');
+	}
+	
+	/**
+	 * Localize text in javascript
+	 * @param string $script
+	 */
+	static public function localize($script = '') {
+		switch($script) {
+			
+			case 'bu-slideshow-admin':
+				$local = array(
+					'noSlideshowsMsg' => __('No slideshows yet.', BU_S_LOCAL),
+					'addButtonText' => __('Add a slideshow', BU_S_LOCAL),
+					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_S_LOCAL),
+					'deleteError' => __('Could not delete slideshow.', BU_S_LOCAL),
+					'noneSelectedError' => __('You must select a slideshow.', BU_S_LOCAL),
+					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_S_LOCAL),
+					'thumbFailError' => __('Could not load image thumbnail.', BU_S_LOCAL),
+					'thumbAltText' => __('thumbnail for this slide\'s image', BU_S_LOCAL),
+					'addSlideFailError' => __('Could not create new slide.', BU_S_LOCAL),
+					'mediaUploadTitle' => __('Select Image', BU_S_LOCAL),
+					'mediaUploadButton' => __('Select Image', BU_S_LOCAL)
+				);
+				wp_localize_script($script, 'buSlideshowLocalAdmin', $local);
+				
+				break;
+			
+			default:
+				break;
+		}
 	}
 	
 	/**
