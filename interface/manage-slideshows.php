@@ -3,18 +3,20 @@
 	<div id="bu-slideshow-slides">
 		<ul class="widefat" id="bu-slideshow-manage">
 			
-			<?php foreach($slideshows as $id => $show) { ?>
-			
-			<li>
-				<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php echo esc_html(stripslashes($show->name)); ?></a></span>
-				<span class="alignright">
-					<a class="button" href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>">Edit</a> 
-					<a href="<?php echo self::$preview_url . '&amp;bu_slideshow_id=' . $id; ?>" class="bu-slideshow-preview button">Preview</a> 
-					<a href="#" class="bu-slideshow-delete button" data-slideshow-id="<?php echo $id; ?>">Delete</a></span>
-			</li>
-			
-			<?php } 
-			if (count($slideshows) < 1) { ?>
+			<?php 
+			if (is_array($slideshows) && count($slideshows) > 0) {
+				foreach($slideshows as $id => $show) { ?>
+
+				<li>
+					<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php echo esc_html(stripslashes($show->name)); ?></a></span>
+					<span class="alignright">
+						<a class="button" href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>">Edit</a> 
+						<a href="<?php echo self::$preview_url . '&amp;bu_slideshow_id=' . $id; ?>" class="bu-slideshow-preview button">Preview</a> 
+						<a href="#" class="bu-slideshow-delete button" data-slideshow-id="<?php echo $id; ?>">Delete</a></span>
+				</li>
+
+				<?php } 
+			} else { ?>
 				
 			<li>
 				<p>No slideshows yet.</p>

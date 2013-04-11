@@ -1,9 +1,6 @@
 <div class="bu-slideshow-selector">
-	<?php if (!count($all_slideshows)): ?>
 	
-	<p>No slideshows found. <a href="<?php echo BU_Slideshow::$add_url; ?>" title="Create a new slideshow">Add a Slideshow</a></p>
-	
-	<?php else: ?>
+	<?php if (is_array($all_slideshows) && count($all_slideshows) > 0): ?>
 	
 	<div class="col1">
 		<p>
@@ -46,6 +43,10 @@
 			<input type="checkbox" name="bu_slideshow_autoplay" id="bu_slideshow_autoplay" value="1"<?php echo $args['autoplay'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_autoplay">Automatically play slideshow</label>
 		</p>
 	</div>
+	
+	<?php else: ?>
+	
+	<p>No slideshows found. <a href="<?php echo BU_Slideshow::$add_url; ?>" title="Create a new slideshow">Add a Slideshow</a></p>
 	
 	<?php endif; ?>
 	

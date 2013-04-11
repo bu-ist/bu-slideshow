@@ -21,12 +21,14 @@
 			</p>
 			<div id="bu-slideshow-slidelist">
 				<ul>
-				<?php foreach ($this->slides as $index => $slide) {
-					$slide->set_order($index);
-					$slide->set_view('admin');
-					echo $slide->get();
-				}
-				if (count($this->slides) < 1) {
+				<?php 
+				if (is_array($this->slides) && count($this->slides) > 0) {
+					foreach ($this->slides as $index => $slide) {
+						$slide->set_order($index);
+						$slide->set_view('admin');
+						echo $slide->get();
+					}
+				} else {
 					$slide = new BU_Slide(array('view' => 'admin'));
 					echo $slide->get();
 				} ?>

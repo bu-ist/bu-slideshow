@@ -1,7 +1,7 @@
 <?php
 /*
  Plugin Name: BU Slideshow
- Description: Allows for the creation and display of rotating slideshows. Uses sequence.js.
+ Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
  Version: 1.0
  Author: Boston University (IS&T)
@@ -9,7 +9,7 @@
 */
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('BU_S_OLDJS', 'old/'); // dir for old jQuery compat scripts
+define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
 
 if (!defined('BU_S_LOCAL')) {
 	define('BU_S_LOCAL', 'BU_Slideshow');
@@ -39,7 +39,7 @@ class BU_Slideshow {
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
 	static $nav_styles = array('icon', 'number');
 	
-	static $editor_screens = array('page', 'post'); // edit screens 
+	static $editor_screens = array('page', 'post'); // screens using Add Slideshow button
 	
 	static public function init() {
 		global $pagenow;
@@ -91,24 +91,22 @@ class BU_Slideshow {
 			self::selector_scripts_styles();
 		}
 		
+		$back_compat = false;
 		if (version_compare(self::$wp_version, '3.3', '<')) {
-			self::old_admin_scripts();
-		} else {
-			self::new_admin_scripts();
+			$back_compat = true;
 		}
-		
+		self::admin_scripts($back_compat);
 		
 		/* preview page needs public scripts/styles */
 		if ($current_screen->id === 'admin_page_bu-preview-slideshow') {
 			self::public_scripts_styles();
 		}
-		
 	}
 	
 	/**
-	 * Admin scripts for jQuery < 1.71
+	 * Admin scripts, for older and newer jQuery.
 	 */
-	static public function old_admin_scripts() {
+	static public function admin_scripts($back_compat = false) {
 		global $current_screen;
 		$admin_pages = array(
 			'toplevel_page_bu-slideshow',
@@ -116,45 +114,24 @@ class BU_Slideshow {
 			'admin_page_bu-edit-slideshow'
 		);
 		
+		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
+		if ($back_compat) {
+			$js_url .= BU_SLIDESHOW_OLDJS;
+			error_log('back compat');
+		}
+		
 		if (self::using_editor()) {
-			wp_register_script('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_S_OLDJS . 'bu-modal.js', array('jquery'), false, true);
+			wp_register_script('bu-modal', $js_url . 'bu-modal.js', array('jquery'), false, true);
 			wp_register_style('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/css/bu-modal.css');
 			wp_enqueue_script('bu-modal');
 			wp_enqueue_style('bu-modal');
 		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_S_OLDJS . 'bu-slideshow-admin.js', array('jquery', 'bu-modal'), false, true);
-			wp_enqueue_script('bu-slideshow-admin');
-			wp_enqueue_script('jquery-ui-sortable');
-			wp_enqueue_script('thickbox');
+			wp_register_script('bu-modal', $js_url . 'bu-modal.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin.js', array('jquery', 'bu-modal'), false, true);
 			
-			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css');
-			wp_enqueue_style('bu-slideshow-admin');
-			wp_enqueue_style('thickbox');
-		}
-	}
-	
-	/**
-	 * Admin scripts for jQuery >= 1.71
-	 */
-	static public function new_admin_scripts() {
-		global $current_screen;
-		$admin_pages = array(
-			'toplevel_page_bu-slideshow',
-			'slideshows_page_bu-slideshow',
-			'admin_page_bu-edit-slideshow'
-		);
-		
-		if (self::using_editor()) {
-			wp_register_script('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/js/bu-modal.js', array('jquery'), false, true);
-			wp_register_style('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/css/bu-modal.css');
 			wp_enqueue_script('bu-modal');
-			wp_enqueue_style('bu-modal');
-		}
-		
-		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-admin.js', array('jquery', 'bu-modal'), false, true);
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_script('thickbox');
@@ -165,7 +142,8 @@ class BU_Slideshow {
 		}
 		
 		/* enqueue new media uploader stuff */
-		if ($current_screen->id === 'admin_page_bu-edit-slideshow' && function_exists('wp_enqueue_media')) {
+		if ($back_compat && $current_screen->id === 'admin_page_bu-edit-slideshow' 
+				&& function_exists('wp_enqueue_media')) {
 			wp_enqueue_media();
 		}
 	}
@@ -180,11 +158,12 @@ class BU_Slideshow {
 	static public function public_scripts_styles() {
 		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/modernizr-dev.js', array(), false, true);
 		
+		$back_compat = false;
 		if (version_compare(self::$wp_version, '3.3', '<')) {
-			self::old_public_scripts();
-		} else {
-			self::new_public_scripts();
+			$back_compat = true;
 		}
+		
+		self::public_scripts($back_compat);
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
@@ -200,20 +179,25 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Front end scripts for jQuery < 1.71. Patches jQuery 'on' to support sequence.js
+	 * Front end scripts, for older and newer jQuery. For jQuery < 1.71, patches jQuery 'on' to support sequence.js
 	 */
-	static public function old_public_scripts() {
-		wp_register_script('bu-sequence-patch', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_S_OLDJS . 'bu-sequence-patch.js', array('jquery'), false, true);
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr', 'bu-sequence-patch'), false, true);
-		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_S_OLDJS . 'bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr', 'bu-sequence-patch'), false, true);
-	}
-	
-	/**
-	 * Front end scripts for jQuery >= 1.71
-	 */
-	static public function new_public_scripts() {
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', array('jquery', 'modernizr'), false, true);
-		wp_register_script('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow.js', array('jquery', 'jquery-sequence', 'modernizr'), false, true);
+	static public function public_scripts($back_compat) {
+		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
+		if ($back_compat) {
+			$js_url .= BU_SLIDESHOW_OLDJS;
+		}
+		
+		$seq_deps = array('jquery', 'modernizr');
+		$slideshow_deps = array('jquery', 'jquery-sequence', 'modernizr');
+		
+		if ($back_compat) {
+			$seq_deps[] = 'bu-sequence-patch';
+			$slideshow_deps[] = 'bu-sequence-patch';
+		}
+		
+		wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), false, true);
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', $seq_deps, false, true);
+		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow.js', $slideshow_deps, false, true);
 	}
 	
 	/**
@@ -221,7 +205,7 @@ class BU_Slideshow {
 	 */
 	static public function selector_scripts_styles() {
 		if (version_compare(self::$wp_version, '3.3', '<')) {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_S_OLDJS . 'bu-slideshow-selector.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector.js', array('jquery'), false, true);
 		} else {
 			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector.js', array('jquery'), false, true);
 		}
@@ -285,7 +269,7 @@ class BU_Slideshow {
 	 */
 	static public function media_upload_custom() {
 		$referer = strpos( wp_get_referer(), 'bu_slideshow' );
-		if ($referer != '') {
+		if ($referer !== FALSE) {
 			add_filter('gettext', array(__CLASS__, 'replace_thickbox_text'), 1, 3);
 			add_filter('post_mime_types', array(__CLASS__, 'post_mime_types'));
 		}
@@ -377,6 +361,7 @@ class BU_Slideshow {
 			
 			if (!self::slideshow_exists($id)) {
 				$msg = __("Could not find slideshow.", BU_S_LOCAL);
+				$id = false;
 			}
 			
 		}
@@ -393,8 +378,6 @@ class BU_Slideshow {
 		if (!is_string($name) || !trim($name)) {
 			return new WP_Error(__('invalid argument', BU_S_LOCAL), __('Invalid name supplied for slideshow.', BU_S_LOCAL));
 		}
-		
-		$all_slideshows = self::get_slideshows();
 		
 		$show = new BU_Slideshow_Instance();
 		$show->set_name(trim($name));
@@ -436,7 +419,7 @@ class BU_Slideshow {
 		}
 
 		if (!current_user_can(self::$min_cap)) {
-			wp_die(__("You do not have the neccesary permissions to delete slideshows.", BU_S_LOCAL));
+			wp_die(__("You do not have the necessary permissions to delete slideshows.", BU_S_LOCAL));
 		}
 		
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
@@ -476,13 +459,7 @@ class BU_Slideshow {
 	static public function slideshow_exists($id) {
 		$all_slideshows = self::get_slideshows();
 		
-		foreach ($all_slideshows as $show_id => $show_arr) {
-			if (intval($id) === $show_id) {
-				return true;
-			}
-		}
-		
-		return false;
+		return array_key_exists($id, $all_slideshows);
 	}
 	
 	/**
@@ -492,12 +469,9 @@ class BU_Slideshow {
 	 * @return bool|array
 	 */
 	static public function get_slideshow($id) {
-		if (!self::slideshow_exists($id)) {
-			return false;
-		}
-		
 		$all_slideshows = self::get_slideshows();
-		return $all_slideshows[$id];
+		
+		return array_key_exists($id, $all_slideshows) ? $all_slideshows[$id] : false;
 	}
 	
 	/**
@@ -524,16 +498,16 @@ class BU_Slideshow {
 			}
 
 			if (!current_user_can(self::$min_cap)) {
-				wp_die(__("You do not have the neccesary permissions to update slideshows.", BU_S_LOCAL));
+				wp_die(__("You do not have the necessary permissions to update slideshows.", BU_S_LOCAL));
 			}
 			
-			$update = 1;
+			$is_update = true;
 			$msg = '';
 
 			$req = array('bu_slideshow_id', 'bu_slideshow_name');
 			foreach ($req as $r) {
 				if (!isset($_POST[$r]) || empty($_POST[$r])) {
-					$update = 0;
+					$is_update = false;
 					$msg .= sprintf(__('Could not update slideshow: missing or invalid %s. ', BU_S_LOCAL), $r);
 				}
 			}
@@ -543,7 +517,8 @@ class BU_Slideshow {
 				$_POST['bu_slides'] = array();
 			}
 
-			if ($update) {
+			// we are handling a form submission
+			if ($is_update) {
 				
 				if (!self::slideshow_exists(intval($_POST['bu_slideshow_id']))) {
 					$msg .= __('Could not find slideshow.', BU_S_LOCAL);
@@ -554,24 +529,23 @@ class BU_Slideshow {
 					
 					$show->set_name($_POST['bu_slideshow_name']);
 					
-					//$show->set_slides($_POST['bu_slides']);
 					$slides = array();
 					foreach ($_POST['bu_slides'] as $i => $arr) {
 						$args = array(
 							'view' => 'admin',
 							'order' => $i,
-							'image_id' => $arr['image_id'],
+							'image_id' => intval($arr['image_id']),
 							'image_size' => $arr['image_size'],
 							'caption' => array(
 								'title' => $arr['caption']['title'],
 								'link' => $arr['caption']['link'],
-								'text' => $arr['caption']['text']
+								'text' => wp_kses_data($arr['caption']['text'])
 							)
 						);
 						$slides[] = new BU_Slide($args);
 					}
 					$show->set_slides($slides);
-					
+
 					if ($show->update()) {
 						$msg .= __("Slideshow updated successfully.", BU_S_LOCAL);
 					} else {
@@ -583,6 +557,7 @@ class BU_Slideshow {
 			
 		}
 		
+		// display edit page, whether form submitted or not
 		if (isset($_GET['bu_slideshow_id']) && !empty($_GET['bu_slideshow_id'])) {
 			
 			$id = intval($_GET['bu_slideshow_id']);
@@ -648,7 +623,6 @@ class BU_Slideshow {
 
 		/* if the regular img url is returned it means we don't have an existing thumb of correct size */
 		if (strpos($img_arr[0], strval($img_arr[1])) === false) {
-			error_log('generating thumb for img id ' . $img_id);
 			$img_path = get_attached_file($img_id);
 			$success = wp_update_attachment_metadata($img_id, wp_generate_attachment_metadata($img_id, $img_path));
 			if ($success) {
