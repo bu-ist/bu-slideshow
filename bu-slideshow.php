@@ -142,7 +142,7 @@ class BU_Slideshow {
 		}
 		
 		/* enqueue new media uploader stuff */
-		if ($back_compat && $current_screen->id === 'admin_page_bu-edit-slideshow' 
+		if (!$back_compat && $current_screen->id === 'admin_page_bu-edit-slideshow' 
 				&& function_exists('wp_enqueue_media')) {
 			wp_enqueue_media();
 		}

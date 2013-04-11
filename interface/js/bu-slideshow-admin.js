@@ -98,7 +98,7 @@ jQuery(document).ready(function($){
 		
 	}
 	
-	/* Insert slideshow button and Inserting shortcode into editor */
+	/* Add Slideshow button and Inserting shortcode into editor */
 	if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' 
 		&& typeof SlideshowSelector === 'function') {
 		
@@ -402,7 +402,7 @@ jQuery(document).ready(function($){
 		$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-add-img', function(e) {
 			window.buUploaders.init(this);
 			window.buUploaders.select();
-			//return false;
+			return false;
 		});
 		
 		$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-remove-img', function() {
