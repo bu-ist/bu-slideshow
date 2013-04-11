@@ -22,6 +22,8 @@ class BU_Slideshow {
 	static $wp_version;
 	
 	static $meta_key = 'bu_slideshows';
+	static $show_id_meta_key = 'bu_slideshow_last_id';
+	
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
 	static $add_url = 'admin.php?page=bu-add-slideshow';
@@ -391,18 +393,11 @@ class BU_Slideshow {
 	 * @return int
 	 */
 	static public function get_new_id() {
-		$all_slideshows = self::get_slideshows();
+		$last_id = get_option(self::$show_id_meta_key, 0);
+		$new_id = $last_id + 1;
+		update_option(self::$show_id_meta_key, $new_id);
 		
-		if (empty($all_slideshows)) {
-			return 1;
-		}
-		
-		$keys = array_keys($all_slideshows);
-		asort($keys);
-		$last_index = implode('', array_slice($keys, -1, 1));
-		$index = $last_index + 1;
-		
-		return $index;
+		return $new_id;
 	}
 	
 	/**
