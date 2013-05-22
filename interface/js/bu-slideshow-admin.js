@@ -133,6 +133,7 @@ jQuery(document).ready(function($){
 		
 		$('.bu-slide-edit-container').hide();
 		
+		/* slide toggle */
 		$('#bu-slideshow-slidelist').on('click', '.bu-slide-expand', function() {
 			var clicked = $(this), editor;
 			editor = clicked.parents('.bu-slideshow-slide').find('.bu-slide-edit-container');
@@ -148,6 +149,7 @@ jQuery(document).ready(function($){
 			return false;
 		});
 		
+		/* replace slide title as user types */
 		$('#bu-slideshow-slidelist').on('keyup', '.bu-slideshow-title-input', function() {
 			var input = $(this);
 			input.parents('.bu-slideshow-slide').find('.bu-slide-title').text(input.val());
@@ -187,7 +189,7 @@ jQuery(document).ready(function($){
 			window.reindexingSlides = false;
 		}
 		
-		// Make slides sortable
+		/* Make slides sortable */
 		function createPlaceholder(event, ui) {
 			var h = ui.item.height();
 			var w = ui.item.width();

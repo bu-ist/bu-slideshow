@@ -1,5 +1,4 @@
-/* after we upgrade WP some enterprising person should come through and 
- * update the jQuery syntax too. */
+/* after we upgrade WP we should scrap the back-compatability */
 
 jQuery(document).ready(function($){
 	
@@ -350,8 +349,24 @@ jQuery(document).ready(function($){
 					var r = $(response);
 					r.find('.bu-slide-edit-container').css('display', 'none');
 					r.appendTo('#bu-slideshow-slidelist ul');
+					setModalHeight( r.find('.bu-slideshow-add-img') );
 				}
 			});
+		}
+		
+		// Set old WP media modal to correct height
+		var modalHeight, imgHref;
+		modalHeight = $(window).height() * 0.9;
+		
+		$('#bu-slideshow-slidelist .bu-slideshow-add-img').each(function() {
+			setModalHeight($(this));
+		});
+		
+		function setModalHeight($link) {
+		
+			imgHref = $link.attr('href') + '&width=640&height=' + modalHeight;
+			$link.attr('href', imgHref);
+		
 		}
 	}
 	

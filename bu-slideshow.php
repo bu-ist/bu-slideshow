@@ -119,7 +119,6 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		if ($back_compat) {
 			$js_url .= BU_SLIDESHOW_OLDJS;
-			error_log('back compat');
 		}
 		
 		if (self::using_editor()) {
