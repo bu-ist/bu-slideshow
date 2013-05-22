@@ -19,7 +19,6 @@ class BU_Slide {
 	public $view;
 	
 	static public $views = array('admin', 'public');
-	static public $slide_excerpt_length = 20;
 	
 	public function __construct($args) {
 		$this->caption['title'] = __('Untitled Slide', BU_S_LOCAL);
@@ -125,8 +124,7 @@ class BU_Slide {
 		}
 
 		if (isset($this->caption['text']) && !empty($this->caption['text'])) {
-			$text = $this->trim_slide_caption($this->caption['text']);
-			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data($text));
+			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data( $this->caption['text'] ));
 		}
 		$html .= '</div>';
 		
@@ -152,20 +150,6 @@ class BU_Slide {
 		}
 		
 		return $html;
-	}
-	
-	/**
-	 * Trims the caption text displayed, if neccesary
-	 * @param string $text
-	 * @return string
-	 */
-	static protected function trim_slide_caption($text) {
-		$words = explode(' ', $text);
-		if (count($words) > self::$slide_excerpt_length) {
-			$text = implode(' ', array_splice($words, 0, self::$slide_excerpt_length)) . '...';
-		}
-		
-		return $text;
 	}
 	
 }
