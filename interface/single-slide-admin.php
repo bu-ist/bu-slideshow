@@ -7,7 +7,7 @@
 	<div class="bu-slide-edit-container">
 		<a class="bu-slide-delete-button button" href="#"><?php _e('delete slide', BU_S_LOCAL); ?></a>
 		<div class="bu-slide-thumb-container">
-			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&post_id=0&TB_iframe=true"><?php _e('Select Image', BU_S_LOCAL); ?></a>
+			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&type=bu_slideshow&post_id=0&TB_iframe=true"><?php _e('Select Image', BU_S_LOCAL); ?></a>
 			<a class="button bu-slideshow-remove-img" href="#"<?php echo $img_thumb ? '' : ' style="display:none;"'; ?>><?php _e('Remove Image', BU_S_LOCAL); ?></a>
 			<input type="hidden" class="bu-slideshow-img-id" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" value="<?php echo esc_attr($this->image_id); ?>" />
 			<input type="hidden" class="bu-slideshow-img-size" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" value="<?php echo esc_attr($this->image_size); ?>" />

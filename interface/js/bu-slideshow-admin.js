@@ -296,11 +296,11 @@ jQuery(document).ready(function($){
 			handleImgThumbResponse : function(response) {
 				var thumb, $el;
 				
+				response = $.parseJSON(response);
 				if (!response || response === '0') {
-					displayError(buSlideshowLocalAdmin.thumbFailError, this.slide);
+					displayError(buSlideshowLocalAdmin.thumbFailError, this.slide.find('.bu-slide-edit-container'), true);
 				} else {
-					response = $.parseJSON(response);
-
+		
 					this.thumbContainers.each(function(index, el) {
 						$el = $(el);
 						thumb = $el.find('img');
@@ -330,7 +330,10 @@ jQuery(document).ready(function($){
 					buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
 						'multiple' : false,
 						'title' : buSlideshowLocalAdmin.mediaUploadTitle,
-						'button' : { 'text' : buSlideshowLocalAdmin.mediaUploadButton }
+						'button' : { 'text' : buSlideshowLocalAdmin.mediaUploadButton },
+						'library' : {
+							'type' : 'image'
+						}
 					});
 					
 					// restore original functionality in case other scripts on page use uploader
@@ -433,13 +436,25 @@ jQuery(document).ready(function($){
 	}
 	
 	/**
-	 * Removes any existing errors and displays new one.
+	 * Removes any existing errors and displays new one. 
 	 */
-	function displayError(msg, target) {
+	function displayError(msg, target, pre) {
+		if ( typeof pre === 'undefined') {
+			pre = false; //append error
+		}
+		
 		$('.error').remove();
 		var html = '<div class="error"><p>' + msg + '</p></div>';
 		
-		target.append(html);
+		if (pre) {
+			target.prepend(html);
+		} else {
+			target.append(html);
+		}
+		
+		setTimeout(function() {
+			$('.error').fadeOut(500);
+		}, 1000);
 	}
 	
 });

@@ -7,6 +7,7 @@
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
 */
+
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
@@ -42,22 +43,30 @@ class BU_Slideshow {
 	static $nav_styles = array('icon', 'number');
 	
 	static $editor_screens = array('page', 'post'); // screens using Add Slideshow button
+	static $image_mimes = array('jpg|jpeg|jpe', 'png', 'gif');
+	static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
 	
 	static public function init() {
 		global $pagenow;
 		
 		self::$wp_version = get_bloginfo('version');
+		self::$upload_error = __(self::$upload_error, BU_S_LOCAL);
 		
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
-		add_action('media_buttons_context', array(__CLASS__, 'add_media_button'),99);
+		// @todo this should use media_buttons per http://core.trac.wordpress.org/ticket/22186, http://core.trac.wordpress.org/ticket/22559
+		add_action('media_buttons_context', array(__CLASS__, 'add_media_button'),99); 
 		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
 		
+		// media upload/insert restrictions
 		if ('media-upload.php' === $pagenow || 'async-upload.php' === $pagenow) {
 			self::media_upload_custom();
 		}
+		add_action('media_upload_bu_slideshow', array(__CLASS__, 'handle_upload'));
+		add_action('pre_get_posts', array(__CLASS__, 'media_library_filter'));
+		add_filter('upload_file_glob', array(__CLASS__, 'flash_file_types')); // does not exist in 3.3+
 		
 		add_action('wp_ajax_bu_delete_slideshow', array(__CLASS__, 'delete_slideshow_ajax'));
 		add_action('wp_ajax_bu_add_slide', array(__CLASS__, 'add_slide_ajax'));
@@ -301,11 +310,50 @@ class BU_Slideshow {
 	 * Handles customizations to media upload for slide images
 	 */
 	static public function media_upload_custom() {
+		
 		$referer = strpos( wp_get_referer(), 'bu_slideshow' );
 		if ($referer !== FALSE) {
-			add_filter('gettext', array(__CLASS__, 'replace_thickbox_text'), 1, 3);
-			add_filter('post_mime_types', array(__CLASS__, 'post_mime_types'));
+			add_filter('gettext', array(__CLASS__, 'replace_thickbox_text'), 99, 3);
+			add_filter('media_upload_tabs', array(__CLASS__, 'remove_url_tab'), 99);
+			add_filter('post_mime_types', array(__CLASS__, 'post_mime_types'), 99);
 		}
+		
+	}
+	
+	/**
+	 * Called when media upload form is first loaded and again when the upload is 
+	 * complete, with the image info in POST. This function exists so we can add
+	 * the mime type filter hook only when the 
+	 */
+	static public function handle_upload() {
+		add_filter('upload_mimes', array(__CLASS__, 'upload_mime_types'), 99);
+		
+		// non-flash upload field
+		if (isset($_POST['html-upload']) && !empty($_FILES)) {
+
+			// uploads the file, inserts the attachment
+			$id = media_handle_upload('async-upload', 0);
+			unset($_FILES);
+			if (is_wp_error($id)) {
+				$errors['upload_error'] = $id;
+				$id = false;
+			}
+		}
+
+		// user has pressed 'insert into post' or equivalent
+		if (!empty($_POST)) {
+			if (is_string($return))
+				return $return;
+			if (is_array($return))
+				$errors = $return;
+		}
+
+		if (isset($_POST['save'])) {
+			$errors['upload_notice'] = __('Saved.');
+		}
+		
+		return wp_iframe('media_upload_type_form', 'bu_slideshow', $errors, $id);
+		
 	}
 	
 	/**
@@ -325,13 +373,27 @@ class BU_Slideshow {
 	}
 	
 	/**
-	 * Restricts uploads to image files and only displays image files when 
-	 * adding from the Media Library
+	 * Remove 'insert from URL' tab, which breaks without a post ID
+	 * 
+	 * @param array $tabs
+	 * @return array
+	 */
+	static public function remove_url_tab($tabs) {
+		
+		unset($tabs['type_url']);
+		
+		return $tabs;
+		
+	}
+	
+	/**
+	 * Restrict 'insert media' filter choices to image file types
 	 * 
 	 * @param array $mime_types
 	 * @return array
 	 */
 	static public function post_mime_types($mime_types) {
+
 		foreach($mime_types as $key => $val) {
 			if ($key !== 'image') {
 				unset($mime_types[$key]);
@@ -339,6 +401,74 @@ class BU_Slideshow {
 		}
 		
 		return $mime_types;
+	}
+	
+	/**
+	 * Restrict media that can be uploaded to images. Is not applied to flash uploader.
+	 * 
+	 * @param array $mime_types
+	 * @return array
+	 */
+	static public function upload_mime_types($mime_types) {
+		
+		foreach($mime_types as $key => $val) {
+			if (!in_array($key, self::$image_mimes)) {
+				unset($mime_types[$key]);
+			}
+		}
+		
+		return $mime_types;
+	}
+	
+	/**
+	 * When Flash uploader is being used on Edit page, restrict allowed file types
+	 * 
+	 * @param string $types
+	 * @return string
+	 */
+	static public function flash_file_types($types) {
+		
+		if (strpos(wp_get_referer(), self::$edit_url) !== false) {
+
+			$new_types = '';
+			foreach (self::$image_mimes as $mime) {
+				if (strpos($mime, 'jpg') !== false) {
+					$submimes = explode('|', $mime);
+					foreach ($submimes as $sub) {
+						$new_types .= $sub . ';';
+					}
+				} else {
+					$new_types .= $mime . ';';
+				}
+			}
+
+			return $new_types;
+			
+		}
+		
+		return $types;
+	}
+	
+	/**
+	 * Restrict query that populates the 'insert from media library' view to images
+	 * 
+	 * @global string $pagenow
+	 * @param obj $query
+	 */
+	static public function media_library_filter($query) {
+		
+		global $pagenow;
+
+		if ($pagenow !== 'media-upload.php') {
+			return;
+		}
+		
+		if (strpos( wp_get_referer(), 'bu_slideshow' ) === false) {
+			return;
+		}
+		
+		$query->set('post_mime_type', 'image');
+		
 	}
 	
 	static public function admin_menu() {
