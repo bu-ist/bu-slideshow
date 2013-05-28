@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2><?php _e('Manage Slideshows', BU_S_LOCAL); ?></h2>
+	<h2><?php _e('Manage Slideshows', BU_S_LOCAL); ?> <a href="<?php echo self::$add_url; ?>" class="button">Add New</a></h2>
 	<div id="bu-slideshow-slides">
 		<ul class="widefat" id="bu-slideshow-manage">
 			
