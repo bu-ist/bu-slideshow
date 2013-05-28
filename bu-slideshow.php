@@ -56,8 +56,7 @@ class BU_Slideshow {
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
-		// @todo this should use media_buttons per http://core.trac.wordpress.org/ticket/22186, http://core.trac.wordpress.org/ticket/22559
-		add_action('media_buttons_context', array(__CLASS__, 'add_media_button'),99); 
+		add_action('media_buttons', array(__CLASS__, 'add_media_button'),99); 
 		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
 		
 		// media upload/insert restrictions
@@ -949,13 +948,14 @@ class BU_Slideshow {
 	 * @param string $context
 	 * @return string
 	 */
-	static public function add_media_button($context) {
+	static public function add_media_button() {
+		
 		if (self::using_editor()) {
 			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_S_LOCAL), __('Add Slideshow', BU_S_LOCAL));
-			$context = $context . $html;
+			
+			echo $html;
 		}
 		
-		return $context;
 	}
 	
 }
