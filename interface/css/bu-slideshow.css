@@ -413,3 +413,9 @@ html.touch .bu-slideshow-arrow-right {
   border-left-color: #cdcdcd;
   border-left-color: rgba(255, 255, 255, 0.7);
 }
+.banner-container .bu-slideshow-slides .bu-slideshow li.slide .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
+  font-size: 14.4px;
+}
+.banner-container .bu-slideshow-slides .bu-slideshow li.slide .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
+  font-size: 12px;
+}
