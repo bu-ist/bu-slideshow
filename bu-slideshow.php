@@ -16,6 +16,12 @@ if (!defined('BU_S_LOCAL')) {
 	define('BU_S_LOCAL', 'BU_Slideshow');
 }
 
+if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
+	define('BU_SSHOW_SUFFIX', '.dev');
+} else {
+	define('BU_SSHOW_SUFFIX', '');
+}
+
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 
@@ -130,15 +136,16 @@ class BU_Slideshow {
 		}
 		
 		if (self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal.js', array('jquery'), false, true);
-			wp_register_style('bu-modal', BU_SLIDESHOW_BASEURL . 'interface/css/bu-modal.css');
+			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
+			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_enqueue_script('bu-modal');
 			wp_enqueue_style('bu-modal');
 		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal.js', array('jquery'), false, true);
-			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin.js', array('jquery', 'bu-modal'), false, true);
+			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
+			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
+			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), false, true);
 			
 			wp_enqueue_script('bu-modal');
 			wp_enqueue_script('bu-slideshow-admin');
@@ -147,6 +154,7 @@ class BU_Slideshow {
 			
 			self::localize('bu-slideshow-admin');
 			
+			wp_enqueue_style('bu-modal');
 			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css');
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
@@ -167,7 +175,7 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/modernizr-dev.js', array(), false, true);
+		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr-dev.js', array(), false, true);
 		
 		$back_compat = false;
 		if (version_compare(self::$wp_version, '3.3', '<')) {
@@ -206,9 +214,12 @@ class BU_Slideshow {
 			$slideshow_deps[] = 'bu-sequence-patch';
 		}
 		
-		wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), false, true);
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/sequence.jquery.js', $seq_deps, false, true);
-		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow.js', $slideshow_deps, false, true);
+		if ($back_compat) {
+			wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), false, true);
+		}
+		
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, false, true);
+		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, false, true);
 	}
 	
 	/**
@@ -216,9 +227,9 @@ class BU_Slideshow {
 	 */
 	static public function selector_scripts_styles() {
 		if (version_compare(self::$wp_version, '3.3', '<')) {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
 		} else {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
 		}
 		
 		wp_enqueue_script('bu-slideshow-selector');

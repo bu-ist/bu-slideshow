@@ -1,0 +1,43 @@
+.bu_modal_bg {
+	background:rgba(0,0,0,0.75);
+	height: 100%;
+	left: 0;
+	position:fixed;
+	top:0;
+	width:100%;
+	z-index:10;
+}
+
+.bu_modal {
+	height:90%;
+	left: 50%;
+	position:fixed;
+	top:0;
+	z-index:10;
+}
+
+.bu_modal .postboxheader {
+	background: #000;
+    height: 24px;
+    left: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: 20px;
+    width: 692px;
+    z-index: 100;
+}
+
+.bu_modal .wrap {
+	margin:0 auto;
+	padding:20px;
+	width:650px;
+}
+
+.bu_modal .postboxheader a.close_btn {
+    color: #EFEFEF;
+    display: block;
+    float: right;
+    padding: 4px;
+    text-decoration: none;
+}

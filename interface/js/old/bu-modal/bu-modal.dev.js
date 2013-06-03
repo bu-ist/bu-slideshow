@@ -76,8 +76,7 @@ jQuery(document).ready(function($) {
 		halfH = parseInt(h / 2);
 
 		this.ui.css({
-			'marginLeft' : '-' + halfW + 'px',
-			'marginTop' : '-' + halfH + 'px'
+			'marginLeft' : '-' + halfW + 'px'
 		});
 		this.isOpen = true;
 
