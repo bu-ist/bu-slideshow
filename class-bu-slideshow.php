@@ -118,10 +118,14 @@ class BU_Slideshow_Instance {
 			case 'public':
 
 				$show_id = esc_attr(self::$id_prefix . $this->id);
-				$show_name = $this->name ? ' ' . str_replace(' ', '-', strtolower(stripslashes($this->name))) : '';
+				$show_name = $this->name ? str_replace(' ', '-', strtolower(stripslashes($this->name))) : '';
+				
+				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
+				$styles = sprintf(' style="width:%s;"', $width);
+				error_log('width: ' . $styles);
 				
 				$container_class = 'bu-slideshow-container';
-				$container_class .= $show_name;
+				$container_class .= ' ' . $show_name;
 				$container_class .= $args['autoplay'] ? ' autoplay' : '';
 
 				// deliberately allowing custom values here
@@ -130,7 +134,7 @@ class BU_Slideshow_Instance {
 				$ul_class_str = esc_attr(join(' ', $ul_classes));
 				$name_att = $show_name ? sprintf(' data-slideshow-name="%s"', $show_name) : '';
 
-				$html = sprintf('<div class="%s" id="%s"%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att);
+				$html = sprintf('<div class="%s" id="%s"%s%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att, $styles);
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {

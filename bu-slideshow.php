@@ -43,7 +43,8 @@ class BU_Slideshow {
 		'transition' => 'slide',
 		'nav_style' => 'icon',
 		'autoplay' => 1,
-		'show_arrows' => 0
+		'show_arrows' => 0,
+		'width' => 'auto'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
 	static $nav_styles = array('icon', 'number');
@@ -840,11 +841,16 @@ class BU_Slideshow {
 			return;
 		}
 		
+		// clean up possible bad att values...
+		
+		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
+			$atts['width'] = 'auto';
+		}
+		
 		if (!in_array($atts['nav_style'], self::$nav_styles)) {
 			$atts['nav_style'] = $att_defaults['nav_style'];
 		}
 		
-		// liberally accept args
 		foreach (array('show_nav', 'autoplay', 'show_arrows') as $var) {
 			if (in_array(strtolower($atts[$var]), $falsish)) {
 				$atts[$var] = 0;
