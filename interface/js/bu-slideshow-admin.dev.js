@@ -119,7 +119,7 @@ jQuery(document).ready(function($){
 				return false;
 			}
 
-			html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '"]';
+			html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" width="' + options.width + '"]';
 
 			window.send_to_editor("<br />" + html + "<br />");
 			selector.reset();
@@ -130,6 +130,69 @@ jQuery(document).ready(function($){
 	
 	/* Edit Slideshow page */
 	if (slideEditor.length) {
+		
+		// Set old WP media modal to correct height
+		var modalHeight, imgHref;
+		modalHeight = $(window).height() * 0.9;
+		
+		/* update slide input names so that new order is saved */
+		function reindexSlides(event, ui) {
+			$('#bu-slideshow-editform-submit').prop('disabled', 'disabled');
+			window.reindexingSlides = true;
+			
+			var regEx = /bu_slides\[([0-9]*)\](.*)/;
+			var name = '';
+			
+			$('.bu-slideshow-slide').each(function(index, el) {
+				$(el).find('input, textarea').each(function(i, e) {
+					var $e = $(e);
+					name = $e.attr('name');
+					name = name.replace(regEx, "bu_slides[" + index + "]$2");
+					$e.attr('name', name);
+				});
+			});
+			
+			$('#bu-slideshow-editform-submit').prop('disabled', false);
+			window.reindexingSlides = false;
+			
+		}
+		
+		/* Make slides sortable */
+		function createPlaceholder(event, ui) {
+			
+			var h = ui.item.height();
+			var w = ui.item.width();
+			$('.sortable-placeholder').outerHeight(h).width(w);
+			
+		}
+		
+		function addSlide(order) {
+			
+			var data = {
+				"action": "bu_add_slide",
+				"order": order
+			};
+			
+			$.post(ajaxurl, data, function(response) {
+				if (!response) {
+					displayError(buSlideshowLocalAdmin.addSlideFailError, $('#bu-slideshow-slidelist'));
+					return;
+				} else {
+					var r = $(response);
+					r.find('.bu-slide-edit-container').css('display', 'none');
+					r.appendTo('#bu-slideshow-slidelist ul');
+					setModalHeight( r.find('.bu-slideshow-add-img') );
+				}
+			});
+			
+		}
+		
+		function setModalHeight($link) {
+		
+			imgHref = $link.attr('href') + '&width=640&height=' + modalHeight;
+			$link.attr('href', imgHref);
+		
+		}
 		
 		$('.bu-slide-edit-container').hide();
 		
@@ -167,34 +230,6 @@ jQuery(document).ready(function($){
 			
 			return (!window.reindexingSlides);
 		});
-		
-		/* update slide input names so that new order is saved */
-		function reindexSlides(event, ui) {
-			$('#bu-slideshow-editform-submit').prop('disabled', 'disabled');
-			window.reindexingSlides = true;
-			
-			var regEx = /bu_slides\[([0-9]*)\](.*)/;
-			var name = '';
-			
-			$('.bu-slideshow-slide').each(function(index, el) {
-				$(el).find('input, textarea').each(function(i, e) {
-					var $e = $(e);
-					name = $e.attr('name');
-					name = name.replace(regEx, "bu_slides[" + index + "]$2");
-					$e.attr('name', name);
-				});
-			});
-			
-			$('#bu-slideshow-editform-submit').prop('disabled', false);
-			window.reindexingSlides = false;
-		}
-		
-		/* Make slides sortable */
-		function createPlaceholder(event, ui) {
-			var h = ui.item.height();
-			var w = ui.item.width();
-			$('.sortable-placeholder').outerHeight(h).width(w);
-		}
 		
 		$('#bu-slideshow-slidelist ul').sortable({
 			stop: reindexSlides,
@@ -287,7 +322,13 @@ jQuery(document).ready(function($){
 					
 					that.setImageDetails(imgId, imgSize);
 
-					that.getImgThumb(imgId);
+					data = {
+						"action": 'bu_get_slide_thumb',
+						"image_id": imgId
+					};
+					$.post(ajaxurl, data, function(response) {
+						that.handleImgThumbResponse(response);
+					});
 
 					tb_remove();
 				}
@@ -402,7 +443,7 @@ jQuery(document).ready(function($){
 				this.imgSizeField.val(size);
 			}
 			
-		}
+		};
 		
 		$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-add-img', function(e) {
 			window.buUploaders.init(this);
@@ -416,23 +457,10 @@ jQuery(document).ready(function($){
 			return false;
 		});
 		
-		function addSlide(order) {
-			var data = {
-				"action": "bu_add_slide",
-				"order": order
-			};
-			
-			$.post(ajaxurl, data, function(response) {
-				if (!response) {
-					displayError(buSlideshowLocalAdmin.addSlideFailError, $('#bu-slideshow-slidelist'));
-					return;
-				} else {
-					var r = $(response);
-					r.find('.bu-slide-edit-container').css('display', 'none');
-					r.appendTo('#bu-slideshow-slidelist ul');
-				}
-			});
-		}
+		$('#bu-slideshow-slidelist .bu-slideshow-add-img').each(function() {
+			setModalHeight($(this));
+		});
+		
 	}
 	
 	/**

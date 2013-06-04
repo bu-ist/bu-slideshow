@@ -54,7 +54,7 @@
 			</p>
 			<p>
 				<label for="bu_slideshow_custom_trans"><?php _e('Custom Transition:', BU_S_LOCAL); ?></label><br />
-				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php echo $args['custom_trans']; ?>" /><br />
+				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php if (isset($args['custom_trans'])) echo $args['custom_trans']; ?>" /><br />
 				<em><small>Overrides transition selected above. You must provide custom CSS transition code if you enter a value here.</small></em>
 			</p>
 		</div>

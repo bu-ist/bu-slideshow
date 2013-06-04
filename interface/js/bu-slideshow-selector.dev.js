@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 	
-	window.SlideshowSelector = function(el) {
+	window.SlideshowSelector = function SlideshowSelector(el) {
 		
 		if ( !(this instanceof SlideshowSelector)) {
 			return new ReferenceError('Contstructor invoked as regular function. Use "new" operator.');
@@ -12,30 +12,30 @@ jQuery(document).ready(function($){
 		}
 		
 		this.init();
-		this.manageCustomField();
 	};
 	
 	SlideshowSelector.prototype.init = function() {
-		this.customField = this.ui.find('#bu_slideshow_custom_transition');
-		this.transitionSelect = this.ui.find('#bu_slideshow_select_transition');
+		this.advancedToggle = this.ui.find('.bu-slideshow-advanced-toggle');
+		this.advanced = this.ui.find('.bu-slideshow-selector-advanced');
 		
+		this.advanced.hide();
 		this.addHandlers();
 	};
 	
 	SlideshowSelector.prototype.addHandlers = function() {
 		var that = this;
 		
-		this.transitionSelect.on('change', function() {
-			that.manageCustomField();
+		that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
+			if (that.advanced.is(':hidden')) {
+				that.advanced.slideDown(200);
+				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
+			} else {
+				that.advanced.slideUp(200);
+				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextShow);
+			}
+
+			return false;
 		});
-	};
-	
-	SlideshowSelector.prototype.manageCustomField = function() {
-		if (this.transitionSelect.val() === 'custom') {
-			this.customField.show();
-		} else {
-			this.customField.hide();
-		}
 	};
 	
 	SlideshowSelector.prototype.getOptions = function() {
@@ -44,11 +44,13 @@ jQuery(document).ready(function($){
 		options.show_id = this.ui.find('#bu_slideshow_selected').val();
 		options.show_nav = this.ui.find('#bu_slideshow_show_nav').is(':checked') ? 1 : 0;
 		options.transition = this.ui.find('#bu_slideshow_select_transition').val();
-		options.custom_transition = this.ui.find('#bu_slideshow_custom_transition').val().replace(' ', '');
+		options.custom_transition = this.ui.find('#bu_slideshow_custom_trans').val().replace(' ', '');
 		options.nav_style = this.ui.find('#bu_slideshow_nav_style').val();
 		options.autoplay = this.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
+		options.width = this.ui.find('#bu_slideshow_width').val();
 
-		if (options.transition === 'custom') {
+		// override transition with custom transition if provided
+		if (options.custom_transition.length > 0) {
 			options.transition = options.custom_transition;
 			var rplcd = {
 				'[' : '',
@@ -56,8 +58,12 @@ jQuery(document).ready(function($){
 				'"' : ''
 			};
 			for (var r in rplcd) {
-				options.transition = options.transition.replace(r, rplcd.r);
+				options.transition = options.transition.replace(r, rplcd[r]);
 			}
+		}
+		
+		if (options.width.length === 0) {
+			options.width = 'auto';
 		}
 
 		return options;
@@ -68,14 +74,13 @@ jQuery(document).ready(function($){
 
 		slideSel = this.ui.find('#bu_slideshow_selected');
 		slideSel.val(slideSel.find('option:first').val());
-
 		transSel = this.ui.find('#bu_slideshow_select_transition');
 		transSel.val(transSel.find('option:first').val());
-
 		navSel = this.ui.find('#bu_slideshow_nav_style');
 		navSel.val(navSel.find('option:first').val());
 		
-		this.ui.find('#bu_slideshow_custom_transition').hide();
+		this.ui.find('#bu_slideshow_width').val('');
+		this.ui.find('#bu_slideshow_custom_trans').val('');
 
 		this.ui.find('#bu_slideshow_show_nav').prop('checked', true);
 		this.ui.find('#bu_slideshow_custom_transition').val('');

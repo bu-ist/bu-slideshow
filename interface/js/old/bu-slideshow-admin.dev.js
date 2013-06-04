@@ -122,7 +122,7 @@ jQuery(document).ready(function($){
 				return false;
 			}
 
-			html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '"]';
+			html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" width="' + options.width + '"]';
 
 			window.send_to_editor("<br />" + html + "<br />");
 			selector.reset();
@@ -315,13 +315,11 @@ jQuery(document).ready(function($){
 					r = regex.exec(imgClass);
 					imgId = r[1]
 
-					that.imgIdField.val(imgId);
-
 					regex = /size-([a-zA-Z]*)/i;
 					r = regex.exec(imgClass);
 					imgSize = r[1];
-
-					that.imgSizeField.val(imgSize);
+					
+					that.setImageDetails(imgId, imgSize);
 
 					data = {
 						"action": 'bu_get_slide_thumb',
@@ -329,31 +327,37 @@ jQuery(document).ready(function($){
 					};
 					$.post(ajaxurl, data, function(response) {
 						that.handleImgThumbResponse(response);
-					})
+					});
 
 					tb_remove();
 				}
 			},
 			
 			handleImgThumbResponse : function(response) {
-				var thumb;
+				var thumb, $el;
 				
+				response = $.parseJSON(response);
 				if (!response || response === '0') {
-					displayError(buSlideshowLocalAdmin.thumbFailError, this.slide);
+					displayError(buSlideshowLocalAdmin.thumbFailError, this.slide.find('.bu-slide-edit-container'), true);
 				} else {
-					response = $.parseJSON(response);
 
 					this.thumbContainers.each(function(index, el) {
-						thumb = $(el).find('img');
+						$el = $(el);
+						thumb = $el.find('img');
 						if (thumb.length) {
 							thumb.attr('src', response[0]);
 						} else {
-							$(el).append('<img src="' + response[0] + '" alt="' + buSlideshowLocalAdmin.thumbAltText + '" />');
+							$el.append('<img src="' + response[0] + '" alt="' + buSlideshowLocalAdmin.thumbAltText + '" />');
 						}
 					});
 					
 					this.removeButton.show();
 				}
+			},
+			
+			setImageDetails : function(id, size) {
+				this.imgIdField.val(id);
+				this.imgSizeField.val(size);
 			}
 			
 		};
@@ -375,18 +379,28 @@ jQuery(document).ready(function($){
 			setModalHeight($(this));
 		});
 		
-		
 	}
 	
 	/**
 	 * Removes any existing errors and displays new one.
 	 */
-	function displayError(msg, target) {
-		target.find('.error').remove();
+	function displayError(msg, target, pre) {
+		if ( typeof pre === 'undefined') {
+			pre = false; //append error
+		}
+		
+		$('.error').remove();
 		var html = '<div class="error"><p>' + msg + '</p></div>';
 		
-		target.append(html);
+		if (pre) {
+			target.prepend(html);
+		} else {
+			target.append(html);
+		}
 		
+		setTimeout(function() {
+			$('.error').fadeOut(500);
+		}, 1000);
 	}
 	
 });
