@@ -237,6 +237,8 @@ class BU_Slideshow {
 		
 		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css');
 		wp_enqueue_style('bu-slideshow-selector');
+		
+		self::localize('bu-slideshow-selector');
 	}
 	
 	/**
@@ -263,6 +265,13 @@ class BU_Slideshow {
 				wp_localize_script($script, 'buSlideshowLocalAdmin', $local);
 				
 				break;
+			
+			case 'bu-slideshow-selector':
+				$local = array(
+					'toggleTextShow' => __('Show advanced'),
+					'toggleTextHide' => __('Hide advanced')
+				);
+				wp_localize_script($script, 'buSlideshowLocalSelector', $local);
 			
 			default:
 				break;

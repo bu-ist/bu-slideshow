@@ -5,6 +5,10 @@
     padding: 1em;
 }
 
+.bu-slideshow-selector-basic {
+	overflow:hidden;
+}
+
 .bu-slideshow-selector p {
 	margin-bottom:1em;
 }
