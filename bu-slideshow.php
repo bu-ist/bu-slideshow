@@ -61,7 +61,7 @@ class BU_Slideshow {
 		self::$upload_error = __(self::$upload_error, BU_S_LOCAL);
 		
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
-		add_action('init', array(__CLASS__, 'add_post_support'));
+		add_action('init', array(__CLASS__, 'add_post_support'),99);
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
