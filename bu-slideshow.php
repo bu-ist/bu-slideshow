@@ -30,6 +30,8 @@ class BU_Slideshow {
 	
 	static $meta_key = 'bu_slideshows';
 	static $show_id_meta_key = 'bu_slideshow_last_id';
+	static $post_support_slug = 'bu_slideshow';
+	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -49,7 +51,6 @@ class BU_Slideshow {
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
 	static $nav_styles = array('icon', 'number');
 	
-	static $editor_screens = array('page', 'post'); // screens using Add Slideshow button
 	static $image_mimes = array('jpg|jpeg|jpe', 'png', 'gif');
 	static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
 	
@@ -60,6 +61,7 @@ class BU_Slideshow {
 		self::$upload_error = __(self::$upload_error, BU_S_LOCAL);
 		
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
+		add_action('init', array(__CLASS__, 'add_post_support'));
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
@@ -89,22 +91,28 @@ class BU_Slideshow {
 		}
 	}
 	
+	static public function add_post_support() {
+		$post_types = apply_filters('bu_slideshow_supported_post_types', self::$supported_post_types);
+		
+		if (!is_array($post_types)) {
+			$post_types = array();
+		}
+		
+		foreach ($post_types as $pt) {
+			add_post_type_support($pt, self::$post_support_slug);
+		}
+	}
+	
 	/**
 	 * Loads admin scripts/styles on plugin's pages. Add a page's id using by hooking
 	 * the bu_slideshow_selector_pages filter to load the selector scripts/styles.
-	 * 
-	 * Scripts/styles loaded only as needed for various modules: slideshow admin pages,
-	 * the selector UI, and the modal that contains selector UI.
 	 * 
 	 * @global type $current_screen
 	 */
 	static public function admin_scripts_styles() {
 		global $current_screen;
 		
-		$selector_pages = self::$editor_screens;
-		$selector_pages = apply_filters('bu_slideshow_selector_pages', $selector_pages);
-		
-		if (in_array($current_screen->id, $selector_pages)) {
+		if (self::using_editor()) {
 			self::selector_scripts_styles();
 		}
 		
@@ -134,13 +142,6 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		if ($back_compat) {
 			$js_url .= BU_SLIDESHOW_OLDJS;
-		}
-		
-		if (self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
-			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
-			wp_enqueue_script('bu-modal');
-			wp_enqueue_style('bu-modal');
 		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
@@ -938,14 +939,9 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function using_editor() {
-		global $current_screen;
+		global $post;
 		
-		$screens = apply_filters('bu_slideshow_editor_screens', self::$editor_screens);
-		if (!is_array($screens)) {
-			$screens = array();
-		}
-		
-		if (in_array($current_screen->id, $screens)) {
+		if ($post->post_type && post_type_supports($post->post_type, self::$post_support_slug)) {
 			return true;
 		}
 		
@@ -1004,5 +1000,14 @@ if (!function_exists('bu_get_slideshow')) {
 		ob_end_clean();
 		
 		return $html;
+	}
+}
+
+/**
+ * For use by third party code that uses the Slideshow Selector UI.
+ */
+if (!function_exists('bu_enqueue_slideshow_selector')) {
+	function bu_enqueue_slideshow_selector() {
+		BU_Slideshow::selector_scripts_styles();
 	}
 }

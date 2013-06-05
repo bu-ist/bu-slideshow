@@ -122,7 +122,6 @@ class BU_Slideshow_Instance {
 				
 				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
 				$styles = sprintf(' style="width:%s;"', $width);
-				error_log('width: ' . $styles);
 				
 				$container_class = 'bu-slideshow-container';
 				$container_class .= ' ' . $show_name;
