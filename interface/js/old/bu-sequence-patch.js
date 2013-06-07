@@ -2,7 +2,6 @@
 
 (function($) {
 	if (typeof $.fn.on !== 'function') {
-		console.log('no jQuery on defined');
 		$.fn.on = $.fn.bind;
 	}
 })(jQuery);

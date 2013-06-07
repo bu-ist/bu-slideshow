@@ -5,7 +5,7 @@
 	position:fixed;
 	top:0;
 	width:100%;
-	z-index:10;
+	z-index:100; /* to top WP admin menu */
 }
 
 .bu_modal {
@@ -13,7 +13,7 @@
 	left: 50%;
 	position:fixed;
 	top:0;
-	z-index:10;
+	z-index:110;
 }
 
 .bu_modal .postboxheader {
@@ -25,7 +25,7 @@
     position: relative;
     top: 20px;
     width: 692px;
-    z-index: 100;
+    z-index: 110;
 }
 
 .bu_modal .wrap {
@@ -40,4 +40,9 @@
     float: right;
     padding: 4px;
     text-decoration: none;
+}
+
+/* fallback overlay background */
+.no-rgba .bu_modal_bg {
+	background:url('../img/bg.png') transparent repeat;
 }

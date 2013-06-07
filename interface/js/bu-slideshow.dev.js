@@ -1,3 +1,7 @@
+/* IE triggers resize all over the place, so we check actual window dimensions */
+windowHeight = jQuery(window)[0].scrollHeight;
+windowWidth = jQuery(window)[0].scrollWidth;
+
 jQuery(document).ready(function($) {
 	window.buSlideshows = {};
 	var container, pagerId, options, args, rotator, imgHeight;
@@ -21,7 +25,7 @@ jQuery(document).ready(function($) {
 		
 		
 		this.init(args);
-	}
+	};
 	
 	BuSlideshow.prototype.init = function(args) {
 		var that = this;
@@ -109,7 +113,11 @@ jQuery(document).ready(function($) {
 		
 	});
 
+	/**
+	 * Resizes slideshow and all slides to height of highest slide
+	 */
 	function bu_resize_slideshow() {
+		
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this), slides = container.find('li .bu-slide-container'), $el, height = 0, currentHeight = 0;
 
@@ -132,8 +140,24 @@ jQuery(document).ready(function($) {
 		
 	}
 	
+	/**
+	 * Dear IE: is this really a resize event? 
+	 */
 	$(window).on('resize', function() {
-		bu_resize_slideshow();
+		
+		var currentHeight, currentWidth;
+		
+		currentHeight = $(window)[0].scrollHeight;
+		currentWidth = $(window)[0].scrollWidth;
+		
+		if (currentHeight !== windowHeight || currentWidth !== windowWidth) {
+			
+			windowHeight = currentHeight;
+			windowWidth = currentWidth;
+			bu_resize_slideshow();
+		
+		}
+		
 	});
 	
 });

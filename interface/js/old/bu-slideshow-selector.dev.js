@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
 	window.SlideshowSelector = function SlideshowSelector(el) {
 		
 		if ( !(this instanceof SlideshowSelector)) {
-			return new ReferenceError('Contstructor invoked as regular function. Use "new" operator.');
+			return new SlideshowSelector(el);
 		}
 		
 		this.ui = $(el);

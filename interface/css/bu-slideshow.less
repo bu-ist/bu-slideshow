@@ -73,9 +73,6 @@
 		-webkit-transition-property:border-right-color;
 		transition-property:border-right-color;
 
-		// ie7
-		*background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
-
 		&:hover {
 			border-right-color:@white-fallback-fade;
 			border-right-color:@white-fade;
@@ -100,9 +97,6 @@
 		-moz-transition-property:border-left-color;
 		-webkit-transition-property:border-left-color;
 		transition-property:border-left-color;
-
-		// ie7
-		*background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
 
 		&:hover {
 			border-left-color:@white-fallback-fade;
@@ -430,6 +424,61 @@ html.touch .bu-slideshow-arrow-right {
 
 			}
 
+		}
+
+	}
+
+}
+
+// ie7 hacks
+*+html {
+
+	.bu-slideshow-navigation-container {
+
+		.nav-icon {
+
+			li {
+
+				a {
+					display:block;
+					float:left;
+					margin-right: 0.6em;
+				}
+
+			}
+
+		}
+
+		.nav-number {
+
+			li {
+
+				a {
+					color: @white-fallback-fade;
+				}
+
+			}
+
+		}
+
+	}
+
+	.bu-slideshow-arrow-right {
+		
+		background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
+
+		&:hover {
+			background: url("../img/arrows.png") no-repeat scroll 0 -24px transparent;
+		}
+
+	}
+
+	.bu-slideshow-arrow-left {
+
+		background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
+
+		&:hover {
+			background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
 		}
 
 	}

@@ -72,7 +72,6 @@
   -moz-transition-property: border-right-color;
   -webkit-transition-property: border-right-color;
   transition-property: border-right-color;
-  *background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left:hover,
 .bu-slideshow-container .bu-slideshow-arrow-left:active {
@@ -124,7 +123,6 @@
   -moz-transition-property: border-left-color;
   -webkit-transition-property: border-left-color;
   transition-property: border-left-color;
-  *background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right:hover,
 .bu-slideshow-container .bu-slideshow-arrow-right:active {
@@ -418,4 +416,24 @@ html.touch .bu-slideshow-arrow-right {
 }
 .banner-container .bu-slideshow-slides .bu-slideshow li.slide .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
   font-size: 12px;
+}
+* + html .bu-slideshow-navigation-container .nav-icon li a {
+  display: block;
+  float: left;
+  margin-right: 0.6em;
+}
+* + html .bu-slideshow-navigation-container .nav-number li a {
+  color: #cdcdcd;
+}
+* + html .bu-slideshow-arrow-right {
+  background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
+}
+* + html .bu-slideshow-arrow-right:hover {
+  background: url("../img/arrows.png") no-repeat scroll 0 -24px transparent;
+}
+* + html .bu-slideshow-arrow-left {
+  background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
+}
+* + html .bu-slideshow-arrow-left:hover {
+  background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
 }

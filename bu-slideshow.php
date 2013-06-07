@@ -145,7 +145,7 @@ class BU_Slideshow {
 		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
+			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, false);
 			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), false, true);
 			
