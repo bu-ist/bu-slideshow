@@ -177,7 +177,7 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr-dev.js', array(), false, true);
+		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), false, true);
 		
 		$back_compat = false;
 		if (version_compare(self::$wp_version, '3.3', '<')) {
