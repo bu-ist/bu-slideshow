@@ -81,6 +81,10 @@ class BU_Slideshow_Instance {
 	
 	/**
 	 * Save changes to this slideshow.
+	 * 
+	 * Note: using delete/add option instead of update because of 
+	 * https://core.trac.wordpress.org/ticket/23381
+	 * 
 	 * @return int
 	 */
 	public function update() {
@@ -88,7 +92,8 @@ class BU_Slideshow_Instance {
 		$all_slideshows = BU_Slideshow::get_slideshows();
 		$all_slideshows[$this->id] = $this;
 		
-		update_option(BU_Slideshow::$meta_key, $all_slideshows);
+		delete_option(BU_Slideshow::$meta_key);
+		add_option(BU_Slideshow::$meta_key, $all_slideshows);
 		
 		return 1;
 	}

@@ -611,6 +611,10 @@ class BU_Slideshow {
 	
 	/**
 	 * Deletes slideshow with given id if it exists.
+	 * 
+	 * Note: using delete/add option instead of update option because of 
+	 * https://core.trac.wordpress.org/ticket/23381
+	 * 
 	 * @param int $id
 	 * @return int
 	 */
@@ -622,7 +626,8 @@ class BU_Slideshow {
 		$all_slideshows = self::get_slideshows();
 		
 		unset($all_slideshows[$id]);
-		update_option(self::$meta_key, $all_slideshows);
+		delete_option(self::$meta_key);
+		add_option(self::$meta_key, $all_slideshows);
 		
 		return 1;
 	}
