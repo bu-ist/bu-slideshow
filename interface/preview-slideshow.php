@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2><?php _e('Preview Slideshow', BU_S_LOCAL); ?></h2>
+	<h2><?php _e('Preview Slideshow', BU_SSHOW_LOCAL); ?></h2>
 	
 	<div id="bu-slideshow-preview">
 		
@@ -12,9 +12,9 @@
 		<?php self::shortcode_handler(array("show_id" => $id)); ?>
 		
 	<?php } ?>
-		<h4><?php _e('Note', BU_S_LOCAL); ?></h4>
-		<p><?php _e('This preview uses the default settings. When you add this slideshow to a page, you will be able to customize the display settings.', BU_S_LOCAL); ?></p>
-		<p><?php _e(sprintf('Return to <a href="%s">Manage Slideshows</a></p>', self::$manage_url), BU_S_LOCAL); ?>
+		<h4><?php _e('Note', BU_SSHOW_LOCAL); ?></h4>
+		<p><?php _e('This preview uses the default settings. When you add this slideshow to a page, you will be able to customize the display settings.', BU_SSHOW_LOCAL); ?></p>
+		<p><?php _e(sprintf('Return to <a href="%s">Manage Slideshows</a></p>', self::$manage_url), BU_SSHOW_LOCAL); ?>
 	</div>
 	<?php 
 	/* load scripts for shortcode */

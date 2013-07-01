@@ -6,14 +6,16 @@
  Version: 1.0
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
+ * 
+ * Currently supports WP 3.1 and 3.5.X. In the future only 3.5.X+ should be supported.
 */
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
 
-if (!defined('BU_S_LOCAL')) {
-	define('BU_S_LOCAL', 'BU_Slideshow');
+if (!defined('BU_SSHOW_LOCAL')) {
+	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
 
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
@@ -58,7 +60,7 @@ class BU_Slideshow {
 		global $pagenow;
 		
 		self::$wp_version = get_bloginfo('version');
-		self::$upload_error = __(self::$upload_error, BU_S_LOCAL);
+		self::$upload_error = __(self::$upload_error, BU_SSHOW_LOCAL);
 		
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
 		add_action('init', array(__CLASS__, 'add_post_support'),99);
@@ -251,17 +253,17 @@ class BU_Slideshow {
 			
 			case 'bu-slideshow-admin':
 				$local = array(
-					'noSlideshowsMsg' => __('No slideshows yet.', BU_S_LOCAL),
-					'addButtonText' => __('Add a slideshow', BU_S_LOCAL),
-					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_S_LOCAL),
-					'deleteError' => __('Could not delete slideshow.', BU_S_LOCAL),
-					'noneSelectedError' => __('You must select a slideshow.', BU_S_LOCAL),
-					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_S_LOCAL),
-					'thumbFailError' => __('Could not load image thumbnail.', BU_S_LOCAL),
-					'thumbAltText' => __('thumbnail for this slide\'s image', BU_S_LOCAL),
-					'addSlideFailError' => __('Could not create new slide.', BU_S_LOCAL),
-					'mediaUploadTitle' => __('Select Image', BU_S_LOCAL),
-					'mediaUploadButton' => __('Select Image', BU_S_LOCAL)
+					'noSlideshowsMsg' => __('No slideshows yet.', BU_SSHOW_LOCAL),
+					'addButtonText' => __('Add a slideshow', BU_SSHOW_LOCAL),
+					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_SSHOW_LOCAL),
+					'deleteError' => __('Could not delete slideshow.', BU_SSHOW_LOCAL),
+					'noneSelectedError' => __('You must select a slideshow.', BU_SSHOW_LOCAL),
+					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
+					'thumbFailError' => __('Could not load image thumbnail.', BU_SSHOW_LOCAL),
+					'thumbAltText' => __('thumbnail for this slide\'s image', BU_SSHOW_LOCAL),
+					'addSlideFailError' => __('Could not create new slide.', BU_SSHOW_LOCAL),
+					'mediaUploadTitle' => __('Select Image', BU_SSHOW_LOCAL),
+					'mediaUploadButton' => __('Select Image', BU_SSHOW_LOCAL)
 				);
 				wp_localize_script($script, 'buSlideshowLocalAdmin', $local);
 				
@@ -387,7 +389,7 @@ class BU_Slideshow {
 	 */
 	static public function replace_thickbox_text($translated_text, $text, $domain) {
 		if ($text === 'Insert into Post') {
-			return __('Select Image', BU_S_LOCAL);
+			return __('Select Image', BU_SSHOW_LOCAL);
 		}
 		
 		return $translated_text;
@@ -493,10 +495,10 @@ class BU_Slideshow {
 	}
 	
 	static public function admin_menu() {
-		add_menu_page(__('Slideshows', BU_S_LOCAL), __('Slideshows', BU_S_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), '', 21);
-		add_submenu_page('bu-slideshow', __('Add Slideshow', BU_S_LOCAL), __('Add Slideshow', BU_S_LOCAL), self::$min_cap, 'bu-add-slideshow', array(__CLASS__, 'add_slideshow_page'));
-		add_submenu_page('bu-preview-slideshow', __('Preview Slideshow', BU_S_LOCAL), __('Preview Slideshow', BU_S_LOCAL), self::$min_cap, 'bu-preview-slideshow', array(__CLASS__, 'preview_slideshow_page'));
-		add_submenu_page('bu-edit-slideshow', __('Edit Slideshow', BU_S_LOCAL), __('Edit Slideshow', BU_S_LOCAL), self::$min_cap, 'bu-edit-slideshow', array(__CLASS__, 'edit_slideshow_page'));
+		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), '', 21);
+		add_submenu_page('bu-slideshow', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-add-slideshow', array(__CLASS__, 'add_slideshow_page'));
+		add_submenu_page('bu-preview-slideshow', __('Preview Slideshow', BU_SSHOW_LOCAL), __('Preview Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-preview-slideshow', array(__CLASS__, 'preview_slideshow_page'));
+		add_submenu_page('bu-edit-slideshow', __('Edit Slideshow', BU_SSHOW_LOCAL), __('Edit Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-edit-slideshow', array(__CLASS__, 'edit_slideshow_page'));
 	}
 	
 	/**
@@ -506,19 +508,19 @@ class BU_Slideshow {
 		$msg = '';
 		if (isset($_POST['bu-new-slideshow-name'])) {
 			if (!isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_add_slideshow')) {
-				wp_die(__('You are not authorized to perform this action.', BU_S_LOCAL));
+				wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
 			}
 			
 			if (!current_user_can(self::$min_cap)) {
-				wp_die(__('You do not have permission to add a new slideshow.', BU_S_LOCAL));
+				wp_die(__('You do not have permission to add a new slideshow.', BU_SSHOW_LOCAL));
 			}
 
 			if (!isset($_POST['bu-new-slideshow-name']) || trim($_POST['bu-new-slideshow-name']) === '') {
-				$msg = __('You must enter a name for the slideshow.', BU_S_LOCAL); 
+				$msg = __('You must enter a name for the slideshow.', BU_SSHOW_LOCAL); 
 			} else {
 				
 				$show = self::create_slideshow(trim($_POST['bu-new-slideshow-name']));
-				$msg = sprintf(__('Slideshow "%s" successfully created. <a href="%s&amp;bu_slideshow_id=%s">Edit this slideshow.</a>', BU_S_LOCAL), esc_html(stripslashes($show->name)), self::$edit_url, $show->id);
+				$msg = sprintf(__('Slideshow "%s" successfully created. <a href="%s&amp;bu_slideshow_id=%s">Edit this slideshow.</a>', BU_SSHOW_LOCAL), esc_html(stripslashes($show->name)), self::$edit_url, $show->id);
 				
 			}
 		}
@@ -544,7 +546,7 @@ class BU_Slideshow {
 			$id = intval($_GET['bu_slideshow_id']);
 			
 			if (!self::slideshow_exists($id)) {
-				$msg = __("Could not find slideshow.", BU_S_LOCAL);
+				$msg = __("Could not find slideshow.", BU_SSHOW_LOCAL);
 				$id = false;
 			}
 			
@@ -560,7 +562,7 @@ class BU_Slideshow {
 	 */
 	static public function create_slideshow($name) {
 		if (!is_string($name) || !trim($name)) {
-			return new WP_Error(__('invalid argument', BU_S_LOCAL), __('Invalid name supplied for slideshow.', BU_S_LOCAL));
+			return new WP_Error(__('invalid argument', BU_SSHOW_LOCAL), __('Invalid name supplied for slideshow.', BU_SSHOW_LOCAL));
 		}
 		
 		$show = new BU_Slideshow_Instance();
@@ -588,15 +590,15 @@ class BU_Slideshow {
 	static public function delete_slideshow_ajax() {
 
 		if (!isset($_POST['bu_slideshow_nonce'])) {
-			wp_die(__("You are not authorized to perform that action.", BU_S_LOCAL));
+			wp_die(__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
 		}
 
 		if (!wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_delete_slideshow')) {
-			wp_die(__("You are not authorized to perform that action.", BU_S_LOCAL));
+			wp_die(__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
 		}
 
 		if (!current_user_can(self::$min_cap)) {
-			wp_die(__("You do not have the necessary permissions to delete slideshows.", BU_S_LOCAL));
+			wp_die(__("You do not have the necessary permissions to delete slideshows.", BU_SSHOW_LOCAL));
 		}
 		
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
@@ -676,11 +678,11 @@ class BU_Slideshow {
 		if ( isset($_POST['bu_slideshow_edit_show']) && $_POST['bu_slideshow_edit_show'] ) {
 			
 			if (!isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow')) {
-				wp_die(__("You are not authorized to perform this action.", BU_S_LOCAL));
+				wp_die(__("You are not authorized to perform this action.", BU_SSHOW_LOCAL));
 			}
 
 			if (!current_user_can(self::$min_cap)) {
-				wp_die(__("You do not have the necessary permissions to update slideshows.", BU_S_LOCAL));
+				wp_die(__("You do not have the necessary permissions to update slideshows.", BU_SSHOW_LOCAL));
 			}
 			
 			$is_update = true;
@@ -690,7 +692,7 @@ class BU_Slideshow {
 			foreach ($req as $r) {
 				if (!isset($_POST[$r]) || empty($_POST[$r])) {
 					$is_update = false;
-					$msg .= sprintf(__('Could not update slideshow: missing or invalid %s. ', BU_S_LOCAL), $r);
+					$msg .= sprintf(__('Could not update slideshow: missing or invalid %s. ', BU_SSHOW_LOCAL), $r);
 				}
 			}
 			
@@ -703,7 +705,7 @@ class BU_Slideshow {
 			if ($is_update) {
 				
 				if (!self::slideshow_exists(intval($_POST['bu_slideshow_id']))) {
-					$msg .= __('Could not find slideshow.', BU_S_LOCAL);
+					$msg .= __('Could not find slideshow.', BU_SSHOW_LOCAL);
 				} else {
 					
 					$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
@@ -729,9 +731,9 @@ class BU_Slideshow {
 					$show->set_slides($slides);
 
 					if ($show->update()) {
-						$msg .= __("Slideshow updated successfully.", BU_S_LOCAL);
+						$msg .= __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
 					} else {
-						$msg .= __("Slideshow did not save succesfully.", BU_S_LOCAL);
+						$msg .= __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
 					}
 				
 				}
@@ -960,9 +962,9 @@ class BU_Slideshow {
 		if (self::using_editor()):   ?>
 			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 				
-				<h2><?php _e('Insert Slideshow', BU_S_LOCAL); ?></h2>
+				<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
 				<?php echo self::get_selector(); ?>
-				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_S_LOCAL); ?></a></p>
+				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
 			</div>
 				
 		<?php
@@ -978,7 +980,7 @@ class BU_Slideshow {
 	static public function add_media_button() {
 		
 		if (self::using_editor()) {
-			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_S_LOCAL), __('Add Slideshow', BU_S_LOCAL));
+			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL));
 			
 			echo $html;
 		}

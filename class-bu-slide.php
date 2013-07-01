@@ -2,8 +2,8 @@
 require_once plugin_dir_path(__FILE__) . 'bu-slideshow.php';
 require_once plugin_dir_path(__FILE__) . 'class-bu-slideshow.php';
 
-if (!defined('BU_S_LOCAL')) {
-	define('BU_S_LOCAL', 'BU_Slideshow');
+if (!defined('BU_SSHOW_LOCAL')) {
+	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
 
 class BU_Slide {
@@ -21,7 +21,7 @@ class BU_Slide {
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
-		$this->caption['title'] = __('Untitled Slide', BU_S_LOCAL);
+		$this->caption['title'] = __('Untitled Slide', BU_SSHOW_LOCAL);
 		
 		foreach ($this as $prop => $val) {
 			if (isset($args[$prop])) {

@@ -2,8 +2,8 @@
 require_once plugin_dir_path(__FILE__) . 'bu-slideshow.php';
 require_once plugin_dir_path(__FILE__) . 'class-bu-slide.php';
 
-if (!defined('BU_S_LOCAL')) {
-	define('BU_S_LOCAL', 'BU_Slideshow');
+if (!defined('BU_SSHOW_LOCAL')) {
+	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
 
 class BU_Slideshow_Instance {
@@ -25,7 +25,7 @@ class BU_Slideshow_Instance {
 			$args = array();
 		}
 		
-		$this->name = __('Untitled Slideshow', BU_S_LOCAL);
+		$this->name = __('Untitled Slideshow', BU_SSHOW_LOCAL);
 		$id = BU_Slideshow::get_new_id();
 		$this->id = $id;
 		
