@@ -66,7 +66,7 @@
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
   border-right-color: #686868;
-  border-right-color: rgba(0, 0, 0, 0.55);
+  border-right-color: rgba(0, 0, 0, 0.35);
   border-radius: 0 4px 4px 0;
   left: 0;
   -moz-transition-property: border-right-color;
@@ -117,7 +117,7 @@
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
   border-left-color: #686868;
-  border-left-color: rgba(0, 0, 0, 0.55);
+  border-left-color: rgba(0, 0, 0, 0.35);
   border-radius: 4px 0 0 4px;
   right: 0;
   -moz-transition-property: border-left-color;
@@ -183,7 +183,7 @@
   display: inline;
   list-style: none;
   margin: 0;
-  padding: 1.4em 1.25em 0;
+  padding: 1em 1.2em;
   position: absolute;
   right: 6%;
   width: 35%;
@@ -202,11 +202,15 @@
   text-decoration: underline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-family: 'Helvetica', 'Arial', sans-serif;
   color: #bcbcbc;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
   padding: 0;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
+  font-size: .85em;
+  margin: 0;
 }
 .bu-slideshow-container .bu-slideshow-slides .animate-slide-default {
   left: 100%;
@@ -333,7 +337,7 @@
   background: rgba(255, 255, 255, 0.7);
   border: 3px solid;
   border-color: #686868;
-  border-color: rgba(0, 0, 0, 0.55);
+  border-color: rgba(0, 0, 0, 0.35);
   height: 0.8em;
   width: 0.8em;
 }
@@ -352,7 +356,7 @@
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span,
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span {
   background-color: #686868;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 0, 0, 0.35);
   -moz-transition-property: background-color;
   -webkit-transition-property: background-color;
   transition-property: background-color;
@@ -368,7 +372,7 @@
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a {
   background-color: #686868;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 0, 0, 0.35);
   color: #cdcdcd;
   color: rgba(255, 255, 255, 0.7);
   display: inline-block;
