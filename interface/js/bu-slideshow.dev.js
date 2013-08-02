@@ -34,14 +34,15 @@ jQuery(document).ready(function($) {
 			args = {};
 		}
 		
-		this.sequence.afterLoaded = bu_resize_slideshow;
+		// this.sequence.afterLoaded = bu_resize_slideshow;
+		this.sequence.afterLoaded = bu_resize_slideshow_haaaay;
 		
 		this.sequence.beforeNextFrameAnimatesIn = function() {
 			if (that.pager) {
 				that.pager.setActive();
 			}
 		}
-		
+
 		this.pager = $('#' + args.pager).length ? $('#' + args.pager) : false;
 		if (this.pager) {
 			this.initPager();
@@ -55,8 +56,8 @@ jQuery(document).ready(function($) {
 	
 	BuSlideshow.prototype.initPager = function() {
 		var that = this;
-		
-		this.pager.find('li a').on('click', function() {
+
+		this.pager.find('li a').bind('click', function() {
 			var id = $(this).attr('id').replace('pager-', '');
 			that.sequence.nextFrameID = id;
 			that.sequence.goTo(id);
@@ -73,15 +74,15 @@ jQuery(document).ready(function($) {
 	BuSlideshow.prototype.initArrows = function() {
 		var that = this;
 		
-		this.arrows.find('.bu-slideshow-arrow-left').on('click', function() {
+		this.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
 			that.sequence.prev();
 			return false;
-		}).end().find('.bu-slideshow-arrow-right').on('click', function() {
+		}).end().find('.bu-slideshow-arrow-right').bind('click', function() {
 			that.sequence.next();
 			return false;
 		});
 	};
-
+	
 	$('.bu-slideshow-container').each(function(index, el){
 		var $this = $(this), autoplay = false, container, pagerId, arrowId, 
 			options, args, name;
@@ -117,7 +118,7 @@ jQuery(document).ready(function($) {
 	 * Resizes slideshow and all slides to height of highest slide
 	 */
 	function bu_resize_slideshow() {
-		
+
 		$('.bu-slideshow-container').each(function(){
 			var container = $(this), slides = container.find('li .bu-slide-container'), $el, height = 0, currentHeight = 0;
 
@@ -132,18 +133,24 @@ jQuery(document).ready(function($) {
 			
 			slides.each(function(i, el) {
 				$(el).css('height', height + 'px');
-			})
+			});
 			
 			container.css('height', height + 'px');
 			container.find('ul.bu-slideshow').css('height', height + 'px');
 		});
 		
 	}
+
+	function bu_resize_slideshow_haaaay() {
+
+		$('.bu-slideshow-container').height( $('.bu-slideshow-container ul li img').height() );
+
+	}
 	
 	/**
 	 * Dear IE: is this really a resize event? 
 	 */
-	$(window).on('resize', function() {
+	$(window).resize(function() {
 		
 		var currentHeight, currentWidth;
 		
@@ -154,10 +161,13 @@ jQuery(document).ready(function($) {
 			
 			windowHeight = currentHeight;
 			windowWidth = currentWidth;
-			bu_resize_slideshow();
+			// bu_resize_slideshow();
+			bu_resize_slideshow_haaaay();
 		
 		}
-		
+
+		bu_resize_slideshow_haaaay();
+
 	});
 	
 });
