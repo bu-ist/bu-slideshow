@@ -151,6 +151,7 @@ class BU_Slideshow {
 			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), false, true);
 			
+			wp_enqueue_script('media-upload');
 			wp_enqueue_script('bu-modal');
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
@@ -365,6 +366,9 @@ class BU_Slideshow {
 
 		// user has pressed 'insert into post' or equivalent
 		if (!empty($_POST)) {
+			
+			$return = media_upload_form_handler();
+			
 			if (is_string($return))
 				return $return;
 			if (is_array($return))
