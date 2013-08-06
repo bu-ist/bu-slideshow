@@ -3,7 +3,7 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 1.0.1
+ Version: 1.0.2
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
@@ -499,10 +499,36 @@ class BU_Slideshow {
 	}
 	
 	static public function admin_menu() {
-		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), '', 21);
+		$index = self::get_menu_index(21);
+		
+		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), '', $index);
 		add_submenu_page('bu-slideshow', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-add-slideshow', array(__CLASS__, 'add_slideshow_page'));
 		add_submenu_page('bu-preview-slideshow', __('Preview Slideshow', BU_SSHOW_LOCAL), __('Preview Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-preview-slideshow', array(__CLASS__, 'preview_slideshow_page'));
 		add_submenu_page('bu-edit-slideshow', __('Edit Slideshow', BU_SSHOW_LOCAL), __('Edit Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-edit-slideshow', array(__CLASS__, 'edit_slideshow_page'));
+	}
+	
+	/**
+	 * Hack to prevent admin menu position from overwriting any existing menu items.
+	 * A better solution should be available in the future, see http://core.trac.wordpress.org/ticket/12718
+	 * 
+	 * @global array $menu
+	 * @param int $index
+	 * @return int
+	 */
+	static protected function get_menu_index($index) {
+		
+		if (!is_numeric($index)) {
+			return NULL;
+		}
+		
+		global $menu;
+		
+		if (isset($menu[$index])) {
+			return self::get_menu_index( ($index + 1) );
+		}
+		
+		return (int) $index;
+		
 	}
 	
 	/**
