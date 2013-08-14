@@ -8,6 +8,10 @@
  Author URI: http://www.bu.edu/tech/
  * 
  * Currently supports WP 3.1 and 3.5.X. In the future only 3.5.X+ should be supported.
+ * 
+ * @todo upgrade sequence.js
+ * @todo integrate sequence's next/prev button functionality
+ * @todo integrate sequence's pagination functionality
 */
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
@@ -909,7 +913,7 @@ class BU_Slideshow {
 		
 		$html = $show->get($atts);
 		
-		echo $html;
+		return $html;
 	}
 	
 	/**
