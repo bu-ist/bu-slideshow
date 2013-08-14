@@ -1035,10 +1035,7 @@ if (!function_exists('bu_get_slideshow')) {
 			return '';
 		}
 		
-		ob_start();
-		BU_Slideshow::shortcode_handler($args);
-		$html = ob_get_contents();
-		ob_end_clean();
+		$html = BU_Slideshow::shortcode_handler($args);
 		
 		return $html;
 	}
