@@ -38,6 +38,7 @@ class BU_Slideshow {
 	static $show_id_meta_key = 'bu_slideshow_last_id';
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
+	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
 	
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -974,15 +975,27 @@ class BU_Slideshow {
 	
 	/**
 	 * Returns true if the current screen should integrate the 'insert slideshow' 
-	 * functionality in the WP editor. Allows for filtering of screens.
+	 * button and modal functionality in the WP editor. Allows for filtering of screens.
 	 * 
 	 * @global object $current_screen
 	 * @return boolean
 	 */
 	static public function using_editor() {
-		global $post;
+
+		global $current_screen;
 		
-		if ($post->post_type && post_type_supports($post->post_type, self::$post_support_slug)) {
+		if (!$current_screen || !$current_screen->id) {
+			return false;
+		}
+		
+		$allowed_screens = apply_filters('bu_slideshow_insert_slideshow_screens', self::$editor_screens);
+		$screen_id = $current_screen->id;
+		
+		if ($screen_id && post_type_supports($screen_id, self::$post_support_slug)) {
+			return true;
+		}
+		
+		if (in_array($screen_id, $allowed_screens)) {
 			return true;
 		}
 		
