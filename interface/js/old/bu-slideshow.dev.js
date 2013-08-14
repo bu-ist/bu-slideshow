@@ -1,6 +1,6 @@
 /* IE triggers resize all over the place, so we check actual window dimensions */
-windowHeight = jQuery(window)[0].scrollHeight;
-windowWidth = jQuery(window)[0].scrollWidth;
+windowHeight = jQuery(window).height();
+windowWidth = jQuery(window).width();
 
 jQuery(document).ready(function($) {
 	window.buSlideshows = {};
@@ -34,8 +34,7 @@ jQuery(document).ready(function($) {
 			args = {};
 		}
 		
-		// this.sequence.afterLoaded = bu_resize_slideshow;
-		this.sequence.afterLoaded = bu_resize_slideshow_haaaay;
+		this.sequence.afterLoaded = bu_resize_slideshow;
 		
 		this.sequence.beforeNextFrameAnimatesIn = function() {
 			if (that.pager) {
@@ -116,35 +115,34 @@ jQuery(document).ready(function($) {
 
 	/**
 	 * Resizes slideshow and all slides to height of highest slide
+	 * 
+	 * I hate iterating through everything in the slides here, but we should allow 
+	 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
 	 */
 	function bu_resize_slideshow() {
 
 		$('.bu-slideshow-container').each(function(){
-			var container = $(this), slides = container.find('li .bu-slide-container'), $el, height = 0, currentHeight = 0;
+			var container = $(this), slides = container.find('li .bu-slide-container'), 
+				$el, height = 0, currentHeight = 0;
 
-			slides.each(function(i, el) {
+			slides.find('*').each(function(i, el) {
 				$el = $(el);
-				$el.css('height', 'auto');
+				
 				currentHeight = $el.height();
 				if (currentHeight > height) {
 					height = currentHeight;
 				}
 			});
-			
+
 			slides.each(function(i, el) {
-				$(el).css('height', height + 'px');
+				$(el).height(height);
 			});
+
+			container.height(height);
+			container.find('ul.bu-slideshow').height(height);
 			
-			container.css('height', height + 'px');
-			container.find('ul.bu-slideshow').css('height', height + 'px');
 		});
 		
-	}
-
-	function bu_resize_slideshow_haaaay() {
-
-		$('.bu-slideshow-container').height( $('.bu-slideshow-container ul li img').height() );
-
 	}
 	
 	/**
@@ -154,19 +152,16 @@ jQuery(document).ready(function($) {
 		
 		var currentHeight, currentWidth;
 		
-		currentHeight = $(window)[0].scrollHeight;
-		currentWidth = $(window)[0].scrollWidth;
+		currentHeight = $(window).height();
+		currentWidth = $(window).width();
 		
 		if (currentHeight !== windowHeight || currentWidth !== windowWidth) {
 			
 			windowHeight = currentHeight;
 			windowWidth = currentWidth;
-			// bu_resize_slideshow();
-			bu_resize_slideshow_haaaay();
+			bu_resize_slideshow();
 		
 		}
-
-		bu_resize_slideshow_haaaay();
 
 	});
 	
