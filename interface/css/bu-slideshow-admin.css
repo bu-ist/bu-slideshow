@@ -99,7 +99,7 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 .sortable-placeholder {border:2px #cdcdcd dashed;padding:10px 20px;}
 
 /* Manage slideshows */
-#bu-slideshow-manage {max-width:600px;}
+#bu-slideshow-manage {background-color: #f9f9f9;border-color: #dfdfdf;max-width:600px;}
 #bu-slideshow-manage li {border-bottom:1px solid #DFDFDF;margin-bottom:0;overflow:hidden;padding:10px;}
 #bu-slideshow-manage li:last-child {border-bottom:none;}
 #bu-slideshow-manage span {display:inline-block;}
