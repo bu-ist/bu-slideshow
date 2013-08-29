@@ -14,6 +14,7 @@
  * @todo integrate sequence's pagination functionality
 */
 
+define('BU_SLIDESHOW_VERSION', '1.0.3');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
@@ -152,9 +153,9 @@ class BU_Slideshow {
 		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, false);
+			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
 			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
-			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), false, true);
+			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
 			
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('bu-modal');
@@ -165,7 +166,7 @@ class BU_Slideshow {
 			self::localize('bu-slideshow-admin');
 			
 			wp_enqueue_style('bu-modal');
-			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css');
+			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
 		}
@@ -185,7 +186,7 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), false, true);
+		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
 		
 		$back_compat = false;
 		if (version_compare(self::$wp_version, '3.3', '<')) {
@@ -195,14 +196,14 @@ class BU_Slideshow {
 		self::public_scripts($back_compat);
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 		
 		/* enqueue public styles on preview page */
 		global $current_screen;
 		if ($current_screen && $current_screen->id === 'admin_page_bu-preview-slideshow') {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css');
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 	}
@@ -225,11 +226,11 @@ class BU_Slideshow {
 		}
 		
 		if ($back_compat) {
-			wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), false, true);
+			wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
 		}
 		
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, false, true);
-		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, false, true);
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
+		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
 	}
 	
 	/**
@@ -237,14 +238,14 @@ class BU_Slideshow {
 	 */
 	static public function selector_scripts_styles() {
 		if (version_compare(self::$wp_version, '3.3', '<')) {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
 		} else {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), false, true);
+			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
 		}
 		
 		wp_enqueue_script('bu-slideshow-selector');
 		
-		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css');
+		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css', array(), BU_SLIDESHOW_VERSION);
 		wp_enqueue_style('bu-slideshow-selector');
 		
 		self::localize('bu-slideshow-selector');
