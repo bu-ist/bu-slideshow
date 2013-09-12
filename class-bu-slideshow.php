@@ -139,7 +139,7 @@ class BU_Slideshow_Instance {
 				$name_att = $show_name ? sprintf(' data-slideshow-name="%s"', $show_name) : '';
 
 				$html = sprintf('<div class="%s" id="%s"%s%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att, $styles);
-				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s" aria-hidden="true">', $ul_class_str, $show_id);
+				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {
 					$id_prefix = self::$id_prefix . $this->id;

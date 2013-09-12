@@ -115,19 +115,19 @@
 	.bu-slideshow-slides {
 
 		.bu-slideshow {
-			width:100% !important;
+			width:100%;
 			height:auto;
-			list-style:none !important;
+			list-style:none;
 			margin:0;
 			padding:0;
-			position:relative !important;
+			position:relative;
 
 			li {
 				left: 0; // flexi indents lists with left positioning.
-				list-style-type: none !important;
+				list-style-type: none;
 				margin-left: 0;
 				margin-right: 0;
-				width:100% !important;
+				width:100%;
 				height:auto;
 
 				// these styles are the base values from which animate-in values animate
@@ -142,7 +142,7 @@
 					.bu-slide-caption {
 						background:@semi-opaque-fallback;
 						background:@semi-opaque;
-						bottom: 20%;
+						bottom: 15%;
 						display:inline;
 						list-style:none;
 						margin:0;
@@ -154,13 +154,10 @@
 
 						p {
 							color:#ffffff;
-							font-size:1em;
 							line-height:1.4;
 						}
 
 						a {
-							color:#bcbcbc;
-							text-decoration:none;
 
 							&:hover {
 								text-decoration:underline;
@@ -168,9 +165,8 @@
 						}
 
 						.bu-slide-caption-title {
-							font-size: 1.3em;
-							font-family: 'Helvetica','Arial',sans-serif;
-							color: #bcbcbc;
+							// font-size: 1.3em;
+							// font-family: 'Helvetica','Arial',sans-serif;
 							margin-bottom: .5em;
 							padding: 0;
 						}
@@ -314,29 +310,12 @@
 			li {
 
 				a {
-					display:inline-block;
-					text-indent:-9999em;
-					border-radius:50%;
-					padding:2px;
-					background: @white-fallback-fade;
-					background: @white-fade;
-					border:3px solid;
-					border-color: @semi-opaque-fallback-fade;
-					border-color: @semi-opaque-fade;
-					height:0.8em;
-					width:0.8em;
 
 					span {
-						display:block;
-						height:100%;
-						width:100%;
-						border-radius:50%;
 						.mediumTransition;
 					}
 
 					&:hover span, &:active span, &.active span {
-						background-color: @semi-opaque-fallback-fade;
-						background-color: @semi-opaque-fade;
 						-moz-transition-property:background-color;
 						-webkit-transition-property:background-color;
 						transition-property:background-color;
