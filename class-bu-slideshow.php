@@ -11,6 +11,7 @@ class BU_Slideshow_Instance {
 	public $view;
 	public $name = '';
 	public $id = 1;
+	public $height = 0;
 	public $slides = array();
 	
 	static $classes = array('bu-slideshow');
@@ -57,6 +58,15 @@ class BU_Slideshow_Instance {
 		}
 		
 		$this->name = $name;
+	}
+
+	/**
+	 * Set the height of the slideshow.
+	 * @param int $height
+	 */
+	public function set_height($height) {
+		$height = intval($height);
+		$this->height = $height;
 	}
 	
 	/**
@@ -126,7 +136,8 @@ class BU_Slideshow_Instance {
 				$show_name = $this->name ? str_replace(' ', '-', strtolower(stripslashes($this->name))) : '';
 				
 				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
-				$styles = sprintf(' style="width:%s;"', $width);
+				$height = ($this->height > 0) ? 'height: '.intval($this->height).'px;' : '';
+				$styles = sprintf(' style="width:%s; %s"', $width, $height);
 				
 				$container_class = 'bu-slideshow-container';
 				$container_class .= ' ' . $show_name;

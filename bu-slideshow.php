@@ -732,6 +732,9 @@ class BU_Slideshow {
 				}
 			}
 			
+			//default height to 0
+			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
+
 			// okay to have no slides 
 			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
 				$_POST['bu_slides'] = array();
@@ -748,6 +751,7 @@ class BU_Slideshow {
 					$show->set_view('admin');
 					
 					$show->set_name($_POST['bu_slideshow_name']);
+					$show->set_height($height);
 					
 					$slides = array();
 					foreach ($_POST['bu_slides'] as $i => $arr) {
@@ -1037,7 +1041,7 @@ class BU_Slideshow {
 	
 }
 
-add_action('plugins_loaded', array(BU_Slideshow, 'init'));
+BU_Slideshow::init();
 
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler
