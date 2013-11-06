@@ -310,8 +310,11 @@ jQuery(document).ready(function($){
 				
 				window.send_to_editor = function(html) {
 					var imgClass, regex, r, imgId, imgSize, data, thumb;
-					
-					imgClass = $('img', html).attr('class');
+
+					// have to attach it to the DOM first. Can be avoided by using $.parseHTML(html) below -- requires jQuery >= 1.8
+					$("body").append("<div id='slideshow_image_added' style='display:none;'>"+html+"</div>");
+
+					imgClass = $("#slideshow_image_added").find("img").attr('class');
 
 					regex = /wp-image-([0-9]*)/i;
 					r = regex.exec(imgClass);
@@ -340,6 +343,8 @@ jQuery(document).ready(function($){
 					$.post(ajaxurl, data, function(response) {
 						that.handleImgThumbResponse(response);
 					});
+
+					$("#slideshow_image_added").remove();
 
 					tb_remove();
 				}
