@@ -315,12 +315,22 @@ jQuery(document).ready(function($){
 
 					regex = /wp-image-([0-9]*)/i;
 					r = regex.exec(imgClass);
-					imgId = r[1]
+					if(!r){
+						tb_remove(); 
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+					imgId = r[1];
 
 					regex = /size-([a-zA-Z]*)/i;
 					r = regex.exec(imgClass);
 					imgSize = r[1];
-					
+					if(!r){
+						tb_remove();
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+
 					that.setImageDetails(imgId, imgSize);
 
 					data = {
@@ -402,7 +412,7 @@ jQuery(document).ready(function($){
 		
 		setTimeout(function() {
 			$('.error').fadeOut(500);
-		}, 1000);
+		}, 5000);
 	}
 	
 });
