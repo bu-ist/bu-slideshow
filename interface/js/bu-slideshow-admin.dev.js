@@ -1,3 +1,6 @@
+/*
+	@todo: update oldHandleImageSelect to use $.parseHTML() [requires jQuery 1.8+]
+*/
 jQuery(document).ready(function($){
 	
 	var newSlideshowForm = $('#bu-slideshow-newform'), slideShowList = $('#bu-slideshow-manage'),
@@ -179,9 +182,9 @@ jQuery(document).ready(function($){
 					return;
 				} else {
 					var r = $(response);
-					r.find('.bu-slide-edit-container').css('display', 'none');
 					r.appendTo('#bu-slideshow-slidelist ul');
 					setModalHeight( r.find('.bu-slideshow-add-img') );
+					$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
 				}
 			});
 			
@@ -320,12 +323,22 @@ jQuery(document).ready(function($){
 
 					regex = /wp-image-([0-9]*)/i;
 					r = regex.exec(imgClass);
-					imgId = r[1]
-					
+					if(!r){
+						tb_remove(); 
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+					imgId = r[1];
+
 					regex = /size-([a-zA-Z]*)/i;
 					r = regex.exec(imgClass);
 					imgSize = r[1];
-					
+					if(!r){
+						tb_remove();
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+
 					that.setImageDetails(imgId, imgSize);
 
 					data = {
@@ -337,7 +350,7 @@ jQuery(document).ready(function($){
 					});
 
 					$("#slideshow_image_added").remove();
-					
+
 					tb_remove();
 				}
 			},

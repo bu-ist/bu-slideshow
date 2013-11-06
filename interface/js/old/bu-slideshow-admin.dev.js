@@ -183,9 +183,9 @@ jQuery(document).ready(function($){
 					return;
 				} else {
 					var r = $(response);
-					r.find('.bu-slide-edit-container').css('display', 'none');
 					r.appendTo('#bu-slideshow-slidelist ul');
 					setModalHeight( r.find('.bu-slideshow-add-img') );
+					$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
 				}
 			});
 			
