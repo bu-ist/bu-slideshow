@@ -54,6 +54,7 @@ class BU_Slideshow {
 		'nav_style' => 'icon',
 		'autoplay' => 1,
 		'show_arrows' => 0,
+		'transition_delay' => 5000,
 		'width' => 'auto'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
@@ -958,7 +959,7 @@ class BU_Slideshow {
 	static public function get_selector($args = array()) {
 		$all_slideshows = self::get_slideshows();
 		$defaults = self::$shortcode_defaults;
-		$empty_ok = array('show_nav', 'autoplay');
+		$empty_ok = array('show_nav', 'autoplay', 'autoPlayDelay');
 		
 		foreach ($defaults as $key => $def) {
 			if (in_array($key, $empty_ok)) {

@@ -57,6 +57,11 @@
 				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php if (isset($args['custom_transition'])) echo esc_attr($args['custom_transition']); ?>" /><br />
 				<em><small>Overrides transition selected above. You must provide custom CSS transition code if you enter a value here.</small></em>
 			</p>
+			<!-- <p>
+				<label for="bu_slideshow_autoplaydelay"><?php _e('Slide transition delay:', BU_SSHOW_LOCAL); ?></label><br />
+				<input type="text" name="bu_slideshow_autoplaydelay" id="bu_slideshow_autoplaydelay" value="<?php if (isset($args['autoPlayDelay'])) echo esc_attr($args['autoPlayDelay']); ?>" /><br />
+				<em><small>Number in milliseconds between slide transitions (i.e., 5000 would be 5 seconds).</small></em>
+			</p> -->
 		</div>
 	</div>
 	
