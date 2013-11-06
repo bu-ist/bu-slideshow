@@ -248,8 +248,10 @@ jQuery(document).ready(function($){
 		
 		// Delete slide button
 		$('.bu-slide-delete-button').live('click', function() {
-			$(this).parents().parent('.bu-slideshow-slide').remove();
-			reindexSlides();
+			if (confirm(buSlideshowLocalAdmin.deleteConfirmSlide)) {
+				$(this).parents().parent('.bu-slideshow-slide').remove();
+				reindexSlides();
+			}
 				
 			return false;
 		});

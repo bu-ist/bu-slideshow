@@ -13,7 +13,8 @@ class BU_Slide {
 	public $caption = array(
 		'title' => '',
 		'link' => '',
-		'text' => ''
+		'text' => '',
+		'position' => 'caption-bottom-right'
 	);
 	public $order = 0;
 	public $view;
@@ -109,7 +110,7 @@ class BU_Slide {
 			return $html;
 		}
 		
-		$html .= '<div class="bu-slide-caption">';
+		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
 		
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';

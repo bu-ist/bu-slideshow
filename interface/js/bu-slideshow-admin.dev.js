@@ -246,8 +246,11 @@ jQuery(document).ready(function($){
 		
 		// Delete slide button
 		$('#bu-slideshow-slidelist').on('click', '.bu-slide-delete-button', function() {
-			$(this).parents().parent('.bu-slideshow-slide').remove();
-			reindexSlides();
+
+			if (confirm(buSlideshowLocalAdmin.deleteConfirmSlide)) {
+				$(this).parents().parent('.bu-slideshow-slide').remove();
+				reindexSlides();
+			}
 				
 			return false;
 		});

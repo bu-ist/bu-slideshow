@@ -40,7 +40,8 @@ class BU_Slideshow {
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
-	
+	static $caption_positions = array('caption-top-right','caption-top-left','caption-bottom-right','caption-bottom-left');
+
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
 	static $add_url = 'admin.php?page=bu-add-slideshow';
@@ -264,6 +265,7 @@ class BU_Slideshow {
 					'noSlideshowsMsg' => __('No slideshows yet.', BU_SSHOW_LOCAL),
 					'addButtonText' => __('Add a slideshow', BU_SSHOW_LOCAL),
 					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_SSHOW_LOCAL),
+					'deleteConfirmSlide' => __('Are you sure you want to delete this slide?', BU_SSHOW_LOCAL),
 					'deleteError' => __('Could not delete slideshow.', BU_SSHOW_LOCAL),
 					'noneSelectedError' => __('You must select a slideshow.', BU_SSHOW_LOCAL),
 					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
@@ -764,8 +766,9 @@ class BU_Slideshow {
 							'caption' => array(
 								'title' => $arr['caption']['title'],
 								'link' => $arr['caption']['link'],
-								'text' => wp_kses_data($arr['caption']['text'])
-							)
+								'text' => wp_kses_data($arr['caption']['text']),
+								'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
+								)
 						);
 						$slides[] = new BU_Slide($args);
 					}
