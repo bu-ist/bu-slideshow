@@ -77,16 +77,14 @@ li.bu-slideshow-slide {
 	position:relative;
 }
 li.bu-slideshow-slide label {display:inline-block;width:150px;vertical-align:top;}
-li.bu-slideshow-slide div.captionposition p { width:150px; float:left; display:inline-block;}
-li.bu-slideshow-slide div.captionposition input,label {margin-bottom:10px;}
-li.bu-slideshow-slide div.captionposition label {width:100px; padding-right:10px;}
 li.bu-slideshow-slide input[type=text] {border:1px solid #d0d0d0;display:inline-block;width:250px;}
 .bu-slide-thumb-container {float:left;margin-top:22px;min-width:200px;text-align:center;}
-.bu-slide-edit-container {padding:10px 20px; display:none;}
+.bu-slide-edit-container {padding:10px 20px;}
 .bu-slide-thumb {display:block;margin-top:20px;}
 .bu-slide-caption-container {float:right;margin-top:30px;padding-bottom:30px;}
 li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 .bu-slide-delete-button, .wp-core-ui .bu-slide-delete-button {
+	background: none repeat scroll 0 0 #FFFFFF;
 	color:#ff0000;
 	position: absolute;
 	right:20px;

@@ -34,11 +34,6 @@
 				} ?>
 				</ul>
 			</div>
-			<p><strong><?php _e('Advanced options', BU_SSHOW_LOCAL); ?>:</strong> (<?php _e('optional', BU_SSHOW_LOCAL); ?>)<br />
-				<label for="bu_slideshow_height"><?php _e('Default height', BU_SSHOW_LOCAL); ?>: </label>
-				<input type="number" id="bu_slideshow_height" name="bu_slideshow_height" value="<?php echo intval($this->height); ?>" min="0" max="9999" />
-				<span>px</span>
-			</p>
 			<p>
 				<input type="hidden" name="bu_slideshow_edit_show" value="1" />
 				<input type="hidden" name="bu_slideshow_id" value="<?php echo esc_attr($this->id); ?>" />

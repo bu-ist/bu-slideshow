@@ -18,7 +18,6 @@ define('BU_SLIDESHOW_VERSION', '1.0.4');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
-define('SCRIPT_DEBUG', true);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
@@ -41,8 +40,7 @@ class BU_Slideshow {
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
-	static $caption_positions = array('caption-top-right','caption-top-left','caption-bottom-right','caption-bottom-left');
-
+	
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
 	static $add_url = 'admin.php?page=bu-add-slideshow';
@@ -56,7 +54,6 @@ class BU_Slideshow {
 		'nav_style' => 'icon',
 		'autoplay' => 1,
 		'show_arrows' => 0,
-		'transition_delay' => 5000,
 		'width' => 'auto'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
@@ -266,7 +263,6 @@ class BU_Slideshow {
 					'noSlideshowsMsg' => __('No slideshows yet.', BU_SSHOW_LOCAL),
 					'addButtonText' => __('Add a slideshow', BU_SSHOW_LOCAL),
 					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_SSHOW_LOCAL),
-					'deleteConfirmSlide' => __('Are you sure you want to delete this slide?', BU_SSHOW_LOCAL),
 					'deleteError' => __('Could not delete slideshow.', BU_SSHOW_LOCAL),
 					'noneSelectedError' => __('You must select a slideshow.', BU_SSHOW_LOCAL),
 					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
@@ -736,9 +732,6 @@ class BU_Slideshow {
 				}
 			}
 			
-			//default height to 0
-			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
-
 			// okay to have no slides 
 			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
 				$_POST['bu_slides'] = array();
@@ -755,7 +748,6 @@ class BU_Slideshow {
 					$show->set_view('admin');
 					
 					$show->set_name($_POST['bu_slideshow_name']);
-					$show->set_height($height);
 					
 					$slides = array();
 					foreach ($_POST['bu_slides'] as $i => $arr) {
@@ -767,9 +759,8 @@ class BU_Slideshow {
 							'caption' => array(
 								'title' => $arr['caption']['title'],
 								'link' => $arr['caption']['link'],
-								'text' => wp_kses_data($arr['caption']['text']),
-								'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
-								)
+								'text' => wp_kses_data($arr['caption']['text'])
+							)
 						);
 						$slides[] = new BU_Slide($args);
 					}
@@ -963,7 +954,7 @@ class BU_Slideshow {
 	static public function get_selector($args = array()) {
 		$all_slideshows = self::get_slideshows();
 		$defaults = self::$shortcode_defaults;
-		$empty_ok = array('show_nav', 'autoplay', 'autoPlayDelay');
+		$empty_ok = array('show_nav', 'autoplay');
 		
 		foreach ($defaults as $key => $def) {
 			if (in_array($key, $empty_ok)) {

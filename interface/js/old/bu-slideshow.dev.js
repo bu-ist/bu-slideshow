@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 	};
 	
 	$('.bu-slideshow-container').each(function(index, el){
-		var $this = $(this), autoplay = false, autoPlayDelay = 5000, container, pagerId, arrowId, 
+		var $this = $(this), autoplay = false, container, pagerId, arrowId, 
 			options, args, name;
 		
 		container = $this.find('.bu-slideshow-slides');
@@ -91,7 +91,6 @@ jQuery(document).ready(function($) {
 		arrowId = $this.find('div.bu-slideshow-arrows').attr('id');
 		
 		name = $this.attr('data-slideshow-name') ? $this.attr('data-slideshow-name') : index;
-		delay = $this.attr('data-slideshow-delay') ? $this.attr('data-slideshow-delay') : 5000;
 		
 		if ($this.hasClass('autoplay')) {
 			autoplay = true;
@@ -99,7 +98,6 @@ jQuery(document).ready(function($) {
 		
 		options = {
 			autoPlay: autoplay,
-			autoPlayDelay: delay,
 			fallback: {
 				theme : 'slide'
 			}
