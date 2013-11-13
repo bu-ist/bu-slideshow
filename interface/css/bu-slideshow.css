@@ -175,6 +175,7 @@
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container img {
   width: 100%;
+  display: inline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption {
   background: #464646;
@@ -203,6 +204,24 @@
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
   font-size: .85em;
   margin: 0;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-bottom-right {
+  bottom: 15%;
+  right: 6%;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-bottom-left {
+  bottom: 15%;
+  left: 6%;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-left {
+  top: 15%;
+  left: 6%;
+  bottom: auto;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-right {
+  top: 15%;
+  right: 6%;
+  bottom: auto;
 }
 .bu-slideshow-container .bu-slideshow-slides .animate-slide-default {
   left: 100%;
@@ -364,6 +383,7 @@
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
   color: #ffffff;
   opacity: 1;
   -moz-transition-property: background-color color opacity;
