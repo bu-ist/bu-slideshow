@@ -174,13 +174,13 @@
   width: 100%;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container img {
-  width: 100%;
+  max-width: 100%;
   display: inline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption {
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
-  bottom: 15%;
+  bottom: 20%;
   display: inline;
   list-style: none;
   margin: 0;
@@ -192,12 +192,20 @@
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption p {
   color: #ffffff;
+  font-size: 1em;
   line-height: 1.4;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a {
+  color: #bcbcbc;
+  text-decoration: none;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption a:hover {
   text-decoration: underline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
+  font-size: 1.3em;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  color: #bcbcbc;
   margin-bottom: .5em;
   padding: 0;
 }
@@ -321,7 +329,24 @@
   left: 0;
   margin: 0;
 }
+.bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a {
+  display: inline-block;
+  text-indent: -9999em;
+  border-radius: 50%;
+  padding: 2px;
+  background: #cdcdcd;
+  background: rgba(255, 255, 255, 0.7);
+  border: 3px solid;
+  border-color: #686868;
+  border-color: rgba(0, 0, 0, 0.35);
+  height: 0.8em;
+  width: 0.8em;
+}
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -331,6 +356,8 @@
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span,
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span,
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span {
+  background-color: #686868;
+  background-color: rgba(0, 0, 0, 0.35);
   -moz-transition-property: background-color;
   -webkit-transition-property: background-color;
   transition-property: background-color;
@@ -365,7 +392,6 @@
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
   color: #ffffff;
   opacity: 1;
   -moz-transition-property: background-color color opacity;

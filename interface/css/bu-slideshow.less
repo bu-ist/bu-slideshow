@@ -136,14 +136,14 @@
 					width:100%;
 
 					img {
-						width: 100%;
+						max-width:100%;
 						display:inline;
 					}
 
 					.bu-slide-caption {
 						background:@semi-opaque-fallback;
 						background:@semi-opaque;
-						bottom: 15%;
+						bottom: 20%;
 						display:inline;
 						list-style:none;
 						margin:0;
@@ -155,10 +155,13 @@
 
 						p {
 							color:#ffffff;
+							font-size:1em;
 							line-height:1.4;
 						}
 
 						a {
+							color:#bcbcbc;
+							text-decoration:none;
 
 							&:hover {
 								text-decoration:underline;
@@ -166,6 +169,9 @@
 						}
 
 						.bu-slide-caption-title {
+							font-size: 1.3em;
+							font-family: 'Helvetica','Arial',sans-serif;
+							color: #bcbcbc;
 							margin-bottom: .5em;
 							padding: 0;
 						}
@@ -309,12 +315,29 @@
 			li {
 
 				a {
+					display:inline-block;
+					text-indent:-9999em;
+					border-radius:50%;
+					padding:2px;
+					background: @white-fallback-fade;
+					background: @white-fade;
+					border:3px solid;
+					border-color: @semi-opaque-fallback-fade;
+					border-color: @semi-opaque-fade;
+					height:0.8em;
+					width:0.8em;
 
 					span {
+						display:block;
+						height:100%;
+						width:100%;
+						border-radius:50%;
 						.mediumTransition;
 					}
 
 					&:hover span, &:active span, &.active span {
+						background-color: @semi-opaque-fallback-fade;
+						background-color: @semi-opaque-fade;
 						-moz-transition-property:background-color;
 						-webkit-transition-property:background-color;
 						transition-property:background-color;
