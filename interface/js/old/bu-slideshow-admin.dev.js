@@ -183,9 +183,9 @@ jQuery(document).ready(function($){
 					return;
 				} else {
 					var r = $(response);
-					r.find('.bu-slide-edit-container').css('display', 'none');
 					r.appendTo('#bu-slideshow-slidelist ul');
 					setModalHeight( r.find('.bu-slideshow-add-img') );
+					$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
 				}
 			});
 			
@@ -248,8 +248,10 @@ jQuery(document).ready(function($){
 		
 		// Delete slide button
 		$('.bu-slide-delete-button').live('click', function() {
-			$(this).parents().parent('.bu-slideshow-slide').remove();
-			reindexSlides();
+			if (confirm(buSlideshowLocalAdmin.deleteConfirmSlide)) {
+				$(this).parents().parent('.bu-slideshow-slide').remove();
+				reindexSlides();
+			}
 				
 			return false;
 		});
@@ -308,17 +310,30 @@ jQuery(document).ready(function($){
 				
 				window.send_to_editor = function(html) {
 					var imgClass, regex, r, imgId, imgSize, data, thumb;
-					
-					imgClass = $('img', html).attr('class');
+
+					// have to attach it to the DOM first. Can be avoided by using $.parseHTML(html) below -- requires jQuery >= 1.8
+					$("body").append("<div id='slideshow_image_added' style='display:none;'>"+html+"</div>");
+
+					imgClass = $("#slideshow_image_added").find("img").attr('class');
 
 					regex = /wp-image-([0-9]*)/i;
 					r = regex.exec(imgClass);
-					imgId = r[1]
+					if(!r){
+						tb_remove(); 
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+					imgId = r[1];
 
 					regex = /size-([a-zA-Z]*)/i;
 					r = regex.exec(imgClass);
 					imgSize = r[1];
-					
+					if(!r){
+						tb_remove();
+						displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
+						return;
+					}
+
 					that.setImageDetails(imgId, imgSize);
 
 					data = {
@@ -328,6 +343,8 @@ jQuery(document).ready(function($){
 					$.post(ajaxurl, data, function(response) {
 						that.handleImgThumbResponse(response);
 					});
+
+					$("#slideshow_image_added").remove();
 
 					tb_remove();
 				}
@@ -400,7 +417,7 @@ jQuery(document).ready(function($){
 		
 		setTimeout(function() {
 			$('.error').fadeOut(500);
-		}, 1000);
+		}, 5000);
 	}
 	
 });
