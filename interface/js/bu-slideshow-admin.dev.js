@@ -246,8 +246,11 @@ jQuery(document).ready(function($){
 		
 		// Delete slide button
 		$('#bu-slideshow-slidelist').on('click', '.bu-slide-delete-button', function() {
-			$(this).parents().parent('.bu-slideshow-slide').remove();
-			reindexSlides();
+
+			if (confirm(buSlideshowLocalAdmin.deleteConfirmSlide)) {
+				$(this).parents().parent('.bu-slideshow-slide').remove();
+				reindexSlides();
+			}
 				
 			return false;
 		});
@@ -310,7 +313,7 @@ jQuery(document).ready(function($){
 				window.send_to_editor = function(html) {
 					var imgClass, regex, r, imgId, imgSize, data, thumb;
 					
-					// have to attach it to the DOM first. Can be avoided by using $.parseHTML(html) -- requires jQuery >= 1.8
+					// have to attach it to the DOM first. Can be avoided by using $.parseHTML(html) below -- requires jQuery >= 1.8
 					$("body").append("<div id='slideshow_image_added' style='display:none;'>"+html+"</div>");
 
 					imgClass = $("#slideshow_image_added").find("img").attr('class');

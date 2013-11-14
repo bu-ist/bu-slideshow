@@ -263,6 +263,7 @@ class BU_Slideshow {
 					'noSlideshowsMsg' => __('No slideshows yet.', BU_SSHOW_LOCAL),
 					'addButtonText' => __('Add a slideshow', BU_SSHOW_LOCAL),
 					'deleteConfirm' => __('Are you sure you want to delete this slideshow? This action cannot be undone.', BU_SSHOW_LOCAL),
+					'deleteConfirmSlide' => __('Are you sure you want to delete this slide?', BU_SSHOW_LOCAL),
 					'deleteError' => __('Could not delete slideshow.', BU_SSHOW_LOCAL),
 					'noneSelectedError' => __('You must select a slideshow.', BU_SSHOW_LOCAL),
 					'emptyNameError' => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
