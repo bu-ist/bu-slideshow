@@ -3,7 +3,6 @@
 	<?php if (is_array($all_slideshows) && count($all_slideshows) > 0): ?>
 
 	<div class="bu-slideshow-selector-basic">
-		<div class="col1">
 			<p>
 				<label for="bu_slideshow_selected"><?php _e('Select Slideshow:', BU_SSHOW_LOCAL); ?></label><br/>
 				<select name="bu_slideshow_selected" id="bu_slideshow_selected">
@@ -23,12 +22,10 @@
 					} ?>
 				</select><br />
 			</p>
-		</div>
-		<div class="col2">
 			<p>
 				<input type="checkbox" name="bu_slideshow_show_nav" id="bu_slideshow_show_nav" value="1"<?php echo $args['show_nav'] ? ' checked="checked"' : ''; ?>/> <label for="bu_slideshow_show_nav"><?php _e('Display navigation', BU_SSHOW_LOCAL); ?></label>
 			</p>
-			<p>
+			<p class="bu_slideshow_nav_style" <?php echo $args['show_nav'] ? ' style="display:inline;"' : ''; ?>>
 				<label for="bu_slideshow_nav_style"><?php _e('Navigation style:', BU_SSHOW_LOCAL); ?></label><br />
 				<select name="bu_slideshow_nav_style" id="bu_slideshow_nav_style">
 					<?php foreach (BU_Slideshow::$nav_styles as $style) {
@@ -40,14 +37,12 @@
 			<p>
 				<input type="checkbox" name="bu_slideshow_autoplay" id="bu_slideshow_autoplay" value="1"<?php echo $args['autoplay'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_autoplay"><?php _e('Automatically play slideshow', BU_SSHOW_LOCAL); ?></label>
 			</p>
-		</div>
 	</div>
 	
 	<p>
 		<a href="#" class="bu-slideshow-advanced-toggle"><?php _e('Show advanced'); ?></a>
 	</p>
 	<div class="bu-slideshow-selector-advanced">
-		<div class="col1">
 			<p>
 				<label for="bu_slideshow_width"><?php _e('Fixed width:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_width" id="bu_slideshow_width" value="<?php echo $args['width'] !== 'auto' ? esc_attr($args['width']) : ''; ?>" />px
@@ -57,7 +52,6 @@
 				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php if (isset($args['custom_transition'])) echo esc_attr($args['custom_transition']); ?>" /><br />
 				<em><small>Overrides transition selected above. You must provide custom CSS transition code if you enter a value here.</small></em>
 			</p>
-		</div>
 	</div>
 	
 	<?php else: ?>

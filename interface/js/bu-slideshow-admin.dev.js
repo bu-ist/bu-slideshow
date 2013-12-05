@@ -480,6 +480,10 @@ jQuery(document).ready(function($){
 		});
 		
 	}
+
+	$("#bu_slideshow_show_nav").on("click",function(){
+		$(".bu_slideshow_nav_style").toggle();
+	});
 	
 	/**
 	 * Removes any existing errors and displays new one. 

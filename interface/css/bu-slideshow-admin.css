@@ -84,7 +84,6 @@ li.bu-slideshow-slide input[type=text] {border:1px solid #d0d0d0;display:inline-
 .bu-slide-caption-container {float:right;margin-top:30px;padding-bottom:30px;}
 li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 .bu-slide-delete-button, .wp-core-ui .bu-slide-delete-button {
-	background: none repeat scroll 0 0 #FFFFFF;
 	color:#ff0000;
 	position: absolute;
 	right:20px;
@@ -115,4 +114,11 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 /* slideshow modal container */
 #bu_slideshow_modal_wrap {
 	height: 100%;
+	margin:10px 20px;
+	background:none;
+	border:none;
+}
+
+p.bu_slideshow_nav_style{
+	display:none;
 }
