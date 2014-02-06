@@ -472,15 +472,10 @@ Sequence also relies on the following open source scripts:
                         if(Math.abs(dx) >= self.settings.swipeThreshold) {
                             cancelTouch();
                             if(dx > 0) {
-                                /*
-                                 * I switched 'rigth' and 'left' here because the swiping was backwards.
-                                 * This was because of ticket #INC11468317
-                                 * Chris Rodriguez, 31-01-2014
-                                */
-                                self.initCustomKeyEvent(self.settings.swipeEvents.right);
+                                self.initCustomKeyEvent(self.settings.swipeEvents.left);
                                 console.log('Swiping left...');
                             }else{
-                                self.initCustomKeyEvent(self.settings.swipeEvents.left);
+                                self.initCustomKeyEvent(self.settings.swipeEvents.right);
                                 console.log('Swiping right...');
                             }
                         }else if(Math.abs(dy) >= self.settings.swipeThreshold) {
