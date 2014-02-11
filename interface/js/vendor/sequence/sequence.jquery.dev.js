@@ -473,10 +473,8 @@ Sequence also relies on the following open source scripts:
                             cancelTouch();
                             if(dx > 0) {
                                 self.initCustomKeyEvent(self.settings.swipeEvents.left);
-                                console.log('Swiping left...');
                             }else{
                                 self.initCustomKeyEvent(self.settings.swipeEvents.right);
-                                console.log('Swiping right...');
                             }
                         }else if(Math.abs(dy) >= self.settings.swipeThreshold) {
                             cancelTouch();
