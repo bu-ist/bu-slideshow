@@ -100,10 +100,6 @@ jQuery(document).ready(function($) {
             autoPlay: autoplay,
             fallback: {
                 theme : 'slide'
-            },
-            swipeEvents: { 
-                left: "next", 
-                right: "prev" 
             }
         };
         args = {

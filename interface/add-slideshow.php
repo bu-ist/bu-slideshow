@@ -1,20 +1,21 @@
 <div class="wrap">
-	<h2><?php _e('Add Slideshow', BU_SSHOW_LOCAL); ?></h2>
+	<p><a href="<?php echo BU_Slideshow::$manage_url; ?>">&laquo; <?php _e('Back to Manage Slideshows', BU_SSHOW_LOCAL); ?></a></p>
+	<h2><?php _e("Add Slideshow", BU_SSHOW_LOCAL); ?></h2>
 	
-	<div id="bu-slideshow-new">
-		
-		<?php if (isset($msg) && !empty($msg)) { ?>
-		<div class="updated"><p><?php echo $msg; ?></p></div>
-		<?php } ?>
-		
-		<form method="post" action="" id="bu-slideshow-newform">
-			<h3><?php _e('New Slideshow', BU_SSHOW_LOCAL); ?></h3>
-			<p><label for="bu-new-slideshow-name"><?php _e('Slideshow Name', BU_SSHOW_LOCAL); ?></label>
-			<input type="text" name="bu-new-slideshow-name" id="bu-new-slideshow-name" /></p>
+	<?php if (isset($msg) && $msg) { ?>
+	<div class="updated"><p><?php echo $msg; ?></p></div>
+	<?php } ?>
+	
+	<div id="bu-slideshow-edit">
+		<form id="bu-slideshow-editform" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>&noheader">
+			<input type="hidden" name="bu_slideshow_save_show" value="1" />
+			<?php 
+				wp_nonce_field('bu_update_slideshow', 'bu_slideshow_nonce', false, true); 
+				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.inc.php'; 
+			?>
 			<p>
-				<?php wp_nonce_field('bu_add_slideshow', 'bu_slideshow_nonce', false, true); ?>
-				<input class="button-primary" type="submit" name="bu-new-slideshow-create" id="bu-new-slideshow-create" value="<?php _e('Create Slideshow', BU_SSHOW_LOCAL); ?>" /></p>
+				<input type="submit" value="<?php _e('Create Slideshow', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
+			</p>
 		</form>
 	</div>
-	
 </div>

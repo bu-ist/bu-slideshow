@@ -24,6 +24,7 @@
 .bu-slideshow-container {
 	overflow:hidden;
 	position:relative;
+	background: url('../img/loader.gif') no-repeat center;
 		
 	.arrowBgStyles {
 		background-color:transparent;
@@ -136,7 +137,7 @@
 					width:100%;
 
 					img {
-						max-width:100%;
+						width: 100%;
 						display:inline;
 					}
 
@@ -171,7 +172,7 @@
 						.bu-slide-caption-title {
 							font-size: 1.3em;
 							font-family: 'Helvetica','Arial',sans-serif;
-							color: #bcbcbc;
+							color:#bcbcbc;
 							margin-bottom: .5em;
 							padding: 0;
 						}
@@ -180,6 +181,24 @@
 							font-size: .85em;
 							margin: 0;
 						}
+					}
+					.caption-bottom-right{
+						bottom: 15%;
+						right: 6%;
+					}
+					.caption-bottom-left{
+						bottom: 15%;
+						left: 6%;
+					}
+					.caption-top-left{
+						top: 15%;
+						left: 6%;
+						bottom:auto;
+					}
+					.caption-top-right{
+						top: 15%;
+						right: 6%;
+						bottom:auto;
 					}
 				}
 			}
