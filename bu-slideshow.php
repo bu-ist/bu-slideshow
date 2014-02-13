@@ -18,7 +18,6 @@
 define('BU_SLIDESHOW_VERSION', '2.0');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
 define('SCRIPT_DEBUG', true);
 
 if (!defined('BU_SSHOW_LOCAL')) {
@@ -95,12 +94,6 @@ class BU_Slideshow {
 		
 		add_shortcode('bu_slideshow', array(__CLASS__, 'shortcode_handler'));
 		
-		/**
-		 * Back compat for WP < 3.3
-		 */
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			add_action('wp_footer', array(__CLASS__, 'conditional_script_load'));
-		}
 	}
 	
 	static public function add_post_support() {
@@ -218,12 +211,8 @@ class BU_Slideshow {
 	 * Load scripts and styles for the selector UI
 	 */
 	static public function selector_scripts_styles() {
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
-		} else {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
-		}
-		
+		wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
+	
 		wp_enqueue_script('bu-slideshow-selector');
 		
 		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css', array(), BU_SLIDESHOW_VERSION);
