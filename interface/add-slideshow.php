@@ -11,7 +11,7 @@
 			<input type="hidden" name="bu_slideshow_save_show" value="1" />
 			<?php 
 				wp_nonce_field('bu_update_slideshow', 'bu_slideshow_nonce', false, true); 
-				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.inc.php'; 
+				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.php'; 
 			?>
 			<p>
 				<input type="submit" value="<?php _e('Create Slideshow', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
