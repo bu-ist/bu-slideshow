@@ -539,7 +539,7 @@ class BU_Slideshow {
 				$_POST['bu_slides'] = array();
 			}
 
-			// we are handling a form submission & all vaildation complete
+			// we are handling a form submission & all validation complete
 			if ($is_create) {
 				
 				$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );
@@ -760,7 +760,7 @@ class BU_Slideshow {
 				$_POST['bu_slides'] = array();
 			}
 
-			// all vaildation complete
+			// we are handling a form submission & all validation complete
 			if ($is_update) {
 				
 				$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
