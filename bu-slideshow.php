@@ -9,16 +9,12 @@
  * 
  * Currently supports WP 3.5.X.
  * 
- * @todo remove "old" references
  * @todo upgrade sequence.js
- * @todo integrate sequence's next/prev button functionality
- * @todo integrate sequence's pagination functionality
 */
 
 define('BU_SLIDESHOW_VERSION', '2.0');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('SCRIPT_DEBUG', true);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
@@ -543,7 +539,7 @@ class BU_Slideshow {
 				$_POST['bu_slides'] = array();
 			}
 
-			// all vaildation complete
+			// we are handling a form submission & all vaildation complete
 			if ($is_create) {
 				
 				$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );
