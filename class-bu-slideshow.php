@@ -137,7 +137,6 @@ class BU_Slideshow_Instance {
 				
 				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
 				$transition_delay = $args['transition_delay'];
-				// $styles = sprintf(' style="width:%s;"', $width);
 				$height = ($this->height > 0) ? 'height: '.intval($this->height).'px;' : '';
 				$styles = sprintf(' style="width:%s; %s"', $width, $height);
 				

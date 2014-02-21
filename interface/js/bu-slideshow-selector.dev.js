@@ -26,10 +26,13 @@ jQuery(document).ready(function($){
 		var that = this;
 		
 		that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
-			
-			that.advanced.toggle();
-
-			//that.advanced.is(':hidden') ? that.advancedToggle.text(buSlideshowLocalSelector.toggleTextShow) : that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
+			if (that.advanced.is(':hidden')) {
+ 				that.advanced.slideDown(200);
+ 				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
+ 			} else {
+				that.advanced.slideUp(200);
+ 				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextShow);
+ 			}
 
 			return false;
 		});
