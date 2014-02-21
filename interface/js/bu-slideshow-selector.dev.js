@@ -29,6 +29,7 @@ jQuery(document).ready(function($){
 			if (that.advanced.is(':hidden')) {
  				that.advanced.slideDown(200);
  				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
+ 				$('.bu-slideshow-selector-advanced input').first().focus();
  			} else {
 				that.advanced.slideUp(200);
  				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextShow);
