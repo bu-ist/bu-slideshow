@@ -52,7 +52,7 @@ class BU_Slideshow {
 		'nav_style' => 'icon',
 		'autoplay' => 1,
 		'show_arrows' => 0,
-		'transition_delay' => 5000,
+		'transition_delay' => 5,
 		'width' => 'auto'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
@@ -921,6 +921,12 @@ class BU_Slideshow {
 		
 		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
 			$atts['width'] = 'auto';
+		}
+
+		if ( ! is_numeric( $atts['transition_delay'] ) || 1 > $atts['transition_delay'] ) {
+			$atts['transition_delay'] = 5000;
+		} else {
+			$atts['transition_delay'] = intval( $atts['transition_delay'] ) * 1000;
 		}
 		
 		if (!in_array($atts['nav_style'], self::$nav_styles)) {
