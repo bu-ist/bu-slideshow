@@ -161,6 +161,7 @@
   margin: 0;
   padding: 0;
   position: relative !important;
+  background: none !important;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li {
   left: 0;
@@ -347,6 +348,7 @@
   display: inline;
   left: 0;
   margin: 0;
+  background: none !important;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a {
   display: inline-block;
