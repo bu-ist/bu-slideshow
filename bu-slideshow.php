@@ -983,8 +983,8 @@ class BU_Slideshow {
 	static public function get_selector($args = array()) {
 		$all_slideshows = self::get_slideshows();
 		$defaults = self::$shortcode_defaults;
-		$empty_ok = array('show_nav', 'autoplay', 'autoPlayDelay');
-		
+		$empty_ok = array('show_nav', 'autoplay', 'transition_delay');
+
 		foreach ($defaults as $key => $def) {
 			if (in_array($key, $empty_ok)) {
 				if (!isset($args[$key])) {
