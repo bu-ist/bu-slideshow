@@ -3,21 +3,19 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 1.0.6
+ Version: 2.0
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
- * Currently supports WP 3.1 and 3.5.X. In the future only 3.5.X+ should be supported.
+ * Currently supports WP 3.5.X.
  * 
  * @todo upgrade sequence.js
- * @todo integrate sequence's next/prev button functionality
- * @todo integrate sequence's pagination functionality
 */
 
-define('BU_SLIDESHOW_VERSION', '1.0.6');
+define('BU_SLIDESHOW_VERSION', '2.0');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('BU_SLIDESHOW_OLDJS', 'old/'); // dir for old jQuery compat scripts
+define('SCRIPT_DEBUG', true);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
@@ -40,7 +38,8 @@ class BU_Slideshow {
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
-	
+	static $caption_positions = array('caption-top-right','caption-top-left','caption-bottom-right','caption-bottom-left');
+
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
 	static $add_url = 'admin.php?page=bu-add-slideshow';
@@ -54,6 +53,7 @@ class BU_Slideshow {
 		'nav_style' => 'icon',
 		'autoplay' => 1,
 		'show_arrows' => 0,
+		'transition_delay' => 5,
 		'width' => 'auto'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
@@ -91,12 +91,6 @@ class BU_Slideshow {
 		
 		add_shortcode('bu_slideshow', array(__CLASS__, 'shortcode_handler'));
 		
-		/**
-		 * Back compat for WP < 3.3
-		 */
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			add_action('wp_footer', array(__CLASS__, 'conditional_script_load'));
-		}
 	}
 	
 	static public function add_post_support() {
@@ -124,11 +118,7 @@ class BU_Slideshow {
 			self::selector_scripts_styles();
 		}
 		
-		$back_compat = false;
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			$back_compat = true;
-		}
-		self::admin_scripts($back_compat);
+		self::admin_scripts();
 		
 		/* preview page needs public scripts/styles */
 		if ($current_screen->id === 'admin_page_bu-preview-slideshow') {
@@ -139,18 +129,16 @@ class BU_Slideshow {
 	/**
 	 * Admin scripts, for older and newer jQuery.
 	 */
-	static public function admin_scripts($back_compat = false) {
+	static public function admin_scripts() {
 		global $current_screen;
 		$admin_pages = array(
 			'toplevel_page_bu-slideshow',
 			'slideshows_page_bu-slideshow',
-			'admin_page_bu-edit-slideshow'
+			'admin_page_bu-edit-slideshow',
+			'slideshows_page_bu-add-slideshow'
 		);
 		
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
-		if ($back_compat) {
-			$js_url .= BU_SLIDESHOW_OLDJS;
-		}
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
 			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
@@ -172,7 +160,7 @@ class BU_Slideshow {
 		}
 		
 		/* enqueue new media uploader stuff */
-		if (!$back_compat && $current_screen->id === 'admin_page_bu-edit-slideshow' 
+		if ( ($current_screen->id === 'admin_page_bu-edit-slideshow' || $current_screen->id === 'slideshows_page_bu-add-slideshow') 
 				&& function_exists('wp_enqueue_media')) {
 			wp_enqueue_media();
 		}
@@ -187,13 +175,8 @@ class BU_Slideshow {
 	 */
 	static public function public_scripts_styles() {
 		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
-		
-		$back_compat = false;
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			$back_compat = true;
-		}
-		
-		self::public_scripts($back_compat);
+				
+		self::public_scripts();
 		
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
 			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
@@ -211,23 +194,11 @@ class BU_Slideshow {
 	/**
 	 * Front end scripts, for older and newer jQuery. For jQuery < 1.71, patches jQuery 'on' to support sequence.js
 	 */
-	static public function public_scripts($back_compat) {
+	static public function public_scripts() {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
-		if ($back_compat) {
-			$js_url .= BU_SLIDESHOW_OLDJS;
-		}
 		
 		$seq_deps = array('jquery', 'modernizr');
 		$slideshow_deps = array('jquery', 'jquery-sequence', 'modernizr');
-		
-		if ($back_compat) {
-			$seq_deps[] = 'bu-sequence-patch';
-			$slideshow_deps[] = 'bu-sequence-patch';
-		}
-		
-		if ($back_compat) {
-			wp_register_script('bu-sequence-patch', $js_url . 'bu-sequence-patch.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
-		}
 		
 		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
 		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
@@ -237,12 +208,8 @@ class BU_Slideshow {
 	 * Load scripts and styles for the selector UI
 	 */
 	static public function selector_scripts_styles() {
-		if (version_compare(self::$wp_version, '3.3', '<')) {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/' . BU_SLIDESHOW_OLDJS . 'bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
-		} else {
-			wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
-		}
-		
+		wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
+	
 		wp_enqueue_script('bu-slideshow-selector');
 		
 		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css', array(), BU_SLIDESHOW_VERSION);
@@ -542,23 +509,73 @@ class BU_Slideshow {
 	 * Loads and handles submissions from Add Slideshow page.
 	 */
 	static public function add_slideshow_page() {
-		$msg = '';
-		if (isset($_POST['bu-new-slideshow-name'])) {
-			if (!isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_add_slideshow')) {
-				wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
-			}
+	
+		if ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) {
 			
-			if (!current_user_can(self::$min_cap)) {
-				wp_die(__('You do not have permission to add a new slideshow.', BU_SSHOW_LOCAL));
+			if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') ) {
+				require_once(ABSPATH . 'wp-admin/admin-header.php');
+				wp_die(__("You are not authorized to perform this action.", BU_SSHOW_LOCAL));
 			}
 
-			if (!isset($_POST['bu-new-slideshow-name']) || trim($_POST['bu-new-slideshow-name']) === '') {
-				$msg = __('You must enter a name for the slideshow.', BU_SSHOW_LOCAL); 
-			} else {
+			if ( !current_user_can(self::$min_cap) ) {
+				require_once(ABSPATH . 'wp-admin/admin-header.php');
+				wp_die(__('You do not have permission to add a new slideshow.', BU_SSHOW_LOCAL));
+			}
+			
+			// handle update
+			$is_create = true;
+			$msg = '';
+
+			if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
+				require_once(ABSPATH . 'wp-admin/admin-header.php');
+				$is_create = false;
+				$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
+			}
+
+			// default height to 0
+			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
+
+			// okay to have no slides 
+			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
+				$_POST['bu_slides'] = array();
+			}
+
+			// we are handling a form submission & all validation complete
+			if ($is_create) {
 				
-				$show = self::create_slideshow(trim($_POST['bu-new-slideshow-name']));
-				$msg = sprintf(__('Slideshow "%s" successfully created. <a href="%s&amp;bu_slideshow_id=%s">Edit this slideshow.</a>', BU_SSHOW_LOCAL), esc_html(stripslashes($show->name)), self::$edit_url, $show->id);
+				$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );
+				$show->set_view('admin');
 				
+				$show->set_name($_POST['bu_slideshow_name']);
+				$show->set_height($height);
+				
+				$slides = array();
+				foreach ($_POST['bu_slides'] as $i => $arr) {
+					$args = array(
+						'view' => 'admin',
+						'order' => $i,
+						'image_id' => intval($arr['image_id']),
+						'image_size' => $arr['image_size'],
+						'caption' => array(
+							'title' => $arr['caption']['title'],
+							'link' => $arr['caption']['link'],
+							'text' => wp_kses_data($arr['caption']['text']),
+							'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
+							)
+					);
+					$slides[] = new BU_Slide($args);
+				}
+				$show->set_slides($slides);
+
+				if ($show->update()) {
+					$url = 'admin.php?page=bu-edit-slideshow&bu_slideshow_id=' . $show->id . "&msg=";
+					$url .= urlencode( __("Slideshow created successfully.", BU_SSHOW_LOCAL) );
+					wp_redirect( admin_url( $url ) );
+					exit;
+				} else {
+					require_once(ABSPATH . 'wp-admin/admin-header.php');
+					$msg .= __("Error creating slideshow", BU_SSHOW_LOCAL);
+				}		
 			}
 		}
 		
@@ -712,7 +729,7 @@ class BU_Slideshow {
 	 * Displays and handles submissions from Edit Slideshow page.
 	 */
 	static public function edit_slideshow_page() {
-		if ( isset($_POST['bu_slideshow_edit_show']) && $_POST['bu_slideshow_edit_show'] ) {
+		if ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) {
 			
 			if (!isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow')) {
 				wp_die(__("You are not authorized to perform this action.", BU_SSHOW_LOCAL));
@@ -722,58 +739,60 @@ class BU_Slideshow {
 				wp_die(__("You do not have the necessary permissions to update slideshows.", BU_SSHOW_LOCAL));
 			}
 			
+			// handle update
 			$is_update = true;
 			$msg = '';
 
-			$req = array('bu_slideshow_id', 'bu_slideshow_name');
-			foreach ($req as $r) {
-				if (!isset($_POST[$r]) || empty($_POST[$r])) {
-					$is_update = false;
-					$msg .= sprintf(__('Could not update slideshow: missing or invalid %s. ', BU_SSHOW_LOCAL), $r);
-				}
+			if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
+				$is_update = false;
+				$msg .= __('Could not find slideshow. ', BU_SSHOW_LOCAL);
 			}
-			
+
+			if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
+				$is_update = false;
+				$msg .= __('Could not update slideshow: missing name. ', BU_SSHOW_LOCAL);
+			}
+
+			// default height to 0
+			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
+
 			// okay to have no slides 
 			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
 				$_POST['bu_slides'] = array();
 			}
 
-			// we are handling a form submission
+			// we are handling a form submission & all validation complete
 			if ($is_update) {
 				
-				if (!self::slideshow_exists(intval($_POST['bu_slideshow_id']))) {
-					$msg .= __('Could not find slideshow.', BU_SSHOW_LOCAL);
-				} else {
-					
-					$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
-					$show->set_view('admin');
-					
-					$show->set_name($_POST['bu_slideshow_name']);
-					
-					$slides = array();
-					foreach ($_POST['bu_slides'] as $i => $arr) {
-						$args = array(
-							'view' => 'admin',
-							'order' => $i,
-							'image_id' => intval($arr['image_id']),
-							'image_size' => $arr['image_size'],
-							'caption' => array(
-								'title' => $arr['caption']['title'],
-								'link' => $arr['caption']['link'],
-								'text' => wp_kses_data($arr['caption']['text'])
-							)
-						);
-						$slides[] = new BU_Slide($args);
-					}
-					$show->set_slides($slides);
-
-					if ($show->update()) {
-						$msg .= __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
-					} else {
-						$msg .= __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
-					}
+				$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
+				$show->set_view('admin');
 				
+				$show->set_name($_POST['bu_slideshow_name']);
+				$show->set_height($height);
+				
+				$slides = array();
+				foreach ($_POST['bu_slides'] as $i => $arr) {
+					$args = array(
+						'view' => 'admin',
+						'order' => $i,
+						'image_id' => intval($arr['image_id']),
+						'image_size' => $arr['image_size'],
+						'caption' => array(
+							'title' => $arr['caption']['title'],
+							'link' => $arr['caption']['link'],
+							'text' => wp_kses_data($arr['caption']['text']),
+							'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
+							)
+					);
+					$slides[] = new BU_Slide($args);
 				}
+				$show->set_slides($slides);
+
+				if ($show->update()) {
+					$msg .= __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
+				} else {
+					$msg .= __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
+				}		
 			}
 			
 		}
@@ -783,6 +802,10 @@ class BU_Slideshow {
 			
 			$id = intval($_GET['bu_slideshow_id']);
 			
+			if(isset($_GET['msg'])){
+				$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
+			}
+
 			if (self::slideshow_exists($id)) {
 				self::edit_slideshow_ui($id, $msg);
 				return;
@@ -900,6 +923,12 @@ class BU_Slideshow {
 		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
 			$atts['width'] = 'auto';
 		}
+
+		if ( ! is_numeric( $atts['transition_delay'] ) || 1 > $atts['transition_delay'] ) {
+			$atts['transition_delay'] = 5000;
+		} else {
+			$atts['transition_delay'] = intval( $atts['transition_delay'] ) * 1000;
+		}
 		
 		if (!in_array($atts['nav_style'], self::$nav_styles)) {
 			$atts['nav_style'] = $att_defaults['nav_style'];
@@ -955,8 +984,8 @@ class BU_Slideshow {
 	static public function get_selector($args = array()) {
 		$all_slideshows = self::get_slideshows();
 		$defaults = self::$shortcode_defaults;
-		$empty_ok = array('show_nav', 'autoplay');
-		
+		$empty_ok = array('show_nav', 'autoplay', 'transition_delay');
+
 		foreach ($defaults as $key => $def) {
 			if (in_array($key, $empty_ok)) {
 				if (!isset($args[$key])) {

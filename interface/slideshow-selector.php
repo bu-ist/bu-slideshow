@@ -42,7 +42,7 @@
 	<p>
 		<a href="#" class="bu-slideshow-advanced-toggle"><?php _e('Show advanced'); ?></a>
 	</p>
-	<div class="bu-slideshow-selector-advanced">
+	<div class="bu-slideshow-selector-advanced" style="display: none;">
 			<p>
 				<label for="bu_slideshow_width"><?php _e('Fixed width:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_width" id="bu_slideshow_width" value="<?php echo $args['width'] !== 'auto' ? esc_attr($args['width']) : ''; ?>" />px
@@ -51,6 +51,11 @@
 				<label for="bu_slideshow_custom_trans"><?php _e('Custom Transition:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php if (isset($args['custom_transition'])) echo esc_attr($args['custom_transition']); ?>" /><br />
 				<em><small>Overrides transition selected above. You must provide custom CSS transition code if you enter a value here.</small></em>
+			</p>
+			<p>
+				<label for="bu_slideshow_transition_delay"><?php _e('Slide transition delay:', BU_SSHOW_LOCAL); ?></label><br />
+				<input type="text" name="bu_slideshow_transition_delay" id="bu_slideshow_transition_delay" value="<?php if (isset($args['transition_delay'])) echo esc_attr($args['transition_delay']); ?>" /><br />
+				<em><small>Number of seconds between slide transitions.</small></em>
 			</p>
 	</div>
 	

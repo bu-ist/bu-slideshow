@@ -8,37 +8,14 @@
 	
 	<div id="bu-slideshow-edit">
 		<form id="bu-slideshow-editform" method="post" action="">
+			<input type="hidden" name="bu_slideshow_save_show" value="1" />
+			<input type="hidden" name="bu_slideshow_id" value="<?php echo esc_attr($this->id); ?>" />
+			<?php 
+				wp_nonce_field('bu_update_slideshow', 'bu_slideshow_nonce', false, true); 
+				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.php'; 
+			?>
 			<p>
-				<label for="bu_slideshow_name"><strong><?php _e('Slideshow Name', BU_SSHOW_LOCAL); ?>: </strong></label>
-				<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo esc_attr(stripslashes($this->name)); ?>" />
-			</p>
-			
-			<p><strong><?php _e('Slides', BU_SSHOW_LOCAL); ?>:</strong><br />
-				<em><?php _e('Drag to reorder, expand to edit', BU_SSHOW_LOCAL); ?></em>
-			</p>
-			<p>
-				<a href="#" id="bu-slideshow-add-slide" class="button"><?php _e('Add New Slide', BU_SSHOW_LOCAL); ?></a>
-			</p>
-			<div id="bu-slideshow-slidelist">
-				<ul>
-				<?php 
-				if (is_array($this->slides) && count($this->slides) > 0) {
-					foreach ($this->slides as $index => $slide) {
-						$slide->set_order($index);
-						$slide->set_view('admin');
-						echo $slide->get();
-					}
-				} else {
-					$slide = new BU_Slide(array('view' => 'admin'));
-					echo $slide->get();
-				} ?>
-				</ul>
-			</div>
-			<p>
-				<input type="hidden" name="bu_slideshow_edit_show" value="1" />
-				<input type="hidden" name="bu_slideshow_id" value="<?php echo esc_attr($this->id); ?>" />
-				<?php wp_nonce_field('bu_update_slideshow', 'bu_slideshow_nonce', false, true); ?>
-				<input type="submit" value="<?php _e('Save Changes', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit"class="button-primary" />
+				<input type="submit" value="<?php _e('Save Changes', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
 			</p>
 		</form>
 	</div>

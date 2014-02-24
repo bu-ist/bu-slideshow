@@ -11,6 +11,7 @@ class BU_Slideshow_Instance {
 	public $view;
 	public $name = '';
 	public $id = 1;
+	public $height = 0;
 	public $slides = array();
 	
 	static $classes = array('bu-slideshow');
@@ -59,6 +60,15 @@ class BU_Slideshow_Instance {
 		$this->name = $name;
 	}
 	
+	/**
+	 * Set the height of the slideshow.
+	 * @param int $height
+	 */
+	public function set_height($height) {
+		$height = intval($height);
+		$this->height = $height;
+	}
+
 	/**
 	 * Set slides.
 	 * @param array $slides
@@ -126,7 +136,8 @@ class BU_Slideshow_Instance {
 				$show_name = $this->name ? str_replace(' ', '-', strtolower(stripslashes($this->name))) : '';
 				
 				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
-				$styles = sprintf(' style="width:%s;"', $width);
+				$height = ($this->height > 0) ? 'height: '.intval($this->height).'px;' : '';
+				$styles = sprintf(' style="width:%s; %s"', $width, $height);
 				
 				$container_class = 'bu-slideshow-container';
 				$container_class .= ' ' . $show_name;
@@ -136,9 +147,10 @@ class BU_Slideshow_Instance {
 				$ul_classes = self::$classes;
 				$ul_classes[] = 'transition-' . $args['transition']; 
 				$ul_class_str = esc_attr(join(' ', $ul_classes));
-				$name_att = $show_name ? sprintf(' data-slideshow-name="%s"', $show_name) : '';
+				$name_att = $show_name ? sprintf(' data-slideshow-name="%s" data-slideshow-delay="%d"', $show_name, $args['transition_delay']) : '';
 
 				$html = sprintf('<div class="%s" id="%s"%s%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att, $styles);
+				$html .= "<div class='slideshow-loader active'><div class='loader-animation'></div><p>" . __("loading slideshow...") . "</p></div>";
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s">', $ul_class_str, $show_id);
 
 				foreach ($this->slides as $i => $slide) {

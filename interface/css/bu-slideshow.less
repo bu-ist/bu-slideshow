@@ -24,6 +24,74 @@
 .bu-slideshow-container {
 	overflow:hidden;
 	position:relative;
+	min-height: 100px;
+	
+	.slideshow-loader{
+
+		display: none;
+		position: absolute;
+		margin:-40px;
+		top:50%;
+		left:50%;
+		height: 80px;
+		color: #CC0000;
+		text-align: center;
+
+		.loader-animation {
+			margin:auto;
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			border: 8px solid #CC0000;
+			border-right-color: transparent !important;
+			border-radius: 50%;
+			-webkit-animation: spin .8s linear infinite;
+			-moz-animation: spin .8s linear infinite;
+			-ms-animation: spin .8s linear infinite;
+			-o-animation: spin .8s linear infinite;
+			animation: spin .8s linear infinite;
+			// box-shadow: 0 0 25px 2px #eee;
+		}
+
+		&.active {
+			display: block;
+		}
+
+		p {
+			display: none;
+			padding: 10px;
+		}
+
+		@-webkit-keyframes spin {
+			from { -webkit-transform: rotate(0deg); opacity: 0.4; }
+			50%  { -webkit-transform: rotate(180deg); opacity: 1; }
+			to   { -webkit-transform: rotate(360deg); opacity: 0.4; }
+		}
+
+		@-moz-keyframes spin {
+			from { -moz-transform: rotate(0deg); opacity: 0.4; }
+			50%  { -moz-transform: rotate(180deg); opacity: 1; }
+			to   { -moz-transform: rotate(360deg); opacity: 0.4; }
+		}
+
+		@-ms-keyframes spin {
+			from { -ms-transform: rotate(0deg); opacity: 0.4; }
+			50%  { -ms-transform: rotate(180deg); opacity: 1; }
+			to   { -ms-transform: rotate(360deg); opacity: 0.4; }
+		}
+
+		@-o-keyframes spin {
+			from { -o-transform: rotate(0deg); opacity: 0.4; }
+			50%  { -o-transform: rotate(180deg); opacity: 1; }
+			to   { -o-transform: rotate(360deg); opacity: 0.4; }
+		}
+
+		@keyframes spin {
+			from { transform: rotate(0deg); opacity: 0.2; }
+			50%  { transform: rotate(180deg); opacity: 1; }
+			to   { transform: rotate(360deg); opacity: 0.2; }
+		}
+	}
 		
 	.arrowBgStyles {
 		background-color:transparent;
@@ -121,6 +189,7 @@
 			margin:0;
 			padding:0;
 			position:relative !important;
+			background: none !important;
 
 			li {
 				left: 0; // flexi indents lists with left positioning.
@@ -136,7 +205,8 @@
 					width:100%;
 
 					img {
-						max-width:100%;
+						max-width: 100%;
+						width: 100%;
 						display:inline;
 					}
 
@@ -171,7 +241,7 @@
 						.bu-slide-caption-title {
 							font-size: 1.3em;
 							font-family: 'Helvetica','Arial',sans-serif;
-							color: #bcbcbc;
+							color:#bcbcbc;
 							margin-bottom: .5em;
 							padding: 0;
 						}
@@ -180,6 +250,24 @@
 							font-size: .85em;
 							margin: 0;
 						}
+					}
+					.caption-bottom-right{
+						bottom: 15%;
+						right: 6%;
+					}
+					.caption-bottom-left{
+						bottom: 15%;
+						left: 6%;
+					}
+					.caption-top-left{
+						top: 15%;
+						left: 6%;
+						bottom:auto;
+					}
+					.caption-top-right{
+						top: 15%;
+						right: 6%;
+						bottom:auto;
 					}
 				}
 			}
@@ -291,6 +379,8 @@
 
 	.bu-slideshow-navigation-container {
 
+		display: none;
+
 		.bu-slideshow-navigation {
 			bottom:1em;
 			left:0;
@@ -306,6 +396,7 @@
 				display:inline;
 				left:0; // flexi indents lists with left positioning, so.
 				margin:0; // make sure theme list styles don't accidentally separate
+				background:none !important;
 			}
 
 		}
