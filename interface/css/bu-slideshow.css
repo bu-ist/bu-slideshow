@@ -13,6 +13,7 @@
 .bu-slideshow-container {
   overflow: hidden;
   position: relative;
+  min-height: 100px;
 }
 .bu-slideshow-container .slideshow-loader {
   display: none;
