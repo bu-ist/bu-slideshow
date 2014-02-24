@@ -15,7 +15,7 @@
 define('BU_SLIDESHOW_VERSION', '2.0');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('SCRIPT_DEBUG', false);
+define('SCRIPT_DEBUG', true);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');

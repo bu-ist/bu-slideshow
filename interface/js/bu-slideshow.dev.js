@@ -147,6 +147,8 @@ jQuery(document).ready(function($) {
             container.height(height);
             container.find('ul.bu-slideshow').height(height);
             
+            container.find('.slideshow-loader.active').removeClass('active');
+            container.find('.bu-slideshow-navigation-container').css('display', 'inline-block');
         });
         
     }
