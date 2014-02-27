@@ -174,7 +174,7 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
+		// wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
 				
 		self::public_scripts();
 		
@@ -197,8 +197,8 @@ class BU_Slideshow {
 	static public function public_scripts() {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
-		$seq_deps = array('jquery', 'modernizr');
-		$slideshow_deps = array('jquery', 'jquery-sequence', 'modernizr');
+		$seq_deps = array('jquery');
+		$slideshow_deps = array('jquery', 'jquery-sequence');
 		
 		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
 		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
@@ -288,7 +288,7 @@ class BU_Slideshow {
 		global $bu_slideshow_loadscripts;
 		
 		if ($bu_slideshow_loadscripts) {
-			$conditional_scripts = array('modernizr', 'bu-sequence-patch', 'jquery-sequence', 'bu-slideshow');
+			$conditional_scripts = array('bu-sequence-patch', 'jquery-sequence', 'bu-slideshow');
 			apply_filters('bu_slideshow_conditional_scripts', $conditional_scripts);
 			
 			foreach($conditional_scripts as $script) {
@@ -897,7 +897,7 @@ class BU_Slideshow {
 			global $bu_slideshow_loadscripts;
 			$bu_slideshow_loadscripts = 1;
 		} else {
-			wp_enqueue_script('modernizr');
+			// wp_enqueue_script('modernizr');
 			wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
 		}
