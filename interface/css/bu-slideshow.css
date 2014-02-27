@@ -271,6 +271,8 @@
   margin-right: 0;
   width: 100% !important;
   height: auto;
+  background: none;
+  padding: 0;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container {
   height: auto;
