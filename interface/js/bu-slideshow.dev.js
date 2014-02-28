@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
             buSlideshows[name] = new BuSlideshow(args);
         }
         catch (e){
-            console.log(e);
+            // console.log(e);
         }    
     });
 
