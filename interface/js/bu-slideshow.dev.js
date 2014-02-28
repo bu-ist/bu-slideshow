@@ -113,8 +113,12 @@ jQuery(document).ready(function($) {
             'arrows' : arrowId
         };
         
-        buSlideshows[name] = new BuSlideshow(args);
-        
+        try {
+            buSlideshows[name] = new BuSlideshow(args);
+        }
+        catch (e){
+            console.log(e);
+        }    
     });
 
     /**
