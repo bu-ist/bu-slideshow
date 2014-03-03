@@ -1,6 +1,7 @@
 /* IE triggers resize all over the place, so we check actual window dimensions */
 windowHeight = jQuery(window).height();
 windowWidth = jQuery(window).width();
+var retry_count = 0;
 
 jQuery(document).ready(function($) {
     window.buSlideshows = {};
@@ -113,8 +114,19 @@ jQuery(document).ready(function($) {
             'arrows' : arrowId
         };
         
-        buSlideshows[name] = new BuSlideshow(args);
-        
+        try {
+            buSlideshows[name] = new BuSlideshow(args);
+        }
+        catch (e){
+            if( 0 == retry_count && 'Invoked constructor as regular function. Use the "new" operator.' == e ){
+                // console.log('retrying');
+                setTimeout(function(){
+                    bu_resize_slideshow();
+                }, 1000);
+
+                retry_count++;
+            }
+        }    
     });
 
     /**
