@@ -1,10 +1,9 @@
 (function($){
 /* IE triggers resize all over the place, so we check actual window dimensions */
-windowHeight = jQuery(window).height();
-windowWidth = jQuery(window).width();
-var retry_count = 0;
-    window.buSlideshows = {};
-    var container, pagerId, options, args, rotator, imgHeight;
+var windowHeight = jQuery(window).height(),
+    windowWidth = jQuery(window).width(),
+    buSlideshows = {},
+    rotator, imgHeight;
 
     /**
      * Resizes slideshow and all slides to height of highest slide
@@ -15,7 +14,7 @@ var retry_count = 0;
     function bu_resize_slideshow() {
 
         $('.bu-slideshow-container').each(function(){
-            var container = $(this), slides = container.find('li .bu-slide-container'), 
+            var slides = $(this).find('li .bu-slide-container'), 
                 $el, height = 0, currentHeight = 0;
 
             slides.find('*').each(function(i, el) {
@@ -31,8 +30,8 @@ var retry_count = 0;
                 $(el).height(height);
             });
 
-            container.height(height);
-            container.find('ul.bu-slideshow').height(height);
+            $(this).height(height);
+            $(this).find('ul.bu-slideshow').height(height);
             
         });
         
@@ -57,8 +56,10 @@ var retry_count = 0;
         
         
         this.init(args);
-    };
+    }
     
+    window.BuSlideshow = BuSlideshow;
+
     BuSlideshow.prototype.init = function(args) {
         var that = this;
         
@@ -72,7 +73,7 @@ var retry_count = 0;
             if (that.pager) {
                 that.pager.setActive();
             }
-        }
+        };
 
         this.pager = $('#' + args.pager).length ? $('#' + args.pager) : false;
         if (this.pager) {
@@ -99,7 +100,7 @@ var retry_count = 0;
             nextId = that.sequence.nextFrameID; 
             this.find('a').removeClass('active');
             this.find('a#pager-' + nextId).addClass('active');
-        }
+        };
     };
     
     BuSlideshow.prototype.initArrows = function() {
@@ -115,8 +116,6 @@ var retry_count = 0;
     };
 
 jQuery(document).ready(function($) {
-    
-    
     
     $('.bu-slideshow-container').each(function(index, el){
         var $this = $(this), autoplay = false, transition_delay, container, pagerId, arrowId, 
@@ -180,4 +179,4 @@ jQuery(document).ready(function($) {
     });
     
 });
-})(jQuery);
+}(jQuery));
