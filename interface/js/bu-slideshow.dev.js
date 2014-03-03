@@ -1,44 +1,13 @@
-(function($){
 /* IE triggers resize all over the place, so we check actual window dimensions */
 windowHeight = jQuery(window).height();
 windowWidth = jQuery(window).width();
 var retry_count = 0;
+
+jQuery(document).ready(function($) {
     window.buSlideshows = {};
     var container, pagerId, options, args, rotator, imgHeight;
-
-    /**
-     * Resizes slideshow and all slides to height of highest slide
-     * 
-     * I hate iterating through everything in the slides here, but we should allow 
-     * for markup other than what the plugin currently produces (e.g. video, custom HTML).
-     */
-    function bu_resize_slideshow() {
-
-        $('.bu-slideshow-container').each(function(){
-            var container = $(this), slides = container.find('li .bu-slide-container'), 
-                $el, height = 0, currentHeight = 0;
-
-            slides.find('*').each(function(i, el) {
-                $el = $(el);
-                
-                currentHeight = $el.height();
-                if (currentHeight > height) {
-                    height = currentHeight;
-                }
-            });
-
-            slides.each(function(i, el) {
-                $(el).height(height);
-            });
-
-            container.height(height);
-            container.find('ul.bu-slideshow').height(height);
-            
-        });
-        
-    }
-
-    function BuSlideshow(args) {
+    
+    window.BuSlideshow = function BuSlideshow(args) {
         
         if ( !(this instanceof BuSlideshow)) {
             throw new ReferenceError('Invoked constructor as regular function. Use the "new" operator.');
@@ -113,10 +82,6 @@ var retry_count = 0;
             return false;
         });
     };
-
-jQuery(document).ready(function($) {
-    
-    
     
     $('.bu-slideshow-container').each(function(index, el){
         var $this = $(this), autoplay = false, container, pagerId, arrowId, 
@@ -164,7 +129,37 @@ jQuery(document).ready(function($) {
         }    
     });
 
+    /**
+     * Resizes slideshow and all slides to height of highest slide
+     * 
+     * I hate iterating through everything in the slides here, but we should allow 
+     * for markup other than what the plugin currently produces (e.g. video, custom HTML).
+     */
+    function bu_resize_slideshow() {
 
+        $('.bu-slideshow-container').each(function(){
+            var container = $(this), slides = container.find('li .bu-slide-container'), 
+                $el, height = 0, currentHeight = 0;
+
+            slides.find('*').each(function(i, el) {
+                $el = $(el);
+                
+                currentHeight = $el.height();
+                if (currentHeight > height) {
+                    height = currentHeight;
+                }
+            });
+
+            slides.each(function(i, el) {
+                $(el).height(height);
+            });
+
+            container.height(height);
+            container.find('ul.bu-slideshow').height(height);
+            
+        });
+        
+    }
     
     /**
      * Dear IE: is this really a resize event? 
@@ -187,4 +182,3 @@ jQuery(document).ready(function($) {
     });
     
 });
-})(jQuery);
