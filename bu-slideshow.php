@@ -504,68 +504,71 @@ class BU_Slideshow {
 		return (int) $index;
 		
 	}
-	
+
+	static private function save_show($show){
+		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
+
+		// okay to have no slides 
+		if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
+			$_POST['bu_slides'] = array();
+		}
+
+		$slides = array();
+
+		$show->set_view('admin');
+		$show->set_name($_POST['bu_slideshow_name']);
+		$show->set_height($height);
+		
+		foreach ($_POST['bu_slides'] as $i => $arr) {
+			$args = array(
+				'view' => 'admin',
+				'order' => $i,
+				'image_id' => intval($arr['image_id']),
+				'image_size' => $arr['image_size'],
+				'caption' => array(
+					'title' => $arr['caption']['title'],
+					'link' => $arr['caption']['link'],
+					'text' => wp_kses_data($arr['caption']['text']),
+					'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
+					)
+			);
+			$slides[] = new BU_Slide($args);
+		}
+		$show->set_slides($slides);
+	}
+
+
 	/**
 	 * Loads and handles submissions from Add Slideshow page.
 	 */
 	static public function add_slideshow_page() {
 	
-		if ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) {
-			
-			if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') ) {
-				require_once(ABSPATH . 'wp-admin/admin-header.php');
-				wp_die(__("You are not authorized to perform this action.", BU_SSHOW_LOCAL));
-			}
+		$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'do_create' : 'view_form';
 
-			if ( !current_user_can(self::$min_cap) ) {
-				require_once(ABSPATH . 'wp-admin/admin-header.php');
-				wp_die(__('You do not have permission to add a new slideshow.', BU_SSHOW_LOCAL));
-			}
-			
-			// handle update
-			$is_create = true;
-			$msg = '';
-
-			if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
-				require_once(ABSPATH . 'wp-admin/admin-header.php');
-				$is_create = false;
-				$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
-			}
-
-			// default height to 0
-			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
-
-			// okay to have no slides 
-			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
-				$_POST['bu_slides'] = array();
-			}
-
-			// we are handling a form submission & all validation complete
-			if ($is_create) {
-				
-				$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );
-				$show->set_view('admin');
-				
-				$show->set_name($_POST['bu_slideshow_name']);
-				$show->set_height($height);
-				
-				$slides = array();
-				foreach ($_POST['bu_slides'] as $i => $arr) {
-					$args = array(
-						'view' => 'admin',
-						'order' => $i,
-						'image_id' => intval($arr['image_id']),
-						'image_size' => $arr['image_size'],
-						'caption' => array(
-							'title' => $arr['caption']['title'],
-							'link' => $arr['caption']['link'],
-							'text' => wp_kses_data($arr['caption']['text']),
-							'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
-							)
-					);
-					$slides[] = new BU_Slide($args);
+		switch ( $action ) {
+			case 'do_create':
+				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
+					require_once(ABSPATH . 'wp-admin/admin-header.php');
+					wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
+					exit;
 				}
-				$show->set_slides($slides);
+
+				// handle update
+				$msg = '';
+
+				if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
+					$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
+					break;
+				} else {
+					$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );	
+					if( !$show || is_wp_error($show) ){
+						$msg .= __('Error creating slideshow', BU_SSHOW_LOCAL);
+						break;
+					}
+				}
+
+				// we are handling a form submission & all validation complete
+				self::save_show($show);
 
 				if ($show->update()) {
 					$url = 'admin.php?page=bu-edit-slideshow&bu_slideshow_id=' . $show->id . "&msg=";
@@ -576,9 +579,9 @@ class BU_Slideshow {
 					require_once(ABSPATH . 'wp-admin/admin-header.php');
 					$msg .= __("Error creating slideshow", BU_SSHOW_LOCAL);
 				}		
-			}
+				break;
 		}
-		
+		require_once(ABSPATH . 'wp-admin/admin-header.php');
 		require_once BU_SLIDESHOW_BASEDIR . 'interface/add-slideshow.php';
 	}
 	
@@ -587,6 +590,10 @@ class BU_Slideshow {
 	 */
 	static public function manage_slideshow_page() {
 		$slideshows = self::get_slideshows();
+
+		if(isset($_GET['msg'])){
+			$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
+		}
 
 		require_once BU_SLIDESHOW_BASEDIR . 'interface/manage-slideshows.php';
 	}
@@ -729,72 +736,51 @@ class BU_Slideshow {
 	 * Displays and handles submissions from Edit Slideshow page.
 	 */
 	static public function edit_slideshow_page() {
-		if ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) {
-			
-			if (!isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow')) {
-				wp_die(__("You are not authorized to perform this action.", BU_SSHOW_LOCAL));
-			}
 
-			if (!current_user_can(self::$min_cap)) {
-				wp_die(__("You do not have the necessary permissions to update slideshows.", BU_SSHOW_LOCAL));
-			}
-			
-			// handle update
-			$is_update = true;
-			$msg = '';
+	$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'save' : 'view';
 
-			if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
-				$is_update = false;
-				$msg .= __('Could not find slideshow. ', BU_SSHOW_LOCAL);
-			}
-
-			if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
-				$is_update = false;
-				$msg .= __('Could not update slideshow: missing name. ', BU_SSHOW_LOCAL);
-			}
-
-			// default height to 0
-			$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
-
-			// okay to have no slides 
-			if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
-				$_POST['bu_slides'] = array();
-			}
-
-			// we are handling a form submission & all validation complete
-			if ($is_update) {
-				
-				$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));
-				$show->set_view('admin');
-				
-				$show->set_name($_POST['bu_slideshow_name']);
-				$show->set_height($height);
-				
-				$slides = array();
-				foreach ($_POST['bu_slides'] as $i => $arr) {
-					$args = array(
-						'view' => 'admin',
-						'order' => $i,
-						'image_id' => intval($arr['image_id']),
-						'image_size' => $arr['image_size'],
-						'caption' => array(
-							'title' => $arr['caption']['title'],
-							'link' => $arr['caption']['link'],
-							'text' => wp_kses_data($arr['caption']['text']),
-							'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
-							)
-					);
-					$slides[] = new BU_Slide($args);
+		switch ( $action ) {
+			case 'save':
+				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
+					require_once(ABSPATH . 'wp-admin/admin-header.php');
+					wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
+					exit;
 				}
-				$show->set_slides($slides);
+
+				if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
+					$url = 'admin.php?page=bu-edit-slideshow&msg=';
+					$url .= urlencode( __("Cannot find slideshow.", BU_SSHOW_LOCAL) );
+					wp_redirect( admin_url( $url ) );
+					exit;
+				}
+
+				// handle update
+				$msg = '';
+
+				if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
+					$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
+					break;
+				} elseif ( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ) {
+					$msg .= __('Could not find slideshow.', BU_SSHOW_LOCAL);
+					break;
+				} else {
+					$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));	
+					if( !$show || is_wp_error($show) ){
+						$msg .= __('Error getting slideshow', BU_SSHOW_LOCAL);
+						break;
+					}
+				}
+
+				// we are handling a form submission & all validation complete
+		
+				self::save_show($show);
 
 				if ($show->update()) {
 					$msg .= __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
 				} else {
 					$msg .= __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
-				}		
-			}
-			
+				}	
+			break;
 		}
 		
 		// display edit page, whether form submitted or not
@@ -802,13 +788,17 @@ class BU_Slideshow {
 			
 			$id = intval($_GET['bu_slideshow_id']);
 			
-			if(isset($_GET['msg'])){
+			if(empty($msg) && isset($_GET['msg'])){
 				$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
 			}
 
 			if (self::slideshow_exists($id)) {
 				self::edit_slideshow_ui($id, $msg);
 				return;
+			} else {
+				if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
+					wp_die(__("Invalid slideshow.", BU_SSHOW_LOCAL));
+				}
 			}
 			
 		}
