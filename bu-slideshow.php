@@ -544,7 +544,7 @@ class BU_Slideshow {
 	static public function add_slideshow_page() {
 	
 		$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'do_create' : 'view_form';
-
+		
 		switch ( $action ) {
 			case 'do_create':
 				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
@@ -553,16 +553,13 @@ class BU_Slideshow {
 					exit;
 				}
 
-				// handle update
-				$msg = '';
-
 				if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
 					$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
 					break;
 				} else {
 					$show = self::create_slideshow( filter_var($_POST['bu_slideshow_name'], FILTER_SANITIZE_STRING) );	
 					if( !$show || is_wp_error($show) ){
-						$msg .= __('Error creating slideshow', BU_SSHOW_LOCAL);
+						$msg = __('Error creating slideshow', BU_SSHOW_LOCAL);
 						break;
 					}
 				}
@@ -577,7 +574,7 @@ class BU_Slideshow {
 					exit;
 				} else {
 					require_once(ABSPATH . 'wp-admin/admin-header.php');
-					$msg .= __("Error creating slideshow", BU_SSHOW_LOCAL);
+					$msg = __("Error creating slideshow", BU_SSHOW_LOCAL);
 				}		
 				break;
 		}
@@ -610,7 +607,6 @@ class BU_Slideshow {
 				$msg = __("Could not find slideshow.", BU_SSHOW_LOCAL);
 				$id = false;
 			}
-			
 		}
 		
 		require_once BU_SLIDESHOW_BASEDIR . 'interface/preview-slideshow.php';
@@ -738,35 +734,27 @@ class BU_Slideshow {
 	static public function edit_slideshow_page() {
 
 	$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'save' : 'view';
+	$msg = '';
 
 		switch ( $action ) {
 			case 'save':
 				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
-					require_once(ABSPATH . 'wp-admin/admin-header.php');
 					wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
 					exit;
 				}
 
 				if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
-					$url = 'admin.php?page=bu-edit-slideshow&msg=';
-					$url .= urlencode( __("Cannot find slideshow.", BU_SSHOW_LOCAL) );
-					wp_redirect( admin_url( $url ) );
+					wp_die(__('Invalid slideshow.', BU_SSHOW_LOCAL));
 					exit;
 				}
 
-				// handle update
-				$msg = '';
-
 				if( !isset( $_POST['bu_slideshow_name'] ) || '' == trim( $_POST['bu_slideshow_name'] ) ){
-					$msg .= __('Could not create slideshow: missing name.', BU_SSHOW_LOCAL);
-					break;
-				} elseif ( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ) {
-					$msg .= __('Could not find slideshow.', BU_SSHOW_LOCAL);
+					$msg = __('Could not save slideshow: missing name.', BU_SSHOW_LOCAL);
 					break;
 				} else {
 					$show = self::get_slideshow(intval($_POST['bu_slideshow_id']));	
 					if( !$show || is_wp_error($show) ){
-						$msg .= __('Error getting slideshow', BU_SSHOW_LOCAL);
+						$msg = __('Error getting slideshow', BU_SSHOW_LOCAL);
 						break;
 					}
 				}
@@ -776,31 +764,27 @@ class BU_Slideshow {
 				self::save_show($show);
 
 				if ($show->update()) {
-					$msg .= __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
+					$msg = __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
 				} else {
-					$msg .= __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
+					$msg = __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
 				}	
-			break;
-		}
-		
-		// display edit page, whether form submitted or not
-		if (isset($_GET['bu_slideshow_id']) && !empty($_GET['bu_slideshow_id'])) {
+				break;
 			
-			$id = intval($_GET['bu_slideshow_id']);
-			
-			if(empty($msg) && isset($_GET['msg'])){
-				$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
-			}
-
-			if (self::slideshow_exists($id)) {
-				self::edit_slideshow_ui($id, $msg);
-				return;
-			} else {
-				if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
-					wp_die(__("Invalid slideshow.", BU_SSHOW_LOCAL));
+			case 'view':
+				if ( !isset($_GET['bu_slideshow_id']) || empty($_GET['bu_slideshow_id']) ) {
+					wp_die(__('Invalid slideshow', BU_SSHOW_LOCAL));
+					exit;
 				}
-			}
-			
+
+				$show = self::get_slideshow( intval( $_GET['bu_slideshow_id'] ) );	
+				if( !$show || is_wp_error($show) ){
+					wp_die(__('Error getting slideshow', BU_SSHOW_LOCAL));
+					exit;
+				}
+
+				$show->set_view('admin');
+				echo $show->get(array('msg' => $msg));
+				break;
 		}
 	}
 	

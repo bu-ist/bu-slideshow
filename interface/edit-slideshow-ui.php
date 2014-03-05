@@ -2,9 +2,9 @@
 	<p><a href="<?php echo BU_Slideshow::$manage_url; ?>">&laquo; <?php _e('Back to Manage Slideshows', BU_SSHOW_LOCAL); ?></a></p>
 	<h2><?php _e(sprintf("Edit Slideshow: %s", esc_html(stripslashes($this->name))), BU_SSHOW_LOCAL); ?></h2>
 	
-	<?php if (isset($msg) && $msg) { ?>
+	<?php if ( $msg ): ?>
 	<div class="updated"><p><?php echo $msg; ?></p></div>
-	<?php } ?>
+	<?php endif; ?>
 	
 	<div id="bu-slideshow-edit">
 		<form id="bu-slideshow-editform" method="post" action="">
