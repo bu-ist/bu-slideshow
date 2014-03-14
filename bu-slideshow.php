@@ -54,7 +54,8 @@ class BU_Slideshow {
 		'autoplay' => 1,
 		'show_arrows' => 0,
 		'transition_delay' => 5,
-		'width' => 'auto'
+		'width' => 'auto',
+		'align' => 'center'
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
 	static $nav_styles = array('icon', 'number');

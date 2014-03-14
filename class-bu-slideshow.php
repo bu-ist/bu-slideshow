@@ -137,7 +137,21 @@ class BU_Slideshow_Instance {
 				
 				$width = $args['width'] === 'auto' ? 'auto' : $args['width'] . 'px';
 				$height = ($this->height > 0) ? 'height: '.intval($this->height).'px;' : '';
-				$styles = sprintf(' style="width:%s; %s"', $width, $height);
+				$alignment = strtolower($args['align']);
+
+				if ($width !== 'auto') {
+
+					if ($alignment === 'left') {
+						$styles = sprintf(' style="width: %s; %s; float: left;"', $width, $height);	
+					} elseif ($alignment === 'right') {
+						$styles = sprintf(' style="width: %s; %s; float: right;"', $width, $height);
+					} else {
+						$styles = sprintf(' style="width: %s; %s; margin-left: auto; margin-right: auto;"', $width, $height);
+					}
+
+				} else {
+					$styles = sprintf(' style="width: %s; %s"', $width, $height);
+				}
 				
 				$container_class = 'bu-slideshow-container';
 				$container_class .= ' ' . $show_name;

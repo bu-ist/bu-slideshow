@@ -47,6 +47,12 @@
 				<label for="bu_slideshow_width"><?php _e('Fixed width:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_width" id="bu_slideshow_width" value="<?php echo $args['width'] !== 'auto' ? esc_attr($args['width']) : ''; ?>" />px
 			</p>
+			<fieldset id="bu_slideshow_alignment">
+				<legend><?php _e('Alignment:', BU_SSHOW_LOCAL); ?></legend>
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_left" value="left" <?php if ($args['align'] === 'left') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_left">Left</label><br />
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_center" value="center" <?php if ($args['align'] === 'center') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_center">Center</label><br />
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_right" value="right" <?php if ($args['align'] === 'right') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_right">Right</label><br />
+			</fieldset>
 			<p>
 				<label for="bu_slideshow_custom_trans"><?php _e('Custom Transition:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_custom_trans" id="bu_slideshow_custom_trans" value="<?php if (isset($args['custom_transition'])) echo esc_attr($args['custom_transition']); ?>" /><br />

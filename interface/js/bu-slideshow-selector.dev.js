@@ -50,6 +50,8 @@ jQuery(document).ready(function($){
 		options.autoplay = this.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
 		options.transition_delay = this.ui.find('#bu_slideshow_transition_delay').val();
 		options.width = this.ui.find('#bu_slideshow_width').val();
+		// options.align = this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val();
+		// options.align = this.ui.each('.bu_slideshow_alignment_loop input[name="bu_slideshow_alignment"]:checked').val());
 
 		// override transition with custom transition if provided
 		if (options.custom_transition.length > 0) {
@@ -67,6 +69,10 @@ jQuery(document).ready(function($){
 		if (options.width.length === 0) {
 			options.width = 'auto';
 		}
+		
+		// if (options.align.legnth || options.align !== 'undefined' || options.align.length === 0) {
+		// 	options.align = 'center';
+		// }
 
 		return options;
 	};
@@ -82,6 +88,8 @@ jQuery(document).ready(function($){
 		navSel.val(navSel.find('option:first').val());
 		
 		this.ui.find('#bu_slideshow_width').val('');
+		// this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val('');
+		this.ui.find('#bu_slideshow_custom_trans').val('');
 		this.ui.find('#bu_slideshow_custom_trans').val('');
 
 		this.ui.find('#bu_slideshow_show_nav').prop('checked', true);
