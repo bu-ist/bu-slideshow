@@ -124,8 +124,8 @@ var windowHeight = jQuery(window).height(),
 jQuery(document).ready(function($) {
     
     $('.bu-slideshow-container').each(function(index, el){
-        var $this = $(this), autoplay = false, transition_delay, container, pagerId, arrowId, 
-            options, args, name;
+        var $this = $(this), autoplay = false, container, pagerId, arrowId, 
+            options, args, name, transition_delay;
         
         container = $this.find('.bu-slideshow-slides');
         pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
