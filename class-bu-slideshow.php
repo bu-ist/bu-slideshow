@@ -120,6 +120,9 @@ class BU_Slideshow_Instance {
 			
 			case 'admin':
 				$msg = $args['msg'] ? $args['msg'] : '';
+				$name = $this->name;
+				$height = $this->height;
+				$slides = $this->slides;
 				ob_start();
 				
 				include BU_SLIDESHOW_BASEDIR . 'interface/edit-slideshow-ui.php';

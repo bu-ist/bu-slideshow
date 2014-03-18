@@ -1,7 +1,3 @@
-<?php 
-	$name = is_object($this) && isset($this->name) ? $this->name : '';
-	$height = is_object($this) && isset($this->height) ? $this->height : 0;
-?>
 <p>
 	<label for="bu_slideshow_name"><strong><?php _e('Slideshow Name', BU_SSHOW_LOCAL); ?>: </strong></label>
 	<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo $name; ?>" />
@@ -16,8 +12,8 @@
 <div id="bu-slideshow-slidelist">
 	<ul>
 	<?php 
-	if (is_object($this) && is_array($this->slides) && count($this->slides) > 0) {
-		foreach ($this->slides as $index => $slide) {
+	if ( count($slides) > 0 ) {
+		foreach ($slides as $index => $slide) {
 			$slide->set_order($index);
 			$slide->set_view('admin');
 			echo $slide->get();

@@ -544,8 +544,12 @@ class BU_Slideshow {
 	 */
 	static public function add_slideshow_page() {
 	
-		$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'do_create' : 'view_form';
-		
+		$action = !empty( $_POST['bu_slideshow_save_show'] ) ? 'do_create' : 'view_form';
+		$msg = '';
+		$name = '';
+		$height = 0;
+		$slides = array();
+
 		switch ( $action ) {
 			case 'do_create':
 				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
@@ -734,8 +738,8 @@ class BU_Slideshow {
 	 */
 	static public function edit_slideshow_page() {
 
-	$action = ( isset($_POST['bu_slideshow_save_show']) && $_POST['bu_slideshow_save_show'] ) ? 'save' : 'view';
-	$msg = '';
+	$action = !empty( $_POST['bu_slideshow_save_show'] ) ? 'save' : 'view';
+	$msg = !empty($_GET['msg']) ? filter_var( $_GET['msg'], FILTER_SANITIZE_STRING ) : '';
 
 		switch ( $action ) {
 			case 'save':
@@ -761,14 +765,9 @@ class BU_Slideshow {
 				}
 
 				// we are handling a form submission & all validation complete
-		
 				self::save_show($show);
+				$msg = $show->update() ? __("Slideshow updated successfully.", BU_SSHOW_LOCAL) : __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
 
-				if ($show->update()) {
-					$msg = __("Slideshow updated successfully.", BU_SSHOW_LOCAL);
-				} else {
-					$msg = __("Slideshow did not save succesfully.", BU_SSHOW_LOCAL);
-				}	
 				break;
 			
 			case 'view':
@@ -782,11 +781,11 @@ class BU_Slideshow {
 					wp_die(__('Error getting slideshow', BU_SSHOW_LOCAL));
 					exit;
 				}
-
-				$show->set_view('admin');
-				echo $show->get(array('msg' => $msg));
 				break;
 		}
+
+		$show->set_view('admin');
+		echo $show->get(array('msg' => $msg));
 	}
 	
 	/**
