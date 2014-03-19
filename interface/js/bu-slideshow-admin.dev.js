@@ -102,8 +102,7 @@ jQuery(document).ready(function($){
 	}
 	
 	/* Add Slideshow button and Inserting shortcode into editor */
-	if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' 
-		&& typeof SlideshowSelector === 'function') {
+	if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
 		
 		var modal = new BuModal({ 'el' : '#bu_slideshow_modal_wrap' }),
 			selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
