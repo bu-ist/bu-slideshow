@@ -32,7 +32,7 @@ var windowHeight = jQuery(window).height(),
 
             $(this).height(height);
             $(this).find('ul.bu-slideshow').height(height);
-            
+           
         });
         
     }
@@ -66,8 +66,14 @@ var windowHeight = jQuery(window).height(),
         if (!args) {
             args = {};
         }
+
         
-        this.sequence.afterLoaded = bu_resize_slideshow;
+        this.sequence.afterLoaded = function(){
+            var outer = that.container.parent('div.bu-slideshow-container');
+            outer.find('.slideshow-loader.active').removeClass('active');
+            outer.find('.bu-slideshow-navigation-container').css('display', 'inline-block');
+            bu_resize_slideshow();
+        };
         
         this.sequence.beforeNextFrameAnimatesIn = function() {
             if (that.pager) {
@@ -119,13 +125,14 @@ jQuery(document).ready(function($) {
     
     $('.bu-slideshow-container').each(function(index, el){
         var $this = $(this), autoplay = false, container, pagerId, arrowId, 
-            options, args, name;
+            options, args, name, transition_delay;
         
         container = $this.find('.bu-slideshow-slides');
         pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
         arrowId = $this.find('div.bu-slideshow-arrows').attr('id');
         
         name = $this.attr('data-slideshow-name') ? $this.attr('data-slideshow-name') : index;
+        transition_delay = $this.attr('data-slideshow-delay') ? $this.attr('data-slideshow-delay') : 5000;
 
         if ($this.hasClass('autoplay')) {
             autoplay = true;
@@ -133,6 +140,7 @@ jQuery(document).ready(function($) {
         
         options = {
             autoPlay: autoplay,
+            autoPlayDelay: transition_delay,
             fallback: {
                 theme : 'slide'
             },
