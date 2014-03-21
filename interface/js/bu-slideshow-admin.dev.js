@@ -202,7 +202,11 @@
 					return false;
 				}
 
-				html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay  + '" transition_delay="' + options.transition_delay  + '" width="' + options.width + '"]';
+				if (options.width === 'auto') {
+					html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay  + '" transition_delay="' + options.transition_delay  + '" width="' + options.width + '"]';
+				} else {
+					html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay  + '" transition_delay="' + options.transition_delay  + '" width="' + options.width + '" align="' + options.align + '"]';
+				}
 
 				window.send_to_editor("<br />" + html + "<br />");
 				selector.reset();

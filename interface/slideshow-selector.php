@@ -49,9 +49,9 @@
 			</p>
 			<fieldset id="bu_slideshow_alignment">
 				<legend><?php _e('Alignment:', BU_SSHOW_LOCAL); ?></legend>
-				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_left" value="left" <?php if ($args['align'] === 'left') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_left">Left</label><br />
-				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_center" value="center" <?php if ($args['align'] === 'center') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_center">Center</label><br />
-				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slideshow_alignment" id="bu_slideshow_alignment_right" value="right" <?php if ($args['align'] === 'right') { echo 'selected="selected"'; } ?> /> <label for="bu_slideshow_alignment_right">Right</label><br />
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slides[<?php echo esc_attr($this->order); ?>][align][position]" id="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][left]" value="left" <?php echo esc_attr($this->align["position"]) === "left" ? 'checked' : ''; } ?> /> <label for="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][left]">Left</label><br />
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slides[<?php echo esc_attr($this->order); ?>][align][position]" id="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][center]" value="center" <?php echo esc_attr($this->align["position"]) === "center" ? 'checked' : ''; } ?> /> <label for="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][center]">Center</label><br />
+				<input type="radio" class="bu_slideshow_alignment_loop" name="bu_slides[<?php echo esc_attr($this->order); ?>][align][position]" id="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][right]" value="right" <?php echo esc_attr($this->align["position"]) === "right" ? 'checked' : ''; ?> /> <label for="bu_slides[<?php echo esc_attr($this->order); ?>][align][position][right]">Right</label><br />
 			</fieldset>
 			<p>
 				<label for="bu_slideshow_custom_trans"><?php _e('Custom Transition:', BU_SSHOW_LOCAL); ?></label><br />
