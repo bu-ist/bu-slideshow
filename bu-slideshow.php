@@ -39,7 +39,6 @@ class BU_Slideshow {
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
 	static $caption_positions = array('caption-top-right','caption-top-left','caption-bottom-right','caption-bottom-left');
-	static $align_positions = array('left','center','right');
 
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -532,10 +531,7 @@ class BU_Slideshow {
 					'link' => $arr['caption']['link'],
 					'text' => wp_kses_data($arr['caption']['text']),
 					'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
-				),
-				'align' => array(
-					'position' => in_array($arr['align']['position'], self::$align_positions) ? $arr['align']['position'] : 'center'
-				)
+					)
 			);
 			$slides[] = new BU_Slide($args);
 		}
