@@ -9,7 +9,7 @@
 		
 	<?php if ($id) { ?>
 		
-		<?php self::shortcode_handler(array("show_id" => $id)); ?>
+		<?php echo self::shortcode_handler(array("show_id" => $id)); ?>
 		
 	<?php } ?>
 		<h4><?php _e('Note', BU_SSHOW_LOCAL); ?></h4>
