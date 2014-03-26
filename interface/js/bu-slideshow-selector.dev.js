@@ -50,7 +50,7 @@ jQuery(document).ready(function($){
 		options.autoplay = this.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
 		options.transition_delay = this.ui.find('#bu_slideshow_transition_delay').val();
 		options.width = this.ui.find('#bu_slideshow_width').val();
-		// options.align = this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val();
+		options.align = this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val();
 		// options.align = this.ui.each('.bu_slideshow_alignment_loop input[name="bu_slideshow_alignment"]:checked').val());
 
 		// override transition with custom transition if provided
@@ -88,7 +88,7 @@ jQuery(document).ready(function($){
 		navSel.val(navSel.find('option:first').val());
 		
 		this.ui.find('#bu_slideshow_width').val('');
-		// this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val('');
+		this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val('');
 		this.ui.find('#bu_slideshow_custom_trans').val('');
 		this.ui.find('#bu_slideshow_custom_trans').val('');
 
