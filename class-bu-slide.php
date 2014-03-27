@@ -80,12 +80,13 @@ class BU_Slide {
 			case 'public':
 
 				$slide_id = $args['id_prefix'] . '_' . $this->order;
+				$caption_class = !empty($this->caption['position']) ? "slide-".$this->caption['position'] : '';
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
 
 				$html = sprintf('<li id="%s" class="slide">', $slide_id);
-				$html .= '<div class="bu-slide-container">';
+				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
 				$html .= $this->get_image_html();
 				
