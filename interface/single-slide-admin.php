@@ -36,11 +36,15 @@
 					<p><legend><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></legend></p>
 					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-left]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-left"  <?php echo esc_attr($this->caption["position"]) === "caption-top-left" ? 'checked' : ''; ?> />
 					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-left]"><?php _e('Top Left', BU_SSHOW_LOCAL); ?></label>
+					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-center]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-center"  <?php echo esc_attr($this->caption["position"]) === "caption-top-center" ? 'checked' : ''; ?> />
+					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-center]"><?php _e('Top Center', BU_SSHOW_LOCAL); ?></label>
 					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-right]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-right"  <?php echo esc_attr($this->caption["position"]) === "caption-top-right" ? 'checked' : '' ; ?> />
 					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-right]"><?php _e('Top Right', BU_SSHOW_LOCAL); ?></label>
 					<br />
 					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-left]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-left"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-left" ? 'checked' : ''; ?> />
 					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-left]"><?php _e('Bottom Left', BU_SSHOW_LOCAL); ?></label>
+					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-center]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-center"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-center" ? 'checked' : ''; ?> />
+					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-center]"><?php _e('Bottom Center', BU_SSHOW_LOCAL); ?></label>
 					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-right]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-right"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-right" ? 'checked' : ''; ?> />
 					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-right]"><?php _e('Bottom Right', BU_SSHOW_LOCAL); ?></label>
 				</fieldset>

@@ -289,7 +289,7 @@
   display: inline;
   list-style: none;
   margin: 0;
-  padding: 1em 1.2em;
+  padding: 1%;
   position: absolute;
   right: 6%;
   width: 35%;
@@ -322,6 +322,14 @@
   bottom: 15%;
   right: 6%;
 }
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-bottom-center {
+  top: auto;
+  bottom: 15%;
+  margin: 0 auto;
+  left:50%;
+  margin-left:-19%;
+  text-align:center;
+}
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-bottom-left {
   bottom: 15%;
   left: 6%;
@@ -330,6 +338,14 @@
   top: 15%;
   left: 6%;
   bottom: auto;
+}
+.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-center {
+  top: 15%;
+  bottom: auto;
+  margin: 0 auto;
+  left:50%;
+  margin-left:-19%;
+  text-align:center;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-right {
   top: 15%;
