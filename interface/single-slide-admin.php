@@ -12,6 +12,11 @@
 			<input type="hidden" class="bu-slideshow-img-id" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" value="<?php echo esc_attr($this->image_id); ?>" />
 			<input type="hidden" class="bu-slideshow-img-size" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" value="<?php echo esc_attr($this->image_size); ?>" />
 			<span class="bu-slide-thumb"><?php echo $img_thumb; ?></span>
+			<span class="bu-slide-meta">
+				<?php
+					printf("%s <br /> (%spx x %spx) &middot; <a href='%s' target='_blank'>Edit</a>", $img_meta['file'], $img_meta['width'], $img_meta['height'], $edit_url);
+				?>
+			</span>
 		</div>
 		<div class="bu-slide-caption-container">
 			<p>
