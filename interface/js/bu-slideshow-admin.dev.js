@@ -329,55 +329,6 @@
 					this.removeButton.hide();
 				},
 				
-				/**
-				 * Media uploader for WP < 3.5
-				 */
-				oldHandleImageSelect : function() {
-					
-					var that = this;
-					
-					window.send_to_editor = function(html) {
-						var imgClass, regex, r, imgId, imgSize, data, thumb;
-						
-						// have to attach it to the DOM first. Can be avoided by using $.parseHTML(html) below -- requires jQuery >= 1.8
-						$("body").append("<div id='slideshow_image_added' style='display:none;'>"+html+"</div>");
-
-						imgClass = $("#slideshow_image_added").find("img").attr('class');
-
-						regex = /wp-image-([0-9]*)/i;
-						r = regex.exec(imgClass);
-						if(!r){
-							tb_remove(); 
-							displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
-							return;
-						}
-						imgId = r[1];
-
-						regex = /size-([a-zA-Z]*)/i;
-						r = regex.exec(imgClass);
-						imgSize = r[1];
-						if(!r){
-							tb_remove();
-							displayError(buSlideshowLocalAdmin.imageFail, that.slide.find('.bu-slide-edit-container'), true);
-							return;
-						}
-
-						that.setImageDetails(imgId, imgSize);
-
-						data = {
-							"action": 'bu_get_slide_thumb',
-							"image_id": imgId
-						};
-						$.post(ajaxurl, data, function(response) {
-							that.handleImgThumbResponse(response);
-						});
-
-						$("#slideshow_image_added").remove();
-
-						tb_remove();
-					};
-				},
-				
 				handleImgThumbResponse : function(response) {
 					var thumb, $el;
 					
