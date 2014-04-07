@@ -434,6 +434,7 @@
 							
 							that.getImgThumb(imgId);
 							that.setImageDetails(imgId, props.size);
+							that.slide.find('.bu-slide-meta').hide();
 						});
 					}
 					

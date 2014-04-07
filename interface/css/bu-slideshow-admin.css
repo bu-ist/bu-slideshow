@@ -126,3 +126,11 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 p.bu_slideshow_nav_style{
 	display:none;
 }
+.bu-slide-meta{
+	margin: 5px auto;
+	max-width: 200px;
+	word-break:break-all;
+}
+.change-slide-size{
+	margin-top:10px;
+}
