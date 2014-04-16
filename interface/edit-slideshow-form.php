@@ -8,6 +8,7 @@
 </p>
 <p>
 	<a href="#" id="bu-slideshow-add-slide" class="button"><?php _e('Add New Slide', BU_SSHOW_LOCAL); ?></a>
+	<span class="slide-added-confirmation">Slide added!</span>
 </p>
 <div id="bu-slideshow-slidelist">
 	<ul>

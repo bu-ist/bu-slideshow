@@ -44,19 +44,20 @@
 			if (!response) {
 				displayError(buSlideshowLocalAdmin.addSlideFailError, $('#bu-slideshow-slidelist'));
 				return;
-			} else {
-				var r = $(response);
-				r.appendTo('#bu-slideshow-slidelist ul');
-				setModalHeight( r.find('.bu-slideshow-add-img') );
-				$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
 			}
+
+			var r = $(response);
+			r.appendTo('#bu-slideshow-slidelist ul');
+			setModalHeight( r.find('.bu-slideshow-add-img') );
+			$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
+			$(".slide-added-confirmation").fadeIn().delay(3000).fadeOut();
 		});
 		
 	}
 
 	function setModalHeight($link) {
 
-		imgHref = $link.attr('href') + '&width=640&height=' + modalHeight;
+		imgHref = $link.attr('href') + '&width=640&height=' + ($(window).height() * 0.9);
 		$link.attr('href', imgHref);
 
 	}
@@ -86,7 +87,8 @@
 	$(function(){		
 		var newSlideshowForm = $('#bu-slideshow-newform'), slideShowList = $('#bu-slideshow-manage'),
 			slidesContainer = $('#bu-slideshow-slides'), slideEditor = $('#bu-slideshow-edit'),
-			manageUrl = 'admin.php?page=bu-slideshow';
+			manageUrl = 'admin.php?page=bu-slideshow',
+			imgHref;
 		
 		/** New slideshow page */
 		if (newSlideshowForm.length) {
@@ -216,9 +218,7 @@
 		/* Edit Slideshow page */
 		if (slideEditor.length) {
 			
-			// Set old WP media modal to correct height
-			var modalHeight, imgHref;
-			modalHeight = $(window).height() * 0.9;
+
 
 			$('.bu-slideshow-slide:first-child .bu-slide-control').addClass('open');
 			
