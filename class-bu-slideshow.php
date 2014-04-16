@@ -169,6 +169,10 @@ class BU_Slideshow_Instance {
 				$html = sprintf('<div class="%s" id="%s"%s%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att, $styles);
 				$html .= "<div class='slideshow-loader active'><div class='loader-animation'></div><p>" . __("loading slideshow...") . "</p></div>";
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s">', $ul_class_str, $show_id);
+				
+				if( $args['shuffle'] ){
+					shuffle( $this->slides );
+				}
 
 				foreach ($this->slides as $i => $slide) {
 					$id_prefix = self::$id_prefix . $this->id;
