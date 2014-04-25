@@ -55,7 +55,8 @@ class BU_Slideshow {
 		'show_arrows' => 0,
 		'transition_delay' => 5,
 		'width' => 'auto',
-		'align' => 'center'
+		'align' => 'center',
+		'shuffle' => false
 	);
 	static $transitions = array('slide', 'fade'); // prepackaged transitions
 	static $nav_styles = array('icon', 'number');
@@ -891,6 +892,8 @@ class BU_Slideshow {
 			echo '';
 			return;
 		}
+
+		$shuffle = filter_var($shuffle, FILTER_VALIDATE_BOOLEAN);
 		
 		// clean up possible bad att values...
 		

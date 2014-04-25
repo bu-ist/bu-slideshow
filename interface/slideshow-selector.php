@@ -37,6 +37,9 @@
 			<p>
 				<input type="checkbox" name="bu_slideshow_autoplay" id="bu_slideshow_autoplay" value="1"<?php echo $args['autoplay'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_autoplay"><?php _e('Automatically play slideshow', BU_SSHOW_LOCAL); ?></label>
 			</p>
+			<p>
+				<input type="checkbox" name="bu_slideshow_shuffle" id="bu_slideshow_shuffle" value="true"<?php echo $args['shuffle'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_shuffle"><?php _e('Shuffle slideshow', BU_SSHOW_LOCAL); ?></label>
+			</p>
 	</div>
 	
 	<p>
