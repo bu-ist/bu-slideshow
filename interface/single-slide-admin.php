@@ -10,13 +10,36 @@
 			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&type=bu_slideshow&post_id=0&TB_iframe=true"><?php _e('Select Image', BU_SSHOW_LOCAL); ?></a>
 			<a class="button bu-slideshow-remove-img" href="#"<?php echo $img_thumb ? '' : ' style="display:none;"'; ?>><?php _e('Remove Image', BU_SSHOW_LOCAL); ?></a>
 			<input type="hidden" class="bu-slideshow-img-id" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" value="<?php echo esc_attr($this->image_id); ?>" />
-			<input type="hidden" class="bu-slideshow-img-size" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_size]" value="<?php echo esc_attr($this->image_size); ?>" />
+		
 			<span class="bu-slide-thumb"><?php echo $img_thumb; ?></span>
-			<span class="bu-slide-meta">
+			<div class="bu-slide-meta">
 				<?php
-					printf("%s <br /> (%spx x %spx) &middot; <a href='%s' target='_blank'>Edit</a>", $img_meta['file'], $img_meta['width'], $img_meta['height'], $edit_url);
+				// print_r($img_meta);
+					if($img_thumb){
+					
+						printf("%s &middot; <a href='%s' target='_blank'>Edit</a> <br />",$img_meta['file'], $edit_url);
+
+						// printf("<span class='show-slide-size'>(%spx x %spx) <a href='#' class='resize-slide-image'>Change size</a></span>",$img_meta['sizes'][$this->image_size]['width'], $img_meta['sizes'][$this->image_size]['height']);
+						printf("<div class='change-slide-size'><select name='bu_slides[%d][image_size]' class='bu-slideshow-img-size'>", $this->order );
+
+						foreach ($img_meta['sizes'] as $size => $d) {
+							$selected = ($size == $this->image_size) ? " selected " : "";
+							$display_size = $size;
+							if( "thumbnail" == $display_size ){
+								$display_size = "Thumb";
+							} else if ( "full" == $display_size ){
+								$display_size = "Full size";
+							}
+							printf("<option value='%s' %s>%s (%d x %d)</option>", $size, $selected, ucfirst($display_size), $d['width'], $d['height']);
+						}
+
+						echo "</select></div>";
+					} else {
+						printf('<input type="hidden" class="bu-slideshow-img-size" name="bu_slides[%d][image_size]" id="bu_slides[%d][image_size]" value="%s" />',$this->order,$this->order,$this->image_size);
+					}
+
 				?>
-			</span>
+			</div>
 		</div>
 		<div class="bu-slide-caption-container">
 			<p>
