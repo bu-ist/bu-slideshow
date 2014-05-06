@@ -72,6 +72,10 @@
 					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-right]"><?php _e('Bottom Right', BU_SSHOW_LOCAL); ?></label>
 				</fieldset>
 			</div>
+			<p>
+				<label for="bu_slides[<?php echo $this->order; ?>][additional_styles]"><?php _e('Additional CSS Class(es)', BU_SSHOW_LOCAL); ?></label>
+				<input type="text" id="bu_slides[<?php echo $this->order; ?>][additional_styles]" name="bu_slides[<?php echo $this->order; ?>][additional_styles]" value="<?php echo $this->additional_styles; ?>" />
+			</p>
 		</div>
 	</div>
 </li>

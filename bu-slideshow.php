@@ -532,7 +532,8 @@ class BU_Slideshow {
 					'link' => $arr['caption']['link'],
 					'text' => wp_kses_data($arr['caption']['text']),
 					'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
-					)
+					),
+				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles']))
 			);
 			$slides[] = new BU_Slide($args);
 		}
