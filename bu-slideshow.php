@@ -526,10 +526,10 @@ class BU_Slideshow {
 				'view' => 'admin',
 				'order' => $i,
 				'image_id' => intval($arr['image_id']),
-				'image_size' => $arr['image_size'],
+				'image_size' => esc_attr(wp_kses_data($arr['image_size'])),
 				'caption' => array(
-					'title' => $arr['caption']['title'],
-					'link' => $arr['caption']['link'],
+					'title' => wp_kses_data($arr['caption']['title']),
+					'link' => esc_attr(wp_kses_data($arr['caption']['link'])),
 					'text' => wp_kses_data($arr['caption']['text']),
 					'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
 					),
