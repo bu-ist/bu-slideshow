@@ -304,6 +304,7 @@
 					this.removeButton = this.slide.find('.bu-slideshow-remove-img');
 					this.imgIdField = this.slide.find('.bu-slideshow-img-id');
 					this.imgSizeField = this.slide.find('.bu-slideshow-img-size');
+					this.imgMeta = this.slide.find('.bu-slide-meta');
 					this.thumbContainers = this.slide.find('.bu-slide-thumb, .bu-slide-header-thumb');
 				},
 				
@@ -325,7 +326,7 @@
 					
 					this.imgIdField.val('');
 					this.imgSizeField.val('');
-					
+					this.imgMeta.hide();
 					this.removeButton.hide();
 				},
 				
