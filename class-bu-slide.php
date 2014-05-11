@@ -18,6 +18,7 @@ class BU_Slide {
 	);
 	public $order = 0;
 	public $view;
+	public $additional_styles = '';
 	
 	static public $views = array('admin', 'public');
 	
@@ -84,12 +85,13 @@ class BU_Slide {
 			case 'public':
 
 				$slide_id = $args['id_prefix'] . '_' . $this->order;
+				$additional_styles = !empty($this->additional_styles) ? $this->additional_styles : '';
 				$caption_class = !empty($this->caption['position']) ? "slide-".$this->caption['position'] : '';
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
 
-				$html = sprintf('<li id="%s" class="slide">', $slide_id);
+				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
 				$html .= $this->get_image_html();
