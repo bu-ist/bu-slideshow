@@ -13,10 +13,12 @@ class BU_Slide {
 	public $caption = array(
 		'title' => '',
 		'link' => '',
-		'text' => ''
+		'text' => '',
+		'position' => 'caption-bottom-right'
 	);
 	public $order = 0;
 	public $view;
+	public $additional_styles = '';
 	
 	static public $views = array('admin', 'public');
 	
@@ -65,6 +67,10 @@ class BU_Slide {
 
 				if ($this->image_id) {
 					$img_thumb = wp_get_attachment_image($this->image_id, 'bu-slideshow-thumb');
+					$img_meta = wp_get_attachment_metadata($this->image_id);
+					unset($img_meta['sizes']['bu-slideshow-thumb']);
+					$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
+					$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
 				}
 
 				ob_start();
@@ -79,12 +85,14 @@ class BU_Slide {
 			case 'public':
 
 				$slide_id = $args['id_prefix'] . '_' . $this->order;
+				$additional_styles = !empty($this->additional_styles) ? $this->additional_styles : '';
+				$caption_class = !empty($this->caption['position']) ? "slide-".$this->caption['position'] : '';
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
 
-				$html = sprintf('<li id="%s" class="slide">', $slide_id);
-				$html .= '<div class="bu-slide-container">';
+				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
+				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
 				$html .= $this->get_image_html();
 				
@@ -109,7 +117,7 @@ class BU_Slide {
 			return $html;
 		}
 		
-		$html .= '<div class="bu-slide-caption">';
+		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
 		
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';
