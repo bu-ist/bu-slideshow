@@ -85,6 +85,7 @@ li.bu-slideshow-slide input[type=text] {border:1px solid #d0d0d0;display:inline-
 .bu-slide-edit-container {padding:10px 20px; display:none;}
 .bu-slideshow-slide:first-child .bu-slide-edit-container { display:block; }
 .bu-slide-thumb {display:block;margin-top:20px;}
+.bu-slide-thumb img { max-width:100px; }
 .bu-slide-caption-container {float:right;margin-top:30px;padding-bottom:30px;}
 li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 .bu-slide-delete-button, .wp-core-ui .bu-slide-delete-button {
