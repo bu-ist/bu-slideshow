@@ -143,19 +143,17 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
-			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
+			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
+			wp_enqueue_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
 			
 			wp_enqueue_script('media-upload');
-			wp_enqueue_script('bu-modal');
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_script('thickbox');
 			
 			self::localize('bu-slideshow-admin');
 			
-			wp_enqueue_style('bu-modal');
 			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');

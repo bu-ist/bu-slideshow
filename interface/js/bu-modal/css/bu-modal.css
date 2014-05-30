@@ -1,4 +1,5 @@
 .bu_modal_bg {
+	background:url('../img/bg.png') transparent repeat;
 	background:rgba(0,0,0,0.75);
 	height: 100%;
 	left: 0;
@@ -8,41 +9,35 @@
 	z-index:100; /* to top WP admin menu */
 }
 
-.bu_modal {
-	height:90%;
-	left: 50%;
-	position:fixed;
-	top:0;
-	z-index:110;
+.bu_modal.loading_content {
+	background: url('../img/loading.gif') transparent no-repeat center center;
 }
 
-.bu_modal .postboxheader {
+.bu_modal.active {
+	left: 50%;
+	
+	position:fixed;
+	top:65px;
+	bottom:65px;
+	z-index:110;
+	overflow-y: auto;
+}
+
+.bu_modal.active .postboxheader {
 	background: #000;
-    height: 24px;
-    left: 0;
-    margin: 0 auto;
     overflow: hidden;
     position: relative;
-    top: 20px;
-    width: 692px;
+    
+    display: block;
+	width: 100%;
+    height: 24px;
     z-index: 110;
 }
 
-.bu_modal .wrap {
-	margin:0 auto;
-	padding:20px;
-	width:650px;
-}
-
-.bu_modal .postboxheader a.close_btn {
+.bu_modal.active .postboxheader a.close_btn {
     color: #EFEFEF;
     display: block;
     float: right;
     padding: 4px;
     text-decoration: none;
-}
-
-/* fallback overlay background */
-.no-rgba .bu_modal_bg {
-	background:url('../img/bg.png') transparent repeat;
 }
