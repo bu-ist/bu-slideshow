@@ -11,7 +11,7 @@
 		var name = '';
 		
 		$('.bu-slideshow-slide').each(function(index, el) {
-			$(el).find('input, textarea').each(function(i, e) {
+			$(el).find('input, textarea, select').each(function(i, e) {
 				var $e = $(e);
 				name = $e.attr('name');
 				name = name.replace(regEx, "bu_slides[" + index + "]$2");
