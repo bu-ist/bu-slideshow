@@ -101,9 +101,15 @@ class BU_Slideshow_Instance {
 		
 		$all_slideshows = BU_Slideshow::get_slideshows();
 		$all_slideshows[$this->id] = $this;
-		
-		delete_option(BU_Slideshow::$meta_key);
-		add_option(BU_Slideshow::$meta_key, $all_slideshows);
+
+		if(!delete_option(BU_Slideshow::$meta_key)){
+			error_log(__METHOD__ . " Error deleting option: " . BU_Slideshow::$meta_key);
+		}
+		if(!add_option(BU_Slideshow::$meta_key, $all_slideshows)){
+			error_log(__METHOD__ . " Error adding option: " . BU_Slideshow::$meta_key);
+			error_log(print_r($all_slideshows,true));
+			error_log(print_r($this,true));
+		}
 		
 		return 1;
 	}
