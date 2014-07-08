@@ -326,9 +326,9 @@
   top: auto;
   bottom: 15%;
   margin: 0 auto;
-  left:50%;
-  margin-left:-19%;
-  text-align:center;
+  left: 50%;
+  margin-left: -19%;
+  text-align: center;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-bottom-left {
   bottom: 15%;
@@ -343,9 +343,9 @@
   top: 15%;
   bottom: auto;
   margin: 0 auto;
-  left:50%;
-  margin-left:-19%;
-  text-align:center;
+  left: 50%;
+  margin-left: -19%;
+  text-align: center;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-right {
   top: 15%;
@@ -535,7 +535,6 @@
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
   color: #ffffff;
   opacity: 1;
   -moz-transition-property: background-color color opacity;
