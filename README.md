@@ -1,18 +1,25 @@
 # BU Slideshow #
 Wordpress Plugin
 
-===========
-
 **Contributors:** awbauer, clrux, mgburns, bgannonBU
+
 **Tags:** slideshow, images, boston university, bu
+
 **Requires at least:** 3.5
+
 **Tested up to:** 3.9
+
 **Stable tag:** 2.0
+
 **License:** GPLv2 or later
+
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+
 
 ## Description ##
 An easy-to-use Wordpress plugin for creating and managing image-based slideshows.
+
+
 
 ## Changelog ##
 ### 2.0 ###
