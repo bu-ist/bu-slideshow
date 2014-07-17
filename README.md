@@ -17,7 +17,8 @@ Wordpress Plugin
 
 
 ## Description ##
-An easy-to-use Wordpress plugin for creating and managing image-based slideshows.
+An easy-to-use Wordpress plugin for creating and managing image-based slideshows. 
+[View full documentation on BU.edu](http://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
 
 
 
