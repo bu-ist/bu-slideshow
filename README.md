@@ -1,5 +1,5 @@
 # BU Slideshow #
-Wordpress Plugin
+_Wordpress Plugin_
 
 **Contributors:** awbauer, clrux, mgburns, bgannonBU
 
