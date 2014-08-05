@@ -17,10 +17,16 @@ Wordpress Plugin
 
 
 ## Description ##
-An easy-to-use Wordpress plugin for creating and managing image-based slideshows. 
+BU Slideshow is a plugin for creating and managing image-based slideshows. It is designed to be simple enough for any site admin to use, and powerful enough to meet the needs of designers. The plugin has many optional functions that make it flexible enough for a variety of uses: slideshows, photo rotations, feature card decks in the sidebar, etc. 
 [View full documentation on BU.edu](http://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
 
-
+## Features ##
+* Drag-and-drop re-ordering of slides
+* Optional titles and captions on a per-slide basis
+* Set links on a per-slide basis
+* Six locations for caption positioning, also on a per-slide basis
+* Supports unique CSS classes on a per-slide basis for advanced styling options
+* Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
 
 ## Changelog ##
 ### 2.0 ###
