@@ -1,4 +1,4 @@
-/*! COMPILED BY GRUNT. DO NOT MODIFY. bu-slideshow 07-07-2014 */
+/*! COMPILED BY GRUNT. DO NOT MODIFY. bu-slideshow 20-08-2014 */
 (function(e){function m(c,d,b,g){function h(){a.afterLoaded();a.settings.hideFramesUntilPreloaded&&a.settings.preloader&&a.sequence.children("li").show();a.settings.preloader?a.settings.hidePreloaderUsingCSS&&a.transitionsSupported?(a.prependPreloadingCompleteTo=!0==a.settings.prependPreloadingComplete?a.settings.preloader:e(a.settings.prependPreloadingComplete),a.prependPreloadingCompleteTo.addClass("preloading-complete"),setTimeout(k,a.settings.hidePreloaderDelay)):a.settings.preloader.fadeOut(a.settings.hidePreloaderDelay,
 function(){clearInterval(a.defaultPreloader);k()}):k()}function f(a,b){function c(){var a=e(s),d=e(n);g&&(n.length?g.reject(l,a,d):g.resolve(l));e.isFunction(b)&&b.call(f,l,a,d)}function d(a,b){a.src!==BLANK&&-1===e.inArray(a,u)&&(u.push(a),b?n.push(a):s.push(a),e.data(a,"imagesLoaded",{isBroken:b,src:a.src}),h&&g.notifyWith(e(a),[b,l,e(s),e(n)]),l.length===u.length&&(setTimeout(c),l.unbind(".imagesLoaded")))}BLANK="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";var f=a,g=
 e.isFunction(e.Deferred)?e.Deferred():0,h=e.isFunction(g.notify),l=f.find("img").add(f.filter("img")),u=[],s=[],n=[];e.isPlainObject(b)&&e.each(b,function(a,l){if("callback"===a)b=l;else if(g)g[a](l)});l.length?l.bind("load.imagesLoaded error.imagesLoaded",function(a){d(a.target,"error"===a.type)}).each(function(a,b){var l=b.src,c=e.data(b,"imagesLoaded");if(c&&c.src===l)d(b,c.isBroken);else if(b.complete&&void 0!==b.naturalWidth)d(b,0===b.naturalWidth||0===b.naturalHeight);else if(b.readyState||
@@ -37,3 +37,191 @@ b+"animation-delay: .15s; animation-delay: .15s;}.sequence-preloader .preloading
 Modernizr.svg||d?d||setInterval(function(){e(".sequence-preloader").fadeToggle(500)},500):(e(".sequence-preloader").prepend('<div class="preloading"><div class="circle inline"></div><div class="circle inline"></div><div class="circle inline"></div></div>'),setInterval(function(){e(".sequence-preloader .circle").fadeToggle(500)},500))},operaTest:function(){e("body").append('<span id="sequence-opera-test"></span>');var c=e("#sequence-opera-test");c.css("-o-transition","1s");return"1s"!=c.css("-o-transition")?
 !1:!0}},y={startingFrameID:1,cycle:!0,animateStartingFrameIn:!1,reverseAnimationsWhenNavigatingBackwards:!0,moveActiveFrameToTop:!0,autoPlay:!0,autoPlayDirection:1,autoPlayDelay:5E3,navigationSkip:!0,navigationSkipThreshold:250,fadeFrameWhenSkipped:!0,fadeFrameTime:150,preventReverseSkipping:!1,nextButton:!1,showNextButtonOnInit:!0,prevButton:!1,showPrevButtonOnInit:!0,pauseButton:!1,unpauseDelay:null,pauseOnHover:!0,pauseIcon:!1,preloader:!1,preloadTheseFrames:[1],preloadTheseImages:[],hideFramesUntilPreloaded:!0,
 prependPreloadingComplete:!0,hidePreloaderUsingCSS:!0,hidePreloaderDelay:0,keyNavigation:!0,numericKeysGoToFrames:!0,keyEvents:{left:"prev",right:"next"},customKeyEvents:{},swipeNavigation:!0,swipeThreshold:20,swipePreventsDefault:!1,swipeEvents:{left:"prev",right:"next",up:!1,down:!1},hashTags:!1,hashDataAttribute:!1,hashChangesOnFirstFrame:!1,fallback:{theme:"slide",speed:500}}})(jQuery);
+(function($){
+	/* IE triggers resize all over the place, so we check actual window dimensions */
+	var windowHeight = jQuery(window).height(),
+		windowWidth = jQuery(window).width(),
+		buSlideshows = {},
+		rotator, imgHeight;
+
+		/**
+		 * Resizes slideshow and all slides to height of highest slide
+		 * 
+		 * I hate iterating through everything in the slides here, but we should allow 
+		 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
+		 */
+		function bu_resize_slideshow() {
+
+			$('.bu-slideshow-container').each(function(){
+				var slides = $(this).find('li .bu-slide-container'), 
+					$el, height = 0, currentHeight = 0;
+
+				slides.find('*').each(function(i, el) {
+					$el = $(el);
+					
+					currentHeight = $el.height();
+					if (currentHeight > height) {
+						height = currentHeight;
+					}
+				});
+
+				slides.each(function(i, el) {
+					$(el).height(height);
+				});
+
+				$(this).height(height);
+				$(this).find('ul.bu-slideshow').height(height);
+			
+			});
+			
+		}
+
+		function BuSlideshow(args) {
+			
+			if ( !(this instanceof BuSlideshow)) {
+				throw new ReferenceError('Invoked constructor as regular function. Use the "new" operator.');
+			}
+			
+			if (!args.show) {
+				throw new TypeError('Did not pass a valid Sequence object.');
+			}
+			
+			if (!args.container) {
+				throw new ReferenceError('Did not pass a valid container element.');
+			}
+			
+			this.sequence = args.show;
+			this.container = args.container;
+			
+			
+			this.init(args);
+		}
+		
+		window.BuSlideshow = BuSlideshow;
+
+		BuSlideshow.prototype.init = function(args) {
+			var that = this;
+			
+			if (!args) {
+				args = {};
+			}
+
+			
+			this.sequence.afterLoaded = function(){
+				var outer = that.container.parent('div.bu-slideshow-container');
+				outer.find('.slideshow-loader.active').removeClass('active');
+				outer.find('.bu-slideshow-navigation-container').css('display', 'inline-block');
+				bu_resize_slideshow();
+			};
+			
+			this.sequence.beforeNextFrameAnimatesIn = function() {
+				if (that.pager) {
+					that.pager.setActive();
+				}
+			};
+
+			this.pager = $('#' + args.pager).length ? $('#' + args.pager) : false;
+			if (this.pager) {
+				this.initPager();
+			}
+
+			this.arrows = $('#' + args.arrows).length ? $('#' + args.arrows) : false;
+			if (this.arrows) {
+				this.initArrows();
+			}
+		};
+		
+		BuSlideshow.prototype.initPager = function() {
+			var that = this;
+
+			this.pager.find('li a').bind('click', function() {
+				var id = $(this).attr('id').replace('pager-', '');
+				that.sequence.nextFrameID = id;
+				that.sequence.goTo(id);
+				return false;
+			});
+
+			this.pager.setActive = function(nextId) {
+				nextId = that.sequence.nextFrameID; 
+				this.find('a').removeClass('active');
+				this.find('a#pager-' + nextId).addClass('active');
+			};
+		};
+		
+		BuSlideshow.prototype.initArrows = function() {
+			var that = this;
+			
+			this.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
+				that.sequence.prev();
+				return false;
+			}).end().find('.bu-slideshow-arrow-right').bind('click', function() {
+				that.sequence.next();
+				return false;
+			});
+		};
+
+	jQuery(document).ready(function($) {
+		
+		$('.bu-slideshow-container').each(function(index, el){
+			var $this = $(this), autoplay = false, container, pagerId, arrowId, 
+				options, args, name, transition_delay;
+			
+			container = $this.find('.bu-slideshow-slides');
+			pagerId = $this.find('ul.bu-slideshow-navigation').attr('id');
+			arrowId = $this.find('div.bu-slideshow-arrows').attr('id');
+			
+			name = $this.attr('data-slideshow-name') ? $this.attr('data-slideshow-name') : index;
+			transition_delay = $this.attr('data-slideshow-delay') ? $this.attr('data-slideshow-delay') : 5000;
+
+			if ($this.hasClass('autoplay')) {
+				autoplay = true;
+			}
+			
+			options = {
+				autoPlay: autoplay,
+				autoPlayDelay: transition_delay,
+				fallback: {
+					theme : 'slide'
+				},
+				swipeEvents: {
+					left: "next",
+					right: "prev" 
+				}
+			};
+			args = {
+				'show' : container.sequence(options).data('sequence'),
+				'container' : container,
+				'pager' : pagerId,
+				'arrows' : arrowId
+			};
+			
+			try {
+				buSlideshows[name] = new BuSlideshow(args);
+			}
+			catch (e){
+			}    
+		});
+
+		
+		/**
+		 * Dear IE: is this really a resize event? 
+		 */
+		$(window).resize(function() {
+			
+			var currentHeight, currentWidth;
+			
+			currentHeight = $(window).height();
+			currentWidth = $(window).width();
+			
+			if (currentHeight !== windowHeight || currentWidth !== windowWidth) {
+				
+				windowHeight = currentHeight;
+				windowWidth = currentWidth;
+				bu_resize_slideshow();
+			
+			}
+
+		});
+		
+	});
+}(jQuery));

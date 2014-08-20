@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 			slideshow_frontend: {
 				src: [
 					app_path + 'js/vendor/sequence/sequence.jquery.js',
-					app_path + 'js/bu-slideshow.dev.js'
+					app_path + 'js/bu-slideshow-frontend.js'
 				],
 				dest: app_path + 'js/bu-slideshow.concat.js',
 			},
