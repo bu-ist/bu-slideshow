@@ -891,10 +891,10 @@ class BU_Slideshow {
 			echo '';
 			return;
 		}
-
-		$shuffle = filter_var($shuffle, FILTER_VALIDATE_BOOLEAN);
 		
 		// clean up possible bad att values...
+
+		$atts['shuffle'] = filter_var($atts['shuffle'], FILTER_VALIDATE_BOOLEAN);
 		
 		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
 			$atts['width'] = 'auto';
