@@ -9,11 +9,10 @@ module.exports = function(grunt) {
 		concat: {   
 			options: {
 				// the banner is inserted at the top of the output
-				banner: '/*! COMPILED BY GRUNT. DO NOT MODIFY. <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				banner: '/*! COMPILED BY GRUNT. DO NOT MODIFY. <%= pkg.name %> */\n'
 			},
 			slideshow_frontend: {
 				src: [
-					app_path + 'js/vendor/sequence/sequence.jquery.js',
 					app_path + 'js/bu-slideshow-frontend.js'
 				],
 				dest: app_path + 'js/bu-slideshow.concat.js',
@@ -23,7 +22,7 @@ module.exports = function(grunt) {
 		uglify: {
 			options: {
 				// the banner is inserted at the top of the output
-				banner: '/*! Compiled by Grunt <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				banner: '/*! Compiled by Grunt <%= pkg.name %> */\n'
 			},
 			slideshow_frontend:{
 				src: app_path + 'js/bu-slideshow.concat.js',
