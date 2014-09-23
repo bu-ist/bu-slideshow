@@ -126,6 +126,7 @@ li.bu-slideshow-slide textarea {border:1px solid #d0d0d0;width:300px;}
 
 .bu_modal.active{
 	bottom:auto !important;
+	max-height:80%;
 }
 
 p.bu_slideshow_nav_style{
