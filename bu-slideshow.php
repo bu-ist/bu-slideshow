@@ -692,9 +692,15 @@ class BU_Slideshow {
 		$all_slideshows = self::get_slideshows();
 		
 		unset($all_slideshows[$id]);
-		delete_option(self::$meta_key);
-		add_option(self::$meta_key, $all_slideshows);
-		
+
+		if(!delete_option(self::$meta_key)){
+			error_log(__METHOD__ . " Error deleting option: " . self::$meta_key);
+		}
+		if(!add_option(self::$meta_key, $all_slideshows)){
+			error_log(__METHOD__ . " Error adding option: " . self::$meta_key);
+			error_log(print_r($all_slideshows,true));
+		}
+
 		return 1;
 	}
 	
