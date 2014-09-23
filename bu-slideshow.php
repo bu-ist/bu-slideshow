@@ -143,19 +143,17 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
-			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
+			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
+			wp_enqueue_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
 			
 			wp_enqueue_script('media-upload');
-			wp_enqueue_script('bu-modal');
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_script('thickbox');
 			
 			self::localize('bu-slideshow-admin');
 			
-			wp_enqueue_style('bu-modal');
 			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
@@ -200,9 +198,9 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
 		$seq_deps = array('jquery');
-		$slideshow_deps = array('jquery', 'jquery-sequence');
+		$slideshow_deps = array('jquery','jquery-sequence');
 		
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
+		wp_enqueue_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
 		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
 	}
 	
@@ -290,7 +288,7 @@ class BU_Slideshow {
 		global $bu_slideshow_loadscripts;
 		
 		if ($bu_slideshow_loadscripts) {
-			$conditional_scripts = array('bu-sequence-patch', 'jquery-sequence', 'bu-slideshow');
+			$conditional_scripts = array('bu-sequence-patch', 'bu-slideshow');
 			apply_filters('bu_slideshow_conditional_scripts', $conditional_scripts);
 			
 			foreach($conditional_scripts as $script) {
@@ -880,7 +878,7 @@ class BU_Slideshow {
 			$bu_slideshow_loadscripts = 1;
 		} else {
 			// wp_enqueue_script('modernizr');
-			wp_enqueue_script('jquery-sequence');
+			// wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
 		}
 		
@@ -899,10 +897,10 @@ class BU_Slideshow {
 			echo '';
 			return;
 		}
-
-		$shuffle = filter_var($shuffle, FILTER_VALIDATE_BOOLEAN);
 		
 		// clean up possible bad att values...
+
+		$atts['shuffle'] = filter_var($atts['shuffle'], FILTER_VALIDATE_BOOLEAN);
 		
 		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
 			$atts['width'] = 'auto';
