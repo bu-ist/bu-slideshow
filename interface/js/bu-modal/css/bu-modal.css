@@ -6,7 +6,7 @@
 	position:fixed;
 	top:0;
 	width:100%;
-	z-index:100; /* to top WP admin menu */
+	z-index:159900; /* to top WP admin menu */
 }
 
 .bu_modal.loading_content {
@@ -19,7 +19,7 @@
 	position:fixed;
 	top:65px;
 	bottom:65px;
-	z-index:110;
+	z-index:160000;
 	overflow-y: auto;
 }
 
@@ -31,7 +31,7 @@
     display: block;
 	width: 100%;
     height: 24px;
-    z-index: 110;
+    z-index: 160000;
 }
 
 .bu_modal.active .postboxheader a.close_btn {
