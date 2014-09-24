@@ -9,7 +9,7 @@ _Wordpress Plugin_
 
 **Tested up to:** 3.9
 
-**Stable tag:** 2.0
+**Stable tag:** 2.1
 
 **License:** GPLv2 or later
 
