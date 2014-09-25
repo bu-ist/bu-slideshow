@@ -3,7 +3,7 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.0.1
+ Version: 2.1
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
@@ -12,7 +12,7 @@
  * @todo upgrade sequence.js
 */
 
-define('BU_SLIDESHOW_VERSION', '2.0.1');
+define('BU_SLIDESHOW_VERSION', '2.1');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -143,19 +143,17 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_register_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
-			wp_register_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
+			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
+			wp_enqueue_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
 			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
 			
 			wp_enqueue_script('media-upload');
-			wp_enqueue_script('bu-modal');
 			wp_enqueue_script('bu-slideshow-admin');
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_script('thickbox');
 			
 			self::localize('bu-slideshow-admin');
 			
-			wp_enqueue_style('bu-modal');
 			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
@@ -200,7 +198,7 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 		
 		$seq_deps = array('jquery');
-		$slideshow_deps = array('jquery', 'jquery-sequence');
+		$slideshow_deps = array('jquery','jquery-sequence');
 		
 		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
 		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
@@ -899,10 +897,10 @@ class BU_Slideshow {
 			echo '';
 			return;
 		}
-
-		$shuffle = filter_var($shuffle, FILTER_VALIDATE_BOOLEAN);
 		
 		// clean up possible bad att values...
+
+		$atts['shuffle'] = filter_var($atts['shuffle'], FILTER_VALIDATE_BOOLEAN);
 		
 		if (!is_numeric($atts['width']) && strtolower($atts['width']) !== 'auto') {
 			$atts['width'] = 'auto';

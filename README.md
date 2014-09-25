@@ -9,7 +9,7 @@ _Wordpress Plugin_
 
 **Tested up to:** 3.9
 
-**Stable tag:** 2.0
+**Stable tag:** 2.1
 
 **License:** GPLv2 or later
 
@@ -29,6 +29,13 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 * Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
 
 ## Changelog ##
+### 2.1 ###
+* Adding Grunt
+* Updating "Insert Slideshow" modal z-index for WP4.0
+
+### 2.0.1 ###
+* Admin-side fix for inconsistent behavior after updating slide order
+
 ### 2.0 ###
 * Improved “Add Slideshow” flow (3 screens -> 1). Now similar flow to creating new posts/pages.
 ** Abstracted “edit slideshow” form to a separate template file
