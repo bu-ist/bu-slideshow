@@ -7,7 +7,7 @@ _Wordpress Plugin_
 
 **Requires at least:** 3.5
 
-**Tested up to:** 3.9
+**Tested up to:** 4.0
 
 **Stable tag:** 2.1
 
@@ -27,6 +27,11 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 * Six locations for caption positioning, also on a per-slide basis
 * Supports unique CSS classes on a per-slide basis for advanced styling options
 * Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
+
+## Screenshots ##
+!['Edit Slideshow' Interface](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-ui.png)
+!['Edit Slide' UI](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-edit.png)
+![Image Selector](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-selectimage.png)
 
 ## Changelog ##
 ### 2.1 ###
