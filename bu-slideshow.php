@@ -3,7 +3,7 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.1
+ Version: 2.1.1
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
@@ -12,7 +12,7 @@
  * @todo upgrade sequence.js
 */
 
-define('BU_SLIDESHOW_VERSION', '2.1');
+define('BU_SLIDESHOW_VERSION', '2.1.1');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -676,9 +676,6 @@ class BU_Slideshow {
 	/**
 	 * Deletes slideshow with given id if it exists.
 	 * 
-	 * Note: using delete/add option instead of update option because of 
-	 * https://core.trac.wordpress.org/ticket/23381
-	 * 
 	 * @param int $id
 	 * @return int
 	 */
@@ -691,12 +688,11 @@ class BU_Slideshow {
 		
 		unset($all_slideshows[$id]);
 
-		if(!delete_option(self::$meta_key)){
-			error_log(__METHOD__ . " Error deleting option: " . self::$meta_key);
-		}
-		if(!add_option(self::$meta_key, $all_slideshows)){
-			error_log(__METHOD__ . " Error adding option: " . self::$meta_key);
-			error_log(print_r($all_slideshows,true));
+		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
+			update_option(BU_Slideshow::$meta_key, $all_slideshows);
+		} else {
+			delete_option(BU_Slideshow::$meta_key);
+			add_option(BU_Slideshow::$meta_key, $all_slideshows);
 		}
 
 		return 1;

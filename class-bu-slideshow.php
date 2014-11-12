@@ -92,9 +92,6 @@ class BU_Slideshow_Instance {
 	/**
 	 * Save changes to this slideshow.
 	 * 
-	 * Note: using delete/add option instead of update because of 
-	 * https://core.trac.wordpress.org/ticket/23381
-	 * 
 	 * @return int
 	 */
 	public function update() {
@@ -102,15 +99,13 @@ class BU_Slideshow_Instance {
 		$all_slideshows = BU_Slideshow::get_slideshows();
 		$all_slideshows[$this->id] = $this;
 
-		if(!delete_option(BU_Slideshow::$meta_key)){
-			error_log(__METHOD__ . " Error deleting option: " . BU_Slideshow::$meta_key);
+		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
+			update_option(BU_Slideshow::$meta_key, $all_slideshows);
+		} else {
+			delete_option(BU_Slideshow::$meta_key);
+			add_option(BU_Slideshow::$meta_key, $all_slideshows);
 		}
-		if(!add_option(BU_Slideshow::$meta_key, $all_slideshows)){
-			error_log(__METHOD__ . " Error adding option: " . BU_Slideshow::$meta_key);
-			error_log(print_r($all_slideshows,true));
-			error_log(print_r($this,true));
-		}
-		
+
 		return 1;
 	}
 	
