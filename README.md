@@ -34,6 +34,9 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 ![Image Selector](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-selectimage.png)
 
 ## Changelog ##
+### 2.1.1 ###
+* Resolves an issue where slideshows may not update correctly on save/delete.
+
 ### 2.1 ###
 * Adding Grunt
 * Updating "Insert Slideshow" modal z-index for WP4.0
