@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 				src: [
 					app_path + 'js/bu-slideshow-frontend.js'
 				],
-				dest: app_path + 'js/bu-slideshow.concat.js',
+				dest: app_path + 'js/bu-slideshow.dev.js',
 			},
 		},
 
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				banner: '/*! Compiled by Grunt <%= pkg.name %> */\n'
 			},
 			slideshow_frontend:{
-				src: app_path + 'js/bu-slideshow.concat.js',
+				src: app_path + 'js/bu-slideshow.dev.js',
 				dest: app_path + 'js/bu-slideshow.js'
 			},
 			slideshow_admin:{
