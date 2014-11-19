@@ -3,15 +3,16 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.2
+ Version: 2.1.1
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
  * Currently supports WP 3.5.X.
  * 
+ * @todo upgrade sequence.js
 */
 
-define('BU_SLIDESHOW_VERSION', '2.2');
+define('BU_SLIDESHOW_VERSION', '2.1.1');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
