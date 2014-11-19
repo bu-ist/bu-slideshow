@@ -63,6 +63,7 @@ class BU_Slide {
 			case 'admin':
 
 				$img_thumb = '';
+				$caption_positions = apply_filters("bu_slideshow_caption_positions", BU_Slideshow::$caption_positions);
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
