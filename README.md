@@ -35,7 +35,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 
 ## Changelog ##
 ### 2.2 ###
-* Set caption position as dropdown, instead of radio buttons.
+* Set caption position as dropdown, instead of radio buttons. Also adds `bu_slideshow_caption_positions` filter.
 
 ### 2.1.1 ###
 * Resolves an issue where slideshows may not update correctly on save/delete.
