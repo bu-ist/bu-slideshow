@@ -54,24 +54,16 @@
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php _e('Caption', BU_SSHOW_LOCAL); ?></label>
 				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea(wp_kses_data($this->caption["text"])); ?></textarea>
 			</p>
-			<div class="captionposition">
-				<fieldset>
-					<p><legend><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></legend></p>
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-left]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-left"  <?php echo esc_attr($this->caption["position"]) === "caption-top-left" ? 'checked' : ''; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-left]"><?php _e('Top Left', BU_SSHOW_LOCAL); ?></label>
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-center]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-center"  <?php echo esc_attr($this->caption["position"]) === "caption-top-center" ? 'checked' : ''; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-center]"><?php _e('Top Center', BU_SSHOW_LOCAL); ?></label>
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-right]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-top-right"  <?php echo esc_attr($this->caption["position"]) === "caption-top-right" ? 'checked' : '' ; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-top-right]"><?php _e('Top Right', BU_SSHOW_LOCAL); ?></label>
-					<br />
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-left]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-left"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-left" ? 'checked' : ''; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-left]"><?php _e('Bottom Left', BU_SSHOW_LOCAL); ?></label>
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-center]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-center"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-center" ? 'checked' : ''; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-center]"><?php _e('Bottom Center', BU_SSHOW_LOCAL); ?></label>
-					<input type="radio" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-right]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" value="caption-bottom-right"  <?php echo esc_attr($this->caption["position"]) === "caption-bottom-right" ? 'checked' : ''; ?> />
-					<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position][caption-bottom-right]"><?php _e('Bottom Right', BU_SSHOW_LOCAL); ?></label>
-				</fieldset>
-			</div>
+			<p><label><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></label>
+			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >
+				<?php 
+				foreach($caption_positions as $l=>$v){
+					$maybe_selected = ($v === $this->caption["position"]) ? "selected" : "";
+					printf("<option value='%s' %s>%s</option>", $v, $maybe_selected, $l);
+				}
+				?>
+			</select>
+			</p>
 			<p>
 				<label for="bu_slides[<?php echo $this->order; ?>][additional_styles]"><?php _e('Additional CSS Class(es)', BU_SSHOW_LOCAL); ?></label>
 				<input type="text" id="bu_slides[<?php echo $this->order; ?>][additional_styles]" name="bu_slides[<?php echo $this->order; ?>][additional_styles]" value="<?php echo $this->additional_styles; ?>" />

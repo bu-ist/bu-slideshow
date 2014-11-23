@@ -3,16 +3,15 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.1.1
+ Version: 2.2
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
  * Currently supports WP 3.5.X.
  * 
- * @todo upgrade sequence.js
 */
 
-define('BU_SLIDESHOW_VERSION', '2.1.1');
+define('BU_SLIDESHOW_VERSION', '2.2');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -38,7 +37,15 @@ class BU_Slideshow {
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
-	static $caption_positions = array('caption-top-right','caption-top-center','caption-top-left','caption-center-center','caption-bottom-right','caption-bottom-center','caption-bottom-left');
+	static $caption_positions = array(
+		'Top Right' => 'caption-top-right', 
+		'Top Center' => 'caption-top-center', 
+		'Top Left' => 'caption-top-left', 
+		'Middle Center' => 'caption-center-center', 
+		'Bottom Right' => 'caption-bottom-right', 
+		'Bottom Center' => 'caption-bottom-center', 
+		'Bottom Left' => 'caption-bottom-left'
+	);
 
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -507,6 +514,7 @@ class BU_Slideshow {
 
 	static private function save_show($show){
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
+		$caption_positions = apply_filters("bu_slideshow_caption_positions", self::$caption_positions);
 
 		// okay to have no slides 
 		if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
@@ -529,7 +537,7 @@ class BU_Slideshow {
 					'title' => wp_kses_data($arr['caption']['title']),
 					'link' => esc_attr(wp_kses_data($arr['caption']['link'])),
 					'text' => wp_kses_data($arr['caption']['text']),
-					'position' => in_array($arr['caption']['position'], self::$caption_positions) ? $arr['caption']['position'] : 'caption-bottom-right'
+					'position' => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
 					),
 				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles']))
 			);
