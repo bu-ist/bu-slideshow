@@ -365,8 +365,11 @@
 						that.modifyWPSelectFrame();
 					
 						buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
-							'multiple' : false,
-							'title' : buSlideshowLocalAdmin.mediaUploadTitle,
+							frame: 'select',
+							state: 'bu-slideshow-image',
+							states: [
+								new wp.media.controller.BuSlideshowImage() 
+							],
 							'button' : { 'text' : buSlideshowLocalAdmin.mediaUploadButton },
 							'library' : {
 								'type' : 'image'
@@ -398,28 +401,19 @@
 				 */
 				modifyWPSelectFrame : function() {
 					
-					wp.media.view.MediaFrame.Select.prototype.browseContent = function( content ) {
-						var state = this.state(), selection = state.get('selection');
-
-						this.$el.removeClass('hide-toolbar');
-
-						content.view = new wp.media.view.AttachmentsBrowser({
-							controller: this,
-							collection: state.get('library'),
-							model:      state,
-							// sortable:   state.get('sortable'),
-							// search:     state.get('searchable'),
-							filters:    state.get('filterable'),
-							display:    true,
-							// dragInfo:   state.get('dragInfo'),
-							selection:  selection,
-							sortable:   true,
-							search:     false,
-							dragInfo:   true,
-
-							AttachmentView: wp.media.view.Attachment.EditLibrary
+					if(this.newEditor){
+						wp.media.controller.BuSlideshowImage = wp.media.controller.Library.extend({
+							defaults: _.defaults({
+								id: 'bu-slideshow-image',
+								library: wp.media.query({ type: 'image' }),
+								multiple: false,
+								priority: 60,
+								displaySettings: true,
+								displayUserSettings: true,
+								title : buSlideshowLocalAdmin.mediaUploadTitle
+							}, wp.media.controller.Library.prototype.defaults )
 						});
-					};
+					}
 					
 				},
 				
