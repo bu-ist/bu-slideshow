@@ -359,34 +359,28 @@
 					var that = this;
 					
 					if (typeof buUploadFrame !== 'object') {
-						
-						var oldBrowseContent = wp.media.view.MediaFrame.Select.prototype.browseContent;
-						
+												
 						that.modifyWPSelectFrame();
 					
 						buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
 							frame: 'select',
 							state: 'bu-slideshow-image',
 							states: [
-								new wp.media.controller.BuSlideshowImage() 
+								new wp.media.controller.BuSlideshowImage()
 							],
 							'button' : { 'text' : buSlideshowLocalAdmin.mediaUploadButton },
 							'library' : {
 								'type' : 'image'
 							}
 						});
-						
-						// restore original functionality in case other scripts on page use uploader
-						wp.media.view.MediaFrame.Select.prototype.browseContent = oldBrowseContent;
-
-						buUploadFrame.on('select', function() {
+						 
+						buUploadFrame.state('bu-slideshow-image').on('select', function() {
 							var img, props, state, imgId;
-							
-							state = buUploadFrame.state();
-							img = state.get('selection').first();
-							props = state.display(img).attributes;
+						 
+							img = this.get('selection').first();
+							props = this.display(img).attributes;
 							imgId = img.toJSON().id;
-							
+						 
 							that.getImgThumb(imgId);
 							that.setImageDetails(imgId, props.size);
 							that.slide.find('.bu-slide-meta').hide();
@@ -398,6 +392,7 @@
 				
 				/**
 				 * Patches the Select media frame to add the attachment details in the sidebar.
+				 * Allows image size to be selected when attached to slide.
 				 */
 				modifyWPSelectFrame : function() {
 					
