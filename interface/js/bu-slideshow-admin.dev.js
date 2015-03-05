@@ -1,6 +1,3 @@
-/*
-	@todo: update oldHandleImageSelect to use $.parseHTML() [requires jQuery 1.8+]
-*/
 (function($){
 	/* update slide input names so that new order is saved */
 	function reindexSlides(event, ui) {
@@ -284,9 +281,6 @@
 			// Media upload management
 			window.buUploaders = {
 				
-				/* are we using old school uploader or WP 3.5+ uploader? */
-				newEditor : (window.wp && window.wp.media) ? true : false,
-				
 				init : function(button) {
 					var $button = $(button);
 					
@@ -310,11 +304,7 @@
 				
 				// trigger appropriate media upload UI/handling
 				select : function() {
-					if (this.newEditor) {
-						this.newHandleImageSelect();
-					} else {
-						this.oldHandleImageSelect();
-					}
+					this.newHandleImageSelect();
 				},
 				
 				// remove image
@@ -359,31 +349,28 @@
 					var that = this;
 					
 					if (typeof buUploadFrame !== 'object') {
-						
-						var oldBrowseContent = wp.media.view.MediaFrame.Select.prototype.browseContent;
-						
+												
 						that.modifyWPSelectFrame();
 					
 						buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
-							'multiple' : false,
-							'title' : buSlideshowLocalAdmin.mediaUploadTitle,
+							frame: 'select',
+							state: 'bu-slideshow-image',
+							states: [
+								new wp.media.controller.BuSlideshowImage()
+							],
 							'button' : { 'text' : buSlideshowLocalAdmin.mediaUploadButton },
 							'library' : {
 								'type' : 'image'
 							}
 						});
-						
-						// restore original functionality in case other scripts on page use uploader
-						wp.media.view.MediaFrame.Select.prototype.browseContent = oldBrowseContent;
-
-						buUploadFrame.on('select', function() {
+						 
+						buUploadFrame.state('bu-slideshow-image').on('select', function() {
 							var img, props, state, imgId;
-							
-							state = buUploadFrame.state();
-							img = state.get('selection').first();
-							props = state.display(img).attributes;
+						 
+							img = this.get('selection').first();
+							props = this.display(img).attributes;
 							imgId = img.toJSON().id;
-							
+						 
 							that.getImgThumb(imgId);
 							that.setImageDetails(imgId, props.size);
 							that.slide.find('.bu-slide-meta').hide();
@@ -395,32 +382,20 @@
 				
 				/**
 				 * Patches the Select media frame to add the attachment details in the sidebar.
+				 * Allows image size to be selected when attached to slide.
 				 */
 				modifyWPSelectFrame : function() {
-					
-					wp.media.view.MediaFrame.Select.prototype.browseContent = function( content ) {
-						var state = this.state(), selection = state.get('selection');
-
-						this.$el.removeClass('hide-toolbar');
-
-						content.view = new wp.media.view.AttachmentsBrowser({
-							controller: this,
-							collection: state.get('library'),
-							model:      state,
-							// sortable:   state.get('sortable'),
-							// search:     state.get('searchable'),
-							filters:    state.get('filterable'),
-							display:    true,
-							// dragInfo:   state.get('dragInfo'),
-							selection:  selection,
-							sortable:   true,
-							search:     false,
-							dragInfo:   true,
-
-							AttachmentView: wp.media.view.Attachment.EditLibrary
-						});
-					};
-					
+					wp.media.controller.BuSlideshowImage = wp.media.controller.Library.extend({
+							defaults: _.defaults({
+								id: 'bu-slideshow-image',
+								library: wp.media.query({ type: 'image' }),
+								multiple: false,
+								priority: 60,
+								displaySettings: true,
+								displayUserSettings: true,
+								title : buSlideshowLocalAdmin.mediaUploadTitle
+							}, wp.media.controller.Library.prototype.defaults )
+						});					
 				},
 				
 				getImgThumb : function(imgId) {
