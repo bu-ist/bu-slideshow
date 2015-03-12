@@ -516,7 +516,7 @@ class BU_Slideshow {
 
 	static private function save_show($show){
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
-		$caption_positions = apply_filters("bu_slideshow_caption_positions", self::$caption_positions);
+		$caption_positions = apply_filters('bu_slideshow_caption_positions', self::$caption_positions);
 		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
 		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
 

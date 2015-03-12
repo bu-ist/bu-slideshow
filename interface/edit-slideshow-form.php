@@ -38,7 +38,7 @@
 			echo $slide->get();
 		}
 	} else {
-		$slide = new BU_Slide(array('view' => 'admin'));
+		$slide = new BU_Slide( array( 'view' => 'admin' ) );
 		echo $slide->get();
 	} ?>
 	</ul>

@@ -72,7 +72,7 @@ class BU_Slide {
 			case 'admin':
 
 				$img_thumb = '';
-				$caption_positions = apply_filters("bu_slideshow_caption_positions", BU_Slideshow::$caption_positions);
+				$caption_positions = apply_filters('bu_slideshow_caption_positions', BU_Slideshow::$caption_positions);
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
@@ -100,6 +100,8 @@ class BU_Slide {
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
+				$this->image_html = $this->get_image_html();
+				$this->caption_html = $this->get_caption_html();
 
 				if( !empty( $this->template_id ) ){
 					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
@@ -111,13 +113,13 @@ class BU_Slide {
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
-				$html .= $this->get_image_html();
+				$html .= $this->image_html;
 				
-				$html .= $this->get_caption_html();
+				$html .= $this->caption_html;
 				
 				$html .= '</div></li>';
 
-				return $html;
+				return apply_filters( 'bu_slideshow_slide_html', $html, $this );
 				
 				break;
 			
