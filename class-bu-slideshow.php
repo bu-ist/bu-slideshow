@@ -12,6 +12,7 @@ class BU_Slideshow_Instance {
 	public $name = '';
 	public $id = 1;
 	public $height = 0;
+	public $template_id = '';
 	public $slides = array();
 	
 	static $classes = array('bu-slideshow');
@@ -58,6 +59,14 @@ class BU_Slideshow_Instance {
 		}
 		
 		$this->name = $name;
+	}
+
+	/**
+	 * Set the template of the slideshow.
+	 * @param string $template
+	 */
+	public function set_template($template) {
+		$this->template_id = $template;
 	}
 	
 	/**
@@ -114,12 +123,20 @@ class BU_Slideshow_Instance {
 	 */
 	public function get($args = array()) {
 		
+		/*
+		* Filter accepts templates in array form. 
+		*  - Templates must be defined (minimally) with an ID & name attribute:
+		*    e.g. array( 'great-template' => array( 'name'=>'Great Template!' ), 'also-awesome' => array( 'name'=>'Another template' ) )
+		*/	
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates );
+
 		switch ($this->view) {
 			
 			case 'admin':
 				$msg = $args['msg'] ? $args['msg'] : '';
 				$name = $this->name;
 				$height = $this->height;
+				$template_id = $this->template_id;
 				$slides = $this->slides;
 				ob_start();
 				
@@ -175,6 +192,7 @@ class BU_Slideshow_Instance {
 				foreach ($this->slides as $i => $slide) {
 					$id_prefix = self::$id_prefix . $this->id;
 					
+					$slide->set_template($this->template_id);
 					$slide->set_order($i);
 					$slide->set_view($this->view);
 					

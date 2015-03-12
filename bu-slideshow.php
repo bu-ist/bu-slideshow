@@ -47,6 +47,7 @@ class BU_Slideshow {
 		'Bottom Center' => 'caption-bottom-center', 
 		'Bottom Left' => 'caption-bottom-left'
 	);
+	static $slide_templates = array();
 
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -516,6 +517,8 @@ class BU_Slideshow {
 	static private function save_show($show){
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
 		$caption_positions = apply_filters("bu_slideshow_caption_positions", self::$caption_positions);
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
+		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
 
 		// okay to have no slides 
 		if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
@@ -526,6 +529,7 @@ class BU_Slideshow {
 
 		$show->set_view('admin');
 		$show->set_name($_POST['bu_slideshow_name']);
+		$show->set_template( $template );
 		$show->set_height($height);
 		
 		foreach ($_POST['bu_slides'] as $i => $arr) {
@@ -540,6 +544,7 @@ class BU_Slideshow {
 					'text' => wp_kses_data($arr['caption']['text']),
 					'position' => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
 					),
+				'template_id' => $template,
 				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles']))
 			);
 			$slides[] = new BU_Slide($args);

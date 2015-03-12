@@ -17,6 +17,7 @@ class BU_Slide {
 		'position' => 'caption-bottom-right'
 	);
 	public $order = 0;
+	public $template_id = '';
 	public $view;
 	public $additional_styles = '';
 	
@@ -38,6 +39,14 @@ class BU_Slide {
 	 */
 	public function set_order($order) {
 		$this->order = intval($order);
+	}
+
+	/**
+	 * Set the template of this slide
+	 * @param string $template_id
+	 */
+	public function set_template($template_id) {
+		$this->template_id = $template_id;
 	}
 	
 	/**
@@ -91,6 +100,13 @@ class BU_Slide {
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
+
+				if( !empty( $this->template_id ) ){
+					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
+					$this->template_options = $templates[ $this->template_id ];
+				} else {
+					$this->template_options = array();
+				}
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
