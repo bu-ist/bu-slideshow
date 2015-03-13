@@ -101,7 +101,7 @@ class BU_Slide {
 
 				$this->caption = stripslashes_deep($this->caption);
 				$this->image_html = $this->get_image_html();
-				$this->caption_html = $this->get_caption_html();
+				$this->caption['html'] = $this->get_caption_html();
 
 				if( !empty( $this->template_id ) ){
 					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
@@ -115,7 +115,7 @@ class BU_Slide {
 				
 				$html .= $this->image_html;
 				
-				$html .= $this->caption_html;
+				$html .= $this->caption['html'];
 				
 				$html .= '</div></li>';
 
