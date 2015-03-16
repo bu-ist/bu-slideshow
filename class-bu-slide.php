@@ -113,13 +113,13 @@ class BU_Slide {
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
-				$html .= $this->image_html;
+				$slide_inner = $this->image_html . $this->caption['html'];
 				
-				$html .= $this->caption['html'];
+				$html .= apply_filters( 'bu_slideshow_slide_html', $slide_inner, $this );
 				
 				$html .= '</div></li>';
 
-				return apply_filters( 'bu_slideshow_slide_html', $html, $this );
+				return $html;
 				
 				break;
 			
