@@ -77,6 +77,7 @@ class BU_Slideshow {
 		self::$wp_version = get_bloginfo('version');
 		self::$upload_error = __(self::$upload_error, BU_SSHOW_LOCAL);
 		
+		add_action('init', array(__CLASS__, 'register_cpt'), 6);
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
 		add_action('init', array(__CLASS__, 'add_post_support'),99);
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
@@ -102,6 +103,16 @@ class BU_Slideshow {
 		
 	}
 	
+	static public function register_cpt(){
+		$args = array(
+				'public'			=> false,
+				'capability_type'	=> 'post',
+				'supports'			=> false,
+			);
+
+		register_post_type( 'bu_slideshow', $args );
+	}
+
 	static public function add_post_support() {
 		$post_types = apply_filters('bu_slideshow_supported_post_types', self::$supported_post_types);
 		
@@ -726,7 +737,7 @@ class BU_Slideshow {
 	 */
 	static public function get_slideshow($id) {
 		$all_slideshows = self::get_slideshows();
-		
+
 		return array_key_exists($id, $all_slideshows) ? $all_slideshows[$id] : false;
 	}
 	
@@ -736,10 +747,12 @@ class BU_Slideshow {
 	 * @return array
 	 */
 	static public function get_slideshows() {
+
 		$all_slideshows = get_option(self::$meta_key, array());
 		if (!is_array($all_slideshows)) {
 			$all_slideshows = array();
 		}
+
 		return $all_slideshows;
 	}
 	

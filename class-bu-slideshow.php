@@ -10,7 +10,7 @@ class BU_Slideshow_Instance {
 	
 	public $view;
 	public $name = '';
-	public $id = 1;
+	public $id = 0;
 	public $height = 0;
 	public $slides = array();
 	
@@ -27,8 +27,6 @@ class BU_Slideshow_Instance {
 		}
 		
 		$this->name = __('Untitled Slideshow', BU_SSHOW_LOCAL);
-		$id = BU_Slideshow::get_new_id();
-		$this->id = $id;
 		
 		if (isset($args['view'])) {
 			$this->set_view($args['view']);
