@@ -8,11 +8,11 @@
 				foreach($slideshows as $id => $show) { ?>
 
 				<li>
-					<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $show->id; ?>"><?php echo esc_html(stripslashes($show->name)); ?></a></span>
+					<span class="alignleft"><a href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php echo esc_html(stripslashes($show->name)); ?></a></span>
 					<span class="alignright">
-						<a class="button" href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $show->id; ?>"><?php _e('Edit', BU_SSHOW_LOCAL); ?></a> 
-						<a href="<?php echo self::$preview_url . '&amp;bu_slideshow_id=' . $show->id; ?>" class="bu-slideshow-preview button"><?php _e('Preview', BU_SSHOW_LOCAL); ?></a> 
-						<a href="#" class="bu-slideshow-delete button" data-slideshow-id="<?php echo $show->id; ?>"><?php _e('Delete', BU_SSHOW_LOCAL); ?></a></span>
+						<a class="button" href="<?php echo self::$edit_url . '&amp;bu_slideshow_id=' . $id; ?>"><?php _e('Edit', BU_SSHOW_LOCAL); ?></a> 
+						<a href="<?php echo self::$preview_url . '&amp;bu_slideshow_id=' . $id; ?>" class="bu-slideshow-preview button"><?php _e('Preview', BU_SSHOW_LOCAL); ?></a> 
+						<a href="#" class="bu-slideshow-delete button" data-slideshow-id="<?php echo $id; ?>"><?php _e('Delete', BU_SSHOW_LOCAL); ?></a></span>
 				</li>
 
 				<?php } 

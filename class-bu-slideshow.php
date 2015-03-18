@@ -105,11 +105,14 @@ class BU_Slideshow_Instance {
 	 */
 	public function update() {
 		
+		$all_slideshows = BU_Slideshow::get_slideshows();
+		$all_slideshows[$this->id] = $this;
+
 		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
-			update_option( BU_Slideshow::$meta_key_prefix . $this->id , $this );
+			update_option(BU_Slideshow::$meta_key, $all_slideshows);
 		} else {
-			delete_option( BU_Slideshow::$meta_key_prefix . $this->id );
-			add_option( BU_Slideshow::$meta_key_prefix . $this->id , $this , '' , 'no');
+			delete_option(BU_Slideshow::$meta_key);
+			add_option(BU_Slideshow::$meta_key, $all_slideshows);
 		}
 
 		return 1;
