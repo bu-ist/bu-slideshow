@@ -107,9 +107,9 @@ class BU_Slideshow {
 	
 	static public function register_cpt(){
 		$args = array(
-				'public'           => false,
-				'capability_type'  => 'post',
-				'supports'         => false,
+			  'public'           => false,
+			  'capability_type'  => 'post',
+			  'supports'         => false,
 			);
 
 		register_post_type( 'bu_slideshow', $args );
@@ -716,7 +716,6 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function slideshow_exists($id) {
-
 		$id = self::slideshow_maybe_translate_id( $id );
 
 		return ( 'object' === gettype( get_post_meta( $id, '_bu_slideshow', TRUE ) ) );
@@ -730,7 +729,6 @@ class BU_Slideshow {
 	* @return int
 	*/
 	static public function slideshow_maybe_translate_id($id){
-
 		$old_slideshow_ids = get_option( 'bu_slideshow_id_map', array() );
 
 		if( array_key_exists( $id, $old_slideshow_ids ) ){
@@ -747,9 +745,7 @@ class BU_Slideshow {
 	 * @return bool|array
 	 */
 	static public function get_slideshow($id) {
-
 		$id = self::slideshow_maybe_translate_id( $id );
-
 		$slideshow = get_post_meta( $id, '_bu_slideshow', TRUE );
 
 		return ( 'object' === gettype( $slideshow ) ) ? $slideshow : FALSE;
@@ -761,7 +757,6 @@ class BU_Slideshow {
 	 * @return array
 	 */
 	static public function get_slideshows() {
-
 		$slideshows = array();
 		$slideshow_posts = get_posts( array( 'post_type' => 'bu_slideshow' ) );
 
