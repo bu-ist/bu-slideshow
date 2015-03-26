@@ -3,6 +3,24 @@
 	<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo $name; ?>" />
 </p>
 
+<?php if( count( $valid_templates ) ): ?>
+<p>
+	<label for="bu_slideshow_template"><strong><?php _e('Slideshow Template', BU_SSHOW_LOCAL); ?>: </strong></label>
+
+	<select name="bu_slideshow_template">
+		<option value="">Default template</option>
+		<?php 
+			foreach ($valid_templates as $i => $t){
+				if( is_array( $t ) && array_key_exists( 'name', $t ) ){
+					printf( '<option value="%s" %s>%s</option>', $i, selected( $i, $template_id, false ), $t['name'] );
+				}
+			} 
+		?>
+	</select>
+</p>
+
+<?php endif; ?>
+
 <p><strong><?php _e('Slides', BU_SSHOW_LOCAL); ?>:</strong><br />
 	<em><?php _e('Drag to reorder, expand to edit', BU_SSHOW_LOCAL); ?></em>
 </p>
@@ -20,7 +38,7 @@
 			echo $slide->get();
 		}
 	} else {
-		$slide = new BU_Slide(array('view' => 'admin'));
+		$slide = new BU_Slide( array( 'view' => 'admin' ) );
 		echo $slide->get();
 	} ?>
 	</ul>

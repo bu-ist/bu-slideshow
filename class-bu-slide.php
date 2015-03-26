@@ -17,6 +17,7 @@ class BU_Slide {
 		'position' => 'caption-bottom-right'
 	);
 	public $order = 0;
+	public $template_id = '';
 	public $view;
 	public $additional_styles = '';
 	
@@ -38,6 +39,14 @@ class BU_Slide {
 	 */
 	public function set_order($order) {
 		$this->order = intval($order);
+	}
+
+	/**
+	 * Set the template of this slide
+	 * @param string $template_id
+	 */
+	public function set_template($template_id) {
+		$this->template_id = $template_id;
 	}
 	
 	/**
@@ -63,7 +72,7 @@ class BU_Slide {
 			case 'admin':
 
 				$img_thumb = '';
-				$caption_positions = apply_filters("bu_slideshow_caption_positions", BU_Slideshow::$caption_positions);
+				$caption_positions = apply_filters('bu_slideshow_caption_positions', BU_Slideshow::$caption_positions);
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
@@ -91,13 +100,22 @@ class BU_Slide {
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
+				$this->image_html = $this->get_image_html();
+				$this->caption['html'] = $this->get_caption_html();
+
+				if( !empty( $this->template_id ) ){
+					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
+					$this->template_options = $templates[ $this->template_id ];
+				} else {
+					$this->template_options = array();
+				}
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
-				$html .= $this->get_image_html();
+				$slide_inner = $this->image_html . $this->caption['html'];
 				
-				$html .= $this->get_caption_html();
+				$html .= apply_filters( 'bu_slideshow_slide_html', $slide_inner, $this );
 				
 				$html .= '</div></li>';
 
