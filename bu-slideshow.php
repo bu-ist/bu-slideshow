@@ -107,9 +107,9 @@ class BU_Slideshow {
 	
 	static public function register_cpt(){
 		$args = array(
-				'public'			=> false,
-				'capability_type'	=> 'post',
-				'supports'			=> false,
+				'public'           => false,
+				'capability_type'  => 'post',
+				'supports'         => false,
 			);
 
 		register_post_type( 'bu_slideshow', $args );
@@ -724,7 +724,7 @@ class BU_Slideshow {
 	
 	/**
 	* Determine if slideshow ID was created before v3.2
-	* If it is, fetch the new post ID.
+	* If it was, fetch the new post ID.
 	* 
 	* @param int $id
 	* @return int
