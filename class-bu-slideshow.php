@@ -97,20 +97,48 @@ class BU_Slideshow_Instance {
 	}
 	
 	/**
+	 * Create new slideshow post
+	 * 
+	 * @return int
+	 */
+	protected function create_post(){
+		// Create post object
+		$post = array(
+			'post_title'	=> $this->name,
+			'post_content'	=> '',
+			'post_status'	=> 'publish',
+			'post_type'		=> 'bu_slideshow',
+		);
+
+		$result = $postID = wp_insert_post( $post );
+
+		if( is_wp_error( $result ) ) {
+		    error_log( sprintf( '[%s] Error creating post: %s Object: %s',
+				__FUNCTION__, $result->get_error_message(), var_export( $this, TRUE ) ) );
+			return FALSE;
+		} else {
+			if( false === add_post_meta( $postID, '_bu_slideshow', $this, true ) ){
+				error_log( sprintf( '[%s] Error adding posst meta: ID %d Object: %s',
+				__FUNCTION__, $postID, var_export( $this, TRUE ) ) );
+		    	return FALSE;
+			}
+		}
+		return $postID;
+	}
+
+	/**
 	 * Save changes to this slideshow.
 	 * 
 	 * @return int
 	 */
 	public function update() {
-		
-		$all_slideshows = BU_Slideshow::get_slideshows();
-		$all_slideshows[$this->id] = $this;
+		if( !$this->id ){
+			$this->id = $this->create_post();
+		}
 
-		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
-			update_option(BU_Slideshow::$meta_key, $all_slideshows);
-		} else {
-			delete_option(BU_Slideshow::$meta_key);
-			add_option(BU_Slideshow::$meta_key, $all_slideshows);
+		if ( BU_Slideshow::slideshow_exists( $this->id ) ){
+			$post_id = BU_Slideshow::slideshow_maybe_translate_id( $this->id );
+			update_post_meta( $post_id, '_bu_slideshow', $this );
 		}
 
 		return 1;

@@ -3,7 +3,7 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.2.1
+ Version: 2.3
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
@@ -11,7 +11,7 @@
  * 
 */
 
-define('BU_SLIDESHOW_VERSION', '2.2.1');
+define('BU_SLIDESHOW_VERSION', '2.3');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -28,6 +28,7 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
+require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
 
 class BU_Slideshow {
 	static $wp_version;
@@ -704,22 +705,8 @@ class BU_Slideshow {
 	 * @return int
 	 */
 	static public function delete_slideshow($id) {
-		if (!self::slideshow_exists($id)) {
-			return;
-		}
-		
-		$all_slideshows = self::get_slideshows();
-		
-		unset($all_slideshows[$id]);
-
-		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
-			update_option(BU_Slideshow::$meta_key, $all_slideshows);
-		} else {
-			delete_option(BU_Slideshow::$meta_key);
-			add_option(BU_Slideshow::$meta_key, $all_slideshows);
-		}
-
-		return 1;
+		$id = self::slideshow_maybe_translate_id( $id );
+		return ( FALSE !== wp_delete_post( $id ) );
 	}
 	
 	/**
@@ -729,11 +716,30 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function slideshow_exists($id) {
-		$all_slideshows = self::get_slideshows();
-		
-		return array_key_exists($id, $all_slideshows);
+
+		$id = self::slideshow_maybe_translate_id( $id );
+
+		return ( 'object' === gettype( get_post_meta( $id, '_bu_slideshow', TRUE ) ) );
 	}
 	
+	/**
+	* Determine if slideshow ID was created before v3.2
+	* If it is, fetch the new post ID.
+	* 
+	* @param int $id
+	* @return int
+	*/
+	static public function slideshow_maybe_translate_id($id){
+
+		$old_slideshow_ids = get_option( 'bu_slideshow_id_map', array() );
+
+		if( array_key_exists( $id, $old_slideshow_ids ) ){
+			$id = $old_slideshow_ids[ $id ];
+		}
+
+		return $id;
+	}
+
 	/**
 	 * Returns slideshow with given id, or false if slideshow doesn't exist.
 	 * 
@@ -741,9 +747,12 @@ class BU_Slideshow {
 	 * @return bool|array
 	 */
 	static public function get_slideshow($id) {
-		$all_slideshows = self::get_slideshows();
 
-		return array_key_exists($id, $all_slideshows) ? $all_slideshows[$id] : false;
+		$id = self::slideshow_maybe_translate_id( $id );
+
+		$slideshow = get_post_meta( $id, '_bu_slideshow', TRUE );
+
+		return ( 'object' === gettype( $slideshow ) ) ? $slideshow : FALSE;
 	}
 	
 	/**
@@ -753,12 +762,14 @@ class BU_Slideshow {
 	 */
 	static public function get_slideshows() {
 
-		$all_slideshows = get_option(self::$meta_key, array());
-		if (!is_array($all_slideshows)) {
-			$all_slideshows = array();
+		$slideshows = array();
+		$slideshow_posts = get_posts( array( 'post_type' => 'bu_slideshow' ) );
+
+		foreach ($slideshow_posts as $show) {
+			$slideshows[ $show->ID ] = self::get_slideshow( $show->ID );
 		}
 
-		return $all_slideshows;
+		return $slideshows;
 	}
 	
 	/**

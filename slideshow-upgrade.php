@@ -8,11 +8,11 @@ add_action('init', 'bu_slideshow_upgrade', 99);
  */
 function bu_slideshow_upgrade() {
 	$current_version = get_option('bu_slideshow_version');
+	$run_all = ( FALSE === $current_version && version_compare('2.3', BU_SLIDESHOW_VERSION, '<=') );
 
-	if ( ( empty($current_version) && version_compare('2.3', BU_SLIDESHOW_VERSION, '<=') ) 
-		|| -1 === version_compare($current_version, BU_SLIDESHOW_VERSION ) ) {
+	if ( $run_all || -1 === version_compare($current_version, BU_SLIDESHOW_VERSION ) ) {
 
-		if( -1 === version_compare($current_version, '2.3' ) ){
+		if( $run_all || -1 === version_compare($current_version, '2.3' ) ){
 			bu_slideshow_migrate_shows();
 		}
 
@@ -31,6 +31,7 @@ function bu_slideshow_upgrade() {
 function bu_slideshow_migrate_shows() {
 	$all_slideshows = get_option( 'bu_slideshows' , array() );
 	$has_errors = FALSE;
+	$slideshow_id_map_option = 'bu_slideshow_id_map';
 
 	foreach ($all_slideshows as $k => $show) {
 
@@ -56,11 +57,28 @@ function bu_slideshow_migrate_shows() {
 				__FUNCTION__, $result->get_error_message(), var_export( $show, TRUE ) ) );
 		    $has_errors = TRUE;
 		} else {
-			add_post_meta( $postID, '_bu_slideshow', $show, true );
+			if( false === add_post_meta( $postID, '_bu_slideshow', $show, true ) ){
+				error_log( sprintf( '[%s] Error adding posst meta: ID %d Object: %s',
+					__FUNCTION__, $postID, var_export( $show, TRUE ) ) );
+				$has_errors = TRUE;
+			}
 		}
 
-		// if( ! $has_errors ){
-		// 	delete_option( 'bu_slideshows' );
-		// }
+		if( !$has_errors ){
+			$map = get_option( $slideshow_id_map_option );
+
+			if( FALSE === $map ){
+				$map = array();
+				add_option( $slideshow_id_map_option, $map, '', false );
+			}
+			
+			$map[ $show->id ] = $postID;
+			
+			update_option( $slideshow_id_map_option, $map );
+		}
 	}
+
+	// if( ! $has_errors ){
+	// 	delete_option( 'bu_slideshows' );
+	// }
 }
