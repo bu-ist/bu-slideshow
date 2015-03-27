@@ -104,10 +104,10 @@ class BU_Slideshow_Instance {
 	protected function create_post(){
 		// Create post object
 		$post = array(
-			'post_title'	=> $this->name,
-			'post_content'	=> '',
-			'post_status'	=> 'publish',
-			'post_type'		=> 'bu_slideshow',
+		  'post_title'    => $this->name,
+		  'post_content'  => '',
+		  'post_status'   => 'publish',
+		  'post_type'     => 'bu_slideshow',
 		);
 
 		$result = $postID = wp_insert_post( $post );

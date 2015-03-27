@@ -6,7 +6,7 @@
 			<p>
 				<label for="bu_slideshow_selected"><?php _e('Select Slideshow:', BU_SSHOW_LOCAL); ?></label><br/>
 				<select name="bu_slideshow_selected" id="bu_slideshow_selected">
-					<option value="0"<?php if (!$args['show_id']) echo ' selected="selected"'; ?>></option>
+					<option value="0"<?php if (!$args['show_id']) echo ' selected="selected"'; ?>>Select...</option>
 					<?php foreach ($all_slideshows as $show) {
 						$id = BU_Slideshow::slideshow_maybe_translate_id( $show->id );
 						printf('<option value="%d"%s>%s</option>', esc_attr($id), selected( $show->id, $args['show_id'] ), esc_html($show->name));
