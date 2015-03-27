@@ -758,7 +758,7 @@ class BU_Slideshow {
 	 */
 	static public function get_slideshows() {
 		$slideshows = array();
-		$slideshow_posts = get_posts( array( 'post_type' => 'bu_slideshow' ) );
+		$slideshow_posts = get_posts( array( 'post_type' => 'bu_slideshow', 'posts_per_page' => -1 ) );
 
 		foreach ($slideshow_posts as $show) {
 			$slideshows[ $show->ID ] = self::get_slideshow( $show->ID );
