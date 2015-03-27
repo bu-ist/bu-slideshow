@@ -58,7 +58,7 @@ function bu_slideshow_migrate_shows() {
 		    $has_errors = TRUE;
 		} else {
 			if( false === add_post_meta( $postID, '_bu_slideshow', $show, true ) ){
-				error_log( sprintf( '[%s] Error adding posst meta: ID %d Object: %s',
+				error_log( sprintf( '[%s] Error adding post meta: ID %d Object: %s',
 					__FUNCTION__, $postID, var_export( $show, TRUE ) ) );
 				$has_errors = TRUE;
 			}
