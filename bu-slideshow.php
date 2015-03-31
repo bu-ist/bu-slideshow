@@ -107,10 +107,20 @@ class BU_Slideshow {
 	
 	static public function register_cpt(){
 		$args = array(
-			  'public'           => false,
-			  'capability_type'  => 'post',
-			  'supports'         => false,
-			);
+			'labels'             => array(),
+			'public'             => false,
+			'publicly_queryable' => false,
+			'show_ui'            => false,
+			'show_in_menu'       => false,
+			'query_var'          => false,
+			'rewrite'            => false,
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'           => false,
+			'can_export'         => true,
+		);
 
 		register_post_type( 'bu_slideshow', $args );
 	}
