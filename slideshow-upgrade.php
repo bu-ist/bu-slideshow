@@ -32,9 +32,14 @@ function bu_slideshow_migrate_shows() {
 	$all_slideshows = get_option( 'bu_slideshows' , array() );
 	$has_errors = FALSE;
 	$slideshow_id_map_option = 'bu_slideshow_id_map';
+	$map = get_option( $slideshow_id_map_option );
+
+	if( FALSE === $map ){
+		$map = array();
+		add_option( $slideshow_id_map_option, $map, '', false );
+	}
 
 	foreach ($all_slideshows as $k => $show) {
-
 		if( ! intval( $show->id ) ){
 			$has_errors = TRUE;
 			error_log( sprintf( '[%s] Invalid Slideshow ID: %d Object: %s',
@@ -42,43 +47,28 @@ function bu_slideshow_migrate_shows() {
 			continue;
 		}
 
-		// Create post object
-		$slideshow = array(
-			'post_title'	=> $show->name,
-			'post_content'	=> '',
-			'post_status'	=> 'publish',
-			'post_type'		=> 'bu_slideshow',
-		);
-
-		$result = $postID = wp_insert_post( $slideshow );
-
-		if( is_wp_error( $result ) ) {
-		    error_log( sprintf( '[%s] Error creating post: %s Object: %s',
-				__FUNCTION__, $result->get_error_message(), var_export( $show, TRUE ) ) );
-		    $has_errors = TRUE;
-		} else {
-			if( false === add_post_meta( $postID, '_bu_slideshow', $show, true ) ){
-				error_log( sprintf( '[%s] Error adding post meta: ID %d Object: %s',
-					__FUNCTION__, $postID, var_export( $show, TRUE ) ) );
-				$has_errors = TRUE;
-			}
-		}
-
-		if( !$has_errors ){
-			$map = get_option( $slideshow_id_map_option );
-
-			if( FALSE === $map ){
-				$map = array();
-				add_option( $slideshow_id_map_option, $map, '', false );
-			}
-			
+		if( FALSE !== bu_slideshow_create_post( $show, $map ) ){
 			$map[ $show->id ] = $postID;
-			
-			update_option( $slideshow_id_map_option, $map );
 		}
 	}
 
-	// if( ! $has_errors ){
-	// 	delete_option( 'bu_slideshows' );
-	// }
+	// Wrap-up
+	if( ! $has_errors ){
+		// delete_option( 'bu_slideshows' );
+		update_option( $slideshow_id_map_option, $map );
+	}
+}
+
+function bu_slideshow_create_post( $show, $map ){
+	$result = $postID = $show->create_post();
+
+	if( FALSE === $result ){
+		error_log( sprintf( '[%s] Error creating post: %s Object: %s',
+			__FUNCTION__, $result->get_error_message(), var_export( $show, TRUE ) ) );
+		return FALSE;
+	} else if( array_key_exists( $postID, $map ) ){
+		error_log( sprintf( '[%s] Error creating post: Slideshow ID %d exists. Map: %s',
+			__FUNCTION__, $postID, var_export( $map, TRUE ) ) );
+		return bu_slideshow_create_post( $show, $map );	
+	}
 }

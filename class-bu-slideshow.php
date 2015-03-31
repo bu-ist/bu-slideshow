@@ -101,7 +101,7 @@ class BU_Slideshow_Instance {
 	 * 
 	 * @return int
 	 */
-	protected function create_post(){
+	public function create_post(){
 		// Create post object
 		$post = array(
 		  'post_title'    => $this->name,
