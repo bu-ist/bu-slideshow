@@ -7,7 +7,8 @@
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
- * Currently supports WP 3.5.X.
+ * Currently supports WP 3.5+
+ * Tested to WP 4.2
  * 
 */
 
