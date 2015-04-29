@@ -1,8 +1,10 @@
-<li class="bu-slideshow-slide">
-	<div class="bu-slide-header">
-		<p><span class="bu-slide-header-thumb"><?php echo $img_thumb; ?></span></p>
-		<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
-		<a href="#" class="bu-slide-expand bu-slide-control" title="<?php _e('Click to edit this slide', BU_SSHOW_LOCAL); ?>"></a>
+<li class="bu-slideshow-slide control-section">
+	<div class="bu-slide-header menu-item-bar">
+		<div class="menu-item-handle ui-sortable-handle accordion-section-title" style="width:auto;">
+			<p><span class="bu-slide-header-thumb"><?php echo $img_thumb; ?></span></p>
+			<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
+			<a href="#" class="bu-slide-expand bu-slide-control" title="<?php _e('Click to edit this slide', BU_SSHOW_LOCAL); ?>">edit</a>
+		</div>
 	</div>
 	<div class="bu-slide-edit-container">
 		<a class="bu-slide-delete-button" href="#"><?php _e('delete slide', BU_SSHOW_LOCAL); ?></a>
