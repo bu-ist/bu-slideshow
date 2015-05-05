@@ -552,12 +552,9 @@ class BU_Slideshow {
 
 		$show->set_view('admin');
 		$show->set_name($_POST['bu_slideshow_name']);
+		$show->set_template($template);
 		$show->set_height($height);
 
-		if( $template !== $show->template_id ){
-			$show->set_template( $template );
-		}
-		
 		foreach ($_POST['bu_slides'] as $i => $arr) {
 			$customfields = array();
 
