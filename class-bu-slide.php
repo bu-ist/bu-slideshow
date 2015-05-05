@@ -18,8 +18,10 @@ class BU_Slide {
 	);
 	public $order = 0;
 	public $template_id = '';
+	public $template_options = array();
 	public $view;
 	public $additional_styles = '';
+	public $custom_fields = array();
 	
 	static public $views = array('admin', 'public');
 	
@@ -66,6 +68,11 @@ class BU_Slide {
 	 * @return string
 	 */
 	public function get($args = array()){
+
+		if( ! empty( $this->template_id ) ){
+			$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
+			$this->template_options = $templates[ $this->template_id ];
+		}
 		
 		switch ($this->view) {
 			
@@ -102,13 +109,6 @@ class BU_Slide {
 				$this->caption = stripslashes_deep($this->caption);
 				$this->image_html = $this->get_image_html();
 				$this->caption['html'] = $this->get_caption_html();
-
-				if( !empty( $this->template_id ) ){
-					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
-					$this->template_options = $templates[ $this->template_id ];
-				} else {
-					$this->template_options = array();
-				}
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);

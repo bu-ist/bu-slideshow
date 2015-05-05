@@ -70,6 +70,17 @@
 				<label for="bu_slides[<?php echo $this->order; ?>][additional_styles]"><?php _e('Additional CSS Class(es)', BU_SSHOW_LOCAL); ?></label>
 				<input type="text" id="bu_slides[<?php echo $this->order; ?>][additional_styles]" name="bu_slides[<?php echo $this->order; ?>][additional_styles]" value="<?php echo $this->additional_styles; ?>" />
 			</p>
+
+			<?php 
+				foreach( $this->template_options['custom_fields'] as $fieldID => $fieldLabel ){
+					$value = array_key_exists($fieldID, $this->custom_fields) ?  $this->custom_fields[ $fieldID ] : '';
+					echo "<p>";
+					printf('<label for="bu_slides[%s][custom_fields][%s]">%s</label>', $this->order, $fieldID, $fieldLabel );
+					printf('<input type="text" id="bu_slides[%s][custom_fields][%s]" name="bu_slides[%s][custom_fields][%s]" value="%s" />', 
+							$this->order, $fieldID, $this->order, $fieldID, $value);
+					echo "</p>";
+				}
+			?>
 		</div>
 	</div>
 </li>
