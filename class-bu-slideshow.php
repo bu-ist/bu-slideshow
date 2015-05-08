@@ -110,7 +110,7 @@ class BU_Slideshow_Instance {
 		  'post_type'     => 'bu_slideshow',
 		);
 
-		$result = $postID = wp_insert_post( $post );
+		$result = $postID = wp_insert_post( $post, true );
 
 		if( is_wp_error( $result ) ) {
 		    error_log( sprintf( '[%s] Error creating post: %s Object: %s',
