@@ -72,6 +72,8 @@ class BU_Slide {
 		if( ! empty( $this->template_id ) ){
 			$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 			$this->template_options = $templates[ $this->template_id ];
+		} else {
+			$this->template_options['custom_fields'] = array();
 		}
 		
 		switch ($this->view) {
@@ -80,6 +82,8 @@ class BU_Slide {
 
 				$img_thumb = '';
 				$caption_positions = apply_filters('bu_slideshow_caption_positions', BU_Slideshow::$caption_positions);
+				$allowed_fields = $this->template_options['custom_fields'];
+				$custom_fields = $this->custom_fields;
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {

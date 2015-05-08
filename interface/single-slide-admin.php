@@ -72,8 +72,8 @@
 			</p>
 
 			<?php 
-				foreach( $this->template_options['custom_fields'] as $fieldID => $fieldLabel ){
-					$value = array_key_exists($fieldID, $this->custom_fields) ?  $this->custom_fields[ $fieldID ] : '';
+				foreach( $allowed_fields as $fieldID => $fieldLabel ){
+					$value = array_key_exists($fieldID, $custom_fields) ?  $custom_fields[ $fieldID ] : '';
 					echo "<p>";
 					printf('<label for="bu_slides[%s][custom_fields][%s]">%s</label>', $this->order, $fieldID, $fieldLabel );
 					printf('<input type="text" id="bu_slides[%s][custom_fields][%s]" name="bu_slides[%s][custom_fields][%s]" value="%s" />', 

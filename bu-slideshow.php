@@ -558,7 +558,7 @@ class BU_Slideshow {
 		foreach ($_POST['bu_slides'] as $i => $arr) {
 			$customfields = array();
 
-			if( is_array( $arr['custom_fields'] ) ){
+			if( $show->template_id && is_array( $arr['custom_fields'] ) ){
 				foreach( $arr['custom_fields'] as $k => $v){
 					if( ! array_key_exists($k, $all_templates[ $show->template_id ]['custom_fields'] ) ){
 						continue;
