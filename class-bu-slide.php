@@ -21,6 +21,7 @@ class BU_Slide {
 	public $template_options = array();
 	public $view;
 	public $additional_styles = '';
+	public $custom_fields = array();
 	
 	static public $views = array('admin', 'public');
 	
