@@ -23,6 +23,7 @@ class BU_Slide {
 	public $additional_styles = '';
 	public $custom_fields = array();
 	
+	static public $custom_field_types = array('text');
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
@@ -90,7 +91,6 @@ class BU_Slide {
 					$img_thumb = wp_get_attachment_image($this->image_id, 'bu-slideshow-thumb');
 					if( !empty( $img_thumb ) ){
 						$img_meta = wp_get_attachment_metadata($this->image_id);
-						echo "thesizes " . $this->image_id;
 						unset($img_meta['sizes']['bu-slideshow-thumb']);
 						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
 						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
