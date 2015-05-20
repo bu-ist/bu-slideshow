@@ -47,7 +47,9 @@ function bu_slideshow_migrate_shows() {
 			continue;
 		}
 
-		if( FALSE !== bu_slideshow_create_post( $show, $map ) ){
+		$postID = bu_slideshow_create_post( $show, $map );
+
+		if( FALSE !== $postID ){
 			$map[ $show->id ] = $postID;
 		}
 	}
@@ -71,4 +73,6 @@ function bu_slideshow_create_post( $show, $map ){
 			__FUNCTION__, $postID, var_export( $map, TRUE ) ) );
 		return bu_slideshow_create_post( $show, $map );	
 	}
+
+	return $postID;
 }

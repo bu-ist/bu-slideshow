@@ -18,9 +18,12 @@ class BU_Slide {
 	);
 	public $order = 0;
 	public $template_id = '';
+	public $template_options = array();
 	public $view;
 	public $additional_styles = '';
+	public $custom_fields = array();
 	
+	static public $custom_field_types = array('text');
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
@@ -66,6 +69,13 @@ class BU_Slide {
 	 * @return string
 	 */
 	public function get($args = array()){
+
+		if( ! empty( $this->template_id ) ){
+			$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
+			$this->template_options = $templates[ $this->template_id ];
+		} else {
+			$this->template_options['custom_fields'] = array();
+		}
 		
 		switch ($this->view) {
 			
@@ -73,13 +83,14 @@ class BU_Slide {
 
 				$img_thumb = '';
 				$caption_positions = apply_filters('bu_slideshow_caption_positions', BU_Slideshow::$caption_positions);
+				$allowed_fields = $this->template_options['custom_fields'];
+				$custom_fields = $this->custom_fields;
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
 					$img_thumb = wp_get_attachment_image($this->image_id, 'bu-slideshow-thumb');
 					if( !empty( $img_thumb ) ){
 						$img_meta = wp_get_attachment_metadata($this->image_id);
-						echo "thesizes " . $this->image_id;
 						unset($img_meta['sizes']['bu-slideshow-thumb']);
 						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
 						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
@@ -105,13 +116,6 @@ class BU_Slide {
 				$this->caption = stripslashes_deep($this->caption);
 				$this->image_html = $this->get_image_html();
 				$this->caption['html'] = $this->get_caption_html();
-
-				if( !empty( $this->template_id ) ){
-					$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
-					$this->template_options = $templates[ $this->template_id ];
-				} else {
-					$this->template_options = array();
-				}
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);

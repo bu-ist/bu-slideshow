@@ -541,6 +541,7 @@ class BU_Slideshow {
 		$caption_positions = apply_filters('bu_slideshow_caption_positions', self::$caption_positions);
 		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
 		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
+		$all_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 
 		// okay to have no slides 
 		if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
@@ -555,6 +556,17 @@ class BU_Slideshow {
 		$show->set_height($height);
 		
 		foreach ($_POST['bu_slides'] as $i => $arr) {
+			$customfields = array();
+
+			if( $show->template_id && is_array( $arr['custom_fields'] ) ){
+				foreach( $arr['custom_fields'] as $k => $v){
+					if( ! array_key_exists($k, $all_templates[ $show->template_id ]['custom_fields'] ) ){
+						continue;
+					}
+					$customfields[ $k ] = sanitize_text_field( $v );
+				}
+			}
+
 			$args = array(
 				'view' => 'admin',
 				'order' => $i,
@@ -567,7 +579,8 @@ class BU_Slideshow {
 					'position' => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
 					),
 				'template_id' => $template,
-				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles']))
+				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles'])),
+				'custom_fields' => $customfields,
 			);
 			$slides[] = new BU_Slide($args);
 		}
