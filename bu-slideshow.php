@@ -938,6 +938,7 @@ class BU_Slideshow {
 			// wp_enqueue_script('modernizr');
 			wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
+			do_action('bu_slideshow_enqueued');
 		}
 		
 		$att_defaults = self::$shortcode_defaults;
