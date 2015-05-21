@@ -37,7 +37,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 ## Changelog ##
 ### 2.3 ###
 * Migrating slideshows to custom post type
-* Support for custom slide templates, including custom fields
+* [Support for custom slide templates](https://github.com/bu-ist/bu-slideshow/wiki/Actions-&-Filters#bu_slideshow_slide_templates), including custom fields
 
 ### 2.2.1 ###
 * Cleaning up slide image select in WP 4.0
