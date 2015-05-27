@@ -19,7 +19,7 @@
 				// print_r($img_meta);
 					if($img_thumb){
 					
-						printf("%s &middot; <a href='%s' target='_blank'>Edit</a> <br />",$img_meta['file'], $edit_url);
+						printf("%s &middot; <a href='%s' target='_blank'>Edit</a> <br />",$img_meta['file'], $manage_url);
 
 						// printf("<span class='show-slide-size'>(%spx x %spx) <a href='#' class='resize-slide-image'>Change size</a></span>",$img_meta['sizes'][$this->image_size]['width'], $img_meta['sizes'][$this->image_size]['height']);
 						printf("<div class='change-slide-size'><select name='bu_slides[%d][image_size]' class='bu-slideshow-img-size'>", $this->order );

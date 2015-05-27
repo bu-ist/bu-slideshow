@@ -167,7 +167,6 @@ class BU_Slideshow {
 		$admin_pages = array(
 			'toplevel_page_bu-slideshow',
 			'slideshows_page_bu-slideshow',
-			'admin_page_bu-edit-slideshow',
 			'slideshows_page_bu-add-slideshow'
 		);
 		
@@ -293,7 +292,7 @@ class BU_Slideshow {
 	static public function get_url() {
 		$urls = array(
 			'manage_url' => self::$manage_url,
-			'edit_url' => self::$edit_url,
+			'edit_url' => self::$manage_url,
 			'add_url' => self::$add_url,
 			'preview_url' => self::$preview_url
 		);
@@ -460,7 +459,7 @@ class BU_Slideshow {
 	 */
 	static public function flash_file_types($types) {
 		
-		if (strpos(wp_get_referer(), self::$edit_url) !== false) {
+		if (strpos(wp_get_referer(), self::$manage_url) !== false) {
 
 			$new_types = '';
 			foreach (self::$image_mimes as $mime) {
@@ -509,7 +508,6 @@ class BU_Slideshow {
 		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), 'dashicons-format-gallery', $index);
 		add_submenu_page('bu-slideshow', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-add-slideshow', array(__CLASS__, 'add_slideshow_page'));
 		add_submenu_page('bu-preview-slideshow', __('Preview Slideshow', BU_SSHOW_LOCAL), __('Preview Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-preview-slideshow', array(__CLASS__, 'preview_slideshow_page'));
-		add_submenu_page('bu-edit-slideshow', __('Edit Slideshow', BU_SSHOW_LOCAL), __('Edit Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-edit-slideshow', array(__CLASS__, 'edit_slideshow_page'));
 	}
 	
 	/**
@@ -622,7 +620,7 @@ class BU_Slideshow {
 				self::save_show($show);
 
 				if ($show->update()) {
-					$url = 'admin.php?page=bu-edit-slideshow&bu_slideshow_id=' . $show->id . "&msg=";
+					$url = 'admin.php?page=bu-slideshow&bu_slideshow_id=' . $show->id . "&msg=";
 					$url .= urlencode( __("Slideshow created successfully.", BU_SSHOW_LOCAL) );
 					wp_redirect( admin_url( $url ) );
 					exit;
@@ -640,13 +638,17 @@ class BU_Slideshow {
 	 * Displays Manage Slideshow page.
 	 */
 	static public function manage_slideshow_page() {
-		$slideshows = self::get_slideshows();
+		if( intval( $_GET['bu_slideshow_id'] ) ){
+			self::edit_slideshow_page();
+		} else {
+			$slideshows = self::get_slideshows();
 
-		if(isset($_GET['msg'])){
-			$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
+			if(isset($_GET['msg'])){
+				$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
+			}
+
+			require_once BU_SLIDESHOW_BASEDIR . 'interface/manage-slideshows.php';
 		}
-
-		require_once BU_SLIDESHOW_BASEDIR . 'interface/manage-slideshows.php';
 	}
 	
 	/**
