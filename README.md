@@ -7,7 +7,7 @@ _Wordpress Plugin_
 
 **Requires at least:** 3.5
 
-**Tested up to:** 4.2.1
+**Tested up to:** 4.2.2
 
 **Stable tag:** 2.3
 
