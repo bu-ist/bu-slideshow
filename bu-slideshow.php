@@ -3,15 +3,16 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.2.1
+ Version: 2.3
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
- * Currently supports WP 3.5.X.
+ * Currently supports WP 3.5+
+ * Tested to WP 4.2.2
  * 
 */
 
-define('BU_SLIDESHOW_VERSION', '2.2.1');
+define('BU_SLIDESHOW_VERSION', '2.3');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -28,6 +29,7 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
+require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
 
 class BU_Slideshow {
 	static $wp_version;
@@ -46,6 +48,7 @@ class BU_Slideshow {
 		'Bottom Center' => 'caption-bottom-center', 
 		'Bottom Left' => 'caption-bottom-left'
 	);
+	static $slide_templates = array();
 
 	static $manage_url = 'admin.php?page=bu-slideshow';
 	static $edit_url = 'admin.php?page=bu-edit-slideshow';
@@ -77,6 +80,7 @@ class BU_Slideshow {
 		self::$wp_version = get_bloginfo('version');
 		self::$upload_error = __(self::$upload_error, BU_SSHOW_LOCAL);
 		
+		add_action('init', array(__CLASS__, 'register_cpt'), 6);
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
 		add_action('init', array(__CLASS__, 'add_post_support'),99);
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
@@ -102,6 +106,26 @@ class BU_Slideshow {
 		
 	}
 	
+	static public function register_cpt(){
+		$args = array(
+			'labels'             => array(),
+			'public'             => false,
+			'publicly_queryable' => false,
+			'show_ui'            => false,
+			'show_in_menu'       => false,
+			'query_var'          => false,
+			'rewrite'            => false,
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'           => false,
+			'can_export'         => true,
+		);
+
+		register_post_type( 'bu_slideshow', $args );
+	}
+
 	static public function add_post_support() {
 		$post_types = apply_filters('bu_slideshow_supported_post_types', self::$supported_post_types);
 		
@@ -482,7 +506,7 @@ class BU_Slideshow {
 	static public function admin_menu() {
 		$index = self::get_menu_index(21);
 		
-		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), '', $index);
+		add_menu_page(__('Slideshows', BU_SSHOW_LOCAL), __('Slideshows', BU_SSHOW_LOCAL), self::$min_cap, 'bu-slideshow', array(__CLASS__, 'manage_slideshow_page'), 'dashicons-format-gallery', $index);
 		add_submenu_page('bu-slideshow', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-add-slideshow', array(__CLASS__, 'add_slideshow_page'));
 		add_submenu_page('bu-preview-slideshow', __('Preview Slideshow', BU_SSHOW_LOCAL), __('Preview Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-preview-slideshow', array(__CLASS__, 'preview_slideshow_page'));
 		add_submenu_page('bu-edit-slideshow', __('Edit Slideshow', BU_SSHOW_LOCAL), __('Edit Slideshow', BU_SSHOW_LOCAL), self::$min_cap, 'bu-edit-slideshow', array(__CLASS__, 'edit_slideshow_page'));
@@ -514,7 +538,10 @@ class BU_Slideshow {
 
 	static private function save_show($show){
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
-		$caption_positions = apply_filters("bu_slideshow_caption_positions", self::$caption_positions);
+		$caption_positions = apply_filters('bu_slideshow_caption_positions', self::$caption_positions);
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
+		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
+		$all_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 
 		// okay to have no slides 
 		if (!isset($_POST['bu_slides']) || !is_array($_POST['bu_slides'])) {
@@ -525,9 +552,21 @@ class BU_Slideshow {
 
 		$show->set_view('admin');
 		$show->set_name($_POST['bu_slideshow_name']);
+		$show->set_template( $template );
 		$show->set_height($height);
 		
 		foreach ($_POST['bu_slides'] as $i => $arr) {
+			$customfields = array();
+
+			if( $show->template_id && is_array( $arr['custom_fields'] ) ){
+				foreach( $arr['custom_fields'] as $k => $v){
+					if( ! array_key_exists($k, $all_templates[ $show->template_id ]['custom_fields'] ) ){
+						continue;
+					}
+					$customfields[ $k ] = sanitize_text_field( $v );
+				}
+			}
+
 			$args = array(
 				'view' => 'admin',
 				'order' => $i,
@@ -539,7 +578,9 @@ class BU_Slideshow {
 					'text' => wp_kses_data($arr['caption']['text']),
 					'position' => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
 					),
-				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles']))
+				'template_id' => $template,
+				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles'])),
+				'custom_fields' => $customfields,
 			);
 			$slides[] = new BU_Slide($args);
 		}
@@ -688,22 +729,8 @@ class BU_Slideshow {
 	 * @return int
 	 */
 	static public function delete_slideshow($id) {
-		if (!self::slideshow_exists($id)) {
-			return;
-		}
-		
-		$all_slideshows = self::get_slideshows();
-		
-		unset($all_slideshows[$id]);
-
-		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
-			update_option(BU_Slideshow::$meta_key, $all_slideshows);
-		} else {
-			delete_option(BU_Slideshow::$meta_key);
-			add_option(BU_Slideshow::$meta_key, $all_slideshows);
-		}
-
-		return 1;
+		$id = self::slideshow_maybe_translate_id( $id );
+		return ( FALSE !== wp_delete_post( $id ) );
 	}
 	
 	/**
@@ -713,11 +740,28 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function slideshow_exists($id) {
-		$all_slideshows = self::get_slideshows();
-		
-		return array_key_exists($id, $all_slideshows);
+		$id = self::slideshow_maybe_translate_id( $id );
+
+		return ( 'object' === gettype( get_post_meta( $id, '_bu_slideshow', TRUE ) ) );
 	}
 	
+	/**
+	* Determine if slideshow ID was created before v3.2
+	* If it was, fetch the new post ID.
+	* 
+	* @param int $id
+	* @return int
+	*/
+	static public function slideshow_maybe_translate_id($id){
+		$old_slideshow_ids = get_option( 'bu_slideshow_id_map', array() );
+
+		if( array_key_exists( $id, $old_slideshow_ids ) ){
+			$id = $old_slideshow_ids[ $id ];
+		}
+
+		return $id;
+	}
+
 	/**
 	 * Returns slideshow with given id, or false if slideshow doesn't exist.
 	 * 
@@ -725,9 +769,10 @@ class BU_Slideshow {
 	 * @return bool|array
 	 */
 	static public function get_slideshow($id) {
-		$all_slideshows = self::get_slideshows();
-		
-		return array_key_exists($id, $all_slideshows) ? $all_slideshows[$id] : false;
+		$id = self::slideshow_maybe_translate_id( $id );
+		$slideshow = get_post_meta( $id, '_bu_slideshow', TRUE );
+
+		return ( 'object' === gettype( $slideshow ) ) ? $slideshow : FALSE;
 	}
 	
 	/**
@@ -736,11 +781,20 @@ class BU_Slideshow {
 	 * @return array
 	 */
 	static public function get_slideshows() {
-		$all_slideshows = get_option(self::$meta_key, array());
-		if (!is_array($all_slideshows)) {
-			$all_slideshows = array();
+		$slideshows = array();
+		$slideshow_posts = get_posts( array( 
+			'post_type' => 'bu_slideshow', 
+			'posts_per_page' => -1, 
+			'orderby' => 'title', 
+			'order' => 'asc' 
+			) 
+		);
+
+		foreach ($slideshow_posts as $show) {
+			$slideshows[ $show->ID ] = self::get_slideshow( $show->ID );
 		}
-		return $all_slideshows;
+
+		return $slideshows;
 	}
 	
 	/**
@@ -884,6 +938,7 @@ class BU_Slideshow {
 			// wp_enqueue_script('modernizr');
 			wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
+			do_action('bu_slideshow_enqueued');
 		}
 		
 		$att_defaults = self::$shortcode_defaults;

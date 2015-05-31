@@ -10,8 +10,9 @@ class BU_Slideshow_Instance {
 	
 	public $view;
 	public $name = '';
-	public $id = 1;
+	public $id = 0;
 	public $height = 0;
+	public $template_id = '';
 	public $slides = array();
 	
 	static $classes = array('bu-slideshow');
@@ -27,8 +28,6 @@ class BU_Slideshow_Instance {
 		}
 		
 		$this->name = __('Untitled Slideshow', BU_SSHOW_LOCAL);
-		$id = BU_Slideshow::get_new_id();
-		$this->id = $id;
 		
 		if (isset($args['view'])) {
 			$this->set_view($args['view']);
@@ -58,6 +57,14 @@ class BU_Slideshow_Instance {
 		}
 		
 		$this->name = $name;
+	}
+
+	/**
+	 * Set the template of the slideshow.
+	 * @param string $template
+	 */
+	public function set_template($template) {
+		$this->template_id = $template;
 	}
 	
 	/**
@@ -90,20 +97,48 @@ class BU_Slideshow_Instance {
 	}
 	
 	/**
+	 * Create new slideshow post
+	 * 
+	 * @return int
+	 */
+	public function create_post(){
+		// Create post object
+		$post = array(
+		  'post_title'    => $this->name,
+		  'post_content'  => '',
+		  'post_status'   => 'publish',
+		  'post_type'     => 'bu_slideshow',
+		);
+
+		$result = $postID = wp_insert_post( $post, true );
+
+		if( is_wp_error( $result ) ) {
+		    error_log( sprintf( '[%s] Error creating post: %s Object: %s',
+				__FUNCTION__, $result->get_error_message(), var_export( $this, TRUE ) ) );
+			return FALSE;
+		} else {
+			if( false === add_post_meta( $postID, '_bu_slideshow', $this, true ) ){
+				error_log( sprintf( '[%s] Error adding posst meta: ID %d Object: %s',
+				__FUNCTION__, $postID, var_export( $this, TRUE ) ) );
+		    	return FALSE;
+			}
+		}
+		return $postID;
+	}
+
+	/**
 	 * Save changes to this slideshow.
 	 * 
 	 * @return int
 	 */
 	public function update() {
-		
-		$all_slideshows = BU_Slideshow::get_slideshows();
-		$all_slideshows[$this->id] = $this;
+		if( !$this->id ){
+			$this->id = $this->create_post();
+		}
 
-		if( version_compare( get_bloginfo('version'), '3.6', '>=') ){
-			update_option(BU_Slideshow::$meta_key, $all_slideshows);
-		} else {
-			delete_option(BU_Slideshow::$meta_key);
-			add_option(BU_Slideshow::$meta_key, $all_slideshows);
+		if ( BU_Slideshow::slideshow_exists( $this->id ) ){
+			$post_id = BU_Slideshow::slideshow_maybe_translate_id( $this->id );
+			update_post_meta( $post_id, '_bu_slideshow', $this );
 		}
 
 		return 1;
@@ -117,12 +152,20 @@ class BU_Slideshow_Instance {
 	 */
 	public function get($args = array()) {
 		
+		/*
+		* Filter accepts templates in array form. 
+		*  - Templates must be defined (minimally) with an ID & name attribute:
+		*    e.g. array( 'great-template' => array( 'name'=>'Great Template!' ), 'also-awesome' => array( 'name'=>'Another template' ) )
+		*/	
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates );
+
 		switch ($this->view) {
 			
 			case 'admin':
 				$msg = $args['msg'] ? $args['msg'] : '';
 				$name = $this->name;
 				$height = $this->height;
+				$template_id = $this->template_id;
 				$slides = $this->slides;
 				ob_start();
 				
@@ -178,6 +221,7 @@ class BU_Slideshow_Instance {
 				foreach ($this->slides as $i => $slide) {
 					$id_prefix = self::$id_prefix . $this->id;
 					
+					$slide->set_template($this->template_id);
 					$slide->set_order($i);
 					$slide->set_view($this->view);
 					

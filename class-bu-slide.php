@@ -17,9 +17,13 @@ class BU_Slide {
 		'position' => 'caption-bottom-right'
 	);
 	public $order = 0;
+	public $template_id = '';
+	public $template_options = array();
 	public $view;
 	public $additional_styles = '';
+	public $custom_fields = array();
 	
+	static public $custom_field_types = array('text');
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
@@ -39,6 +43,14 @@ class BU_Slide {
 	public function set_order($order) {
 		$this->order = intval($order);
 	}
+
+	/**
+	 * Set the template of this slide
+	 * @param string $template_id
+	 */
+	public function set_template($template_id) {
+		$this->template_id = $template_id;
+	}
 	
 	/**
 	 * Set the view type.
@@ -57,21 +69,32 @@ class BU_Slide {
 	 * @return string
 	 */
 	public function get($args = array()){
+
+		if( ! empty( $this->template_id ) ){
+			$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
+			$this->template_options = $templates[ $this->template_id ];
+		} else {
+			$this->template_options['custom_fields'] = array();
+		}
 		
 		switch ($this->view) {
 			
 			case 'admin':
 
 				$img_thumb = '';
-				$caption_positions = apply_filters("bu_slideshow_caption_positions", BU_Slideshow::$caption_positions);
+				$caption_positions = apply_filters('bu_slideshow_caption_positions', BU_Slideshow::$caption_positions);
+				$allowed_fields = $this->template_options['custom_fields'];
+				$custom_fields = $this->custom_fields;
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
 					$img_thumb = wp_get_attachment_image($this->image_id, 'bu-slideshow-thumb');
-					$img_meta = wp_get_attachment_metadata($this->image_id);
-					unset($img_meta['sizes']['bu-slideshow-thumb']);
-					$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
-					$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
+					if( !empty( $img_thumb ) ){
+						$img_meta = wp_get_attachment_metadata($this->image_id);
+						unset($img_meta['sizes']['bu-slideshow-thumb']);
+						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
+						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
+					}
 				}
 
 				ob_start();
@@ -91,13 +114,15 @@ class BU_Slide {
 				$haslink = false;
 
 				$this->caption = stripslashes_deep($this->caption);
+				$this->image_html = $this->get_image_html();
+				$this->caption['html'] = $this->get_caption_html();
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 				
-				$html .= $this->get_image_html();
+				$slide_inner = $this->image_html . $this->caption['html'];
 				
-				$html .= $this->get_caption_html();
+				$html .= apply_filters( 'bu_slideshow_slide_html', $slide_inner, $this );
 				
 				$html .= '</div></li>';
 

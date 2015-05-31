@@ -1,8 +1,10 @@
-<li class="bu-slideshow-slide">
-	<div class="bu-slide-header">
-		<p><span class="bu-slide-header-thumb"><?php echo $img_thumb; ?></span></p>
-		<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
-		<a href="#" class="bu-slide-expand bu-slide-control" title="<?php _e('Click to edit this slide', BU_SSHOW_LOCAL); ?>"></a>
+<li class="bu-slideshow-slide control-section">
+	<div class="bu-slide-header menu-item-bar">
+		<div class="menu-item-handle ui-sortable-handle accordion-section-title" style="width:auto;">
+			<p><span class="bu-slide-header-thumb"><?php echo $img_thumb; ?></span></p>
+			<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
+			<a href="#" class="bu-slide-expand bu-slide-control" title="<?php _e('Click to edit this slide', BU_SSHOW_LOCAL); ?>">edit</a>
+		</div>
 	</div>
 	<div class="bu-slide-edit-container">
 		<a class="bu-slide-delete-button" href="#"><?php _e('delete slide', BU_SSHOW_LOCAL); ?></a>
@@ -68,6 +70,27 @@
 				<label for="bu_slides[<?php echo $this->order; ?>][additional_styles]"><?php _e('Additional CSS Class(es)', BU_SSHOW_LOCAL); ?></label>
 				<input type="text" id="bu_slides[<?php echo $this->order; ?>][additional_styles]" name="bu_slides[<?php echo $this->order; ?>][additional_styles]" value="<?php echo $this->additional_styles; ?>" />
 			</p>
+
+			<?php 
+				foreach( $allowed_fields as $id => $field ){
+					if( !is_array( $field ) || !isset( $field['label'] ) ){
+						return;
+					}
+					$type = ( isset( $field['type'] ) && in_array( $field['type'], self::$custom_field_types, true ) ) ? $field['type'] : 'text';
+					$value = array_key_exists($id, $custom_fields) ? $custom_fields[ $id ] : '';
+
+					echo "<p>";
+					printf('<label for="bu_slides[%s][custom_fields][%s]">%s</label>', $this->order, $id, $field['label'] );
+
+					switch ( $type ) {
+						case 'text':
+							printf('<input type="text" id="bu_slides[%s][custom_fields][%s]" name="bu_slides[%s][custom_fields][%s]" value="%s" />', 
+								$this->order, $id, $this->order, $id, $value);
+							break;
+					}
+					echo "</p>";
+				}
+			?>
 		</div>
 	</div>
 </li>

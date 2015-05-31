@@ -2,8 +2,8 @@
 Contributors: awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 4.1.1
-Stable tag: 2.2.1
+Tested up to: 4.2.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 * Optional titles and captions on a per-slide basis
 * Set links on a per-slide basis
 * Six locations for caption positioning, also on a per-slide basis
+* Supports custom templates for slides, including custom slide fields
 * Supports unique CSS classes on a per-slide basis for advanced styling options
 * Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
 
@@ -36,6 +37,10 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.
 
 == Changelog ==
+= 2.3 =
+* Migrating slideshows to custom post type
+* Support for custom slide templates, including custom fields
+
 = 2.2.1 =
 * Cleaning up slide image select in WP 4.0
 

@@ -214,22 +214,20 @@
 		
 		/* Edit Slideshow page */
 		if (slideEditor.length) {
-			
 
-
-			$('.bu-slideshow-slide:first-child .bu-slide-control').addClass('open');
+			$('.bu-slideshow-slide:first-child').addClass('open');
 			
 			/* slide toggle */
 			$('#bu-slideshow-slidelist').on('click', '.bu-slide-expand', function() {
-				var clicked = $(this), editor;
-				editor = clicked.parents('.bu-slideshow-slide').find('.bu-slide-edit-container');
+				var $slideContainer = $(this).parents('.bu-slideshow-slide').first(),
+					$editor = $slideContainer.find('.bu-slide-edit-container');
 				
-				if (clicked.hasClass('open')) {
-					clicked.removeClass('open');
-					editor.slideUp(300);
+				if ($slideContainer.hasClass('open')) {
+					$slideContainer.removeClass('open');
+					$editor.slideUp(300);
 				} else {
-					clicked.addClass('open');
-					editor.slideDown(300);
+					$slideContainer.addClass('open');
+					$editor.slideDown(300);
 				}
 				
 				return false;
