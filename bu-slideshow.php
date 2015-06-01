@@ -3,7 +3,7 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.3
+ Version: 2.3.1
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
@@ -12,7 +12,7 @@
  * 
 */
 
-define('BU_SLIDESHOW_VERSION', '2.3');
+define('BU_SLIDESHOW_VERSION', '2.3.1');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -73,6 +73,10 @@ class BU_Slideshow {
 	
 	static $image_mimes = array('jpg|jpeg|jpe', 'png', 'gif');
 	static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
+
+	static public function add_plugins_loaded_hook(){
+		add_action('plugins_loaded', array(__CLASS__, 'init'));
+	}
 	
 	static public function init() {
 		global $pagenow;
@@ -1108,7 +1112,7 @@ class BU_Slideshow {
 	
 }
 
-add_action('plugins_loaded', array(BU_Slideshow, 'init'));
+BU_Slideshow::add_plugins_loaded_hook(); 
 
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler
