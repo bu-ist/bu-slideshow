@@ -8,21 +8,15 @@ add_action('init', 'bu_slideshow_upgrade', 99);
  */
 function bu_slideshow_upgrade() {
 	$current_version = get_option('bu_slideshow_version');
-	$run_all = ( FALSE === $current_version && version_compare('2.3', BU_SLIDESHOW_VERSION, '<=') );
+	$upgrade_firstrun = ( FALSE === $current_version && version_compare('2.3', BU_SLIDESHOW_VERSION, '<=') );
+	$update_to_latest = ( -1 === version_compare($current_version, BU_SLIDESHOW_VERSION ) );
 
-	if ( $run_all || -1 === version_compare($current_version, BU_SLIDESHOW_VERSION ) ) {
-
-		if( $run_all || -1 === version_compare($current_version, '2.3' ) ){
+	if ( $upgrade_firstrun || $update_to_latest ) {
+		update_option('bu_slideshow_version', BU_SLIDESHOW_VERSION);
+		if( $upgrade_firstrun || -1 === version_compare($current_version, '2.3' ) ){
 			bu_slideshow_migrate_shows();
 		}
-
-		update_option('bu_slideshow_version', BU_SLIDESHOW_VERSION);
 	}
-// 	$all_slideshows = get_option( 'bu_slideshows' , array() );
-	
-// 	foreach ($all_slideshows as $k => $show) {
-// print_r(serialize($show)."\n\n\n");
-// 	}
 }
 
 /**
