@@ -7,9 +7,9 @@ _Wordpress Plugin_
 
 **Requires at least:** 3.5
 
-**Tested up to:** 4.2.2
+**Tested up to:** 4.3
 
-**Stable tag:** 2.3.2
+**Stable tag:** 2.3.3
 
 **License:** GPLv2 or later
 
@@ -35,6 +35,10 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 ![Image Selector](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-selectimage.png)
 
 ## Changelog ##
+### 2.3.3 ###
+* Bugfixes for PHP notices
+* Improving Add Slide UX
+
 ### 2.3.2 ###
 * Bugfix for potential duplicate slideshows
 
