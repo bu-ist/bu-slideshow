@@ -544,7 +544,7 @@ class BU_Slideshow {
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
 		$caption_positions = apply_filters('bu_slideshow_caption_positions', self::$caption_positions);
 		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
-		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
+		$template = ( isset($_POST['bu_slideshow_template']) && array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ) ? $_POST['bu_slideshow_template'] : '';
 		$all_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 
 		// okay to have no slides 
@@ -602,6 +602,7 @@ class BU_Slideshow {
 		$name = '';
 		$height = 0;
 		$slides = array();
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates );
 
 		switch ( $action ) {
 			case 'do_create':
