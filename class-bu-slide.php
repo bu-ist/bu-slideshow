@@ -27,7 +27,7 @@ class BU_Slide {
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
-		$this->caption['title'] = __('Untitled Slide', BU_SSHOW_LOCAL);
+		// $this->caption['title'] = __('Untitled Slide', BU_SSHOW_LOCAL);
 		
 		foreach ($this as $prop => $val) {
 			if (isset($args[$prop])) {
