@@ -46,7 +46,7 @@
 		<div class="bu-slide-caption-container">
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]"><?php _e('Title', BU_SSHOW_LOCAL); ?></label>
-				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_attr(strip_tags($this->caption["title"])); ?>" />
+				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_textarea($this->caption["title"]); ?>" />
 			</p>
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php _e('Link', BU_SSHOW_LOCAL); ?></label> 
