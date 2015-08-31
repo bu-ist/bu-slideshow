@@ -54,7 +54,7 @@
 			</p>
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php _e('Caption', BU_SSHOW_LOCAL); ?></label>
-				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea(wp_kses_data($this->caption["text"])); ?></textarea>
+				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea($this->caption["text"]); ?></textarea>
 			</p>
 			<p><label><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></label>
 			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >
