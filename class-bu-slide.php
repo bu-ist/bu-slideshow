@@ -158,7 +158,7 @@ class BU_Slide {
 		}
 
 		if (isset($this->caption['text']) && !empty($this->caption['text'])) {
-			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data( $this->caption['text'] ));
+			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', $this->caption['text']);
 		}
 		$html .= '</div>';
 		
