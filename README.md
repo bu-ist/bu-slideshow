@@ -1,6 +1,8 @@
 # BU Slideshow #
 _Wordpress Plugin_
 
+[![Build Status](https://travis-ci.org/bu-ist/bu-slideshow.svg)](https://travis-ci.org/bu-ist/bu-slideshow)
+
 **Contributors:** awbauer, clrux, mgburns, bgannonBU
 
 **Tags:** slideshow, images, boston university, bu
