@@ -2,7 +2,7 @@
 Contributors: awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 4.3
+Tested up to: 4.3.1
 Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,7 +38,8 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 == Changelog ==
 = 2.3.4 =
-* Formats slide titles correctly in admin view
+* Formats slide titles (with HTML entities) correctly in admin view
+* Adds unit tests
 
 = 2.3.3 =
 * Bugfixes for PHP notices

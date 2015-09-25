@@ -9,7 +9,7 @@ _Wordpress Plugin_
 
 **Requires at least:** 3.5
 
-**Tested up to:** 4.3
+**Tested up to:** 4.3.1
 
 **Stable tag:** 2.3.4
 
@@ -38,7 +38,8 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 
 ## Changelog ##
 ### 2.3.4 ###
-* Formats slide titles correctly in admin view
+* Formats slide titles (with HTML entities) correctly in admin view
+* Adds unit tests
 
 ### 2.3.3 ###
 * Bugfixes for PHP notices
