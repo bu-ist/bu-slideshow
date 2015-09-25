@@ -37,7 +37,7 @@ class Test_BU_Slideshow_Create_Slideshows extends WP_UnitTestCase {
 		// Set POST vars to emulate form submission
 		$_POST = array(
 			'bu_slideshow_save_show'	=> 'save',
-			'bu_slideshow_id' 			=> $show->id,
+			'bu_slideshow_id' 		=> $show->id,
 			'bu_slideshow_name' 		=> $expected_show_name_after_update,
 			'bu_slideshow_nonce' 		=> wp_create_nonce( 'bu_update_slideshow' ),
 			'bu_slideshow_height' 		=> '300',
