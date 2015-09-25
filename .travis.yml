@@ -1,6 +1,8 @@
 language: php
 notifications:
   slack:
+    on_success: change
+    on_failure: change
     secure: xU0tCjCJyrUZPXV/P555kiBMGV3N+CxNrhCbFBz55inmSDcZR/h/KI8MsPCb6cUVmj75ppZtOoyLIsXFi6DFbz/fbUR9gX3Cnv9LBkcDps5o9YnG0/y4rY7sZxDFVGBoovnkErnp2USWoLMXezwGqL3tF+ygp8RhcalEffUjQHA=
 php:
 - 5.3
