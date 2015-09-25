@@ -1,0 +1,15 @@
+language: php
+notifications:
+  slack:
+    on_success: change
+    on_failure: change
+    secure: xU0tCjCJyrUZPXV/P555kiBMGV3N+CxNrhCbFBz55inmSDcZR/h/KI8MsPCb6cUVmj75ppZtOoyLIsXFi6DFbz/fbUR9gX3Cnv9LBkcDps5o9YnG0/y4rY7sZxDFVGBoovnkErnp2USWoLMXezwGqL3tF+ygp8RhcalEffUjQHA=
+php:
+- 5.3
+- 5.5
+env:
+- WP_VERSION=latest WP_MULTISITE=1
+before_script:
+- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+script: phpunit
+sudo: false

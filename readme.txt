@@ -2,8 +2,8 @@
 Contributors: awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 4.2.1
-Stable tag: 2.3
+Tested up to: 4.3.1
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,20 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.
 
 == Changelog ==
+= 2.3.4 =
+* Formats slide titles (with HTML entities) correctly in admin view
+* Adds unit tests
+
+= 2.3.3 =
+* Bugfixes for PHP notices
+* Improving Add Slide UX
+
+= 2.3.2 =
+* Bugfix for potential duplicate slideshows
+
+= 2.3.1 =
+* Fix PHP notice 
+
 = 2.3 =
 * Migrating slideshows to custom post type
 * Support for custom slide templates, including custom fields

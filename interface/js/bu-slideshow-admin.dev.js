@@ -47,7 +47,6 @@
 			r.appendTo('#bu-slideshow-slidelist ul');
 			setModalHeight( r.find('.bu-slideshow-add-img') );
 			$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
-			$(".slide-added-confirmation").fadeIn().delay(3000).fadeOut();
 		});
 		
 	}

@@ -46,7 +46,7 @@
 		<div class="bu-slide-caption-container">
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]"><?php _e('Title', BU_SSHOW_LOCAL); ?></label>
-				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_attr(strip_tags($this->caption["title"])); ?>" />
+				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_textarea($this->caption["title"]); ?>" />
 			</p>
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php _e('Link', BU_SSHOW_LOCAL); ?></label> 
@@ -54,7 +54,7 @@
 			</p>
 			<p>
 				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php _e('Caption', BU_SSHOW_LOCAL); ?></label>
-				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea(wp_kses_data($this->caption["text"])); ?></textarea>
+				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea($this->caption["text"]); ?></textarea>
 			</p>
 			<p><label><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></label>
 			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >

@@ -3,16 +3,16 @@
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
  
- Version: 2.3
+ Version: 2.3.4
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  * 
  * Currently supports WP 3.5+
- * Tested to WP 4.2
+ * Tested to WP 4.3
  * 
 */
 
-define('BU_SLIDESHOW_VERSION', '2.3');
+define('BU_SLIDESHOW_VERSION', '2.3.4');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -73,6 +73,10 @@ class BU_Slideshow {
 	
 	static $image_mimes = array('jpg|jpeg|jpe', 'png', 'gif');
 	static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
+
+	static public function add_plugins_loaded_hook(){
+		add_action('plugins_loaded', array(__CLASS__, 'init'));
+	}
 	
 	static public function init() {
 		global $pagenow;
@@ -538,7 +542,7 @@ class BU_Slideshow {
 		$height = (intval($_POST['bu_slideshow_height']) > 0) ? intval($_POST['bu_slideshow_height']) : 0 ;
 		$caption_positions = apply_filters('bu_slideshow_caption_positions', self::$caption_positions);
 		$valid_templates = apply_filters('bu_slideshow_slide_templates', self::$slide_templates);
-		$template = array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ? $_POST['bu_slideshow_template'] : '';
+		$template = ( isset($_POST['bu_slideshow_template']) && array_key_exists( $_POST['bu_slideshow_template'], $valid_templates ) ) ? $_POST['bu_slideshow_template'] : '';
 		$all_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 
 		// okay to have no slides 
@@ -596,6 +600,7 @@ class BU_Slideshow {
 		$name = '';
 		$height = 0;
 		$slides = array();
+		$valid_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates );
 
 		switch ( $action ) {
 			case 'do_create':
@@ -1110,7 +1115,7 @@ class BU_Slideshow {
 	
 }
 
-add_action('plugins_loaded', array(BU_Slideshow, 'init'));
+BU_Slideshow::add_plugins_loaded_hook(); 
 
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler

@@ -27,7 +27,7 @@ class BU_Slide {
 	static public $views = array('admin', 'public');
 	
 	public function __construct($args) {
-		$this->caption['title'] = __('Untitled Slide', BU_SSHOW_LOCAL);
+		// $this->caption['title'] = __('Untitled Slide', BU_SSHOW_LOCAL);
 		
 		foreach ($this as $prop => $val) {
 			if (isset($args[$prop])) {
@@ -158,7 +158,7 @@ class BU_Slide {
 		}
 
 		if (isset($this->caption['text']) && !empty($this->caption['text'])) {
-			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', wp_kses_data( $this->caption['text'] ));
+			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', $this->caption['text']);
 		}
 		$html .= '</div>';
 		

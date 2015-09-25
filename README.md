@@ -1,15 +1,17 @@
 # BU Slideshow #
 _Wordpress Plugin_
 
+[![Build Status](https://travis-ci.org/bu-ist/bu-slideshow.svg)](https://travis-ci.org/bu-ist/bu-slideshow)
+
 **Contributors:** awbauer, clrux, mgburns, bgannonBU
 
 **Tags:** slideshow, images, boston university, bu
 
 **Requires at least:** 3.5
 
-**Tested up to:** 4.2.1
+**Tested up to:** 4.3.1
 
-**Stable tag:** 2.3
+**Stable tag:** 2.3.4
 
 **License:** GPLv2 or later
 
@@ -35,6 +37,20 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 ![Image Selector](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-selectimage.png)
 
 ## Changelog ##
+### 2.3.4 ###
+* Formats slide titles (with HTML entities) correctly in admin view
+* Adds unit tests
+
+### 2.3.3 ###
+* Bugfixes for PHP notices
+* Improving Add Slide UX
+
+### 2.3.2 ###
+* Bugfix for potential duplicate slideshows
+
+### 2.3.1 ###
+* Fix PHP notice 
+
 ### 2.3 ###
 * Migrating slideshows to custom post type
 * [Support for custom slide templates](https://github.com/bu-ist/bu-slideshow/wiki/Actions-&-Filters#bu_slideshow_slide_templates), including custom fields
