@@ -112,7 +112,20 @@ class BU_Slideshow {
 	
 	static public function register_cpt(){
 		$args = array(
-			'labels'             => array(),
+			'labels'             => array(
+				'name'               => __( 'Slideshows', BU_SSHOW_LOCAL ),
+				'singular_name'      => __( 'Slideshow', BU_SSHOW_LOCAL ),
+				'add_new'            => __( 'Add New', BU_SSHOW_LOCAL ),
+				'add_new_item'       => __( 'Add New Slideshow', BU_SSHOW_LOCAL ),
+				'edit_item'          => __( 'Edit Slideshow', BU_SSHOW_LOCAL ),
+				'new_item'           => __( 'New Slideshow', BU_SSHOW_LOCAL ),
+				'view_item'          => __( 'View Slideshow', BU_SSHOW_LOCAL ),
+				'search_items'       => __( 'Search Slideshows', BU_SSHOW_LOCAL ),
+				'not_found'          => __( 'No Slideshows found', BU_SSHOW_LOCAL ),
+				'not_found_in_trash' => __( 'No Slideshows in the trash', BU_SSHOW_LOCAL ),
+				'parent_item_colon'  => __( 'Parent Slideshows:', BU_SSHOW_LOCAL ),
+				'menu_name'          => __( 'Slideshows', BU_SSHOW_LOCAL ),
+			),
 			'public'             => false,
 			'publicly_queryable' => false,
 			'show_ui'            => false,
