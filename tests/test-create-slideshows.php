@@ -19,11 +19,11 @@ class Test_BU_Slideshow_Create_Slideshows extends WP_UnitTestCase {
 		wp_set_current_user( $user->ID );
 
 		$slideshow_defaults = get_class_vars( 'BU_Slideshow' );
-		
+
 		$this->assertTrue( current_user_can( $slideshow_defaults['min_cap'] ) );
 	}
 
-	function test_admin_page_edit_slideshow_submission(){		
+	function test_admin_page_edit_slideshow_submission(){
 		$show_name = 'Test Slideshow to Update';
 		$expected_show_name_after_update = 'Updated Test Slideshow';
 
