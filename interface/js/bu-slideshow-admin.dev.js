@@ -183,7 +183,7 @@
 		/* Add Slideshow button and Inserting shortcode into editor */
 		if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
 			
-			var modal = new BuModal({ 'el' : '#bu_slideshow_modal_wrap' }),
+			var modal = new BuModal({ 'el' : '#bu_slideshow_modal_wrap', 'height' : '80%' }),
 				selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 			
 			$('#bu_slideshow_modal_button').on('click', function() {
