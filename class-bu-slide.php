@@ -102,7 +102,7 @@ class BU_Slide {
 				$html = ob_get_contents();
 				ob_end_clean();
 
-				return $html;
+				return apply_filters( 'bu_slideshow_slide_admin', $html, $this );
 
 				break;
 
