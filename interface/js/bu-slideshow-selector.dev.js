@@ -48,6 +48,7 @@ jQuery(document).ready(function($){
 		options.custom_transition = this.ui.find('#bu_slideshow_custom_trans').val().replace(' ', '');
 		options.nav_style = this.ui.find('#bu_slideshow_nav_style').val();
 		options.autoplay = this.ui.find('#bu_slideshow_autoplay').is(':checked') ? 1 : 0;
+		options.shuffle = this.ui.find('#bu_slideshow_shuffle').is(':checked') ? 1 : 0;
 		options.transition_delay = this.ui.find('#bu_slideshow_transition_delay').val();
 		options.width = this.ui.find('#bu_slideshow_width').val();
 		// options.align = this.ui.find('#bu_slideshow_alignment input[type="radio"]:checked').val();
