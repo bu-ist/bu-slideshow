@@ -579,7 +579,7 @@ class BU_Slideshow {
 					if( ! array_key_exists($k, $all_templates[ $show->template_id ]['custom_fields'] ) ){
 						continue;
 					}
-					$customfields[ $k ] = sanitize_text_field( $v );
+					$customfields[ $k ] = wp_kses_post( $v );
 				}
 			}
 
