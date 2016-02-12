@@ -9,9 +9,9 @@ _Wordpress Plugin_
 
 **Requires at least:** 3.5
 
-**Tested up to:** 4.4.1
+**Tested up to:** 4.4.2
 
-**Stable tag:** 2.3.5
+**Stable tag:** 2.3.6
 
 **License:** GPLv2 or later
 
@@ -37,6 +37,11 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 ![Image Selector](http://developer.bu.edu/bu-slideshow/files/2014/08/slideshow-screencap-selectimage.png)
 
 ## Changelog ##
+### 2.3.6 ###
+* Allow custom fields to use HTML (GH #28)
+* Add `bu_slideshow_slide_admin` filter, allowing custom templates to change slide admin 
+* Adds "shuffle" attribute when shortcode is inserted in the Editor (GH #25)
+
 ### 2.3.5 ### 
 * Fixes issue with "Add Slideshow" modal in Editor
 
