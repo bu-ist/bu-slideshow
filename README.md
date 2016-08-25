@@ -11,7 +11,7 @@ _Wordpress Plugin_
 
 **Tested up to:** 4.4.2
 
-**Stable tag:** 2.3.6
+**Stable tag:** 2.3.7
 
 **License:** GPLv2 or later
 
