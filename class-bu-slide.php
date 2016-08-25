@@ -95,7 +95,7 @@ class BU_Slide {
 						if( array_key_exists( 'bu-slideshow-thumb', $img_meta['sizes'] ) ){
 							unset($img_meta['sizes'][BU_Slideshow::$custom_thumb_size]);
 						}
-						
+
 						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
 						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
 					}

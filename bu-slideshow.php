@@ -2,14 +2,13 @@
 /*
  Plugin Name: BU Slideshow
  Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
- 
  Version: 2.3.7
  Author: Boston University (IS&T)
  Author URI: http://www.bu.edu/tech/
  *
  * Currently supports WP 3.5+
  * Tested to WP 4.4.2
- * 
+ *
 */
 
 define('BU_SLIDESHOW_VERSION', '2.3.7');
@@ -284,7 +283,6 @@ class BU_Slideshow {
 					'noneSelectedError'  => __('You must select a slideshow.', BU_SSHOW_LOCAL),
 					'emptyNameError'     => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
 					'thumbFailError'     => __('Could not load image thumbnail.', BU_SSHOW_LOCAL),
-					'thumbAltText'       => __('thumbnail for this slide\'s image', BU_SSHOW_LOCAL),
 					'addSlideFailError'  => __('Could not create new slide.', BU_SSHOW_LOCAL),
 					'mediaUploadTitle'   => __('Select Image', BU_SSHOW_LOCAL),
 					'mediaUploadButton'  => __('Select Image', BU_SSHOW_LOCAL)
