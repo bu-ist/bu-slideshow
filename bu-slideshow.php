@@ -910,28 +910,40 @@ class BU_Slideshow {
 
 		$img_info = self::get_slide_image_thumb(intval($_POST['image_id']));
 
-		echo json_encode($img_info);
+		echo $img_info;
 		exit;
 	}
 
 	/**
-	 * Gets thumbnail for custom size; generates that thumbnail if it doesn't yet exist
-	 * in order to support images uploaded before plugin was activated
-	 * @return array
+	 * Generates thumbnail if it doesn't yet exist.
+	 * Supports images uploaded before plugin was activated.
+	 *
+	 * @param  int  $img_id
+	 * @return bool
 	 */
-	static public function get_slide_image_thumb($img_id) {
-		$img_arr = wp_get_attachment_image_src($img_id, 'bu-slideshow-thumb');
+	static public function generate_slideshow_thumb( $img_id ) {
+		$img_arr = wp_get_attachment_image_src($img_id, static::$custom_thumb_size);
 
 		/* if the regular img url is returned it means we don't have an existing thumb of correct size */
 		if (strpos($img_arr[0], strval($img_arr[1])) === false) {
 			$img_path = get_attached_file($img_id);
 			$success = wp_update_attachment_metadata($img_id, wp_generate_attachment_metadata($img_id, $img_path));
-			if ($success) {
-				$img_arr = wp_get_attachment_image_src($img_id, 'bu-slideshow-thumb');
-			}
+			return false !== $success;
 		}
 
-		return $img_arr;
+		return true;
+	}
+
+	/**
+	 * Gets thumbnail for custom size. Generates thumbnail if it doesn't exist.
+	 * @return array
+	 */
+	static public function get_slide_image_thumb( $img_id ) {
+		if ( ! static::generate_slideshow_thumb( $img_id ) ) {
+			error_log( sprintf( '%s: Failed generating thumbnail for image (%s).', __METHOD__, $img_id ) );
+		}
+
+		return wp_get_attachment_image( $img_id, static::$custom_thumb_size );
 	}
 
 	/**

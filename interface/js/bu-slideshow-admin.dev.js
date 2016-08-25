@@ -319,19 +319,18 @@
 				
 				handleImgThumbResponse : function(response) {
 					var thumb, $el;
-					
-					response = $.parseJSON(response);
+
 					if (!response || response === '0') {
 						displayError(buSlideshowLocalAdmin.thumbFailError, this.slide.find('.bu-slide-edit-container'), true);
 					} else {
-			
 						this.thumbContainers.each(function(index, el) {
 							$el = $(el);
 							thumb = $el.find('img');
+
 							if (thumb.length) {
-								thumb.attr('src', response[0]);
+								thumb.replaceWith(response);
 							} else {
-								$el.append('<img src="' + response[0] + '" alt="' + buSlideshowLocalAdmin.thumbAltText + '" />');
+								$el.append(response);
 							}
 						});
 						
