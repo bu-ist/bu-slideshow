@@ -36,6 +36,7 @@ class BU_Slideshow {
 
 	static $meta_key = 'bu_slideshows';
 	static $show_id_meta_key = 'bu_slideshow_last_id';
+	static $custom_thumb_size = 'bu-slideshow-thumb';
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
@@ -349,7 +350,7 @@ class BU_Slideshow {
 	 * Establishes custom thumbnail size.
 	 */
 	static public function custom_thumb_size() {
-		add_image_size('bu-slideshow-thumb', 100, 100, true);
+		add_image_size(static::$custom_thumb_size, 100, 100, true);
 	}
 
 	/**
