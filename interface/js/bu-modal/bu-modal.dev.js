@@ -1,3 +1,6 @@
+/* modernizr, just for rgba */
+;window.Modernizr=function(a,b,c){function u(a){j.cssText=a}function v(a,b){return u(prefixes.join(a+";")+(b||""))}function w(a,b){return typeof a===b}function x(a,b){return!!~(""+a).indexOf(b)}function y(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:w(f,"function")?f.bind(d||b):f}return!1}var d="2.6.2",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k,l={}.toString,m={},n={},o={},p=[],q=p.slice,r,s={}.hasOwnProperty,t;!w(s,"undefined")&&!w(s.call,"undefined")?t=function(a,b){return s.call(a,b)}:t=function(a,b){return b in a&&w(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=q.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(q.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(q.call(arguments)))};return e}),m.rgba=function(){return u("background-color:rgba(150,255,150,.5)"),x(j.backgroundColor,"rgba")};for(var z in m)t(m,z)&&(r=z.toLowerCase(),e[r]=m[z](),p.push((e[r]?"":"no-")+r));return e.addTest=function(a,b){if(typeof a=="object")for(var d in a)t(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" "+(b?"":"no-")+a),e[a]=b}return e},u(""),i=k=null,e._version=d,g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+p.join(" "):""),e}(this,this.document);
+
 jQuery(document).ready(function($) {
 	
 	window.BuModal = function BuModal(args) {
@@ -17,7 +20,7 @@ jQuery(document).ready(function($) {
 		this.el = args['el'] ? $(args['el']) : $('<div>').appendTo(document.body);
 		this.content_url = args['content_url'] ? args['content_url'] : '';
 		this.width = args['width'] ? args['width'] : 'fit-content';
-		this.height = args['width'] ? args['height'] : 'fit-content';
+		this.height = args['height'] ? args['height'] : 'fit-content';
 		
 		// An element can have multiple modals bound to it, we re-use the bu_modal container.
 		this.ui = this.el.parents('.bu_modal');
@@ -35,7 +38,7 @@ jQuery(document).ready(function($) {
 		this.bindHandlers();
 	};
 
-	BuModal.version = 1.4;
+	BuModal.version = '2.0.6';
 
 	BuModal.bg = $('<div class="bu_modal_bg"></div>').prependTo(document.getElementsByTagName('body')[0]).hide();	
 	BuModal.active_modal = false;
@@ -44,7 +47,7 @@ jQuery(document).ready(function($) {
 		if (BuModal.active_modal) {
 			BuModal.active_modal.close();
 		}
-	}
+	};
 	
 	BuModal.prototype.init = function() {
 		var modal = this;
