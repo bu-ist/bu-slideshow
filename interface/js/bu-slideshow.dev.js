@@ -1,4 +1,3 @@
-/*! COMPILED BY GRUNT. DO NOT MODIFY. bu-slideshow */
 (function($){
 	/* IE triggers resize all over the place, so we check actual window dimensions */
 	var windowHeight = jQuery(window).height(),
