@@ -1,63 +1,97 @@
-var app_path = "interface/";
+/* jshint node:true */
+module.exports = function( grunt ) {
 
-module.exports = function(grunt) {
+	// Load tasks.
+	require('matchdep').filterDev(['grunt-*']).forEach( grunt.loadNpmTasks );
 
-	//All configuration goes here 
+	//All configuration goes here
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
 		uglify: {
-			options: {
-				// the banner is inserted at the top of the output
-				banner: '/*! Compiled by Grunt <%= pkg.name %> */\n'
-			},
 			slideshow_frontend:{
-				src: app_path + 'js/bu-slideshow.dev.js',
-				dest: app_path + 'js/bu-slideshow.js'
+				src: 'interface/js/bu-slideshow.dev.js',
+				dest: 'interface/js/bu-slideshow.js'
 			},
 			slideshow_admin:{
-				src: app_path + 'js/bu-slideshow-admin.dev.js',
-				dest: app_path + 'js/bu-slideshow-admin.js'
+				src: 'interface/js/bu-slideshow-admin.dev.js',
+				dest: 'interface/js/bu-slideshow-admin.js'
 			},
 			slideshow_selector:{
-				src: app_path + 'js/bu-slideshow-selector.dev.js',
-				dest: app_path + 'js/bu-slideshow-selector.js'
+				src: 'interface/js/bu-slideshow-selector.dev.js',
+				dest: 'interface/js/bu-slideshow-selector.js'
 			}
 		},
 
 		less: {
 			slideshow:{
-				src: app_path + 'css/bu-slideshow.less',
-				dest: app_path + 'css/bu-slideshow.css',
+				src: 'interface/css/bu-slideshow.less',
+				dest: 'interface/css/bu-slideshow.css',
 				// options:{   compress: true  }
+			}
+		},
+
+		cssmin: {
+			core: {
+				expand: true,
+				cwd: 'interface/css',
+				src: [ '*.css', '!*.min.css' ],
+				dest: 'interface/css',
+				ext: '.min.css'
+			}
+		},
+
+		phplint: {
+			options : {
+				phpArgs : {
+					'-lf': null
+				}
+			},
+			all : {
+				src : '**/*.php'
 			}
 		},
 
 		watch: {
 			scripts: {
 				files: [
-					app_path + 'js/*.dev.js'
+					'interface/js/*.dev.js'
 				],
-				tasks: ['concat', 'uglify'],
+				tasks: ['uglify'],
 				options: {  spawn: false, },
-			} ,
+			},
 			less: {
 				files: [
-					app_path + 'css/bu-slideshow.less'
+					'interface/css/bu-slideshow.less',
 				],
-				tasks: ['less'],
+				tasks: ['styles'],
 				options: {  spawn: false, },
-			} 
+			},
+			styles: {
+				files: [
+					'interface/css/*.css',
+					'!interface/css/*.min.css',
+					'!interface/css/bu-slideshow.css'
+				],
+				tasks: ['cssmin'],
+				options: {  spawn: false, },
+			},
+			phplint : {
+				files : [ '**/*.php' ],
+				tasks : [ 'phplint' ],
+				options : {
+					spawn : false
+				}
+			}
 		}
 	});
 
-	//the packages we plan on using.
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-contrib-watch');
+	// Build task.
+	grunt.registerTask( 'scripts', [ 'uglify' ] );
+	grunt.registerTask( 'styles', [ 'less', 'cssmin' ] );
+	grunt.registerTask( 'build', [ 'styles', 'scripts', 'phplint' ] );
 
-	//sequence of events to run when grunt is run.
-	grunt.registerTask('default', ['concat','uglify',"less"]);
+	// Default task.
+	grunt.registerTask( 'default', [ 'build' ] );
 
 };
