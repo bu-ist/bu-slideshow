@@ -22,8 +22,10 @@ if (!defined('BU_SSHOW_LOCAL')) {
 
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_SUFFIX', '.dev');
+	define('BU_SSHOW_MIN', '');
 } else {
 	define('BU_SSHOW_SUFFIX', '');
+	define('BU_SSHOW_MIN', '.min');
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -202,7 +204,7 @@ class BU_Slideshow {
 
 			self::localize('bu-slideshow-admin');
 
-			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
 		}
@@ -227,14 +229,14 @@ class BU_Slideshow {
 		self::public_scripts();
 
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 
 		/* enqueue public styles on preview page */
 		global $current_screen;
 		if ($current_screen && $current_screen->id === 'admin_page_bu-preview-slideshow') {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 	}
@@ -260,7 +262,7 @@ class BU_Slideshow {
 
 		wp_enqueue_script('bu-slideshow-selector');
 
-		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css', array(), BU_SLIDESHOW_VERSION);
+		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 		wp_enqueue_style('bu-slideshow-selector');
 
 		self::localize('bu-slideshow-selector');
