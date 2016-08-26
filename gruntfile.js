@@ -6,19 +6,6 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
-		concat: {   
-			options: {
-				// the banner is inserted at the top of the output
-				banner: '/*! COMPILED BY GRUNT. DO NOT MODIFY. <%= pkg.name %> */\n'
-			},
-			slideshow_frontend: {
-				src: [
-					app_path + 'js/bu-slideshow-frontend.js'
-				],
-				dest: app_path + 'js/bu-slideshow.dev.js',
-			},
-		},
-
 		uglify: {
 			options: {
 				// the banner is inserted at the top of the output
