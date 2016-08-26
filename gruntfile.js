@@ -10,16 +10,16 @@ module.exports = function( grunt ) {
 
 		uglify: {
 			slideshow_frontend:{
-				src: 'interface/js/bu-slideshow.dev.js',
-				dest: 'interface/js/bu-slideshow.js'
+				src: 'interface/js/bu-slideshow.js',
+				dest: 'interface/js/bu-slideshow.min.js'
 			},
 			slideshow_admin:{
-				src: 'interface/js/bu-slideshow-admin.dev.js',
-				dest: 'interface/js/bu-slideshow-admin.js'
+				src: 'interface/js/bu-slideshow-admin.js',
+				dest: 'interface/js/bu-slideshow-admin.min.js'
 			},
 			slideshow_selector:{
-				src: 'interface/js/bu-slideshow-selector.dev.js',
-				dest: 'interface/js/bu-slideshow-selector.js'
+				src: 'interface/js/bu-slideshow-selector.js',
+				dest: 'interface/js/bu-slideshow-selector.min.js'
 			}
 		},
 
@@ -55,7 +55,8 @@ module.exports = function( grunt ) {
 		watch: {
 			scripts: {
 				files: [
-					'interface/js/*.dev.js'
+					'interface/js/*.js',
+					'!interface/js/*.min.js'
 				],
 				tasks: ['uglify'],
 				options: {  spawn: false, },
