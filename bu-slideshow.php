@@ -222,7 +222,6 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		// wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
 
 		self::public_scripts();
 
@@ -964,7 +963,6 @@ class BU_Slideshow {
 			global $bu_slideshow_loadscripts;
 			$bu_slideshow_loadscripts = 1;
 		} else {
-			// wp_enqueue_script('modernizr');
 			wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
 			do_action('bu_slideshow_enqueued');
