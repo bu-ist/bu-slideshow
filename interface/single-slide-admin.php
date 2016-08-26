@@ -12,13 +12,12 @@
 			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&type=bu_slideshow&post_id=0&TB_iframe=true"><?php _e('Select Image', BU_SSHOW_LOCAL); ?></a>
 			<a class="button bu-slideshow-remove-img" href="#"<?php echo $img_thumb ? '' : ' style="display:none;"'; ?>><?php _e('Remove Image', BU_SSHOW_LOCAL); ?></a>
 			<input type="hidden" class="bu-slideshow-img-id" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" value="<?php echo esc_attr($this->image_id); ?>" />
-		
+
 			<span class="bu-slide-thumb"><?php echo $img_thumb; ?></span>
 			<div class="bu-slide-meta">
 				<?php
-				// print_r($img_meta);
 					if($img_thumb){
-					
+
 						printf("%s &middot; <a href='%s' target='_blank'>Edit</a> <br />",$img_meta['file'], $edit_url);
 
 						// printf("<span class='show-slide-size'>(%spx x %spx) <a href='#' class='resize-slide-image'>Change size</a></span>",$img_meta['sizes'][$this->image_size]['width'], $img_meta['sizes'][$this->image_size]['height']);
@@ -49,7 +48,7 @@
 				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_textarea($this->caption["title"]); ?>" />
 			</p>
 			<p>
-				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php _e('Link', BU_SSHOW_LOCAL); ?></label> 
+				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php _e('Link', BU_SSHOW_LOCAL); ?></label>
 				<input type="text" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]" value="<?php echo esc_url($this->caption["link"]); ?>" />
 			</p>
 			<p>
@@ -58,7 +57,7 @@
 			</p>
 			<p><label><?php _e('Caption Position', BU_SSHOW_LOCAL); ?></label>
 			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >
-				<?php 
+				<?php
 				foreach($caption_positions as $l=>$v){
 					$maybe_selected = ($v === $this->caption["position"]) ? "selected" : "";
 					printf("<option value='%s' %s>%s</option>", $v, $maybe_selected, $l);
@@ -71,7 +70,7 @@
 				<input type="text" id="bu_slides[<?php echo $this->order; ?>][additional_styles]" name="bu_slides[<?php echo $this->order; ?>][additional_styles]" value="<?php echo $this->additional_styles; ?>" />
 			</p>
 
-			<?php 
+			<?php
 				foreach( $allowed_fields as $id => $field ){
 					if( !is_array( $field ) || !isset( $field['label'] ) ){
 						return;
@@ -84,7 +83,7 @@
 
 					switch ( $type ) {
 						case 'text':
-							printf('<input type="text" id="bu_slides[%s][custom_fields][%s]" name="bu_slides[%s][custom_fields][%s]" value="%s" />', 
+							printf('<input type="text" id="bu_slides[%s][custom_fields][%s]" name="bu_slides[%s][custom_fields][%s]" value="%s" />',
 								$this->order, $id, $this->order, $id, $value);
 							break;
 					}

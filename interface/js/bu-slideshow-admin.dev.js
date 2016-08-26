@@ -3,10 +3,10 @@
 	function reindexSlides(event, ui) {
 		$('#bu-slideshow-editform-submit').prop('disabled', 'disabled');
 		window.reindexingSlides = true;
-		
+
 		var regEx = /bu_slides\[([0-9]*)\](.*)/;
 		var name = '';
-		
+
 		$('.bu-slideshow-slide').each(function(index, el) {
 			$(el).find('input, textarea, select').each(function(i, e) {
 				var $e = $(e);
@@ -15,28 +15,28 @@
 				$e.attr('name', name);
 			});
 		});
-		
+
 		$('#bu-slideshow-editform-submit').prop('disabled', false);
 		window.reindexingSlides = false;
-		
+
 	}
 
 	/* Make slides sortable */
 	function createPlaceholder(event, ui) {
-		
+
 		var h = ui.item.height();
 		var w = ui.item.width();
 		$('.sortable-placeholder').outerHeight(h).width(w);
-		
+
 	}
 
 	function addSlide(order) {
-		
+
 		var data = {
 			"action": "bu_add_slide",
 			"order": order
 		};
-		
+
 		$.post(ajaxurl, data, function(response) {
 			if (!response) {
 				displayError(buSlideshowLocalAdmin.addSlideFailError, $('#bu-slideshow-slidelist'));
@@ -48,7 +48,7 @@
 			setModalHeight( r.find('.bu-slideshow-add-img') );
 			$("#bu-slideshow-slidelist ul li:last-child .bu-slide-edit-container").slideDown();
 		});
-		
+
 	}
 
 	function setModalHeight($link) {
@@ -59,33 +59,33 @@
 	}
 
 	/**
-	 * Removes any existing errors and displays new one. 
+	 * Removes any existing errors and displays new one.
 	 */
 	function displayError(msg, target, pre) {
 		if ( typeof pre === 'undefined') {
 			pre = false; //append error
 		}
-		
+
 		$('.error').remove();
 		var html = '<div class="error"><p>' + msg + '</p></div>';
-		
+
 		if (pre) {
 			target.prepend(html);
 		} else {
 			target.append(html);
 		}
-		
+
 		setTimeout(function() {
 			$('.error').fadeOut(500);
 		}, 1000);
 	}
 
-	$(function(){		
+	$(function(){
 		var newSlideshowForm = $('#bu-slideshow-newform'), slideShowList = $('#bu-slideshow-manage'),
 			slidesContainer = $('#bu-slideshow-slides'), slideEditor = $('#bu-slideshow-edit'),
 			manageUrl = 'admin.php?page=bu-slideshow',
 			imgHref;
-		
+
 		/** New slideshow page */
 		if (newSlideshowForm.length) {
 			newSlideshowForm.on('submit', function() {
@@ -99,37 +99,37 @@
 				return true;
 			});
 		}
-		
-		/** 
-		 * Manage slideshows page 
+
+		/**
+		 * Manage slideshows page
 		 */
 		if (slideShowList.length && slidesContainer.length) {
-			
+
 			var slideShowMgr = function(args) {
 				var that = {};
-				
+
 				that.container = slidesContainer;
-				
+
 				that.list = $(args.list);
 				if (!that.list.length) {
 					throw TypeError('Invalid element supplied to slideshow manager.');
 				}
-				
+
 				that.nonce = $('#bu_slideshow_nonce').val();
-				
+
 				that.numShows = function() {
 					return that.list.find('li').length;
 				};
-				
+
 				that.addEmptyMsg = function() {
 					that.getUrl('add_url', function(addUrl) {
 						var html = '<li><p>' + buSlideshowLocalAdmin.noSlideshowsMsg + '</p>' +
 							'<p><a class="button" href="' + addUrl + '">' + buSlideshowLocalAdmin.addButtonText + '</a></p></li>';
 						that.list.append(html);
 					});
-					
+
 				};
-				
+
 				that.getUrl = function(url, cb) {
 					var data = {
 						"action" : "bu_slideshow_get_url",
@@ -139,10 +139,10 @@
 						cb(response);
 					});
 				};
-				
+
 				that.list.on('click', '.bu-slideshow-delete', function() {
 					var result = confirm(buSlideshowLocalAdmin.deleteConfirm);
-					
+
 					if (result) {
 						var $this = $(this), showId, data;
 						showId = $this.attr('data-slideshow-id');
@@ -152,7 +152,7 @@
 							"id": showId,
 							"bu_slideshow_nonce": that.nonce
 						};
-						
+
 						$.post(ajaxurl, data, function(response) {
 							that.deleteResponse($this, response);
 						});
@@ -160,7 +160,7 @@
 
 					return false;
 				});
-				
+
 				that.deleteResponse = function(el, r) {
 					if (r && r !== '0') {
 						el.parent().parent('li').remove();
@@ -175,21 +175,21 @@
 					}
 				};
 			};
-			
+
 			slideShowMgr({'list': '#bu-slideshow-manage'});
-			
+
 		}
-		
+
 		/* Add Slideshow button and Inserting shortcode into editor */
 		if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
-			
+
 			var modal = new BuModal({ 'el' : '#bu_slideshow_modal_wrap', 'height' : '80%' }),
 				selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
-			
+
 			$('#bu_slideshow_modal_button').on('click', function() {
 				modal.open();
 			});
-			
+
 			$('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
 				var options, html;
 				selector.ui.parent().find('.error').remove();
@@ -209,18 +209,18 @@
 			});
 		}
 
-		
-		
+
+
 		/* Edit Slideshow page */
 		if (slideEditor.length) {
 
 			$('.bu-slideshow-slide:first-child').addClass('open');
-			
+
 			/* slide toggle */
 			$('#bu-slideshow-slidelist').on('click', '.bu-slide-expand', function() {
 				var $slideContainer = $(this).parents('.bu-slideshow-slide').first(),
 					$editor = $slideContainer.find('.bu-slide-edit-container');
-				
+
 				if ($slideContainer.hasClass('open')) {
 					$slideContainer.removeClass('open');
 					$editor.slideUp(300);
@@ -228,42 +228,42 @@
 					$slideContainer.addClass('open');
 					$editor.slideDown(300);
 				}
-				
+
 				return false;
 			});
-			
+
 			/* replace slide title as user types */
 			$('#bu-slideshow-slidelist').on('keyup', '.bu-slideshow-title-input', function() {
 				var input = $(this);
 				input.parents('.bu-slideshow-slide').find('.bu-slide-title').text(input.val());
 			});
-			
+
 			/* don't allow saving until slide reindexing is complete */
 			$('#bu-slideshow-editform').on('submit', function() {
-				
+
 				var name = $('#bu_slideshow_name').val().replace(' ', '');
 				if (!name) {
-					
+
 					displayError(buSlideshowLocalAdmin.emptyNameError, $(this));
 					return false;
 				}
-				
+
 				return (!window.reindexingSlides);
 			});
-			
+
 			$('#bu-slideshow-slidelist ul').sortable({
 				stop: reindexSlides,
 				placeholder: "sortable-placeholder",
 				start: createPlaceholder
 			});
-			
+
 			// Add new slide button
 			$('#bu-slideshow-add-slide').on('click', function() {
 				var order = slideEditor.find('#bu-slideshow-slidelist li').length;
 				addSlide(order);
 				return false;
 			});
-			
+
 			// Delete slide button
 			$('#bu-slideshow-slidelist').on('click', '.bu-slide-delete-button', function() {
 
@@ -271,26 +271,26 @@
 					$(this).parents().parent('.bu-slideshow-slide').remove();
 					reindexSlides();
 				}
-					
+
 				return false;
 			});
-			
+
 			// Media upload management
 			window.buUploaders = {
-				
+
 				init : function(button) {
 					var $button = $(button);
-					
+
 					if (!$button.length) {
 						throw new TypeError('No valid button identified.');
 					}
-					
+
 					this.slide = $button.parents('.bu-slideshow-slide');
 					this.populateFields();
 				},
-				
+
 				populateFields : function() {
-				
+
 					this.addButton = this.slide.find('.bu-slideshow-add-img');
 					this.removeButton = this.slide.find('.bu-slideshow-remove-img');
 					this.imgIdField = this.slide.find('.bu-slideshow-img-id');
@@ -298,57 +298,56 @@
 					this.imgMeta = this.slide.find('.bu-slide-meta');
 					this.thumbContainers = this.slide.find('.bu-slide-thumb, .bu-slide-header-thumb');
 				},
-				
+
 				// trigger appropriate media upload UI/handling
 				select : function() {
 					this.newHandleImageSelect();
 				},
-				
+
 				// remove image
 				remove : function() {
-					
+
 					this.thumbContainers.each(function(index, el) {
 						$(el).find('img').remove();
 					});
-					
+
 					this.imgIdField.val('');
 					this.imgSizeField.val('');
 					this.imgMeta.hide();
 					this.removeButton.hide();
 				},
-				
+
 				handleImgThumbResponse : function(response) {
 					var thumb, $el;
-					
-					response = $.parseJSON(response);
+
 					if (!response || response === '0') {
 						displayError(buSlideshowLocalAdmin.thumbFailError, this.slide.find('.bu-slide-edit-container'), true);
 					} else {
-			
 						this.thumbContainers.each(function(index, el) {
 							$el = $(el);
 							thumb = $el.find('img');
+
 							if (thumb.length) {
-								thumb.attr('src', response[0]);
+								thumb.replaceWith(response);
 							} else {
-								$el.append('<img src="' + response[0] + '" alt="' + buSlideshowLocalAdmin.thumbAltText + '" />');
+								$el.append(response);
 							}
 						});
-						
+
 						this.removeButton.show();
 					}
 				},
-				
+
 				/**
 				 * Media uploader for WP 3.5+
 				 */
 				newHandleImageSelect : function() {
 					var that = this;
-					
+
 					if (typeof buUploadFrame !== 'object') {
-												
+
 						that.modifyWPSelectFrame();
-					
+
 						buUploadFrame = wp.media.frames.bu_slideshow_frame = wp.media({
 							frame: 'select',
 							state: 'bu-slideshow-image',
@@ -360,23 +359,23 @@
 								'type' : 'image'
 							}
 						});
-						 
+
 						buUploadFrame.state('bu-slideshow-image').on('select', function() {
 							var img, props, state, imgId;
-						 
+
 							img = this.get('selection').first();
 							props = this.display(img).attributes;
 							imgId = img.toJSON().id;
-						 
+
 							that.getImgThumb(imgId);
 							that.setImageDetails(imgId, props.size);
 							that.slide.find('.bu-slide-meta').hide();
 						});
 					}
-					
+
 					buUploadFrame.open();
 				},
-				
+
 				/**
 				 * Patches the Select media frame to add the attachment details in the sidebar.
 				 * Allows image size to be selected when attached to slide.
@@ -392,12 +391,12 @@
 								displayUserSettings: true,
 								title : buSlideshowLocalAdmin.mediaUploadTitle
 							}, wp.media.controller.Library.prototype.defaults )
-						});					
+						});
 				},
-				
+
 				getImgThumb : function(imgId) {
 					var that = this, data;
-					
+
 					data = {
 						"action": 'bu_get_slide_thumb',
 						"image_id": imgId
@@ -406,35 +405,35 @@
 						that.handleImgThumbResponse(response);
 					});
 				},
-				
+
 				setImageDetails : function(id, size) {
 					this.imgIdField.val(id);
 					this.imgSizeField.val(size);
 				}
-				
+
 			};
-			
+
 			$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-add-img', function(e) {
 				window.buUploaders.init(this);
 				window.buUploaders.select();
 				return false;
 			});
-			
+
 			$('#bu-slideshow-slidelist').on('click', '.bu-slideshow-remove-img', function() {
 				window.buUploaders.init(this);
 				window.buUploaders.remove();
 				return false;
 			});
-			
+
 			$('#bu-slideshow-slidelist .bu-slideshow-add-img').each(function() {
 				setModalHeight($(this));
 			});
-			
+
 		}
-		
+
 		$("#bu_slideshow_show_nav").on("click",function(){
 			$(".bu_slideshow_nav_style").toggle();
 		});
-		
+
 	});
 }(jQuery));
