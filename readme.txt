@@ -9,8 +9,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-BU Slideshow is a plugin for creating and managing image-based slideshows. It is designed to be simple enough for any site admin to use, and powerful enough to meet the needs of designers. The plugin has many optional functions that make it flexible enough for a variety of uses: slideshows, photo rotations, feature card decks in the sidebar, etc. 
-[View full documentation on BU.edu](http://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
+BU Slideshow is a plugin for creating and managing image-based slideshows. It is designed to be simple enough for any site admin to use, and powerful enough to meet the needs of designers. The plugin has many optional functions that make it flexible enough for a variety of uses: slideshows, photo rotations, feature card decks in the sidebar, etc.
+[View full documentation on BU.edu](https://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
 
 = Features =
 * Drag-and-drop re-ordering of slides
@@ -42,10 +42,10 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 = 2.3.6 =
 * Allow custom fields to use HTML (GH #28)
-* Add `bu_slideshow_slide_admin` filter, allowing custom templates to change slide admin 
+* Add `bu_slideshow_slide_admin` filter, allowing custom templates to change slide admin
 * Adds "shuffle" attribute when shortcode is inserted in the Editor (GH #25)
 
-= 2.3.5 = 
+= 2.3.5 =
 * Fixes issue with "Add Slideshow" modal in Editor
 
 = 2.3.4 =
@@ -60,7 +60,7 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 * Bugfix for potential duplicate slideshows
 
 = 2.3.1 =
-* Fix PHP notice 
+* Fix PHP notice
 
 = 2.3 =
 * Migrating slideshows to custom post type
