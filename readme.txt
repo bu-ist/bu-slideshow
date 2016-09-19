@@ -1,16 +1,17 @@
 === BU Slideshow ===
-Contributors: awbauer, clrux, mgburns, gannondigital
+Contributors: inderpreet99, awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 4.4.2
-Stable tag: 2.3.7
+Tested up to: 4.6.1
+Stable tag: 2.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-BU Slideshow is a plugin for creating and managing image-based slideshows. It is designed to be simple enough for any site admin to use, and powerful enough to meet the needs of designers. The plugin has many optional functions that make it flexible enough for a variety of uses: slideshows, photo rotations, feature card decks in the sidebar, etc. 
-[View full documentation on BU.edu](http://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
+BU Slideshow is a plugin for creating and managing image-based slideshows. It is designed to be simple enough for any site admin to use, and powerful enough to meet the needs of designers. The plugin has many optional functions that make it flexible enough for a variety of uses: slideshows, photo rotations, feature card decks in the sidebar, etc.
+
+[View full documentation on BU.edu](https://www.bu.edu/tech/services/comm/websites/www/wordpress/how-to/create-slideshows/)
 
 = Features =
 * Drag-and-drop re-ordering of slides
@@ -21,8 +22,14 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 * Supports unique CSS classes on a per-slide basis for advanced styling options
 * Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
 
+= Developers =
+
+For developer documentation, feature roadmaps and more visit the [plugin repository on Github](https://github.com/bu-ist/bu-slideshow/).
+
+[Build Status](https://travis-ci.org/bu-ist/bu-slideshow)
+
 == Installation ==
-This plugin can be installed automatically through the WordPress admin interface, or by clicking the downlaod link on this page and installing manually.
+This plugin can be installed automatically through the WordPress admin interface, or by clicking the download link on this page and installing manually.
 
 Once installed, slideshows can be created by accessing the "Slideshows" menu in the admin panel. Slideshows can be dropped into any page by using the "Add Slideshow" button on the post/page edit screen.
 
@@ -37,15 +44,20 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.
 
 == Changelog ==
+= 2.3.8 =
+* Fix UI issues since WP 4.4
+* Use minified CSS on the frontend. Fixes #31.
+* Switch to min filenames: https://core.trac.wordpress.org/ticket/21633
+
 = 2.3.7 =
 * Adds error checking to `bu-slideshow-thumb` image size handling
 
 = 2.3.6 =
 * Allow custom fields to use HTML (GH #28)
-* Add `bu_slideshow_slide_admin` filter, allowing custom templates to change slide admin 
+* Add `bu_slideshow_slide_admin` filter, allowing custom templates to change slide admin
 * Adds "shuffle" attribute when shortcode is inserted in the Editor (GH #25)
 
-= 2.3.5 = 
+= 2.3.5 =
 * Fixes issue with "Add Slideshow" modal in Editor
 
 = 2.3.4 =
@@ -60,11 +72,12 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 * Bugfix for potential duplicate slideshows
 
 = 2.3.1 =
-* Fix PHP notice 
+* Fix PHP notice
 
 = 2.3 =
 * Migrating slideshows to custom post type
-* Support for custom slide templates, including custom fields
+* Support for custom slide templates: https://github.com/bu-ist/bu-slideshow/wiki/Actions-&-Filters#bu_slideshow_slide_templates
+* Support for custom fields
 
 = 2.2.1 =
 * Cleaning up slide image select in WP 4.0
@@ -93,4 +106,7 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 * Added shortcode option “shuffle”
 * Added option to update image size (full/large/medium/etc) used in slide
 * Removed old back compatibility with WP < 3.3
-
+* Minor UI tweaks
+* - On slideshow edit screen, expand edit container for first slide by default (previously: all collapsed)
+* - Hide navigation elements until slideshow is fully loaded
+* - Image details / “edit” link on slideshow admin page

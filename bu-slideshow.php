@@ -1,18 +1,16 @@
 <?php
 /*
- Plugin Name: BU Slideshow
- Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
- 
- Version: 2.3.7
- Author: Boston University (IS&T)
- Author URI: http://www.bu.edu/tech/
- *
- * Currently supports WP 3.5+
- * Tested to WP 4.4.2
- * 
+Plugin Name: BU Slideshow
+Plugin URI: http://developer.bu.edu/bu-slideshow/
+Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
+Version: 2.3.8
+Author: Boston University (IS&T)
+Author URI: http://www.bu.edu/tech/
+Requires at least: 3.5
+Tested up to: 4.6.1
 */
 
-define('BU_SLIDESHOW_VERSION', '2.3.7');
+define('BU_SLIDESHOW_VERSION', '2.3.8');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);
@@ -22,9 +20,9 @@ if (!defined('BU_SSHOW_LOCAL')) {
 }
 
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
-	define('BU_SSHOW_SUFFIX', '.dev');
+	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_SUFFIX', '');
+	define('BU_SSHOW_MIN', '.min');
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -36,6 +34,7 @@ class BU_Slideshow {
 
 	static $meta_key = 'bu_slideshows';
 	static $show_id_meta_key = 'bu_slideshow_last_id';
+	static $custom_thumb_size = 'bu-slideshow-thumb';
 	static $post_support_slug = 'bu_slideshow';
 	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
@@ -191,9 +190,9 @@ class BU_Slideshow {
 		$js_url = BU_SLIDESHOW_BASEURL . 'interface/js/';
 
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
-			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
+			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_MIN . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
 			wp_enqueue_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
-			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_SUFFIX . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
+			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_MIN . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
 
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('bu-slideshow-admin');
@@ -202,7 +201,7 @@ class BU_Slideshow {
 
 			self::localize('bu-slideshow-admin');
 
-			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow-admin', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-admin' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow-admin');
 			wp_enqueue_style('thickbox');
 		}
@@ -222,19 +221,18 @@ class BU_Slideshow {
 	 * need to supply your own CSS transitions in this case.
 	 */
 	static public function public_scripts_styles() {
-		// wp_register_script('modernizr', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/modernizr' . BU_SSHOW_SUFFIX . '.js', array(), BU_SLIDESHOW_VERSION, true);
 
 		self::public_scripts();
 
 		if (!defined('BU_SLIDESHOW_CUSTOM_CSS') || !BU_SLIDESHOW_CUSTOM_CSS) {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 
 		/* enqueue public styles on preview page */
 		global $current_screen;
 		if ($current_screen && $current_screen->id === 'admin_page_bu-preview-slideshow') {
-			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow.css', array(), BU_SLIDESHOW_VERSION);
+			wp_register_style('bu-slideshow', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 			wp_enqueue_style('bu-slideshow');
 		}
 	}
@@ -248,19 +246,19 @@ class BU_Slideshow {
 		$seq_deps = array('jquery');
 		$slideshow_deps = array('jquery','jquery-sequence');
 
-		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_SUFFIX . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
-		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_SUFFIX . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
+		wp_register_script('jquery-sequence', BU_SLIDESHOW_BASEURL . 'interface/js/vendor/sequence/sequence.jquery' . BU_SSHOW_MIN . '.js', $seq_deps, BU_SLIDESHOW_VERSION, true);
+		wp_register_script('bu-slideshow', $js_url . 'bu-slideshow' . BU_SSHOW_MIN . '.js', $slideshow_deps, BU_SLIDESHOW_VERSION, true);
 	}
 
 	/**
 	 * Load scripts and styles for the selector UI
 	 */
 	static public function selector_scripts_styles() {
-		wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_SUFFIX . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
+		wp_register_script('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/js/bu-slideshow-selector' . BU_SSHOW_MIN . '.js', array('jquery'), BU_SLIDESHOW_VERSION, true);
 
 		wp_enqueue_script('bu-slideshow-selector');
 
-		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector.css', array(), BU_SLIDESHOW_VERSION);
+		wp_register_style('bu-slideshow-selector', BU_SLIDESHOW_BASEURL . 'interface/css/bu-slideshow-selector' . BU_SSHOW_MIN . '.css', array(), BU_SLIDESHOW_VERSION);
 		wp_enqueue_style('bu-slideshow-selector');
 
 		self::localize('bu-slideshow-selector');
@@ -283,7 +281,6 @@ class BU_Slideshow {
 					'noneSelectedError'  => __('You must select a slideshow.', BU_SSHOW_LOCAL),
 					'emptyNameError'     => __('The name field for the slideshow cannot be empty.', BU_SSHOW_LOCAL),
 					'thumbFailError'     => __('Could not load image thumbnail.', BU_SSHOW_LOCAL),
-					'thumbAltText'       => __('thumbnail for this slide\'s image', BU_SSHOW_LOCAL),
 					'addSlideFailError'  => __('Could not create new slide.', BU_SSHOW_LOCAL),
 					'mediaUploadTitle'   => __('Select Image', BU_SSHOW_LOCAL),
 					'mediaUploadButton'  => __('Select Image', BU_SSHOW_LOCAL)
@@ -349,7 +346,7 @@ class BU_Slideshow {
 	 * Establishes custom thumbnail size.
 	 */
 	static public function custom_thumb_size() {
-		add_image_size('bu-slideshow-thumb', 100, 100, true);
+		add_image_size(static::$custom_thumb_size, 100, 100, true);
 	}
 
 	/**
@@ -909,28 +906,40 @@ class BU_Slideshow {
 
 		$img_info = self::get_slide_image_thumb(intval($_POST['image_id']));
 
-		echo json_encode($img_info);
+		echo $img_info;
 		exit;
 	}
 
 	/**
-	 * Gets thumbnail for custom size; generates that thumbnail if it doesn't yet exist
-	 * in order to support images uploaded before plugin was activated
-	 * @return array
+	 * Generates thumbnail if it doesn't yet exist.
+	 * Supports images uploaded before plugin was activated.
+	 *
+	 * @param  int  $img_id
+	 * @return bool
 	 */
-	static public function get_slide_image_thumb($img_id) {
-		$img_arr = wp_get_attachment_image_src($img_id, 'bu-slideshow-thumb');
+	static public function generate_slideshow_thumb( $img_id ) {
+		$img_arr = wp_get_attachment_image_src($img_id, static::$custom_thumb_size);
 
 		/* if the regular img url is returned it means we don't have an existing thumb of correct size */
 		if (strpos($img_arr[0], strval($img_arr[1])) === false) {
 			$img_path = get_attached_file($img_id);
 			$success = wp_update_attachment_metadata($img_id, wp_generate_attachment_metadata($img_id, $img_path));
-			if ($success) {
-				$img_arr = wp_get_attachment_image_src($img_id, 'bu-slideshow-thumb');
-			}
+			return false !== $success;
 		}
 
-		return $img_arr;
+		return true;
+	}
+
+	/**
+	 * Gets thumbnail for custom size. Generates thumbnail if it doesn't exist.
+	 * @return array
+	 */
+	static public function get_slide_image_thumb( $img_id ) {
+		if ( ! static::generate_slideshow_thumb( $img_id ) ) {
+			error_log( sprintf( '%s: Failed generating thumbnail for image (%s).', __METHOD__, $img_id ) );
+		}
+
+		return wp_get_attachment_image( $img_id, static::$custom_thumb_size );
 	}
 
 	/**
@@ -953,7 +962,6 @@ class BU_Slideshow {
 			global $bu_slideshow_loadscripts;
 			$bu_slideshow_loadscripts = 1;
 		} else {
-			// wp_enqueue_script('modernizr');
 			wp_enqueue_script('jquery-sequence');
 			wp_enqueue_script('bu-slideshow');
 			do_action('bu_slideshow_enqueued');

@@ -6,6 +6,13 @@
 		"grunt-contrib-concat": "~0.3.0",
 		"grunt-contrib-uglify": "~0.4.0",
 		"grunt-contrib-watch": "~0.6.0",
-		"grunt-contrib-less": "~0.10.0"
+		"grunt-contrib-less": "~0.10.0",
+		"grunt-contrib-cssmin": "^0.12.2",
+		"grunt-phplint": "^0.0.8",
+    	"matchdep": "^0.3.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/bu-ist/bu-slideshow.git"
 	}
 }

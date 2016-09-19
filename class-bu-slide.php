@@ -88,14 +88,14 @@ class BU_Slide {
 				$this->caption = stripslashes_deep($this->caption);
 
 				if ($this->image_id) {
-					$img_thumb = wp_get_attachment_image($this->image_id, 'bu-slideshow-thumb');
+					$img_thumb = wp_get_attachment_image($this->image_id, BU_Slideshow::$custom_thumb_size);
 					if( !empty( $img_thumb ) ){
 						$img_meta = wp_get_attachment_metadata($this->image_id);
 
 						if( array_key_exists( 'bu-slideshow-thumb', $img_meta['sizes'] ) ){
-							unset($img_meta['sizes']['bu-slideshow-thumb']);
+							unset($img_meta['sizes'][BU_Slideshow::$custom_thumb_size]);
 						}
-						
+
 						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
 						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
 					}

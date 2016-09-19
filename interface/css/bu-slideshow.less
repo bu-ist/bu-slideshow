@@ -1,11 +1,11 @@
-@semi-opaque-fallback:		#464646; 
+@semi-opaque-fallback:		#464646;
 @semi-opaque:				rgba(0,0,0,0.75);
 @semi-opaque-fallback-fade:	#686868;
 @semi-opaque-fade:			rgba(0,0,0,0.35);
 @white-fallback:			#ffffff;
 @white:						rgba(255,255,255,1);
 @white-fallback-fade:		#cdcdcd;
-@white-fade:				rgba(255,255,255,0.7);	
+@white-fade:				rgba(255,255,255,0.7);
 
 .mediumTransition {
 	-moz-transition-duration:0.3s;
@@ -25,7 +25,7 @@
 	overflow:hidden;
 	position:relative;
 	min-height: 100px;
-	
+
 	.slideshow-loader{
 
 		display: none;
@@ -92,10 +92,10 @@
 			to   { transform: rotate(360deg); opacity: 0.2; }
 		}
 	}
-		
+
 	.arrowBgStyles {
 		background-color:transparent;
-		
+
 		cursor:pointer;
 		display:block;
 		height: 4em;
@@ -218,7 +218,7 @@
 						display:inline;
 						list-style:none;
 						margin:0;
-						padding: 1%; 
+						padding: 1%;
 						position:absolute;
 						right: 6%;
 						width:35%;
@@ -491,11 +491,11 @@
 		}
 
 	}
-	
+
 }
 
 // make left/right arrows obvious on touchscreens
-html.touch .bu-slideshow-arrow-left, 
+html.touch .bu-slideshow-arrow-left,
 html.touch .bu-slideshow-arrow-right {
 	background-color:@semi-opaque-fallback;
 	background-color:@semi-opaque;
@@ -578,7 +578,7 @@ html.touch .bu-slideshow-arrow-right {
 	}
 
 	.bu-slideshow-arrow-right {
-		
+
 		background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
 
 		&:hover {
