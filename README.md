@@ -26,7 +26,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 
 For developer documentation, feature roadmaps and more visit the [plugin repository on Github](https://github.com/bu-ist/bu-slideshow/).
 
-[Build Status](https://travis-ci.org/bu-ist/bu-slideshow)
+[![Build Status](https://travis-ci.org/bu-ist/bu-slideshow.svg)](https://travis-ci.org/bu-ist/bu-slideshow)
 
 ## Installation ##
 This plugin can be installed automatically through the WordPress admin interface, or by clicking the download link on this page and installing manually.
