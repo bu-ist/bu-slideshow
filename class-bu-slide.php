@@ -121,7 +121,7 @@ class BU_Slide {
 				$this->image_html = $this->get_image_html();
 				$this->caption['html'] = $this->get_caption_html();
 
-				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
+				$html = sprintf('<li id="%s" class="bu-slideshow-slide slide %s">', $slide_id, $additional_styles);
 				$html .= sprintf('<div class="bu-slide-container %s">', $caption_class);
 
 				$slide_inner = $this->image_html . $this->caption['html'];
