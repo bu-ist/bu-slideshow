@@ -64,7 +64,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	width: 0;
 }
 
-@mixin animate-slide-default {
+%animate-slide-default {
 	left:100%;
 	position:absolute;
 	-webkit-transition-duration: 1s;
@@ -74,7 +74,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: 1s;
 }
 
-@mixin animate-slide-in {
+%animate-slide-in {
 	left:0;
 	-webkit-transition-duration: 1s;
 	-moz-transition-duration: 1s;
@@ -83,7 +83,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: 1s;
 }
 
-@mixin animate-slide-out {
+%animate-slide-out {
 	left:-100%;
 	-webkit-transition-duration: 1s;
 	-moz-transition-duration: 1s;
@@ -92,7 +92,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: 1s;
 }
 
-@mixin animate-fade-default {
+%animate-fade-default {
 	opacity:0;
 	position:absolute;
 	-webkit-transition-duration: 1.5s;
@@ -102,7 +102,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: 1.5s;
 }
 
-@mixin animate-fade-in {
+%animate-fade-in {
 	opacity:1.0;
 	-webkit-transition-duration: 1.5s;
 	-moz-transition-duration: 1.5s;
@@ -111,7 +111,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: 1.5s;
 }
 
-@mixin animate-fade-out {
+%animate-fade-out {
 	opacity:0;
 	-webkit-transition-duration: 1.5s;
 	-moz-transition-duration: 1.5s;
@@ -360,34 +360,34 @@ $white-fade:				rgba(255,255,255,0.7);
 			}
 		}
 		.animate-slide-default {
-			@include animate-slide-default;
+			@extend %animate-slide-default;
 		}
 		.animate-slide-in {
-			@include animate-slide-in;
+			@extend %animate-slide-in;
 		}
 		.animate-slide-out {
-			@include animate-slide-out;
+			@extend %animate-slide-out;
 		}
 		.animate-fade-default {
-			@include animate-fade-default;
+			@extend %animate-fade-default;
 		}
 		.animate-fade-in {
-			@include animate-fade-in;
+			@extend %animate-fade-in;
 		}
 		.animate-fade-out {
-			@include animate-fade-out;
+			@extend %animate-fade-out;
 		}
 
 		.transition-slide {
 
 			.bu-slide-container {
-				@include animate-slide-default;
+				@extend %animate-slide-default;
 			}
 
 			.animate-in {
 
 				.bu-slide-container {
-					@include animate-slide-in;
+					@extend %animate-slide-in;
 				}
 
 			}
@@ -395,7 +395,7 @@ $white-fade:				rgba(255,255,255,0.7);
 			.animate-out {
 
 				.bu-slide-container {
-					@include animate-slide-out;
+					@extend %animate-slide-out;
 				}
 
 			}
@@ -405,13 +405,13 @@ $white-fade:				rgba(255,255,255,0.7);
 		.transition-fade {
 
 			.bu-slide-container {
-				@include animate-fade-default;
+				@extend %animate-fade-default;
 			}
 
 			.animate-in {
 
 				.bu-slide-container {
-					@include animate-fade-in;
+					@extend %animate-fade-in;
 				}
 
 			}
@@ -419,7 +419,7 @@ $white-fade:				rgba(255,255,255,0.7);
 			.animate-out {
 
 				.bu-slide-container {
-					@include animate-fade-out;
+					@extend %animate-fade-out;
 				}
 
 			}
