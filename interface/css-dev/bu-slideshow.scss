@@ -11,64 +11,6 @@
 	position:relative;
 	min-height: 100px;
 
-	.arrowBgStyles {
-		@extend %arrowBgStyles;
-	}
-
-	.arrowStyles {
-		@extend %arrowStyles;
-	}
-
-	.bu-slideshow-arrow-left {
-		@extend %arrowBgStyles;
-
-		border-right-color:$semi-opaque-fallback-fade;
-		border-right-color:$semi-opaque-fade;
-		border-radius: 0 4px 4px 0;
-		left:0;
-		-moz-transition-property:border-right-color;
-		-webkit-transition-property:border-right-color;
-		transition-property:border-right-color;
-
-		&:hover {
-			border-right-color:$white-fallback-fade;
-			border-right-color:$white-fade;
-		}
-
-		&:after {
-			@extend %arrowStyles;
-
-			border-left-color:transparent;
-			border-right-color:inherit;
-			right:1em;
-		}
-	}
-
-	.bu-slideshow-arrow-right {
-		@extend %arrowBgStyles;
-
-		border-left-color:$semi-opaque-fallback-fade;
-		border-left-color:$semi-opaque-fade;
-		border-radius: 4px 0 0 4px;
-		right:0;
-		-moz-transition-property:border-left-color;
-		-webkit-transition-property:border-left-color;
-		transition-property:border-left-color;
-
-		&:hover {
-			border-left-color:$white-fallback-fade;
-			border-left-color:$white-fade;
-		}
-
-		&:after {
-			@extend %arrowStyles;
-
-			border-left-color:inherit;
-			border-right-color:transparent;
-			left: 1em;
-		}
-	}
-
 	.bu-slideshow-slides {
 
 		.bu-slideshow {
@@ -343,6 +285,63 @@
 
 	}
 
+}
+.arrowBgStyles {
+	@extend %arrowBgStyles;
+}
+
+.arrowStyles {
+	@extend %arrowStyles;
+}
+
+.bu-slideshow-arrow-left {
+	@extend %arrowBgStyles;
+
+	border-right-color:$semi-opaque-fallback-fade;
+	border-right-color:$semi-opaque-fade;
+	border-radius: 0 4px 4px 0;
+	left:0;
+	-moz-transition-property:border-right-color;
+	-webkit-transition-property:border-right-color;
+	transition-property:border-right-color;
+
+	&:hover {
+		border-right-color:$white-fallback-fade;
+		border-right-color:$white-fade;
+	}
+
+	&:after {
+		@extend %arrowStyles;
+
+		border-left-color:transparent;
+		border-right-color:inherit;
+		right:1em;
+	}
+}
+
+.bu-slideshow-arrow-right {
+	@extend %arrowBgStyles;
+
+	border-left-color:$semi-opaque-fallback-fade;
+	border-left-color:$semi-opaque-fade;
+	border-radius: 4px 0 0 4px;
+	right:0;
+	-moz-transition-property:border-left-color;
+	-webkit-transition-property:border-left-color;
+	transition-property:border-left-color;
+
+	&:hover {
+		border-left-color:$white-fallback-fade;
+		border-left-color:$white-fade;
+	}
+
+	&:after {
+		@extend %arrowStyles;
+
+		border-left-color:inherit;
+		border-right-color:transparent;
+		left: 1em;
+	}
 }
 .slideshow-loader{
 	display: none;
