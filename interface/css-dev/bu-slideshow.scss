@@ -52,7 +52,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	}
 }
 
-@mixin arrowStyles {
+%arrowStyles {
 	border-style: solid;
 	border-width: 0.75em;
 	border-top-color:transparent;
@@ -197,7 +197,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	}
 
 	.arrowStyles {
-		@include arrowStyles;
+		@extend %arrowStyles;
 	}
 
 	.bu-slideshow-arrow-left {
@@ -217,7 +217,7 @@ $white-fade:				rgba(255,255,255,0.7);
 		}
 
 		&:after {
-			@include arrowStyles;
+			@extend %arrowStyles;
 
 			border-left-color:transparent;
 			border-right-color:inherit;
@@ -242,7 +242,7 @@ $white-fade:				rgba(255,255,255,0.7);
 		}
 
 		&:after {
-			@include arrowStyles;
+			@extend %arrowStyles;
 
 			border-left-color:inherit;
 			border-right-color:transparent;
