@@ -137,49 +137,35 @@
 }
 
 .transition-slide {
-
 	.bu-slide-container {
 		@extend %animate-slide-default;
 	}
-
 	.animate-in {
-
 		.bu-slide-container {
 			@extend %animate-slide-in;
 		}
-
 	}
-
 	.animate-out {
-
 		.bu-slide-container {
 			@extend %animate-slide-out;
 		}
-
 	}
-
 }
 
 .transition-fade {
-
 	.bu-slide-container {
 		@extend %animate-fade-default;
 	}
-
 	.animate-in {
-
 		.bu-slide-container {
 			@extend %animate-fade-in;
 		}
-
 	}
 
 	.animate-out {
-
 		.bu-slide-container {
 			@extend %animate-fade-out;
 		}
-
 	}
 }
 
