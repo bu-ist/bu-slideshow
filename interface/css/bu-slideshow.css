@@ -1,4 +1,4 @@
-.mediumTransition {
+.mediumTransition, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a, .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a:hover, .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -489,11 +489,6 @@
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -ms-transition-duration: 0.3s;
-  transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span {
   background-color: #686868;
@@ -501,11 +496,6 @@
   -moz-transition-property: background-color;
   -webkit-transition-property: background-color;
   transition-property: background-color;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -ms-transition-duration: 0.3s;
-  transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li {
   list-style-type: none;
@@ -522,11 +512,6 @@
   opacity: 0.75;
   padding: .5em .7em .25em;
   text-decoration: none;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -ms-transition-duration: 0.3s;
-  transition-duration: 0.3s;
 }
 .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a:hover, .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   background-color: #464646;
@@ -537,11 +522,6 @@
   -moz-transition-property: background-color color opacity;
   -webkit-transition-property: background-color color opacity;
   transition-property: background-color color opacity;
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -ms-transition-duration: 0.3s;
-  transition-duration: 0.3s;
 }
 
 html.touch .bu-slideshow-arrow-left,

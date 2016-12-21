@@ -7,7 +7,7 @@ $white:						rgba(255,255,255,1);
 $white-fallback-fade:		#cdcdcd;
 $white-fade:				rgba(255,255,255,0.7);
 
-@mixin mediumTransition {
+%mediumTransition {
 	-moz-transition-duration:0.3s;
 	-webkit-transition-duration:0.3s;
 	-o-transition-duration:0.3s;
@@ -16,7 +16,7 @@ $white-fade:				rgba(255,255,255,0.7);
 }
 
 .mediumTransition {
-	@include mediumTransition;
+	@extend %mediumTransition;
 }
 @mixin slowTransition {
 	-moz-transition-duration:0.6s;
@@ -472,7 +472,7 @@ $white-fade:				rgba(255,255,255,0.7);
 						height:100%;
 						width:100%;
 						border-radius:50%;
-						@include mediumTransition;
+						@extend %mediumTransition;
 					}
 
 					&:hover span, &:active span, &.active span {
@@ -481,7 +481,7 @@ $white-fade:				rgba(255,255,255,0.7);
 						-moz-transition-property:background-color;
 						-webkit-transition-property:background-color;
 						transition-property:background-color;
-						@include mediumTransition;
+						@extend %mediumTransition;
 					}
 
 				}
@@ -505,7 +505,7 @@ $white-fade:				rgba(255,255,255,0.7);
 					opacity:0.75;
 					padding:.5em .7em .25em;
 					text-decoration:none;
-					@include mediumTransition;
+					@extend %mediumTransition;
 
 					&:hover, &.active {
 						background-color:$semi-opaque-fallback;
@@ -516,7 +516,7 @@ $white-fade:				rgba(255,255,255,0.7);
 						-moz-transition-property:background-color color opacity;
 						-webkit-transition-property:background-color color opacity;
 						transition-property:background-color color opacity;
-						@include mediumTransition;
+						@extend %mediumTransition;
 					}
 				}
 			}
