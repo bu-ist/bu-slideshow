@@ -23,22 +23,29 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		less: {
-			slideshow:{
-				src: 'interface/css/bu-slideshow.less',
-				dest: 'interface/css/bu-slideshow.css',
-				// options:{   compress: true  }
-			}
-		},
-
-		cssmin: {
-			core: {
-				expand: true,
-				cwd: 'interface/css',
-				src: [ '*.css', '!*.min.css' ],
-				dest: 'interface/css',
-				ext: '.min.css'
-			}
+		sass: {
+			dev: {
+				options: {
+					style: 'expanded',
+					loadPath: 'css-dev',
+				},
+				files: {
+					'interface/css/bu-slideshow-admin.css': 'interface/css-dev/bu-slideshow-admin.scss',
+					'interface/css/bu-slideshow-selector.css': 'interface/css-dev/bu-slideshow-selector.scss',
+					'interface/css/bu-slideshow.css': 'interface/css-dev/bu-slideshow.scss',
+				}
+			},
+			prod: {
+				options: {
+					style: 'compressed',
+					loadPath: 'css-dev',
+				},
+				files: {
+					'interface/css/bu-slideshow-admin.min.css': 'interface/css-dev/bu-slideshow-admin.scss',
+					'interface/css/bu-slideshow-selector.min.css': 'interface/css-dev/bu-slideshow-selector.scss',
+					'interface/css/bu-slideshow.min.css': 'interface/css-dev/bu-slideshow.scss',
+				}
+			},
 		},
 
 		phplint: {
@@ -61,20 +68,11 @@ module.exports = function( grunt ) {
 				tasks: ['uglify'],
 				options: {  spawn: false, },
 			},
-			less: {
+			sass: {
 				files: [
-					'interface/css/bu-slideshow.less',
+					'interface/css-dev/*.scss',
 				],
 				tasks: ['styles'],
-				options: {  spawn: false, },
-			},
-			styles: {
-				files: [
-					'interface/css/*.css',
-					'!interface/css/*.min.css',
-					'!interface/css/bu-slideshow.css'
-				],
-				tasks: ['cssmin'],
 				options: {  spawn: false, },
 			},
 			phplint : {
@@ -89,10 +87,10 @@ module.exports = function( grunt ) {
 
 	// Build task.
 	grunt.registerTask( 'scripts', [ 'uglify' ] );
-	grunt.registerTask( 'styles', [ 'less', 'cssmin' ] );
+	grunt.registerTask( 'styles', [ 'sass' ] );
 	grunt.registerTask( 'build', [ 'styles', 'scripts', 'phplint' ] );
 
 	// Default task.
-	grunt.registerTask( 'default', [ 'build' ] );
+	grunt.registerTask( 'default', [ 'watch' ] );
 
 };
