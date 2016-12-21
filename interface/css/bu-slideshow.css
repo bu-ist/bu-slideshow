@@ -6,10 +6,30 @@
   transition-duration: 0.3s;
 }
 
-.slowTransition, .bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .arrowBgStyles:active, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-left:active, .bu-slideshow-container .bu-slideshow-arrow-right, .bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .bu-slideshow-arrow-right:active {
+.slowTransition, .bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-right {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
+}
+
+.bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-right {
+  background-color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 4em;
+  line-height: normal;
+  min-width: 2.2em;
+  position: absolute;
+  top: 50%;
+  width: 5%;
+  z-index: 1000;
+}
+.bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .arrowBgStyles:active, .bu-slideshow-container .bu-slideshow-arrow-left:active, .bu-slideshow-container .bu-slideshow-arrow-right:active {
+  background-color: #464646;
+  background-color: rgba(0, 0, 0, 0.75);
+  -moz-transition-property: background-color;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
 }
 
 .bu-slideshow-container {
@@ -118,25 +138,6 @@
     opacity: 0.2;
   }
 }
-.bu-slideshow-container .arrowBgStyles {
-  background-color: transparent;
-  cursor: pointer;
-  display: block;
-  height: 4em;
-  line-height: normal;
-  min-width: 2.2em;
-  position: absolute;
-  top: 50%;
-  width: 5%;
-  z-index: 1000;
-}
-.bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .arrowBgStyles:active {
-  background-color: #464646;
-  background-color: rgba(0, 0, 0, 0.75);
-  -moz-transition-property: background-color;
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-}
 .bu-slideshow-container .arrowStyles {
   border-style: solid;
   border-width: 0.75em;
@@ -149,16 +150,6 @@
   width: 0;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left {
-  background-color: transparent;
-  cursor: pointer;
-  display: block;
-  height: 4em;
-  line-height: normal;
-  min-width: 2.2em;
-  position: absolute;
-  top: 50%;
-  width: 5%;
-  z-index: 1000;
   border-right-color: #686868;
   border-right-color: rgba(0, 0, 0, 0.35);
   border-radius: 0 4px 4px 0;
@@ -166,13 +157,6 @@
   -moz-transition-property: border-right-color;
   -webkit-transition-property: border-right-color;
   transition-property: border-right-color;
-}
-.bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-left:active {
-  background-color: #464646;
-  background-color: rgba(0, 0, 0, 0.75);
-  -moz-transition-property: background-color;
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left:hover {
   border-right-color: #cdcdcd;
@@ -193,16 +177,6 @@
   right: 1em;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right {
-  background-color: transparent;
-  cursor: pointer;
-  display: block;
-  height: 4em;
-  line-height: normal;
-  min-width: 2.2em;
-  position: absolute;
-  top: 50%;
-  width: 5%;
-  z-index: 1000;
   border-left-color: #686868;
   border-left-color: rgba(0, 0, 0, 0.35);
   border-radius: 4px 0 0 4px;
@@ -210,13 +184,6 @@
   -moz-transition-property: border-left-color;
   -webkit-transition-property: border-left-color;
   transition-property: border-left-color;
-}
-.bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .bu-slideshow-arrow-right:active {
-  background-color: #464646;
-  background-color: rgba(0, 0, 0, 0.75);
-  -moz-transition-property: background-color;
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right:hover {
   border-left-color: #cdcdcd;

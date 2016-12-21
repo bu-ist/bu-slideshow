@@ -27,7 +27,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	@extend %slowTransition;
 }
 
-@mixin arrowBgStyles {
+%arrowBgStyles {
 	background-color:transparent;
 	cursor:pointer;
 	display:block;
@@ -193,7 +193,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	}
 
 	.arrowBgStyles {
-		@include arrowBgStyles;
+		@extend %arrowBgStyles;
 	}
 
 	.arrowStyles {
@@ -201,7 +201,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	}
 
 	.bu-slideshow-arrow-left {
-		@include arrowBgStyles;
+		@extend %arrowBgStyles;
 
 		border-right-color:$semi-opaque-fallback-fade;
 		border-right-color:$semi-opaque-fade;
@@ -226,7 +226,7 @@ $white-fade:				rgba(255,255,255,0.7);
 	}
 
 	.bu-slideshow-arrow-right {
-		@include arrowBgStyles;
+		@extend %arrowBgStyles;
 
 		border-left-color:$semi-opaque-fallback-fade;
 		border-left-color:$semi-opaque-fade;
