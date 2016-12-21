@@ -1,6 +1,14 @@
 {
 	"name": "bu-slideshow",
 	"version": "2.0.1",
+	"contributors": [
+		"Andrew Bauer <awbauer@bu.edu>",
+		"Brendan Gannon <bgannon@bu.edu>",
+		"Inderpreet Singh <isingh@bu.edu>",
+		"Mike Burns <mgburns@bu.edu>",
+		"Ashley Kolodziej <kolodz10@bu.edu>",
+		"Daniel Bachhuber <daniel@handbuilt.co>",
+	],
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.3.0",
