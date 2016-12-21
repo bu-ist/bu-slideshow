@@ -3,3 +3,4 @@ node_modules
 /interface/.DS_Store
 /.DS_Store
 /.sass-cache
+/sftp-config.json
