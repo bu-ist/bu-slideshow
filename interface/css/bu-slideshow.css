@@ -128,15 +128,16 @@
   background: none;
   padding: 0;
 }
-.bu-slideshow-slide .bu-slide-container {
+
+.bu-slide-container {
   height: auto;
   width: 100%;
 }
-.bu-slideshow-slide .bu-slide-container img {
+.bu-slide-container img {
   max-width: 100%;
   display: inline;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption {
+.bu-slide-container .bu-slide-caption {
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
   bottom: 20%;
@@ -149,34 +150,34 @@
   width: 35%;
   z-index: 12;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption p {
+.bu-slide-container .bu-slide-caption p {
   color: #ffffff;
   font-size: 1em;
   line-height: 1.4;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption a {
+.bu-slide-container .bu-slide-caption a {
   color: #bcbcbc;
   text-decoration: none;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption a:hover {
+.bu-slide-container .bu-slide-caption a:hover {
   text-decoration: underline;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
+.bu-slide-container .bu-slide-caption .bu-slide-caption-title {
   font-size: 1.3em;
   font-family: 'Helvetica', 'Arial', sans-serif;
   color: #bcbcbc;
   margin-bottom: .5em;
   padding: 0;
 }
-.bu-slideshow-slide .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
+.bu-slide-container .bu-slide-caption .bu-slide-caption-text {
   font-size: .85em;
   margin: 0;
 }
-.bu-slideshow-slide .bu-slide-container .caption-bottom-right {
+.bu-slide-container .caption-bottom-right {
   bottom: 15%;
   right: 6%;
 }
-.bu-slideshow-slide .bu-slide-container .caption-bottom-center {
+.bu-slide-container .caption-bottom-center {
   top: auto;
   bottom: 15%;
   margin: 0 auto;
@@ -184,16 +185,16 @@
   margin-left: -19%;
   text-align: center;
 }
-.bu-slideshow-slide .bu-slide-container .caption-bottom-left {
+.bu-slide-container .caption-bottom-left {
   bottom: 15%;
   left: 6%;
 }
-.bu-slideshow-slide .bu-slide-container .caption-top-left {
+.bu-slide-container .caption-top-left {
   top: 15%;
   left: 6%;
   bottom: auto;
 }
-.bu-slideshow-slide .bu-slide-container .caption-top-center {
+.bu-slide-container .caption-top-center {
   top: 15%;
   bottom: auto;
   margin: 0 auto;
@@ -201,7 +202,7 @@
   margin-left: -19%;
   text-align: center;
 }
-.bu-slideshow-slide .bu-slide-container .caption-top-right {
+.bu-slide-container .caption-top-right {
   top: 15%;
   right: 6%;
   bottom: auto;
