@@ -6,7 +6,7 @@
   transition-duration: 0.3s;
 }
 
-.slowTransition, .bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-right {
+.bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-right, .slowTransition {
   -webkit-transition-duration: 0.6s;
   -moz-transition-duration: 0.6s;
   -ms-transition-duration: 0.6s;
