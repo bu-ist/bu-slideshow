@@ -18,13 +18,13 @@ $white-fade:				rgba(255,255,255,0.7);
 .mediumTransition {
 	@extend %mediumTransition;
 }
-@mixin slowTransition {
+%slowTransition {
 	-moz-transition-duration:0.6s;
 	-webkit-transition-duration:0.6s;
 	transition-duration:0.6s;
 }
 .slowTransition {
-	@include slowTransition;
+	@extend %slowTransition;
 }
 
 @mixin arrowBgStyles {
@@ -38,11 +38,11 @@ $white-fade:				rgba(255,255,255,0.7);
 	top:50%;
 	width: 5%;
 	z-index:1000;
-	@include slowTransition;
+	@extend %slowTransition;
 
 	&:hover,
 	&:active {
-		@include slowTransition;
+		@extend %slowTransition;
 
 		background-color:$semi-opaque-fallback;
 		background-color:$semi-opaque;

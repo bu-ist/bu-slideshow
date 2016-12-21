@@ -6,7 +6,7 @@
   transition-duration: 0.3s;
 }
 
-.slowTransition {
+.slowTransition, .bu-slideshow-container .arrowBgStyles, .bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .arrowBgStyles:active, .bu-slideshow-container .bu-slideshow-arrow-left, .bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-left:active, .bu-slideshow-container .bu-slideshow-arrow-right, .bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .bu-slideshow-arrow-right:active {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
@@ -129,14 +129,8 @@
   top: 50%;
   width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
 }
 .bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .arrowBgStyles:active {
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
   -moz-transition-property: background-color;
@@ -165,9 +159,6 @@
   top: 50%;
   width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
   border-right-color: #686868;
   border-right-color: rgba(0, 0, 0, 0.35);
   border-radius: 0 4px 4px 0;
@@ -177,9 +168,6 @@
   transition-property: border-right-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-left:active {
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
   -moz-transition-property: background-color;
@@ -215,9 +203,6 @@
   top: 50%;
   width: 5%;
   z-index: 1000;
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
   border-left-color: #686868;
   border-left-color: rgba(0, 0, 0, 0.35);
   border-radius: 4px 0 0 4px;
@@ -227,9 +212,6 @@
   transition-property: border-left-color;
 }
 .bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .bu-slideshow-arrow-right:active {
-  -moz-transition-duration: 0.6s;
-  -webkit-transition-duration: 0.6s;
-  transition-duration: 0.6s;
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
   -moz-transition-property: background-color;
