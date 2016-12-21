@@ -8,6 +8,15 @@ $white-fallback-fade:		#cdcdcd;
 $white-fade:				rgba(255,255,255,0.7);
 
 
+// animation
+// Usage: @include animation(spin .8s linear infinite)
+@mixin animation ($animations...) {
+	-webkit-animation: $animations;
+	-moz-animation: $animations;
+	-ms-animation: $animations;
+	-o-animation: $animations;
+	animation: $animations;
+}
 // transition
 // Usage: @include transition(all 250ms ease-in-out 0s)
 @mixin transition ($transitions...) {
