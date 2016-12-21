@@ -13,177 +13,177 @@
 }
 .bu-slideshow-slides {
 
-	.bu-slideshow {
+}
+.bu-slideshow {
+	width:100% !important;
+	height:auto;
+	list-style:none !important;
+	margin:0;
+	padding:0;
+	position:relative !important;
+	background: none !important;
+
+	li {
+		left: 0; // flexi indents lists with left positioning.
+		list-style-type: none !important;
+		margin-left: 0;
+		margin-right: 0;
 		width:100% !important;
 		height:auto;
-		list-style:none !important;
-		margin:0;
+		background: none;
 		padding:0;
-		position:relative !important;
-		background: none !important;
 
-		li {
-			left: 0; // flexi indents lists with left positioning.
-			list-style-type: none !important;
-			margin-left: 0;
-			margin-right: 0;
-			width:100% !important;
+		// these styles are the base values from which animate-in values animate
+		.bu-slide-container {
 			height:auto;
-			background: none;
-			padding:0;
+			width:100%;
 
-			// these styles are the base values from which animate-in values animate
-			.bu-slide-container {
-				height:auto;
-				width:100%;
+			img {
+				max-width: 100%;
+				display:inline;
+			}
 
-				img {
-					max-width: 100%;
-					display:inline;
+			.bu-slide-caption {
+				background:$semi-opaque-fallback;
+				background:$semi-opaque;
+				bottom: 20%;
+				display:inline;
+				list-style:none;
+				margin:0;
+				padding: 1%;
+				position:absolute;
+				right: 6%;
+				width:35%;
+				z-index:12;
+
+				p {
+					color:#ffffff;
+					font-size:1em;
+					line-height:1.4;
 				}
 
-				.bu-slide-caption {
-					background:$semi-opaque-fallback;
-					background:$semi-opaque;
-					bottom: 20%;
-					display:inline;
-					list-style:none;
-					margin:0;
-					padding: 1%;
-					position:absolute;
-					right: 6%;
-					width:35%;
-					z-index:12;
+				a {
+					color:#bcbcbc;
+					text-decoration:none;
 
-					p {
-						color:#ffffff;
-						font-size:1em;
-						line-height:1.4;
-					}
-
-					a {
-						color:#bcbcbc;
-						text-decoration:none;
-
-						&:hover {
-							text-decoration:underline;
-						}
-					}
-
-					.bu-slide-caption-title {
-						font-size: 1.3em;
-						font-family: 'Helvetica', 'Arial', sans-serif;
-						color:#bcbcbc;
-						margin-bottom: .5em;
-						padding: 0;
-					}
-
-					.bu-slide-caption-text {
-						font-size: .85em;
-						margin: 0;
+					&:hover {
+						text-decoration:underline;
 					}
 				}
-				.caption-bottom-right{
-					bottom: 15%;
-					right: 6%;
+
+				.bu-slide-caption-title {
+					font-size: 1.3em;
+					font-family: 'Helvetica', 'Arial', sans-serif;
+					color:#bcbcbc;
+					margin-bottom: .5em;
+					padding: 0;
 				}
-				.caption-bottom-center {
-				  top: auto;
-				  bottom: 15%;
-				  margin: 0 auto;
-				  left:50%;
-				  margin-left:-19%;
-				  text-align:center;
+
+				.bu-slide-caption-text {
+					font-size: .85em;
+					margin: 0;
 				}
-				.caption-bottom-left{
-					bottom: 15%;
-					left: 6%;
-				}
-				.caption-top-left{
-					top: 15%;
-					left: 6%;
-					bottom:auto;
-				}
-				.caption-top-center {
-				  top: 15%;
-				  bottom: auto;
-				  margin: 0 auto;
-				  left:50%;
-				  margin-left:-19%;
-				  text-align:center;
-				}
-				.caption-top-right{
-					top: 15%;
-					right: 6%;
-					bottom:auto;
-				}
+			}
+			.caption-bottom-right{
+				bottom: 15%;
+				right: 6%;
+			}
+			.caption-bottom-center {
+			  top: auto;
+			  bottom: 15%;
+			  margin: 0 auto;
+			  left:50%;
+			  margin-left:-19%;
+			  text-align:center;
+			}
+			.caption-bottom-left{
+				bottom: 15%;
+				left: 6%;
+			}
+			.caption-top-left{
+				top: 15%;
+				left: 6%;
+				bottom:auto;
+			}
+			.caption-top-center {
+			  top: 15%;
+			  bottom: auto;
+			  margin: 0 auto;
+			  left:50%;
+			  margin-left:-19%;
+			  text-align:center;
+			}
+			.caption-top-right{
+				top: 15%;
+				right: 6%;
+				bottom:auto;
 			}
 		}
 	}
-	.animate-slide-default {
+}
+.animate-slide-default {
+	@extend %animate-slide-default;
+}
+.animate-slide-in {
+	@extend %animate-slide-in;
+}
+.animate-slide-out {
+	@extend %animate-slide-out;
+}
+.animate-fade-default {
+	@extend %animate-fade-default;
+}
+.animate-fade-in {
+	@extend %animate-fade-in;
+}
+.animate-fade-out {
+	@extend %animate-fade-out;
+}
+
+.transition-slide {
+
+	.bu-slide-container {
 		@extend %animate-slide-default;
 	}
-	.animate-slide-in {
-		@extend %animate-slide-in;
+
+	.animate-in {
+
+		.bu-slide-container {
+			@extend %animate-slide-in;
+		}
+
 	}
-	.animate-slide-out {
-		@extend %animate-slide-out;
+
+	.animate-out {
+
+		.bu-slide-container {
+			@extend %animate-slide-out;
+		}
+
 	}
-	.animate-fade-default {
+
+}
+
+.transition-fade {
+
+	.bu-slide-container {
 		@extend %animate-fade-default;
 	}
-	.animate-fade-in {
-		@extend %animate-fade-in;
-	}
-	.animate-fade-out {
-		@extend %animate-fade-out;
-	}
 
-	.transition-slide {
+	.animate-in {
 
 		.bu-slide-container {
-			@extend %animate-slide-default;
-		}
-
-		.animate-in {
-
-			.bu-slide-container {
-				@extend %animate-slide-in;
-			}
-
-		}
-
-		.animate-out {
-
-			.bu-slide-container {
-				@extend %animate-slide-out;
-			}
-
+			@extend %animate-fade-in;
 		}
 
 	}
 
-	.transition-fade {
+	.animate-out {
 
 		.bu-slide-container {
-			@extend %animate-fade-default;
+			@extend %animate-fade-out;
 		}
 
-		.animate-in {
-
-			.bu-slide-container {
-				@extend %animate-fade-in;
-			}
-
-		}
-
-		.animate-out {
-
-			.bu-slide-container {
-				@extend %animate-fade-out;
-			}
-
-		}
 	}
 }
 
