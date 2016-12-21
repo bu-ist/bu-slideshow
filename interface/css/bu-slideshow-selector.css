@@ -1,34 +1,36 @@
 .bu-slideshow-selector {
-	border: 1px solid #dfdfdf;
-    border-radius: 4px 4px 4px 4px;
-    overflow: hidden;
-    padding: 1em;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px 4px 4px 4px;
+  overflow: hidden;
+  padding: 1em;
 }
 
 .bu-slideshow-selector-basic {
-	overflow:hidden;
+  overflow: hidden;
 }
 
 .bu-slideshow-selector p {
-	margin-bottom:1em;
-	max-width: 220px;
+  margin-bottom: 1em;
+  max-width: 220px;
 }
 
 html body .bu-slideshow-selector label {
-	margin-left:0;
-	font-style:normal;
+  margin-left: 0;
+  font-style: normal;
 }
 
 .bu-slideshow-selector .col1 {
-	float:left;
-	margin-right:5%;
-	width:44%;
+  float: left;
+  margin-right: 5%;
+  width: 44%;
 }
 
 .bu-slideshow-selector .col2 {
-	float:left;
+  float: left;
 }
 
 .bu-slideshow-selector select {
-	min-width: 14em;
+  min-width: 14em;
 }
+
+/*# sourceMappingURL=bu-slideshow-selector.css.map */

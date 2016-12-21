@@ -5,11 +5,13 @@
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
+
 .slowTransition {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
 }
+
 .bu-slideshow-container {
   overflow: hidden;
   position: relative;
@@ -131,8 +133,7 @@
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
 }
-.bu-slideshow-container .arrowBgStyles:hover,
-.bu-slideshow-container .arrowBgStyles:active {
+.bu-slideshow-container .arrowBgStyles:hover, .bu-slideshow-container .arrowBgStyles:active {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
@@ -175,8 +176,7 @@
   -webkit-transition-property: border-right-color;
   transition-property: border-right-color;
 }
-.bu-slideshow-container .bu-slideshow-arrow-left:hover,
-.bu-slideshow-container .bu-slideshow-arrow-left:active {
+.bu-slideshow-container .bu-slideshow-arrow-left:hover, .bu-slideshow-container .bu-slideshow-arrow-left:active {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
@@ -226,8 +226,7 @@
   -webkit-transition-property: border-left-color;
   transition-property: border-left-color;
 }
-.bu-slideshow-container .bu-slideshow-arrow-right:hover,
-.bu-slideshow-container .bu-slideshow-arrow-right:active {
+.bu-slideshow-container .bu-slideshow-arrow-right:hover, .bu-slideshow-container .bu-slideshow-arrow-right:active {
   -moz-transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
   transition-duration: 0.6s;
@@ -496,9 +495,7 @@
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-.bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span,
-.bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span,
-.bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span {
+.bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:hover span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a:active span, .bu-slideshow-container .bu-slideshow-navigation-container .nav-icon li a.active span {
   background-color: #686868;
   background-color: rgba(0, 0, 0, 0.35);
   -moz-transition-property: background-color;
@@ -531,11 +528,11 @@
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-.bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a:hover,
-.bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
+.bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a:hover, .bu-slideshow-container .bu-slideshow-navigation-container .nav-number li a.active {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
   color: #ffffff;
+  color: white;
   opacity: 1;
   -moz-transition-property: background-color color opacity;
   -webkit-transition-property: background-color color opacity;
@@ -546,25 +543,30 @@
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
+
 html.touch .bu-slideshow-arrow-left,
 html.touch .bu-slideshow-arrow-right {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
 }
+
 html.touch .bu-slideshow-arrow-left {
   border-right-color: #cdcdcd;
   border-right-color: rgba(255, 255, 255, 0.7);
 }
+
 html.touch .bu-slideshow-arrow-right {
   border-left-color: #cdcdcd;
   border-left-color: rgba(255, 255, 255, 0.7);
 }
+
 .banner-container .bu-slideshow-slides .bu-slideshow li.slide .bu-slide-container .bu-slide-caption .bu-slide-caption-title {
   font-size: 14.4px;
 }
 .banner-container .bu-slideshow-slides .bu-slideshow li.slide .bu-slide-container .bu-slide-caption .bu-slide-caption-text {
   font-size: 12px;
 }
+
 * + html .bu-slideshow-navigation-container .nav-icon li a {
   display: block;
   float: left;
@@ -585,3 +587,5 @@ html.touch .bu-slideshow-arrow-right {
 * + html .bu-slideshow-arrow-left:hover {
   background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
 }
+
+/*# sourceMappingURL=bu-slideshow.css.map */
