@@ -1,4 +1,4 @@
-@import 'bu-slideshow-library';
+@import "bu-slideshow-library";
 
 .mediumTransition {
 	@extend %mediumTransition;
@@ -7,116 +7,112 @@
 	@extend %slowTransition;
 }
 .bu-slideshow-container {
-	overflow:hidden;
-	position:relative;
+	position: relative;
+	overflow: hidden;
 	min-height: 100px;
 }
 .bu-slideshow {
-	width:100%;
-	height:auto;
+	position: relative;
+	width: 100%;
+	height: auto;
 	background: none;
-	position:relative;
 }
 ul.bu-slideshow {
-	list-style:none;
-	margin:0;
-	padding:0;
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
 .bu-slideshow-slide {
 	left: 0 !important; // flexi indents lists with left positioning.
-	list-style-type: none !important;
-	margin-left: 0;
+	width: 100% !important;
+	height: auto;
+	padding: 0;
 	margin-right: 0;
-	width:100% !important;
-	height:auto;
+	margin-left: 0;
 	background: none;
-	padding:0;
+	list-style-type: none !important;
 }
 // these styles are the base values from which animate-in values animate
 .bu-slide-container {
-	height:auto;
-	width:100%;
-
+	width: 100%;
+	height: auto;
 	img {
+		display: inline;
 		max-width: 100%;
-		display:inline;
 	}
-
 	// have to stay in here as classes are not specific enough to move out on own level
-	.caption-bottom-right{
-		bottom: 15%;
+	.caption-bottom-right {
 		right: 6%;
+		bottom: 15%;
 	}
 	.caption-bottom-center {
-	  top: auto;
-	  bottom: 15%;
-	  margin: 0 auto;
-	  left:50%;
-	  margin-left:-19%;
-	  text-align:center;
+		top: auto;
+		bottom: 15%;
+		left: 50%;
+		margin: 0 auto;
+		margin-left: -19%;
+		text-align: center;
 	}
-	.caption-bottom-left{
+	.caption-bottom-left {
 		bottom: 15%;
 		left: 6%;
 	}
-	.caption-top-left{
+	.caption-top-left {
 		top: 15%;
+		bottom: auto;
 		left: 6%;
-		bottom:auto;
 	}
 	.caption-top-center {
-	  top: 15%;
-	  bottom: auto;
-	  margin: 0 auto;
-	  left:50%;
-	  margin-left:-19%;
-	  text-align:center;
+		top: 15%;
+		bottom: auto;
+		left: 50%;
+		margin: 0 auto;
+		margin-left: -19%;
+		text-align: center;
 	}
-	.caption-top-right{
+	.caption-top-right {
 		top: 15%;
 		right: 6%;
-		bottom:auto;
+		bottom: auto;
 	}
 }
 .bu-slide-caption {
-	background:$semi-opaque-fallback;
-	background:$semi-opaque;
-	bottom: 20%;
-	display:inline;
-	list-style:none;
-	margin:0;
-	padding: 1%;
-	position:absolute;
+	position: absolute;
 	right: 6%;
-	width:35%;
-	z-index:12;
-
+	bottom: 20%;
+	z-index: 12;
+	display: inline;
+	width: 35%;
+	padding: 1%;
+	margin: 0;
+	background: $semi-opaque-fallback;
+	background: $semi-opaque;
+	list-style: none;
 	a {
-		color:#bcbcbc;
-		text-decoration:none;
-
+		color: #bcbcbc;
+		text-decoration: none;
 		&:hover {
-			text-decoration:underline;
+			text-decoration: underline;
 		}
 	}
 }
 .bu-slide-caption-title,
 .bu-slide-caption-text {
-	color:#ffffff;
-	font-size:1em;
-	line-height:1.4;
+	font-size: 1em;
+	line-height: 1.4;
+	color: #ffffff;
 }
 .bu-slide-caption-title {
-	font-size: 1.3em;
-	font-family: 'Helvetica', 'Arial', sans-serif;
-	color:#bcbcbc;
-	margin-bottom: .5em;
 	padding: 0;
+	margin-bottom: 0.5em;
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1.3em;
+	color: #bcbcbc;
 }
 
 .bu-slide-caption-text {
-	font-size: .85em;
 	margin: 0;
+	font-size: 0.85em;
 }
 .animate-slide-default {
 	@extend %animate-slide-default;
@@ -162,7 +158,6 @@ ul.bu-slideshow {
 			@extend %animate-fade-in;
 		}
 	}
-
 	.animate-out {
 		.bu-slide-container {
 			@extend %animate-fade-out;
@@ -172,94 +167,89 @@ ul.bu-slideshow {
 
 .bu-slideshow-navigation-container {
 	display: none;
-
 	.nav-icon {
 		li {
 			a {
-				display:inline-block;
-				text-indent:-9999em;
-				border-radius:50%;
-				padding:2px;
-				background: $white-fallback-fade;
-				background: $white-fade;
-				border:3px solid;
+				display: inline-block;
+				width: 0.8em;
+				height: 0.8em;
+				padding: 2px;
+				border: 3px solid;
 				border-color: $semi-opaque-fallback-fade;
 				border-color: $semi-opaque-fade;
-				height:0.8em;
-				width:0.8em;
-
+				border-radius: 50%;
+				background: $white-fallback-fade;
+				background: $white-fade;
+				text-indent: -9999em;
 				span {
-					display:block;
-					height:100%;
-					width:100%;
-					border-radius:50%;
+					display: block;
+					width: 100%;
+					height: 100%;
+					border-radius: 50%;
 					@extend %mediumTransition;
 				}
-
-				&:hover span, &:active span, &.active span {
+				&:hover span,
+				&:active span,
+				&.active span {
 					background-color: $semi-opaque-fallback-fade;
 					background-color: $semi-opaque-fade;
-					-moz-transition-property:background-color;
-					-webkit-transition-property:background-color;
-					transition-property:background-color;
 					@extend %mediumTransition;
+					-webkit-transition-property: background-color;
+					   -moz-transition-property: background-color;
+					        transition-property: background-color;
 				}
-
 			}
 		}
 	}
-
 	.nav-number {
 		li {
-			list-style-type: none;
 			margin-left: 0.3em;
-
+			list-style-type: none;
 			a {
+				display: inline-block;
+				padding: 0.5em 0.7em 0.25em;
 				background-color: $semi-opaque-fallback-fade;
 				background-color: $semi-opaque-fade;
+				font-size: 0.9em;
+				line-height: normal;
 				color: $white-fallback-fade;
 				color: $white-fade;
-				display:inline-block;
-				font-size:0.9em;
-				line-height: normal;
-				opacity:0.75;
-				padding:.5em .7em .25em;
-				text-decoration:none;
+				text-decoration: none;
+				opacity: 0.75;
 				@extend %mediumTransition;
 
-				&:hover, &.active {
-					background-color:$semi-opaque-fallback;
-					background-color:$semi-opaque;
+				&:hover,
+				&.active {
+					background-color: $semi-opaque-fallback;
+					background-color: $semi-opaque;
 					color: $white-fallback;
 					color: $white;
 					opacity: 1;
-					-moz-transition-property:background-color color opacity;
-					-webkit-transition-property:background-color color opacity;
-					transition-property:background-color color opacity;
 					@extend %mediumTransition;
+					-webkit-transition-property: background-color color opacity;
+					   -moz-transition-property: background-color color opacity;
+					        transition-property: background-color color opacity;
 				}
 			}
 		}
 	}
-
 }
 
 .bu-slideshow-navigation {
-	bottom:1em;
-	left:0;
-	list-style:none;
-	margin:0;
-	padding:0;
-	position:absolute;
-	text-align:center;
-	width:100%;
-	z-index:13;
-
+	position: absolute;
+	bottom: 1em;
+	left: 0;
+	z-index: 13;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	text-align: center;
 	li {
-		display:inline;
-		left:0; // flexi indents lists with left positioning, so.
-		margin:0; // make sure theme list styles don't accidentally separate
-		background:none !important;
+		left: 0; // flexi indents lists with left positioning, so.
+		display: inline;
+		margin: 0; // make sure theme list styles don't accidentally separate
+		background: none !important;
 	}
 }
 
@@ -272,113 +262,142 @@ ul.bu-slideshow {
 }
 
 .bu-slideshow-arrow-left {
-	@extend %arrowBgStyles;
-
-	border-right-color:$semi-opaque-fallback-fade;
-	border-right-color:$semi-opaque-fade;
+	left: 0;
+	border-right-color: $semi-opaque-fallback-fade;
+	border-right-color: $semi-opaque-fade;
 	border-radius: 0 4px 4px 0;
-	left:0;
-	-moz-transition-property:border-right-color;
-	-webkit-transition-property:border-right-color;
-	transition-property:border-right-color;
-
+	@extend %arrowBgStyles;
+	-webkit-transition-property: border-right-color;
+	   -moz-transition-property: border-right-color;
+	        transition-property: border-right-color;
 	&:hover {
-		border-right-color:$white-fallback-fade;
-		border-right-color:$white-fade;
+		border-right-color: $white-fallback-fade;
+		border-right-color: $white-fade;
 	}
-
 	&:after {
+		right: 1em;
+		border-right-color: inherit;
+		border-left-color: transparent;
 		@extend %arrowStyles;
-
-		border-left-color:transparent;
-		border-right-color:inherit;
-		right:1em;
 	}
 }
 
 .bu-slideshow-arrow-right {
-	@extend %arrowBgStyles;
-
-	border-left-color:$semi-opaque-fallback-fade;
-	border-left-color:$semi-opaque-fade;
+	right: 0;
+	border-left-color: $semi-opaque-fallback-fade;
+	border-left-color: $semi-opaque-fade;
 	border-radius: 4px 0 0 4px;
-	right:0;
-	-moz-transition-property:border-left-color;
-	-webkit-transition-property:border-left-color;
-	transition-property:border-left-color;
-
+	@extend %arrowBgStyles;
+	-webkit-transition-property: border-left-color;
+	   -moz-transition-property: border-left-color;
+	        transition-property: border-left-color;
 	&:hover {
-		border-left-color:$white-fallback-fade;
-		border-left-color:$white-fade;
+		border-left-color: $white-fallback-fade;
+		border-left-color: $white-fade;
 	}
-
 	&:after {
-		@extend %arrowStyles;
-
-		border-left-color:inherit;
-		border-right-color:transparent;
 		left: 1em;
+		border-right-color: transparent;
+		border-left-color: inherit;
+		@extend %arrowStyles;
 	}
 }
-.slideshow-loader{
-	display: none;
+.slideshow-loader {
 	position: absolute;
-	margin: -40px;
 	top: 50%;
 	left: 50%;
+	display: none;
 	height: 80px;
-	color: #CC0000;
+	margin: -40px;
+	color: #cc0000;
 	text-align: center;
-
 	.loader-animation {
-		margin:auto;
 		display: inline-block;
 		width: 30px;
 		height: 30px;
-		border: 8px solid #CC0000;
+		margin: auto;
+		border: 8px solid #cc0000;
 		border-right-color: transparent !important;
 		border-radius: 50%;
-		@include animation(spin .8s linear infinite);
+		@include animation(spin 0.8s linear infinite);
 		// box-shadow: 0 0 25px 2px #eee;
 	}
-
 	&.active {
 		display: block;
 	}
-
 	p {
 		display: none;
 		padding: 10px;
 	}
-
 	@-webkit-keyframes spin {
-		from { -webkit-transform: rotate(0deg); opacity: 0.4; }
-		50%  { -webkit-transform: rotate(180deg); opacity: 1; }
-		to   { -webkit-transform: rotate(360deg); opacity: 0.4; }
+		from {
+			opacity: 0.4;
+			-webkit-transform: rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			-webkit-transform: rotate(180deg);
+		}
+		to {
+			opacity: 0.4;
+			-webkit-transform: rotate(360deg);
+		}
 	}
-
 	@-moz-keyframes spin {
-		from { -moz-transform: rotate(0deg); opacity: 0.4; }
-		50%  { -moz-transform: rotate(180deg); opacity: 1; }
-		to   { -moz-transform: rotate(360deg); opacity: 0.4; }
+		from {
+			opacity: 0.4;
+			-moz-transform: rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			-moz-transform: rotate(180deg);
+		}
+		to {
+			opacity: 0.4;
+			-moz-transform: rotate(360deg);
+		}
 	}
-
 	@-ms-keyframes spin {
-		from { -ms-transform: rotate(0deg); opacity: 0.4; }
-		50%  { -ms-transform: rotate(180deg); opacity: 1; }
-		to   { -ms-transform: rotate(360deg); opacity: 0.4; }
+		from {
+			opacity: 0.4;
+			-ms-transform: rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			-ms-transform: rotate(180deg);
+		}
+		to {
+			opacity: 0.4;
+			-ms-transform: rotate(360deg);
+		}
 	}
-
 	@-o-keyframes spin {
-		from { -o-transform: rotate(0deg); opacity: 0.4; }
-		50%  { -o-transform: rotate(180deg); opacity: 1; }
-		to   { -o-transform: rotate(360deg); opacity: 0.4; }
+		from {
+			opacity: 0.4;
+			-o-transform: rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			-o-transform: rotate(180deg);
+		}
+		to {
+			opacity: 0.4;
+			-o-transform: rotate(360deg);
+		}
 	}
-
 	@keyframes spin {
-		from { transform: rotate(0deg); opacity: 0.2; }
-		50%  { transform: rotate(180deg); opacity: 1; }
-		to   { transform: rotate(360deg); opacity: 0.2; }
+		from {
+			opacity: 0.2;
+			transform: rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			transform: rotate(180deg);
+		}
+		to {
+			opacity: 0.2;
+			transform: rotate(360deg);
+		}
 	}
 }
 
@@ -389,7 +408,6 @@ html.touch {
 		background-color: $semi-opaque-fallback;
 		background-color: $semi-opaque;
 	}
-
 	.bu-slideshow-arrow-left {
 		border-right-color: $white-fallback-fade;
 		border-right-color: $white-fade;
@@ -411,56 +429,35 @@ html.touch {
 }
 
 // ie7 hacks
-*+html {
-
+* + html {
 	.bu-slideshow-navigation-container {
-
 		.nav-icon {
-
 			li {
-
 				a {
-					display:block;
-					float:left;
+					display: block;
+					float: left;
 					margin-right: 0.6em;
 				}
-
 			}
-
 		}
-
 		.nav-number {
-
 			li {
-
 				a {
 					color: $white-fallback-fade;
 				}
-
 			}
-
 		}
-
 	}
-
 	.bu-slideshow-arrow-right {
-
 		background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
-
 		&:hover {
 			background: url("../img/arrows.png") no-repeat scroll 0 -24px transparent;
 		}
-
 	}
-
 	.bu-slideshow-arrow-left {
-
 		background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
-
 		&:hover {
 			background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
 		}
-
 	}
-
 }
