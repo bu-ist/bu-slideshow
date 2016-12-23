@@ -15,16 +15,18 @@
 
 }
 .bu-slideshow {
-	width:100% !important;
+	width:100%;
 	height:auto;
-	list-style:none !important;
+	background: none;
+	position:relative;
+}
+ul.bu-slideshow {
+	list-style:none;
 	margin:0;
 	padding:0;
-	position:relative !important;
-	background: none !important;
 }
 .bu-slideshow-slide {
-	left: 0; // flexi indents lists with left positioning.
+	left: 0 !important; // flexi indents lists with left positioning.
 	list-style-type: none !important;
 	margin-left: 0;
 	margin-right: 0;
