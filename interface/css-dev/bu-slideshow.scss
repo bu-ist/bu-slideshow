@@ -11,9 +11,6 @@
 	position:relative;
 	min-height: 100px;
 }
-.bu-slideshow-slides {
-
-}
 .bu-slideshow {
 	width:100%;
 	height:auto;
@@ -405,35 +402,12 @@ html.touch {
 
 // for BU's Content Banner
 .banner-container {
-
-	.bu-slideshow-slides {
-
-		.bu-slideshow {
-
-			li.slide {
-
-				.bu-slide-container {
-
-					.bu-slide-caption {
-
-						.bu-slide-caption-title {
-							font-size: 14.4px;
-						}
-
-						.bu-slide-caption-text {
-							font-size: 12px;
-						}
-
-					}
-
-				}
-
-			}
-
-		}
-
+	.bu-slide-caption-title {
+		font-size: 14.4px;
 	}
-
+	.bu-slide-caption-text {
+		font-size: 12px;
+	}
 }
 
 // ie7 hacks
