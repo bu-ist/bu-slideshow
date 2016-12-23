@@ -216,23 +216,6 @@
 .bu-slideshow-navigation-container {
   display: none;
 }
-.bu-slideshow-navigation-container .bu-slideshow-navigation {
-  bottom: 1em;
-  left: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  z-index: 13;
-}
-.bu-slideshow-navigation-container .bu-slideshow-navigation li {
-  display: inline;
-  left: 0;
-  margin: 0;
-  background: none !important;
-}
 .bu-slideshow-navigation-container .nav-icon li a {
   display: inline-block;
   text-indent: -9999em;
@@ -284,6 +267,24 @@
   -moz-transition-property: background-color color opacity;
   -webkit-transition-property: background-color color opacity;
   transition-property: background-color color opacity;
+}
+
+.bu-slideshow-navigation {
+  bottom: 1em;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 13;
+}
+.bu-slideshow-navigation li {
+  display: inline;
+  left: 0;
+  margin: 0;
+  background: none !important;
 }
 
 .bu-slideshow-arrow-left {
