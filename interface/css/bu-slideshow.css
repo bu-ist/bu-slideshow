@@ -46,7 +46,7 @@
   width: 0;
 }
 
-.animate-slide-default, .transition-slide .bu-slide-container {
+.transition-slide .bu-slide-container {
   left: 100%;
   position: absolute;
   -webkit-transition-duration: 1s;
@@ -56,7 +56,7 @@
   transition-duration: 1s;
 }
 
-.animate-slide-in, .transition-slide .animate-in .bu-slide-container {
+.transition-slide .animate-in .bu-slide-container {
   left: 0;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -65,7 +65,7 @@
   transition-duration: 1s;
 }
 
-.animate-slide-out, .transition-slide .animate-out .bu-slide-container {
+.transition-slide .animate-out .bu-slide-container {
   left: -100%;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -74,7 +74,7 @@
   transition-duration: 1s;
 }
 
-.animate-fade-default, .transition-fade .bu-slide-container {
+.transition-fade .bu-slide-container {
   opacity: 0;
   position: absolute;
   -webkit-transition-duration: 1.5s;
@@ -84,7 +84,7 @@
   transition-duration: 1.5s;
 }
 
-.animate-fade-in, .transition-fade .animate-in .bu-slide-container {
+.transition-fade .animate-in .bu-slide-container {
   opacity: 1.0;
   -webkit-transition-duration: 1.5s;
   -moz-transition-duration: 1.5s;
@@ -93,7 +93,7 @@
   transition-duration: 1.5s;
 }
 
-.animate-fade-out, .transition-fade .animate-out .bu-slide-container {
+.transition-fade .animate-out .bu-slide-container {
   opacity: 0;
   -webkit-transition-duration: 1.5s;
   -moz-transition-duration: 1.5s;

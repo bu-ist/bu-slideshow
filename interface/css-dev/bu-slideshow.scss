@@ -134,24 +134,6 @@ $lr-position: 6%;
 	margin: 0;
 	font-size: 0.85em;
 }
-.animate-slide-default {
-	@extend %animate-slide-default;
-}
-.animate-slide-in {
-	@extend %animate-slide-in;
-}
-.animate-slide-out {
-	@extend %animate-slide-out;
-}
-.animate-fade-default {
-	@extend %animate-fade-default;
-}
-.animate-fade-in {
-	@extend %animate-fade-in;
-}
-.animate-fade-out {
-	@extend %animate-fade-out;
-}
 
 .transition-slide {
 	.bu-slide-container {
