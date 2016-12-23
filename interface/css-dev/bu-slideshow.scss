@@ -248,7 +248,6 @@
 .bu-slideshow-navigation {
 	bottom:1em;
 	left:0;
-	list-style:none;
 	margin:0;
 	padding:0;
 	position:absolute;
@@ -257,11 +256,15 @@
 	z-index:13;
 
 	li {
-		display:inline;
-		left:0; // flexi indents lists with left positioning, so.
-		margin:0; // make sure theme list styles don't accidentally separate
-		background:none !important;
+		list-style:none !important; // flexi override
+		display: inline;
 	}
+}
+.bu-slideshow-slide {
+	display:inline;
+	left:0 !important; // flexi indents lists with left positioning, so.
+	margin:0; // make sure theme list styles don't accidentally separate
+	background:none !important;
 }
 
 .arrowBgStyles {
@@ -274,7 +277,6 @@
 
 .bu-slideshow-arrow-left {
 	@extend %arrowBgStyles;
-
 	border-right-color:$semi-opaque-fallback-fade;
 	border-right-color:$semi-opaque-fade;
 	border-radius: 0 4px 4px 0;
@@ -403,35 +405,22 @@ html.touch {
 
 // for BU's Content Banner
 .banner-container {
-
 	.bu-slideshow-slides {
-
 		.bu-slideshow {
-
 			li.slide {
-
 				.bu-slide-container {
-
 					.bu-slide-caption {
-
 						.bu-slide-caption-title {
 							font-size: 14.4px;
 						}
-
 						.bu-slide-caption-text {
 							font-size: 12px;
 						}
-
 					}
-
 				}
-
 			}
-
 		}
-
 	}
-
 }
 
 // ie7 hacks

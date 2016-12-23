@@ -272,7 +272,6 @@
 .bu-slideshow-navigation {
   bottom: 1em;
   left: 0;
-  list-style: none;
   margin: 0;
   padding: 0;
   position: absolute;
@@ -281,8 +280,13 @@
   z-index: 13;
 }
 .bu-slideshow-navigation li {
+  list-style: none !important;
   display: inline;
-  left: 0;
+}
+
+.bu-slideshow-slide {
+  display: inline;
+  left: 0 !important;
   margin: 0;
   background: none !important;
 }
