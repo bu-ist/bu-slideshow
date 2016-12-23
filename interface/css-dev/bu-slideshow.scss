@@ -23,23 +23,27 @@ ul.bu-slideshow {
 	list-style: none;
 }
 .bu-slideshow-slide {
-	left: 0 !important; // flexi indents lists with left positioning.
-	width: 100% !important;
+	width: 100%;
 	height: auto;
 	padding: 0;
 	margin-right: 0;
 	margin-left: 0;
 	background: none;
-	list-style-type: none !important;
+}
+li.bu-slideshow-slide {
+	left: 0 !important; // Flexi override
+	list-style-type: none !important; // Flexi override
 }
 // these styles are the base values from which animate-in values animate
 .bu-slide-container {
 	width: 100%;
 	height: auto;
+
 	img {
 		display: inline;
 		max-width: 100%;
 	}
+
 	// have to stay in here as classes are not specific enough to move out on own level
 	.caption-bottom-right {
 		right: 6%;
@@ -88,9 +92,11 @@ ul.bu-slideshow {
 	background: $semi-opaque-fallback;
 	background: $semi-opaque;
 	list-style: none;
+
 	a {
 		color: #bcbcbc;
 		text-decoration: none;
+
 		&:hover {
 			text-decoration: underline;
 		}
@@ -167,6 +173,7 @@ ul.bu-slideshow {
 
 .bu-slideshow-navigation-container {
 	display: none;
+
 	.nav-icon {
 		li {
 			a {
@@ -181,6 +188,7 @@ ul.bu-slideshow {
 				background: $white-fallback-fade;
 				background: $white-fade;
 				text-indent: -9999em;
+
 				span {
 					display: block;
 					width: 100%;
@@ -188,6 +196,7 @@ ul.bu-slideshow {
 					border-radius: 50%;
 					@extend %mediumTransition;
 				}
+
 				&:hover span,
 				&:active span,
 				&.active span {
@@ -201,6 +210,7 @@ ul.bu-slideshow {
 			}
 		}
 	}
+
 	.nav-number {
 		li {
 			margin-left: 0.3em;
@@ -245,61 +255,63 @@ ul.bu-slideshow {
 	margin: 0;
 	list-style: none;
 	text-align: center;
+
 	li {
 		left: 0; // flexi indents lists with left positioning, so.
 		display: inline;
 		margin: 0; // make sure theme list styles don't accidentally separate
-		background: none !important;
+		background: none;
 	}
 }
 
 .arrowBgStyles {
 	@extend %arrowBgStyles;
 }
-
 .arrowStyles {
 	@extend %arrowStyles;
 }
 
 .bu-slideshow-arrow-left {
+	@extend %arrowBgStyles;
 	left: 0;
 	border-right-color: $semi-opaque-fallback-fade;
 	border-right-color: $semi-opaque-fade;
 	border-radius: 0 4px 4px 0;
-	@extend %arrowBgStyles;
 	-webkit-transition-property: border-right-color;
 	   -moz-transition-property: border-right-color;
 	        transition-property: border-right-color;
+
 	&:hover {
 		border-right-color: $white-fallback-fade;
 		border-right-color: $white-fade;
 	}
 	&:after {
+		@extend %arrowStyles;
 		right: 1em;
 		border-right-color: inherit;
 		border-left-color: transparent;
-		@extend %arrowStyles;
 	}
 }
 
 .bu-slideshow-arrow-right {
+	@extend %arrowBgStyles;
 	right: 0;
 	border-left-color: $semi-opaque-fallback-fade;
 	border-left-color: $semi-opaque-fade;
 	border-radius: 4px 0 0 4px;
-	@extend %arrowBgStyles;
 	-webkit-transition-property: border-left-color;
 	   -moz-transition-property: border-left-color;
 	        transition-property: border-left-color;
+
 	&:hover {
 		border-left-color: $white-fallback-fade;
 		border-left-color: $white-fade;
 	}
 	&:after {
+		@extend %arrowStyles;
 		left: 1em;
 		border-right-color: transparent;
 		border-left-color: inherit;
-		@extend %arrowStyles;
 	}
 }
 .slideshow-loader {
@@ -311,24 +323,27 @@ ul.bu-slideshow {
 	margin: -40px;
 	color: #cc0000;
 	text-align: center;
+
 	.loader-animation {
+		@include animation(spin 0.8s linear infinite);
 		display: inline-block;
 		width: 30px;
 		height: 30px;
 		margin: auto;
 		border: 8px solid #cc0000;
-		border-right-color: transparent !important;
+		border-right-color: transparent;
 		border-radius: 50%;
-		@include animation(spin 0.8s linear infinite);
-		// box-shadow: 0 0 25px 2px #eee;
 	}
+
 	&.active {
 		display: block;
 	}
+
 	p {
 		display: none;
 		padding: 10px;
 	}
+
 	@-webkit-keyframes spin {
 		from {
 			opacity: 0.4;
@@ -450,12 +465,14 @@ html.touch {
 	}
 	.bu-slideshow-arrow-right {
 		background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
+
 		&:hover {
 			background: url("../img/arrows.png") no-repeat scroll 0 -24px transparent;
 		}
 	}
 	.bu-slideshow-arrow-left {
 		background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
+
 		&:hover {
 			background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
 		}
