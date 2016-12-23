@@ -34,6 +34,30 @@ li.bu-slideshow-slide {
 	left: 0 !important; // Flexi override
 	list-style-type: none !important; // Flexi override
 }
+
+$tb-position: 15%;
+$lr-position: 6%;
+
+%caption-shared-top {
+	top: $tb-position;
+	bottom: auto;
+}
+%caption-shared-bottom {
+	bottom: $tb-position;
+}
+%caption-shared-left {
+	left: $lr-position;
+}
+%caption-shared-right {
+	right: $lr-position;
+}
+%caption-shared-center {
+	left: 50%;
+	margin: 0 auto;
+	margin-left: -19%;
+	text-align: center;
+}
+
 // these styles are the base values from which animate-in values animate
 .bu-slide-container {
 	width: 100%;
@@ -46,38 +70,28 @@ li.bu-slideshow-slide {
 
 	// have to stay in here as classes are not specific enough to move out on own level
 	.caption-bottom-right {
-		right: 6%;
-		bottom: 15%;
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-right;
 	}
 	.caption-bottom-center {
-		top: auto;
-		bottom: 15%;
-		left: 50%;
-		margin: 0 auto;
-		margin-left: -19%;
-		text-align: center;
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-center;
 	}
 	.caption-bottom-left {
-		bottom: 15%;
-		left: 6%;
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-left;
 	}
 	.caption-top-left {
-		top: 15%;
-		bottom: auto;
-		left: 6%;
+		@extend %caption-shared-top;
+		@extend %caption-shared-left;
 	}
 	.caption-top-center {
-		top: 15%;
-		bottom: auto;
-		left: 50%;
-		margin: 0 auto;
-		margin-left: -19%;
-		text-align: center;
+		@extend %caption-shared-top;
+		@extend %caption-shared-center;
 	}
 	.caption-top-right {
-		top: 15%;
-		right: 6%;
-		bottom: auto;
+		@extend %caption-shared-top;
+		@extend %caption-shared-right;
 	}
 }
 .bu-slide-caption {
