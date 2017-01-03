@@ -36,6 +36,28 @@ $white-fade:				rgba(255,255,255,0.7);
 	transition-duration: $transitions;
 }
 
+// keyframes
+// Usage: @include keyframes(animation-name) {
+		// your animation rules here
+// }
+@mixin keyframes($animation-name) {
+	@-webkit-keyframes #{$animation-name} {
+		@content;
+	}
+	@-moz-keyframes #{$animation-name} {
+		@content;
+	}
+	@-ms-keyframes #{$animation-name} {
+		@content;
+	}
+	@-o-keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+}
+
 %mediumTransition {
 	@include transition-duration(0.3s);
 }

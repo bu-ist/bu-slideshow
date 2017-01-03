@@ -102,6 +102,76 @@
   transition-duration: 1.5s;
 }
 
+@-webkit-keyframes spin {
+  from {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  to {
+    opacity: 0.2;
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  from {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  to {
+    opacity: 0.2;
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes spin {
+  from {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  to {
+    opacity: 0.2;
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spin {
+  from {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  to {
+    opacity: 0.2;
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+  to {
+    opacity: 0.2;
+    transform: rotate(360deg);
+  }
+}
 .bu-slideshow-container {
   position: relative;
   overflow: hidden;
@@ -352,76 +422,7 @@ li.bu-slideshow-slide {
   display: none;
   padding: 10px;
 }
-@-webkit-keyframes spin {
-  from {
-    opacity: 0.4;
-    -webkit-transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    -webkit-transform: rotate(180deg);
-  }
-  to {
-    opacity: 0.4;
-    -webkit-transform: rotate(360deg);
-  }
-}
-@-moz-keyframes spin {
-  from {
-    opacity: 0.4;
-    -moz-transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    -moz-transform: rotate(180deg);
-  }
-  to {
-    opacity: 0.4;
-    -moz-transform: rotate(360deg);
-  }
-}
-@-ms-keyframes spin {
-  from {
-    opacity: 0.4;
-    -ms-transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    -ms-transform: rotate(180deg);
-  }
-  to {
-    opacity: 0.4;
-    -ms-transform: rotate(360deg);
-  }
-}
-@-o-keyframes spin {
-  from {
-    opacity: 0.4;
-    -o-transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    -o-transform: rotate(180deg);
-  }
-  to {
-    opacity: 0.4;
-    -o-transform: rotate(360deg);
-  }
-}
-@keyframes spin {
-  from {
-    opacity: 0.2;
-    transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: rotate(180deg);
-  }
-  to {
-    opacity: 0.2;
-    transform: rotate(360deg);
-  }
-}
+
 html.touch .bu-slideshow-arrow-left,
 html.touch .bu-slideshow-arrow-right {
   background-color: #464646;
