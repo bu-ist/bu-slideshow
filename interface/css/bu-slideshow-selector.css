@@ -1,8 +1,8 @@
 .bu-slideshow-selector {
-  border: 1px solid #dfdfdf;
-  border-radius: 4px 4px 4px 4px;
   overflow: hidden;
   padding: 1em;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px 4px 4px 4px;
 }
 
 .bu-slideshow-selector-basic {
@@ -10,8 +10,8 @@
 }
 
 .bu-slideshow-selector p {
-  margin-bottom: 1em;
   max-width: 220px;
+  margin-bottom: 1em;
 }
 
 html body .bu-slideshow-selector label {
@@ -21,8 +21,8 @@ html body .bu-slideshow-selector label {
 
 .bu-slideshow-selector .col1 {
   float: left;
-  margin-right: 5%;
   width: 44%;
+  margin-right: 5%;
 }
 
 .bu-slideshow-selector .col2 {
