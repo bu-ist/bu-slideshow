@@ -344,7 +344,7 @@ $lr-position: 6%;
 }
 
 // make left/right arrows obvious on touchscreens
-html.touch {
+.touch {
 	.bu-slideshow-arrow-left,
 	.bu-slideshow-arrow-right {
 		background-color: $semi-opaque-fallback;

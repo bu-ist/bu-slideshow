@@ -421,16 +421,16 @@ li.bu-slideshow-slide {
   padding: 10px;
 }
 
-html.touch .bu-slideshow-arrow-left,
-html.touch .bu-slideshow-arrow-right {
+.touch .bu-slideshow-arrow-left,
+.touch .bu-slideshow-arrow-right {
   background-color: #464646;
   background-color: rgba(0, 0, 0, 0.75);
 }
-html.touch .bu-slideshow-arrow-left {
+.touch .bu-slideshow-arrow-left {
   border-right-color: #cdcdcd;
   border-right-color: rgba(255, 255, 255, 0.7);
 }
-html.touch .bu-slideshow-arrow-right {
+.touch .bu-slideshow-arrow-right {
   border-left-color: #cdcdcd;
   border-left-color: rgba(255, 255, 255, 0.7);
 }
