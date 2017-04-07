@@ -1,9 +1,9 @@
 # BU Slideshow #
-**Contributors:** inderpreet99, awbauer, clrux, mgburns, gannondigital  
+**Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99), [awbauer](https://profiles.wordpress.org/awbauer), [clrux](https://profiles.wordpress.org/clrux), [mgburns](https://profiles.wordpress.org/mgburns), [gannondigital](https://profiles.wordpress.org/gannondigital)  
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
-**Tested up to:** 4.6.1  
-**Stable tag:** 2.3.8  
+**Tested up to:** 4.6.4  
+**Stable tag:** 2.3.9  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -26,7 +26,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 
 For developer documentation, feature roadmaps and more visit the [plugin repository on Github](https://github.com/bu-ist/bu-slideshow/).
 
-[![Build Status](https://travis-ci.org/bu-ist/bu-slideshow.svg)](https://travis-ci.org/bu-ist/bu-slideshow)
+[Build Status](https://travis-ci.org/bu-ist/bu-slideshow)
 
 ## Installation ##
 This plugin can be installed automatically through the WordPress admin interface, or by clicking the download link on this page and installing manually.
@@ -39,17 +39,20 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 ## Screenshots ##
 
-###1. An intuitive, compact user interface allows drag-and-drop reordering of slides, easy addition of new slides, and expand/collapse toggles to edit details of individual slides.###
-![An intuitive, compact user interface allows drag-and-drop reordering of slides, easy addition of new slides, and expand/collapse toggles to edit details of individual slides.](https://ps.w.org/bu-slideshow/assets/screenshot-1.png)
+### 1. An intuitive, compact user interface allows drag-and-drop reordering of slides, easy addition of new slides, and expand/collapse toggles to edit details of individual slides. ###
+![An intuitive, compact user interface allows drag-and-drop reordering of slides, easy addition of new slides, and expand/collapse toggles to edit details of individual slides.](http://ps.w.org/bu-slideshow/assets/screenshot-1.png)
 
-###2. Select/remove images, edit titles, captions, links, and specify caption positioning and custom CSS classes all within a single location.###
-![Select/remove images, edit titles, captions, links, and specify caption positioning and custom CSS classes all within a single location.](https://ps.w.org/bu-slideshow/assets/screenshot-2.png)
+### 2. Select/remove images, edit titles, captions, links, and specify caption positioning and custom CSS classes all within a single location. ###
+![Select/remove images, edit titles, captions, links, and specify caption positioning and custom CSS classes all within a single location.](http://ps.w.org/bu-slideshow/assets/screenshot-2.png)
 
-###3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.###
-![Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.](https://ps.w.org/bu-slideshow/assets/screenshot-3.png)
+### 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with. ###
+![Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.](http://ps.w.org/bu-slideshow/assets/screenshot-3.png)
 
 
 ## Changelog ##
+### 2.3.9 ###
+* Fix formatting error in shortcode generation
+
 ### 2.3.8 ###
 * Fix UI issues since WP 4.4
 * Use minified CSS on the frontend. Fixes #31.
