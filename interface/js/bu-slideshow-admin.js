@@ -200,7 +200,7 @@
 					return false;
 				}
 
-				html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay  + '" transition_delay="' + options.transition_delay  + '" width="' + options.width + ' shuffle="'+options.shuffle +'"]';
+				html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" transition_delay="' + options.transition_delay + '" width="' + options.width + '" shuffle="'+ options.shuffle +'"]';
 
 				window.send_to_editor("<br />" + html + "<br />");
 				selector.reset();
