@@ -9,7 +9,8 @@
 		"grunt-contrib-less": "~0.10.0",
 		"grunt-contrib-cssmin": "^0.12.2",
 		"grunt-phplint": "^0.0.8",
-    	"matchdep": "^0.3.0"
+		"matchdep": "^0.3.0",
+		"grunt-wp-readme-to-markdown": "~2.0.1"
 	},
 	"repository": {
 		"type": "git",
