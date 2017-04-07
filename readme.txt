@@ -45,7 +45,7 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 == Changelog ==
 = 2.3.9 =
-* Fix formatting error in shortcode generation *
+* Fix formatting error in shortcode generation
 
 = 2.3.8 =
 * Fix UI issues since WP 4.4

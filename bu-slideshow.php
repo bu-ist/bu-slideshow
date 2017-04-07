@@ -7,7 +7,7 @@ Version: 2.3.9
 Author: Boston University (IS&T)
 Author URI: http://www.bu.edu/tech/
 Requires at least: 3.5
-Tested up to: 4.6.1
+Tested up to: 4.6.4
 */
 
 define('BU_SLIDESHOW_VERSION', '2.3.9');
