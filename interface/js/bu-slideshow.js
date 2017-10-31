@@ -11,44 +11,37 @@ jQuery( document ).ready(function($){
 		 * I hate iterating through everything in the slides here, but we should allow
 		 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
 		 */
-		 var capElement = document.getElementById('special-caption-id');
-		 var botPos = capElement.scrollHeight;
+		var capElement = document.getElementById('special-caption-id');
+		var botPos = capElement.scrollHeight;
 		function bu_resize_slideshow() {
 
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el, height = 0, currentHeight = 0;
-				var captions = $(this).find('.caption-under-slide2'),
-					$cel, cheight = 0, capHeight = 0;
-				var navLocation = $(this).find('.bu-slideshow-navigation'),
-					$botPos = 0;
-
-
+				var capHeight = 5;//height needs to be padded a bit
+				var currentCapHeight = 0;
+				var botPos = 0;
 
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
 
-				if ( $el.prop("class") == 'caption-under-slide2') {
+					if ( $el.prop("class") == 'caption-under-slide2') {
 
-					currentCapHeight = $el.height();
+						currentCapHeight = $el.height();
 
-					if (currentCapHeight > capHeight) {
-						capHeight = currentCapHeight;
-						botPos = capHeight;
+						if (currentCapHeight > capHeight) {
+							capHeight = currentCapHeight;
+							botPos = capHeight;
 
+						}
+							alert(capPos);
 					}
-						alert(capHeight);
-				}
 
-
-					capPos = capHeight;
-
+					capPos = capHeight + 20;
 					currentHeight = $el.height() + botPos;
 
 					if (currentHeight > height) {
 						height = currentHeight;
-						botPos = capHeight;
-
 					}
 				});
 
@@ -59,7 +52,7 @@ jQuery( document ).ready(function($){
 				$(this).height(height);
 				$(this).find('ul.bu-slideshow').height(height);
 
-				$('.bu-slideshow-navigation').css( 'bottom', botPos);
+				$('.bu-slideshow-navigation').css( 'bottom', capPos);
 				$('.caption-under-slide2').css( 'height', botPos);
 			});
 
