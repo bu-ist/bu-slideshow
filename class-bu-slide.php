@@ -151,7 +151,7 @@ class BU_Slide {
 		//adding the caption under the slide requires some addtional js and css
 		//therefore we need the id and unique class name
 		if ( $this->caption['position'] == 'caption-under-slide') {
-			$html .= '<div id="special-caption-id" class="'.$this->caption['position'].'2">';
+			$html .= '<div class="'.$this->caption['position'].'">';
 		} else {
 			$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
 		}

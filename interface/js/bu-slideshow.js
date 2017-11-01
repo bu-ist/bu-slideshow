@@ -11,49 +11,51 @@ jQuery( document ).ready(function($){
 		 * I hate iterating through everything in the slides here, but we should allow
 		 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
 		 */
-		var capElement = document.getElementById('special-caption-id');
-		var botPos = capElement.scrollHeight;
+
 		function bu_resize_slideshow() {
 
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el, height = 0, currentHeight = 0;
-				var capHeight = 5;//height needs to be padded a bit
+				var capHeight = 0;//height needs to be padded a bit
 				var currentCapHeight = 0;
-				var botPos = 0;
+				var captionPosition = 0;//
+				currentCapPosition = 0;
 
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
 
-					if ( $el.prop("class") == 'caption-under-slide2') {
-
+					if ( $el.prop("class") == 'caption-under-slide') {
 						currentCapHeight = $el.height();
+						currentCapPosition = currentCapHeight;
 
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
-							botPos = capHeight;
+							captionPosition = currentCapPosition;
 
 						}
-							alert(capPos);
 					}
 
-					capPos = capHeight + 20;
-					currentHeight = $el.height() + botPos;
+					navigationPosition = capHeight;
+					currentHeight = $el.height() + captionPosition;
 
 					if (currentHeight > height) {
 						height = currentHeight;
 					}
 				});
-
+				alert(captionPosition);
 				slides.each(function(i, el) {
 					$(el).height(height);
+					if ( $el.prop("class") == 'caption-under-slide') {
+						$(el).css( 'top', captionPosition);
+					}
 				});
 
 				$(this).height(height);
 				$(this).find('ul.bu-slideshow').height(height);
 
-				$('.bu-slideshow-navigation').css( 'bottom', capPos);
-				$('.caption-under-slide2').css( 'height', botPos);
+				$('.bu-slideshow-navigation').css( 'bottom', captionPosition );
+				$('.caption-under-slide').css( 'height', captionPosition);
 			});
 
 		}
