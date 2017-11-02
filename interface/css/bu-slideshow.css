@@ -303,14 +303,14 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption {
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
-  bottom: 20%;
+  /* bottom: 20%; */
   display: inline;
   list-style: none;
   margin: 0;
   padding: 1%;
   position: absolute;
-  right: 6%;
-  width: 35%;
+  /* right: 6%;
+  width: 35%; */
   z-index: 12;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption p {
@@ -356,7 +356,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
  .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-under-slide{
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
-  bottom: 0%;
+  /*bottom: 0%;*/
   left: 0%;
   margin: 0;
   padding: 5;
@@ -364,16 +364,6 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   text-align: center;
   width: 100%;
   z-index: 53;
-}
-.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-under-slide p {
-  color: #ffffff;
-  font-size: 1em;
-  line-height: 1.4;
-}
-.bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-under-slide {
-  bottom: 0%;
-  left: 0%;
-  width: 100%;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-left {
   top: 15%;

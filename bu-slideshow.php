@@ -657,7 +657,6 @@ class BU_Slideshow {
 	 */
 	static public function manage_slideshow_page() {
 		$slideshows = self::get_slideshows();
-var_dump($slideshows);
 		if(isset($_GET['msg'])){
 			$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
 		}
