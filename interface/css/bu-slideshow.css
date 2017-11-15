@@ -354,12 +354,9 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
 }
 
  .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-under-slide{
-  background: #464646;
-  background: rgba(0, 0, 0, 0.75);
-  /*bottom: 0%;*/
   left: 0%;
   margin: 0;
-  padding: 5;
+  padding: 0;
   position: absolute;
   text-align: center;
   width: 100%;

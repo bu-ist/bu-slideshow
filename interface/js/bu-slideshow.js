@@ -17,7 +17,8 @@ jQuery( document ).ready(function($){
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el, height = 0, currentHeight = 0;
-				var capHeight = 0;//height needs to be padded a bit
+				/*We need to get the height of each element to postiion the navigation and the caption individually*/
+				var capHeight = 0;
 				var titleHeight = 0;
 				var textHeight = 0;
 				var currentCapHeight = 0;
@@ -27,13 +28,18 @@ jQuery( document ).ready(function($){
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
 					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
-					if ( $el.prop("class") == 'bu-slide-caption caption-under-slide') {
+					if ( $el.hasClass('caption-under-slide') ) {
 
 						currentCapHeight = $el.height();
 						//alert('Line 31 ' + $el.height() );
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
+						currentTextHeight = $el.height();
+							if (currentTextHeight > textHeight) {
+								textHeight = currentTextHeight;
+							}
+
 					} else {
 						if ( $el.prop("class") == 'bu-slide-caption-title'){
 							//alert('Line 37 ' + $el.height() );
@@ -43,9 +49,11 @@ jQuery( document ).ready(function($){
 							}
 						}
 
-						if ( $el.prop("class") == 'bu-slide-caption-text'){
+						if ( $el.hasClass('bu-slide-caption-text') ) {
 							//alert('Line 41 ' + $el.height() );
 							currentTextHeight = $el.height();
+							$el.css('height', $el.height());
+							$el.parent().css('height', $el.height() + ($el.height() * .28));
 							if (currentTextHeight > textHeight) {
 								textHeight = currentTextHeight;
 							}
@@ -63,21 +71,33 @@ jQuery( document ).ready(function($){
 
 					currentHeight = $el.height() + capHeight + titleHeight + textHeight;
 					if (currentHeight > height) {
-						height = currentHeight + capHeight;
+						height = currentHeight;
+					} else {
+						height = height - 1;
 					}
 				});
 
 				slides.each(function(i, el) {
-					$(el).height(height);
-					if ( $el.prop("class") == 'caption-under-slide') {
-						$(el).css( 'top', height);
-					}
-				});
+					/*if ($("li")) {
+						alert( 'Is LI ' + $(this).attr('class') + ' ' + $(el).height());
+						$(el).css('height', height);
+					} else {
+						alert( $(this).is() + ' ' + $(el).height());
+					}*/
 
+				});
+				var checkheight = ( height - captionPosition ) * 1.4;
 				$(this).height(height);
+
+				//$('DIV.bu-slide-caption').css( 'height', 'auto');
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
-				$('.bu-slideshow-navigation').css( 'top', ( captionPosition - 20 ) );
-				$(this).find('ul.bu-slideshow').height(height) + currentHeight;
+				/*If there are any under slide captions that postioning impacts any captions with bottom alignment. Here, they get positioned just above the navigation.*/
+				if( $('DIV.bu-slide-caption.caption-under-slide').length > 0 ){
+					/*$('DIV.bu-slide-caption.caption-bottom-right, DIV.bu-slide-caption.caption-bottom-center, DIV.bu-slide-caption.caption-bottom-left').css( 'bottom', checkheight );*/
+				}
+				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
+				//$(this).find('ul.bu-slideshow').height(height) + currentHeight;
+				alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
 			});
 
 		}
