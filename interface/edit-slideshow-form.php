@@ -1,4 +1,17 @@
-<p>
+<?php
+global $wpdb;
+$slideshows = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_type = 'bu_slideshow' ");
+
+foreach ($slideshows[0] as $key => $value) {
+	echo $key . " - " . $value . "<BR>";
+	if ($key == "ID") {
+		var_dump(get_post_meta($value));
+	}
+ }
+
+//var_dump($slideshows);
+
+?><p>
 	<label for="bu_slideshow_name"><strong><?php _e('Slideshow Name', BU_SSHOW_LOCAL); ?>: </strong></label>
 	<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo $name; ?>" />
 </p>
@@ -9,12 +22,12 @@
 
 	<select name="bu_slideshow_template">
 		<option value="">Default template</option>
-		<?php 
+		<?php
 			foreach ($valid_templates as $i => $t){
 				if( is_array( $t ) && array_key_exists( 'name', $t ) ){
 					printf( '<option value="%s" %s>%s</option>', $i, selected( $i, $template_id, false ), $t['name'] );
 				}
-			} 
+			}
 		?>
 	</select>
 </p>
@@ -26,7 +39,7 @@
 </p>
 <div id="bu-slideshow-slidelist">
 	<ul>
-	<?php 
+	<?php
 	if ( count($slides) > 0 ) {
 		foreach ($slides as $index => $slide) {
 			$slide->set_order($index);

@@ -15,7 +15,6 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
  */
 
 
-
 .mediumTransition {
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
@@ -309,8 +308,8 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   margin: 0;
   padding: 1%;
   position: absolute;
-  /* right: 6%;
-  width: 35%; */
+  right: 6%;
+  width: 35%;
   z-index: 12;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption p {

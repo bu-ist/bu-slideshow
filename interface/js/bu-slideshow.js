@@ -97,7 +97,7 @@ jQuery( document ).ready(function($){
 				}
 				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
 				//$(this).find('ul.bu-slideshow').height(height) + currentHeight;
-				alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
+				//alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
 			});
 
 		}
