@@ -2,11 +2,14 @@
 global $wpdb;
 $slideshows = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_type = 'bu_slideshow' ");
 
-foreach ($slideshows[0] as $key => $value) {
-	echo $key . " - " . $value . "<BR>";
-	if ($key == "ID") {
-		var_dump(get_post_meta($value));
+foreach ($slideshows as $slideshow) {
+
+	if ($slideshow->ID == 2501) {
+		echo 'IDS!<BR>';
+		var_dump(get_post_meta($slideshow->ID));
 	}
+
+	//
  }
 
 //var_dump($slideshows);
