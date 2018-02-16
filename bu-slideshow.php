@@ -36,7 +36,9 @@ class BU_Slideshow {
 	static $show_id_meta_key = 'bu_slideshow_last_id';
 	static $custom_thumb_size = 'bu-slideshow-thumb';
 	static $post_support_slug = 'bu_slideshow';
-	static $supported_post_types = array('page', 'post'); // post types to support Add Slideshow button
+	// post types to support Add Slideshow button
+	// explicitly add page_alt to allow slideshow ui with bu-versions
+	static $supported_post_types = array('page', 'post', 'page_alt');
 	static $editor_screens = array(); // other screens on which to include Add Slideshow modal
 	static $caption_positions = array(
 		'Top Right'     => 'caption-top-right',
