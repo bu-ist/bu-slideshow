@@ -9,7 +9,7 @@ Author URI: http://www.bu.edu/tech/
 Requires at least: 3.5
 Tested up to: 4.6.4
 */
-
+/*Adding a comment to test git issues*/
 define('BU_SLIDESHOW_VERSION', '2.3.9');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
