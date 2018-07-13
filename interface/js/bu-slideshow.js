@@ -4,8 +4,8 @@ jQuery( document ).ready(function($){
 		windowWidth = jQuery(window).width(),
 		buSlideshows = {},
 		rotator, imgHeight;
-		alert( $('.bu-slideshow-container').height() + ' ' + $('li .bu-slide-container').height() + ' ' + $( "div.caption-under-slide" ).height());
-
+		/*alert( $('.bu-slideshow-container').height() + ' ' + $('li .bu-slide-container').height() + ' ' + $( "div.caption-under-slide" ).height());
+*/
 		/**
 		 * Resizes slideshow and all slides to height of highest slide
 		 *
@@ -31,28 +31,16 @@ jQuery( document ).ready(function($){
 
 					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
 					if ( $el.hasClass('caption-under-slide') ) {
-						/*currentCapHeight = $( "div.slide-caption-under-slide > .bu-slide-caption" ).css('height');*/
 						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height();
-
-
-						alert('Line 31 ' + currentCapHeight + ' - ' + $el.height() );
-						//alert('Line 31 ' + currentCapHeight + ' - ' + capHeight );
 
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-						/*if ( $el.hasClass('caption-under-slide') ) {
-							currentTextHeight = $( "div.caption-under-slide p:nth-child(2)" ).height();
-							alert('Line 43 ' + currentTextHeight );
-						}*/
 
-							/*if (currentTextHeight > textHeight) {
-								textHeight = currentTextHeight;
-							}*/
-							textHeight = capHeight;
+						textHeight = capHeight;
 
 					} else {
-						if ( $el.prop("class") == 'bu-slide-caption-title'){
+						if ( $el.hasClass('bu-slide-caption-title') ){
 							//alert('Line 37 ' + $el.height() );
 							currentTitleHeight = $el.height();
 							if (currentTitleHeight > titleHeight) {
@@ -67,7 +55,7 @@ jQuery( document ).ready(function($){
 							/*$el.css('height', $el.height());
 							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
 
-							alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
+							/*alert('Line 41 ' + currentTextHeight + ' ' + textHeight);*/
 							if (currentTextHeight > textHeight) {
 								currentTextHeight = textHeight;
 							}
@@ -85,7 +73,7 @@ jQuery( document ).ready(function($){
 
 
 					if ( $el.hasClass('caption-under-slide') ) {
-						alert('Line 75 ' + $el.height() + ' - ' + capHeight );
+						//alert('Line 75 ' + $el.height() + ' - ' + capHeight );
 						$( "div.caption-under-slide p:nth-child(2)" ).css('height', textHeight);
 						//alert($el.height());
 					}
@@ -98,10 +86,8 @@ jQuery( document ).ready(function($){
 					}
 				});
 
-/*var useThisHeight = $('.bu-slideshow-container').height() +  $('li .bu-slide-container').height();
-$('.bu-slideshow-container').css('height', useThisHeight);*/
-				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight);
-				//var checkheight = ( height - captionPosition ) * 1.2;
+
+				/*alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight);*/
 				var checkheight = ( height + capHeight);
 				$(this).height(checkheight);
 
