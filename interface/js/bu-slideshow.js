@@ -4,6 +4,7 @@ jQuery( document ).ready(function($){
 		windowWidth = jQuery(window).width(),
 		buSlideshows = {},
 		rotator, imgHeight;
+		alert( $('.bu-slideshow-container').height() + ' ' + $('li .bu-slide-container').height() + ' ' + $( "div.caption-under-slide" ).height());
 
 		/**
 		 * Resizes slideshow and all slides to height of highest slide
@@ -27,18 +28,28 @@ jQuery( document ).ready(function($){
 
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
+
 					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
 					if ( $el.hasClass('caption-under-slide') ) {
+						/*currentCapHeight = $( "div.slide-caption-under-slide > .bu-slide-caption" ).css('height');*/
+						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height();
 
-						currentCapHeight = $el.height();
-						//alert('Line 31 ' + $el.height() );
+
+						alert('Line 31 ' + currentCapHeight + ' - ' + $el.height() );
+						//alert('Line 31 ' + currentCapHeight + ' - ' + capHeight );
+
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-						currentTextHeight = $el.height();
-							if (currentTextHeight > textHeight) {
+						/*if ( $el.hasClass('caption-under-slide') ) {
+							currentTextHeight = $( "div.caption-under-slide p:nth-child(2)" ).height();
+							alert('Line 43 ' + currentTextHeight );
+						}*/
+
+							/*if (currentTextHeight > textHeight) {
 								textHeight = currentTextHeight;
-							}
+							}*/
+							textHeight = capHeight;
 
 					} else {
 						if ( $el.prop("class") == 'bu-slide-caption-title'){
@@ -49,13 +60,16 @@ jQuery( document ).ready(function($){
 							}
 						}
 
-						if ( $el.hasClass('bu-slide-caption-text') ) {
-							//alert('Line 41 ' + $el.height() );
-							currentTextHeight = $el.height();
-							$el.css('height', $el.height());
-							$el.parent().css('height', $el.height() + ($el.height() * .28));
+						if ( $el.hasClass('bu-slide-caption') ) {
+
+							//currentTextHeight = $el.height();
+							currentTextHeight = $( "div.bu-slide-caption p:nth-child(2)" ).height();
+							/*$el.css('height', $el.height());
+							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
+
+							alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
 							if (currentTextHeight > textHeight) {
-								textHeight = currentTextHeight;
+								currentTextHeight = textHeight;
 							}
 						}
 
@@ -69,25 +83,27 @@ jQuery( document ).ready(function($){
 
 					}
 
-					currentHeight = $el.height() + capHeight + titleHeight + textHeight;
+
+					if ( $el.hasClass('caption-under-slide') ) {
+						alert('Line 75 ' + $el.height() + ' - ' + capHeight );
+						$( "div.caption-under-slide p:nth-child(2)" ).css('height', textHeight);
+						//alert($el.height());
+					}
+					currentHeight = $el.height() - textHeight;
+	//alert('Line 75 ' + currentHeight + ' ' + textHeight);
 					if (currentHeight > height) {
 						height = currentHeight;
 					} else {
-						height = height - 1;
+						height = height/* - 1*/;
 					}
 				});
 
-				slides.each(function(i, el) {
-					/*if ($("li")) {
-						alert( 'Is LI ' + $(this).attr('class') + ' ' + $(el).height());
-						$(el).css('height', height);
-					} else {
-						alert( $(this).is() + ' ' + $(el).height());
-					}*/
-
-				});
-				var checkheight = ( height - captionPosition ) * 1.4;
-				$(this).height(height);
+/*var useThisHeight = $('.bu-slideshow-container').height() +  $('li .bu-slide-container').height();
+$('.bu-slideshow-container').css('height', useThisHeight);*/
+				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight);
+				//var checkheight = ( height - captionPosition ) * 1.2;
+				var checkheight = ( height + capHeight);
+				$(this).height(checkheight);
 
 				//$('DIV.bu-slide-caption').css( 'height', 'auto');
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
