@@ -1,11 +1,11 @@
 # BU Slideshow #
-**Contributors:** inderpreet99, awbauer, clrux, mgburns, gannondigital  
-**Tags:** slideshow, images, boston university, bu  
-**Requires at least:** 3.5  
-**Tested up to:** 4.6.1  
-**Stable tag:** 2.3.8  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** inderpreet99, awbauer, clrux, mgburns, gannondigital
+**Tags:** slideshow, images, boston university, bu
+**Requires at least:** 3.5
+**Tested up to:** 4.9.6
+**Stable tag:** 2.3.9
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 
 ## Description ##
@@ -50,6 +50,9 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 
 ## Changelog ##
+### 2.3.9 ###
+* Added `page_alt` post type support to enable slides with BU Versions plugin
+
 ### 2.3.8 ###
 * Fix UI issues since WP 4.4
 * Use minified CSS on the frontend. Fixes #31.

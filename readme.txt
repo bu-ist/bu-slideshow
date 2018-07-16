@@ -2,8 +2,8 @@
 Contributors: inderpreet99, awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 4.6.1
-Stable tag: 2.3.8
+Tested up to: 4.9.6
+Stable tag: 2.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.
 
 == Changelog ==
+= 2.3.9 =
+* Added 'page_alt' post type support to enable slides with BU Versions plugin
+
 = 2.3.8 =
 * Fix UI issues since WP 4.4
 * Use minified CSS on the frontend. Fixes #31.
