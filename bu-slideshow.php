@@ -22,7 +22,7 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '.min');
+	define('BU_SSHOW_MIN', '' /*'.min'*/);//no matter what I do SCRIPT_DEBUG is false, so . . .
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -45,7 +45,8 @@ class BU_Slideshow {
 		'Middle Center' => 'caption-center-center',
 		'Bottom Right'  => 'caption-bottom-right',
 		'Bottom Center' => 'caption-bottom-center',
-		'Bottom Left'   => 'caption-bottom-left'
+		'Bottom Left'   => 'caption-bottom-left',
+		'Under Slide'   => 'caption-under-slide'
 	);
 	static $slide_templates = array();
 
