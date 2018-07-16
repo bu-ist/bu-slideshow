@@ -1,11 +1,16 @@
 # BU Slideshow #
-**Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99), [awbauer](https://profiles.wordpress.org/awbauer), [clrux](https://profiles.wordpress.org/clrux), [mgburns](https://profiles.wordpress.org/mgburns), [gannondigital](https://profiles.wordpress.org/gannondigital)  
-**Tags:** slideshow, images, boston university, bu  
-**Requires at least:** 3.5  
-**Tested up to:** 4.6.4  
-**Stable tag:** 2.3.9  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99),
+[awbauer](https://profiles.wordpress.org/awbauer),
+[clrux](https://profiles.wordpress.org/clrux),
+[mgburns](https://profiles.wordpress.org/mgburns),
+[gannondigital](https://profiles.wordpress.org/gannondigital)
+
+**Tags:** slideshow, images, boston university, bu
+**Requires at least:** 3.5
+**Tested up to:** 4.6.4
+**Stable tag:** 2.3.9
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 
 ## Description ##
