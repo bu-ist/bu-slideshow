@@ -11,6 +11,7 @@ Tested up to: 4.9.6
 */
 
 define('BU_SLIDESHOW_VERSION', '2.3.10');
+
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
 // define('SCRIPT_DEBUG', true);

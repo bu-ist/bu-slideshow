@@ -84,13 +84,28 @@ module.exports = function( grunt ) {
 					spawn : false
 				}
 			}
-		}
+		},
+
+		wp_readme_to_markdown: {
+			options: {
+        		screenshot_url: 'http://ps.w.org/{plugin}/assets/{screenshot}.png'
+        	},
+			your_target: {
+				files: {
+					'README.md': 'readme.txt'
+				}
+			},
+		},
 	});
 
 	// Build task.
 	grunt.registerTask( 'scripts', [ 'uglify' ] );
 	grunt.registerTask( 'styles', [ 'less', 'cssmin' ] );
 	grunt.registerTask( 'build', [ 'styles', 'scripts', 'phplint' ] );
+
+	// readme
+	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
 
 	// Default task.
 	grunt.registerTask( 'default', [ 'build' ] );
