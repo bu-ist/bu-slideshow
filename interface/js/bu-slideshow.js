@@ -18,7 +18,11 @@ jQuery( document ).ready(function($){
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el, height = 0, currentHeight = 0;
-				/*We need to get the height of each element to postiion the navigation and the caption individually*/
+				/*We need to get the height of each element to postiion the navigation and the caption individually
+
+
+
+				*/
 				var capHeight = 0;
 				var titleHeight;
 				var textHeight;
@@ -31,6 +35,7 @@ jQuery( document ).ready(function($){
 					currentCapPosition = 0;//
 					currentCapHeight = 0;//
 					textHeight = 0;
+					currentTextHeight = 0;
 					titleHeight = 0;
 
 					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
@@ -40,10 +45,10 @@ jQuery( document ).ready(function($){
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-
+						alert($el.prop('class') + ' ' + currentCapHeight + ' ' + capHeight);
 						textHeight = capHeight;
 
-					} else {
+					/*} else {*/
 						if ( $el.hasClass('bu-slide-caption-title') ){
 							//alert('Line 37 ' + $el.height() );
 							currentTitleHeight = $el.height();
@@ -59,9 +64,9 @@ jQuery( document ).ready(function($){
 							/*$el.css('height', $el.height());
 							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
 
-							/*alert('Line 41 ' + currentTextHeight + ' ' + textHeight);*/
+							alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
 							if (currentTextHeight > textHeight) {
-								currentTextHeight = textHeight;
+								textHeight = currentTextHeight;
 							}
 						}
 
@@ -91,9 +96,22 @@ jQuery( document ).ready(function($){
 				});
 
 
-				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight);
+				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);
 				var checkheight = ( height + capHeight);
 				$(this).height(checkheight);
+
+
+/*
+
+
+		rebuild this way
+		getTallestImage();//return tallest image and use for caption position and navigation position
+		$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
+		$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
+
+		OR!!! do I actually need to call this everytime? what if I position everything once and let the overall resize function handle it? Test that in an other branch.
+
+*/
 
 				//$('DIV.bu-slide-caption').css( 'height', 'auto');
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
@@ -104,6 +122,7 @@ jQuery( document ).ready(function($){
 				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
 				$('.bu-slideshow-navigation').css( 'height', 126 );
 				$('.bu-slide-caption-text').css( 'height', 126 );
+
 				//$(this).find('ul.bu-slideshow').height(height) + currentHeight;
 				//alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
 			});
