@@ -70,6 +70,8 @@ class BU_Slide {
 	 */
 	public function get($args = array()){
 
+
+
 		if( ! empty( $this->template_id ) ){
 			$templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates);
 			$this->template_options = $templates[ $this->template_id ];
@@ -98,6 +100,7 @@ class BU_Slide {
 
 						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
 						$edit_url = admin_url( 'post.php?post=' . $this->image_id . '&action=edit');
+
 					}
 				}
 
@@ -119,6 +122,7 @@ class BU_Slide {
 
 				$this->caption = stripslashes_deep($this->caption);
 				$this->image_html = $this->get_image_html();
+
 				$this->caption['html'] = $this->get_caption_html();
 
 				$html = sprintf('<li id="%s" class="slide %s">', $slide_id, $additional_styles);
@@ -171,6 +175,9 @@ class BU_Slide {
 		if (isset($this->caption['text']) && !empty($this->caption['text'])) {
 			$html .= sprintf('<p class="bu-slide-caption-text">%s</p>', $this->caption['text']);
 		}
+		if ( $this->caption['position'] == 'caption-under-slide') {
+			$html .= '<div style="float: left; clear: both;"></div>';
+		}
 		$html .= '</div>';
 
 		return $html;
@@ -184,7 +191,7 @@ class BU_Slide {
 
 			if (is_array($img_arr) && !empty($img_arr)) {
 				$img_alt = BU_Slideshow::get_image_alt($this->image_id);
-				$img_str = sprintf('<img src="%s" alt="%s" />', esc_url($img_arr[0]), esc_attr($img_alt));
+				$img_str = sprintf('<img src="%s" alt="%s" style="display: block;"/>', esc_url($img_arr[0]), esc_attr($img_alt));
 
 				if (isset($this->caption['link']) && $this->caption['link']) {
 					$html .= sprintf('<a href="%s">%s</a>', esc_url($this->caption['link']), $img_str);

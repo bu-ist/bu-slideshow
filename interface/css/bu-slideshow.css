@@ -290,6 +290,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   height: auto;
   background: none;
   padding: 0;
+  overflow: hidden;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container {
   height: auto;
@@ -297,13 +298,13 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container img {
   max-width: 100%;
-  display: inline;
+  display: block;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption {
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
   /* bottom: 20%; */
-  display: inline;
+  display: block;
   list-style: none;
   margin: 0;
   padding: 1%;

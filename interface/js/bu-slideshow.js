@@ -25,13 +25,14 @@ jQuery( document ).ready(function($){
 				/*We need to get the height of each element to postiion the navigation and the caption individually*/
 
 				slides.find('*').each(function(i, el) {
+					var currentCapHeight = 0;//height of current slide caption (title + text)
 					$el = $(el);
 
 					if ( $el.hasClass('caption-under-slide') ) {
-						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height() +20;//the second paragraph seems to need this padding for some reason
-						currentCapHeight1 = $el.height();
-						if (currentCapHeight1 > capHeight) {
-							capHeight = currentCapHeight1;
+						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height();//the second paragraph seems to need this padding for some reason
+						currentCapHeight1 = $el.height() - $( "div.caption-under-slide p:nth-child(1)" ).height();
+						if (currentCapHeight > capHeight) {
+							capHeight = currentCapHeight;
 						}
 						/*alert($( "div.caption-under-slide p:nth-child(1)" ).height()
 							+ ' ' + $( "div.caption-under-slide p:nth-child(2)" ).height()
@@ -57,10 +58,12 @@ jQuery( document ).ready(function($){
 					}
 
 				});
-				alert('This should be the tallest image and caption' + imgHeight + ' ' + capHeight+ ' ' + height + ' ' + $(this).prop('class'));
+				//alert('This should be the tallest image and caption' + imgHeight + ' ' + capHeight+ ' ' + height + ' ' + $(this).prop('class'));
 
 				//use final numbers to set height, nav position, and caption position
-				$('#bu-slideshow-container-406').height(height);
+				/*$('#bu-slideshow-container-406').height(height);*/
+
+				$('DIV.bu-slideshow-slides').css('margin-bottom', capHeight);
 				$('DIV.bu-slideshow-slides').height(height);
 				$( "div.caption-under-slide p:nth-child(2)" ).height(capHeight)
 				var captionPosition = imgHeight;
