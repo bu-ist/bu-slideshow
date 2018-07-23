@@ -60,8 +60,8 @@ jQuery( document ).ready(function($){
 				alert('This should be the tallest image and caption' + imgHeight + ' ' + capHeight+ ' ' + height + ' ' + $(this).prop('class'));
 
 				//use final numbers to set height, nav position, and caption position
-				$('.bu-slideshow-container').height(height);
-				$('.bu-slideshow-container').css( 'display', 'table');
+				$('#bu-slideshow-container-406').height(height);
+				$('DIV.bu-slideshow-slides').height(height);
 				$( "div.caption-under-slide p:nth-child(2)" ).height(capHeight)
 				var captionPosition = imgHeight;
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
