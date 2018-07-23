@@ -29,11 +29,13 @@ jQuery( document ).ready(function($){
 
 					if ( $el.hasClass('caption-under-slide') ) {
 						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height() +20;//the second paragraph seems to need this padding for some reason
-
-						if (currentCapHeight > capHeight) {
-							capHeight = currentCapHeight;
+						currentCapHeight1 = $el.height();
+						if (currentCapHeight1 > capHeight) {
+							capHeight = currentCapHeight1;
 						}
-						alert($( "div.caption-under-slide p:nth-child(1)" ).height());
+						/*alert($( "div.caption-under-slide p:nth-child(1)" ).height()
+							+ ' ' + $( "div.caption-under-slide p:nth-child(2)" ).height()
+							+ ' ' + $el.height()+ ' ' + $el.prop('class'));*/
 						/*alert($el.prop('class') + ' ' + currentCapHeight + ' ' + currentCapHeight1);*/
 
 					}
@@ -53,12 +55,17 @@ jQuery( document ).ready(function($){
 					} else {
 						height = height;
 					}
+
 				});
+				alert('This should be the tallest image and caption' + imgHeight + ' ' + capHeight+ ' ' + height + ' ' + $(this).prop('class'));
 
 				//use final numbers to set height, nav position, and caption position
-				$(this).height(height);
+				$('.bu-slideshow-container').height(height);
+				$('.bu-slideshow-container').css( 'display', 'table');
+				$( "div.caption-under-slide p:nth-child(2)" ).height(capHeight)
 				var captionPosition = imgHeight;
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
+				$('DIV.bu-slide-caption.caption-under-slide').css( 'height', capHeight);
 
 				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
 
@@ -207,7 +214,7 @@ jQuery( document ).ready(function($){
 
 				windowHeight = currentHeight;
 				windowWidth = currentWidth;
-
+				bu_resize_slideshow();
 			}
 
 		});

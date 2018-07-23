@@ -28,7 +28,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   transition-duration: 0.6s;
 }
 .bu-slideshow-container {
-  overflow: hidden;
+  overflow: display;
   position: relative;
   min-height: 100px;
 }
