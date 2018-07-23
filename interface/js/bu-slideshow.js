@@ -4,8 +4,6 @@ jQuery( document ).ready(function($){
 		windowWidth = jQuery(window).width(),
 		buSlideshows = {},
 		rotator, imgHeight;
-		/*alert( $('.bu-slideshow-container').height() + ' ' + $('li .bu-slide-container').height() + ' ' + $( "div.caption-under-slide" ).height());
-*/
 		/**
 		 * Resizes slideshow and all slides to height of highest slide
 		 *
@@ -16,115 +14,54 @@ jQuery( document ).ready(function($){
 		function bu_resize_slideshow() {
 			$('.bu-slideshow-navigation').css( 'height', 0 );
 			$('.bu-slideshow-container').each(function(){
-				var slides = $(this).find('li .bu-slide-container'),
-					$el, height = 0, currentHeight = 0;
-				/*We need to get the height of each element to postiion the navigation and the caption individually
-
-
-
-				*/
-				var capHeight = 0;
-				var titleHeight;
-				var textHeight;
-				var currentCapHeight;
+				var slides = $(this).find('li .bu-slide-container'), $el;
+				var height = 0;//actual height of the tallest image + the tallest caption
+				var currentHeight = 0;//height of current slide image + caption
+				var capHeight = 0;//actual height of the tallest caption (title + text)
+				var currentCapHeight = 0;//height of current slide caption (title + text)
+				var imgHeight = 0;
 				var captionPosition = 0;//
-				var currentCapPosition;
+				//var currentCapPosition;
+				/*We need to get the height of each element to postiion the navigation and the caption individually*/
 
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
-					currentCapPosition = 0;//
-					currentCapHeight = 0;//
-					textHeight = 0;
-					currentTextHeight = 0;
-					titleHeight = 0;
 
-					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
 					if ( $el.hasClass('caption-under-slide') ) {
-						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height();
+						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height() +20;//the second paragraph seems to need this padding for some reason
 
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-						alert($el.prop('class') + ' ' + currentCapHeight + ' ' + capHeight);
-						textHeight = capHeight;
+						alert($( "div.caption-under-slide p:nth-child(1)" ).height());
+						/*alert($el.prop('class') + ' ' + currentCapHeight + ' ' + currentCapHeight1);*/
 
-					/*} else {*/
-						if ( $el.hasClass('bu-slide-caption-title') ){
-							//alert('Line 37 ' + $el.height() );
-							currentTitleHeight = $el.height();
-							if (currentTitleHeight > titleHeight) {
-								titleHeight = currentTitleHeight;
-							}
-						}
+					}
+					//we need the image hieght regardless of caption position
 
-						if ( $el.hasClass('bu-slide-caption') ) {
-
-							//currentTextHeight = $el.height();
-							currentTextHeight = $( "div.bu-slide-caption p:nth-child(2)" ).height();
-							/*$el.css('height', $el.height());
-							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
-
-							alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
-							if (currentTextHeight > textHeight) {
-								textHeight = currentTextHeight;
-							}
-						}
-
-						if ( $el.find("img") ){
-							//alert('Line 41 ' + $el.height() );
-							currentCapPosition = $el.height();
-							if (currentCapPosition > captionPosition) {
-								captionPosition = currentCapPosition;
-							}
+					if ( $el.find("img") ){
+						currentImgHeight = $el.height();
+						if (currentImgHeight > imgHeight) {
+							imgHeight = currentImgHeight;
 						}
 
 					}
 
-
-					if ( $el.hasClass('caption-under-slide') ) {
-						//alert('Line 75 ' + $el.height() + ' - ' + capHeight );
-						$( "div.caption-under-slide p:nth-child(2)" ).css('height', textHeight);
-						//alert($el.height());
-					}
-					currentHeight = $el.height() - textHeight;
-	//alert('Line 75 ' + currentHeight + ' ' + textHeight);
+					currentHeight = imgHeight + capHeight +20;
 					if (currentHeight > height) {
 						height = currentHeight;
 					} else {
-						height = height/* - 1*/;
+						height = height;
 					}
 				});
 
-
-				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);
-				var checkheight = ( height + capHeight);
-				$(this).height(checkheight);
-
-
-/*
-
-
-		rebuild this way
-		getTallestImage();//return tallest image and use for caption position and navigation position
-		$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
-		$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
-
-		OR!!! do I actually need to call this everytime? what if I position everything once and let the overall resize function handle it? Test that in an other branch.
-
-*/
-
-				//$('DIV.bu-slide-caption').css( 'height', 'auto');
+				//use final numbers to set height, nav position, and caption position
+				$(this).height(height);
+				var captionPosition = imgHeight;
 				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
-				/*If there are any under slide captions that postioning impacts any captions with bottom alignment. Here, they get positioned just above the navigation.*/
-				if( $('DIV.bu-slide-caption.caption-under-slide').length > 0 ){
-					/*$('DIV.bu-slide-caption.caption-bottom-right, DIV.bu-slide-caption.caption-bottom-center, DIV.bu-slide-caption.caption-bottom-left').css( 'bottom', checkheight );*/
-				}
-				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
-				$('.bu-slideshow-navigation').css( 'height', 126 );
-				$('.bu-slide-caption-text').css( 'height', 126 );
 
-				//$(this).find('ul.bu-slideshow').height(height) + currentHeight;
-				//alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
+				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
+
 			});
 
 		}
@@ -270,7 +207,6 @@ jQuery( document ).ready(function($){
 
 				windowHeight = currentHeight;
 				windowWidth = currentWidth;
-				bu_resize_slideshow();
 
 			}
 
