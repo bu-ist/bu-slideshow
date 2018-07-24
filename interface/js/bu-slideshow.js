@@ -46,7 +46,7 @@ jQuery( document ).ready(function($){
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-						alert($el.prop('class') + ' ' + currentCapHeight + ' ' + capHeight);
+						/*alert($el.prop('class') + ' ' + currentCapHeight + ' ' + capHeight);*/
 						textHeight = capHeight;
 
 					/*} else {*/
@@ -71,17 +71,16 @@ jQuery( document ).ready(function($){
 							}
 						}
 
-						if ( $el.find("img")/* && $el.find("img").attr('src')*/ ){
-							alert('Line 75 ' + $el.height() + ' ' +$el.attr('src'));
+
+					}
+
+					if ( $el.find("img") && $el.attr('src') ){
+
 							currentCapPosition = $el.height();
 							if (currentCapPosition > captionPosition) {
 								captionPosition = currentCapPosition;
 							}
 						}
-
-					}
-
-
 					if ( $el.hasClass('caption-under-slide') ) {
 						//alert('Line 75 ' + $el.height() + ' - ' + capHeight );
 						$( "div.caption-under-slide p:nth-child(2)" ).css('height', textHeight);

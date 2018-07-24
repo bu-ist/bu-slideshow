@@ -274,7 +274,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow {
   width: 100% !important;
-  height: auto;
+  /* height: auto; */
   list-style: none !important;
   margin: 0;
   padding: 0;
@@ -292,7 +292,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   padding: 0;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container {
-  height: auto;
+ /*  height: auto; */
   width: 100%;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container img {
