@@ -29,6 +29,7 @@ jQuery( document ).ready(function($){
 				var currentCapHeight;
 				var captionPosition = 0;//
 				var currentCapPosition;
+				var captionPosition = 0;
 
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
@@ -64,14 +65,14 @@ jQuery( document ).ready(function($){
 							/*$el.css('height', $el.height());
 							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
 
-							alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
+							//alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
 							if (currentTextHeight > textHeight) {
 								textHeight = currentTextHeight;
 							}
 						}
 
-						if ( $el.find("img") ){
-							//alert('Line 41 ' + $el.height() );
+						if ( $el.find("img")/* && $el.find("img").attr('src')*/ ){
+							alert('Line 75 ' + $el.height() + ' ' +$el.attr('src'));
 							currentCapPosition = $el.height();
 							if (currentCapPosition > captionPosition) {
 								captionPosition = currentCapPosition;
@@ -96,7 +97,7 @@ jQuery( document ).ready(function($){
 				});
 
 
-				alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);
+				/*alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);*/
 				var checkheight = ( height + capHeight);
 				$(this).height(checkheight);
 
