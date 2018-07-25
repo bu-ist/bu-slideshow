@@ -300,6 +300,7 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   display: inline;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .bu-slide-caption {
+  z-index: 10000;
   background: #464646;
   background: rgba(0, 0, 0, 0.75);
   /* bottom: 20%; */
@@ -358,8 +359,8 @@ $('.active').parent().get(0); // This would be the <a>'s parent <li>.
   padding: 0;
   position: absolute;
   text-align: center;
-  width: 100%;
-  height: 100%;
+  width: 100%;/*
+  height: 100%; */
   z-index: 53;
 }
 .bu-slideshow-container .bu-slideshow-slides .bu-slideshow li .bu-slide-container .caption-top-left {

@@ -18,113 +18,65 @@ jQuery( document ).ready(function($){
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el, height = 0, currentHeight = 0;
-				/*We need to get the height of each element to postiion the navigation and the caption individually
-
-
-
-				*/
+				/*We need to get the height of each element to postiion the navigation and the caption individually*/
+				var checkheight = 0;
 				var capHeight = 0;
-				var titleHeight;
-				var textHeight;
-				var currentCapHeight;
-				var captionPosition = 0;//
-				var currentCapPosition;
-				var captionPosition = 0;
+				var currentCapHeight = 0;
+				var imageHeight = 0;//
+				var currentImageHeight;
+				var imageHeight = 0;
 
+				//loop through each element of the slide
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
-					currentCapPosition = 0;//
+					currentImageHeight = 0;//
 					currentCapHeight = 0;//
-					textHeight = 0;
-					currentTextHeight = 0;
-					titleHeight = 0;
+					var checkheight = 0;
+
 
 					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
 					if ( $el.hasClass('caption-under-slide') ) {
-						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height() + $( "div.caption-under-slide p:nth-child(2)" ).height();
-
+						currentCapHeight = $( "div.caption-under-slide p:nth-child(2)" ).height() + 40;
+						currentCapHeight += $( "div.caption-under-slide p:nth-child(1)" ).height() * 1.5;
+						//alert(currentCapHeight + ' ' + capHeight);
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
-						/*alert($el.prop('class') + ' ' + currentCapHeight + ' ' + capHeight);*/
-						textHeight = capHeight;
-
-					/*} else {*/
-						if ( $el.hasClass('bu-slide-caption-title') ){
-							//alert('Line 37 ' + $el.height() );
-							currentTitleHeight = $el.height();
-							if (currentTitleHeight > titleHeight) {
-								titleHeight = currentTitleHeight;
-							}
-						}
-
-						if ( $el.hasClass('bu-slide-caption') ) {
-
-							//currentTextHeight = $el.height();
-							currentTextHeight = $( "div.bu-slide-caption p:nth-child(2)" ).height();
-							/*$el.css('height', $el.height());
-							$el.parent().css('height', $el.height() + ($el.height() * .28));*/
-
-							//alert('Line 41 ' + currentTextHeight + ' ' + textHeight);
-							if (currentTextHeight > textHeight) {
-								textHeight = currentTextHeight;
-							}
-						}
-
 
 					}
 
 					if ( $el.find("img") && $el.attr('src') ){
 
-							currentCapPosition = $el.height();
-							if (currentCapPosition > captionPosition) {
-								captionPosition = currentCapPosition;
+							currentImageHeight = $el.height();
+							if (currentImageHeight > imageHeight) {
+								imageHeight = currentImageHeight;
 							}
+
 						}
+					});
+
+				slides.find('*').each(function(i, el) {
+					$el = $(el);
 					if ( $el.hasClass('caption-under-slide') ) {
-						//alert('Line 75 ' + $el.height() + ' - ' + capHeight );
-						$( "div.caption-under-slide p:nth-child(2)" ).css('height', textHeight);
-						//alert($el.height());
+						$(this).height(capHeight);
 					}
-					currentHeight = $el.height() - textHeight;
-	//alert('Line 75 ' + currentHeight + ' ' + textHeight);
-					if (currentHeight > height) {
-						height = currentHeight;
-					} else {
-						height = height/* - 1*/;
-					}
-				});
 
 
-				/*alert(height + ' ' + captionPosition + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);*/
-				var checkheight = ( height + capHeight);
-				$(this).height(checkheight);
+					});
 
+				/*alert(height + ' ' + imageHeight + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);*/
+				checkheight = ( imageHeight + capHeight);
 
-/*
-
-
-		rebuild this way
-		getTallestImage();//return tallest image and use for caption position and navigation position
-		$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
-		$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
-
-		OR!!! do I actually need to call this everytime? what if I position everything once and let the overall resize function handle it? Test that in an other branch.
-
-*/
+$("DIV.bu-slideshow-container").each(function(index, value) {
+					    $(value).height(checkheight);
+					});
 
 				//$('DIV.bu-slide-caption').css( 'height', 'auto');
-				$('DIV.bu-slide-caption.caption-under-slide').css( 'top', captionPosition);
-				/*If there are any under slide captions that postioning impacts any captions with bottom alignment. Here, they get positioned just above the navigation.*/
-				if( $('DIV.bu-slide-caption.caption-under-slide').length > 0 ){
-					/*$('DIV.bu-slide-caption.caption-bottom-right, DIV.bu-slide-caption.caption-bottom-center, DIV.bu-slide-caption.caption-bottom-left').css( 'bottom', checkheight );*/
-				}
-				$('.bu-slideshow-navigation').css( 'top', ( captionPosition * .9 ) );
-				$('.bu-slideshow-navigation').css( 'height', 126 );
-				$('.bu-slide-caption-text').css( 'height', 126 );
+				$('.caption-under-slide').css( 'top', imageHeight);
+				//$('.caption-under-slide').css( 'height', capHeight);
+				$('.bu-slideshow-navigation').css( 'top', ( imageHeight * .9 ) );
 
-				//$(this).find('ul.bu-slideshow').height(height) + currentHeight;
-				//alert($(this).find('ul.bu-slideshow').height(height) + currentHeight);
+
 			});
 
 		}
