@@ -135,7 +135,6 @@ class BU_Slideshow_Instance {
 		if( !$this->id ){
 			$this->id = $this->create_post();
 		}
-		var_dump($this);
 
 		if ( BU_Slideshow::slideshow_exists( $this->id ) ){
 			$post_id = BU_Slideshow::slideshow_maybe_translate_id( $this->id );
@@ -153,52 +152,6 @@ class BU_Slideshow_Instance {
 	 */
 	public function get($args = array()) {
 
-foreach($this->slides as $this_slide){
-	//var_dump($this_slide);
-	if ($this_slide){
-			//try to calculate height here
-			//var_dump($this_slide->image_id);
-
-			if ($this_slide->image_id) {
-					$img_thumb = wp_get_attachment_image($this_slide->image_id, BU_Slideshow::$custom_thumb_size);
-					if( !empty( $img_thumb ) ){
-						$img_meta = wp_get_attachment_metadata($this_slide->image_id);
-
-						if( array_key_exists( 'bu-slideshow-thumb', $img_meta['sizes'] ) ){
-							unset($img_meta['sizes'][BU_Slideshow::$custom_thumb_size]);
-						}
-
-						$img_meta['sizes']['full'] = array("width"=>$img_meta['width'],"height"=>$img_meta['height']);
-						$edit_url = admin_url( 'post.php?post=' . $this_slide->image_id . '&action=edit');
-						//var_dump( $img_meta );
-					}
-				}
-
-			if ($this_slide->image_size == 'medium'){
-				//try to calculate height here
-				//var_dump($this->caption['text']);
-				//var_dump($this_slide->image_size );
-
-				$lines = strlen($this_slide->caption['text']) / 74;
-				//var_dump( $lines );
-
-				//$this_slide->height = $this->height + 1500;
-
-			}
-
-		}
-}
-//var_dump($this);
-/*if ($this->height < 1000) {
-	$this->height = $this->height + 1500;
-	$this->update($this);
-	//var_dump($this);
-} else {
-	//var_dump($this->height);
-}*/
-
-
-		//var_dump($this->caption['position'] );
 		/*
 		* Filter accepts templates in array form.
 		*  - Templates must be defined (minimally) with an ID & name attribute:
@@ -277,7 +230,6 @@ foreach($this->slides as $this_slide){
 				}
 
 				$html .= '</ul></div>';
-				$html .= '<div style="position: relative; display: inline; float: left; clear: both;"></div>';
 
 				// slideshow nav
 				if ($args['show_nav']) {

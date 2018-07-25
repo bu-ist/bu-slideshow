@@ -4,8 +4,7 @@ jQuery( document ).ready(function($){
 		windowWidth = jQuery(window).width(),
 		buSlideshows = {},
 		rotator, imgHeight;
-		/*alert( $('.bu-slideshow-container').height() + ' ' + $('li .bu-slide-container').height() + ' ' + $( "div.caption-under-slide" ).height());
-*/
+
 		/**
 		 * Resizes slideshow and all slides to height of highest slide
 		 *
@@ -17,63 +16,59 @@ jQuery( document ).ready(function($){
 			$('.bu-slideshow-navigation').css( 'height', 0 );
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
-					$el, height = 0, currentHeight = 0;
+					$el;
 				/*We need to get the height of each element to postiion the navigation and the caption individually*/
-				var checkheight = 0;
+				var totalHeight = 0;
 				var capHeight = 0;
 				var currentCapHeight = 0;
 				var imageHeight = 0;//
-				var currentImageHeight;
+				var currentImageHeight = 0;
 				var imageHeight = 0;
 
 				//loop through each element of the slide
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
-					currentImageHeight = 0;//
-					currentCapHeight = 0;//
-					var checkheight = 0;
 
-
-					/*when the caption is below the slide we need to ge the largest caption height to position the navigation and make room for the caption*/
+					/*if there is a caption below any slide we need to ge the tallest to position the navigation, position the caption, and make room on the page for the slideshow height*/
+					if ( $el.find("img") && $el.attr('src') ){
+						currentImageHeight = $el.height();
+						if (currentImageHeight > imageHeight) {
+							imageHeight = currentImageHeight;
+						}
+					}
+					/*we need the tallest caption that will be below a slide to calculate the total slideshow height*/
 					if ( $el.hasClass('caption-under-slide') ) {
+						/*the padding of the height property needs to be ironed out
+						getting the height of div.caption-under-slide gets unexpected results. adding the P1 and p2 - slide title and text - gives consistent results but comes up short*/
 						currentCapHeight = $( "div.caption-under-slide p:nth-child(2)" ).height() + 40;
 						currentCapHeight += $( "div.caption-under-slide p:nth-child(1)" ).height() * 1.5;
-						//alert(currentCapHeight + ' ' + capHeight);
+
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
 						}
 
 					}
 
-					if ( $el.find("img") && $el.attr('src') ){
-
-							currentImageHeight = $el.height();
-							if (currentImageHeight > imageHeight) {
-								imageHeight = currentImageHeight;
-							}
-
-						}
-					});
-
-				slides.find('*').each(function(i, el) {
-					$el = $(el);
-					if ( $el.hasClass('caption-under-slide') ) {
-						$(this).height(capHeight);
-					}
+				});
 
 
-					});
+				/*$("DIV.caption-under-slide").each(function(index, value) {
+					  //$(value).height(capHeight);
+				});*/
 
-				/*alert(height + ' ' + imageHeight + ' ' + capHeight + ' ' + textHeight  + ' CTH: ' + currentTextHeight);*/
-				checkheight = ( imageHeight + capHeight);
-
-$("DIV.bu-slideshow-container").each(function(index, value) {
-					    $(value).height(checkheight);
-					});
-
-				//$('DIV.bu-slide-caption').css( 'height', 'auto');
-				$('.caption-under-slide').css( 'top', imageHeight);
-				//$('.caption-under-slide').css( 'height', capHeight);
+				/*$("DIV.bu-slideshow-container").each(function(index, value) {
+				    //$(value).height(totalHeight);
+				});
+*/
+				/*Set each under slide caption to the same height for consistency*/
+				$('DIV.caption-under-slide').css( 'height', capHeight);
+				/*Set each under slide caption position
+				the top of the caption will float ta the bottom edge of the tallest slide regardless of which image the caption is under*/
+				$('DIV.caption-under-slide').css( 'top', imageHeight);
+				/*get the total height and set each slide*/
+				totalHeight = ( imageHeight + capHeight);
+				$("DIV.bu-slideshow-container").css( 'height', totalHeight);
+				/*position navigation*/
 				$('.bu-slideshow-navigation').css( 'top', ( imageHeight * .9 ) );
 
 

@@ -1,20 +1,4 @@
-<?php
-global $wpdb;
-$slideshows = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_type = 'bu_slideshow' ");
-
-foreach ($slideshows as $slideshow) {
-
-	if ($slideshow->ID == 2501) {
-		echo 'IDS!<BR>';
-		var_dump(get_post_meta($slideshow->ID));
-	}
-
-	//
- }
-
-//var_dump($slideshows);
-
-?><p>
+<p>
 	<label for="bu_slideshow_name"><strong><?php _e('Slideshow Name', BU_SSHOW_LOCAL); ?>: </strong></label>
 	<input type="text" id="bu_slideshow_name" name="bu_slideshow_name" value="<?php echo $name; ?>" />
 </p>
