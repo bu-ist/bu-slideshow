@@ -589,7 +589,6 @@ class BU_Slideshow {
 				'image_id'          => intval($arr['image_id']),
 				'image_size'        => esc_attr(wp_kses_data($arr['image_size'])),
 				'caption'           => array(
-					'height'         => '',
 					'title'         => wp_kses_data($arr['caption']['title']),
 					'link'          => esc_attr(wp_kses_data($arr['caption']['link'])),
 					'text'          => wp_kses_data($arr['caption']['text']),

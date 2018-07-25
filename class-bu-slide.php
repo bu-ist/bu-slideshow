@@ -146,15 +146,7 @@ class BU_Slide {
 				( !isset($this->caption['text']) || empty($this->caption['text']) ) ) {
 			return $html;
 		}
-
-
-		//adding the caption under the slide requires some addtional js and css
-		//therefore we need the id and unique class name
-		if ( $this->caption['position'] == 'caption-under-slide') {
-			$html .= '<div class="bu-slide-caption '.$this->caption['position'].'" style="height: '.$this->caption['height'].'px;">';
-		} else {
 			$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
-		}
 
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';
