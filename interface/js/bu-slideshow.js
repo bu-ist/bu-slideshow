@@ -43,7 +43,7 @@ jQuery( document ).ready(function($){
 						getting the height of div.caption-under-slide gets unexpected results. adding the P1 and p2 - slide title and text - gives consistent results but comes up short*/
 						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height();
 						currentCapHeight += $( "div.caption-under-slide p:nth-child(2)" ).height();
-						currentCapHeight += (currentCapHeight)*1.1;
+						currentCapHeight += (currentCapHeight)/**1.08*/;
 
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
