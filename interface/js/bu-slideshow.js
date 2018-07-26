@@ -63,6 +63,9 @@ jQuery( document ).ready(function($){
 				totalHeight = ( imageHeight + capHeight);
 				$("DIV.bu-slideshow-container").css( 'height', totalHeight);
 				/*position navigation*/
+
+				$('.bu-slideshow-arrow-right').css( 'top', ( imageHeight * .85 ) );
+				$('.bu-slideshow-arrow-left').css( 'top', ( imageHeight * .85 ) );
 				$('.bu-slideshow-navigation').css( 'top', ( imageHeight * .9 ) );
 
 
