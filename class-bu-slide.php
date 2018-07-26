@@ -146,7 +146,8 @@ class BU_Slide {
 				( !isset($this->caption['text']) || empty($this->caption['text']) ) ) {
 			return $html;
 		}
-			$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
+
+		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
 
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';

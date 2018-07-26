@@ -1,5 +1,6 @@
 DIV.bu-slide-container {}
-.caption-under-slide {}
+DIV.caption-under-slide {margin}
+DIV.caption-under-slide > P.bu-slide-caption-text {padding: 1%;}
 
 .mediumTransition {
   -moz-transition-duration: 0.3s;

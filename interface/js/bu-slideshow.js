@@ -11,17 +11,18 @@ jQuery( document ).ready(function($){
 		 * I hate iterating through everything in the slides here, but we should allow
 		 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
 		 */
+		 /*Updated to allow for captions below slides*/
 
 		function bu_resize_slideshow() {
 			$('.bu-slideshow-navigation').css( 'height', 0 );
 			$('.bu-slideshow-container').each(function(){
 				var slides = $(this).find('li .bu-slide-container'),
 					$el;
-				/*We need to get the height of each element to postiion the navigation and the caption individually*/
+				/*We need to get the height of each element to postiion the navigation and any caption-under-slide captions individually*/
 				var totalHeight = 0;
 				var capHeight = 0;
 				var currentCapHeight = 0;
-				var imageHeight = 0;//
+				var imageHeight = 0;
 				var currentImageHeight = 0;
 				var imageHeight = 0;
 
@@ -29,19 +30,20 @@ jQuery( document ).ready(function($){
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
 
-					/*if there is a caption below any slide we need to ge the tallest to position the navigation, position the caption, and make room on the page for the slideshow height*/
+					/*if there is a caption below any slide we need to ge the tallest image to position the navigation, the caption, and calculate the total slideshow height*/
 					if ( $el.find("img") && $el.attr('src') ){
 						currentImageHeight = $el.height();
 						if (currentImageHeight > imageHeight) {
 							imageHeight = currentImageHeight;
 						}
 					}
-					/*we need the tallest caption that will be below a slide to calculate the total slideshow height*/
+					/*we need the height of the tallest caption below slide to calculate the total slideshow height and a consistent size for those captions*/
 					if ( $el.hasClass('caption-under-slide') ) {
 						/*the padding of the height property needs to be ironed out
 						getting the height of div.caption-under-slide gets unexpected results. adding the P1 and p2 - slide title and text - gives consistent results but comes up short*/
-						currentCapHeight = $( "div.caption-under-slide p:nth-child(2)" ).height() + 40;
-						currentCapHeight += $( "div.caption-under-slide p:nth-child(1)" ).height() * 1.5;
+						currentCapHeight = $( "div.caption-under-slide p:nth-child(1)" ).height();
+						currentCapHeight += $( "div.caption-under-slide p:nth-child(2)" ).height();
+						currentCapHeight += (currentCapHeight)*1.1;
 
 						if (currentCapHeight > capHeight) {
 							capHeight = currentCapHeight;
@@ -52,18 +54,10 @@ jQuery( document ).ready(function($){
 				});
 
 
-				/*$("DIV.caption-under-slide").each(function(index, value) {
-					  //$(value).height(capHeight);
-				});*/
-
-				/*$("DIV.bu-slideshow-container").each(function(index, value) {
-				    //$(value).height(totalHeight);
-				});
-*/
 				/*Set each under slide caption to the same height for consistency*/
 				$('DIV.caption-under-slide').css( 'height', capHeight);
-				/*Set each under slide caption position
-				the top of the caption will float ta the bottom edge of the tallest slide regardless of which image the caption is under*/
+				/*Set position for each under slide caption.
+				The top of the caption will float at the bottom edge of the tallest image regardless of which image the caption is under*/
 				$('DIV.caption-under-slide').css( 'top', imageHeight);
 				/*get the total height and set each slide*/
 				totalHeight = ( imageHeight + capHeight);
