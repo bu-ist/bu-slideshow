@@ -13,7 +13,7 @@ Tested up to: 4.6.4
 define('BU_SLIDESHOW_VERSION', '2.3.9');
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-define('SCRIPT_DEBUG', true);
+define('SCRIPT_DEBUG', false);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
@@ -23,7 +23,7 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '' /*'.min'*/);//no matter what I do SCRIPT_DEBUG is false, so . . .
+	define('BU_SSHOW_MIN', '.min');
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
