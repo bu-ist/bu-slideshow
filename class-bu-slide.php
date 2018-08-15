@@ -14,7 +14,7 @@ class BU_Slide {
 		'title'    => '',
 		'link'     => '',
 		'text'     => '',
-		'position' => 'caption-bottom-right'
+		'position' => 'caption-under-slide'
 	);
 	public $order = 0;
 	public $template_id = '';

@@ -592,7 +592,7 @@ class BU_Slideshow {
 					'title'         => wp_kses_data($arr['caption']['title']),
 					'link'          => esc_attr(wp_kses_data($arr['caption']['link'])),
 					'text'          => wp_kses_data($arr['caption']['text']),
-					'position'      => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
+					'position'      => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-under-slide' : $arr['caption']['position']
 				),
 				'template_id'       => $template,
 				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles'])),
