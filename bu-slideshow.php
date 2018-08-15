@@ -106,8 +106,10 @@ class BU_Slideshow {
 		add_action('wp_ajax_bu_add_slide', array(__CLASS__, 'add_slide_ajax'));
 		add_action('wp_ajax_bu_get_slide_thumb', array(__CLASS__, 'get_slide_thumb_ajax'));
 		add_action('wp_ajax_bu_slideshow_get_url', array(__CLASS__, 'get_url'));
-
 		add_shortcode('bu_slideshow', array(__CLASS__, 'shortcode_handler'));
+		/*add_filter( 'post_updated_messages', array(__CLASS__,'bu_slideshow_caption_length_warning'));
+		//checks for errors in the profile details meta entry.
+		add_action( 'admin_notices', array( __CLASS__, 'bu_slideshow_admin_notice' ) );*/
 
 	}
 
@@ -1115,6 +1117,143 @@ class BU_Slideshow {
 
 		<?php
 		endif;
+	}
+
+
+	public static function bu_slideshow_caption_length_warning() {
+
+		//first set up custom messages for Profile updates
+		$preview_post_link_html = $scheduled_post_link_html = $view_post_link_html = '';
+		$preview_page_link_html = $scheduled_page_link_html = $view_page_link_html = '';
+		$preview_url = get_preview_post_link( $post_ID );
+
+		$viewable = is_post_type_viewable( 'profile' );
+
+		if ( $viewable ) {
+
+			// Preview post link.
+			$preview_post_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+				esc_url( $preview_url ),
+				__( 'Preview profile' )
+			);
+
+			// Scheduled post preview link.
+			$scheduled_post_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+				esc_url( $permalink ),
+				__( 'Preview profile' )
+			);
+
+			// View post link.
+			$view_post_link_html = sprintf( ' <a href="%1$s">%2$s</a>',
+				esc_url( $permalink ),
+				__( 'View profile' )
+			);
+
+			// Preview page link.
+			$preview_page_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+				esc_url( $preview_url ),
+				__( 'Preview profile' )
+			);
+
+			// Scheduled page preview link.
+			$scheduled_page_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+				esc_url( $permalink ),
+				__( 'Preview profile' )
+			);
+
+			// View page link.
+			$view_page_link_html = sprintf( ' <a href="%1$s">%2$s</a>',
+				esc_url( $permalink ),
+				__( 'View profile' )
+			);
+
+		}
+
+		/* translators: Publish box date format, see https://secure.php.net/date */
+		$scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
+		$messages['profile'] = array(
+				0 => '', // Unused. Messages start at index 1.
+				1 => __(  'Slideshow updated.' ) . $view_post_link_html,
+		         2 => __( 'Custom field updated.' ),
+		         3 => __( 'Custom field deleted.' ),
+		         4 => __( 'Slideshow Updated.'),
+		        /* translators: %s: date and time of the revision */
+		         5 => isset($_GET['revision']) ? sprintf( __( 'Slideshow restored to revision from %s.' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		         6 => __( 'Slideshow published.' ) . $view_post_link_html,
+		         7 => __( 'Slideshow saved.' ),
+		         8 => __( 'Slideshow submitted.' ) . $preview_post_link_html,
+		        10 => __( 'Slideshow draft updated.,' ) . $preview_post_link_html,
+			);
+
+		/*Adding a max caption length
+		bu_profile_admin_notice handles warnings and messages.*/
+
+		$post_ID = get_the_ID();
+		$bu_profile_fn = get_post_meta($post_ID, '_bu_profile_first_name', true);
+		$bu_profile_ln = get_post_meta($post_ID, '_bu_profile_last_name', true);
+
+		if ( empty($bu_profile_fn) || empty($bu_profile_ln) ){
+			$cur_title = get_the_title();
+			if (!$cur_title) {
+				//if there's no title just return the notices
+				return $messages;
+			} else {
+				/*if there is a title suggest first and last
+				before returning notices*/
+				$bu_fn_len = strpos($cur_title, ' ');
+				$bu_fn_len ? $bu_fn_len : $bu_fn_len = 0;
+				$bu_fn = substr($cur_title, 0, $bu_fn_len);
+				$bu_ln = substr($cur_title, $bu_fn_len, 100 );
+
+				update_post_meta(get_the_ID(), '_bu_profile_first_name', $bu_fn, '');
+				update_post_meta(get_the_ID(), '_bu_profile_last_name', $bu_ln, '');
+			}
+			return $messages;
+		}
+
+	}
+
+	/**
+	 * Filter to warn about missing profile data.
+	 *
+	 * @param int    $post_id
+	 * @param object $post
+	 */
+	public static function bu_slideshow_admin_notice(){
+
+		if( array_key_exists('admin_message', $_GET)){
+			$possible_messages = $_GET['required_fields'];
+			$add_admin = false;
+			?>
+		    <div class="error">
+		      <p>
+		      <?php
+
+		         $admin_message = '';
+		            $css_message = '<script type="text/javascript">
+		            jQuery(document).ready(function($){
+					   $("';
+					$css_classes = '';
+					foreach ($_GET as $key => $value) {
+
+						$css_classes .= '#bu_profile_' . $key . ', ';
+						if (in_array($key, $possible_messages)) {
+							$admin_message .= $value . '<BR>';
+						}
+						$add_admin = true;
+					}
+					$css_classes = trim(trim($css_classes, ' '), ',');
+					if ($add_admin == true ) {$admin_message .= $_GET['admin_message'] . '<BR>';}
+		            $css_message .= $css_classes . '").css( {"border-width": "1px", "border-color": "red", "border-style": "solid"});
+							});
+						</script>';
+					echo $css_message . $admin_message;
+
+		       ?>
+		       </p>
+		    </div>
+		    <?php
+		}
 	}
 
 	/**
