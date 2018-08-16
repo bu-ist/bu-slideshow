@@ -2,8 +2,8 @@
 **Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99), [awbauer](https://profiles.wordpress.org/awbauer), [clrux](https://profiles.wordpress.org/clrux), [mgburns](https://profiles.wordpress.org/mgburns), [gannondigital](https://profiles.wordpress.org/gannondigital)  
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
-**Tested up to:** 4.6.4  
-**Stable tag:** 2.3.9  
+**Tested up to:** 4.9.6  
+**Stable tag:** 2.3.10  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -50,6 +50,9 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 
 ## Changelog ##
+### 2.3.10 ###
+* Added 'page_alt' post type support to enable the Slideshow UI wehn using the BU Versions plugin
+
 ### 2.3.9 ###
 * Fix formatting error in shortcode generation
 
