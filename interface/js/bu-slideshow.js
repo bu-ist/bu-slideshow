@@ -5,6 +5,11 @@ jQuery( document ).ready(function($){
 		buSlideshows = {},
 		rotator, imgHeight;
 
+		/*Class swapping function for caption underslide on mobile*/
+		function bu_swap_caption_location(current_class) {
+
+		}
+
 		/**
 		 * Resizes slideshow and all slides to height of highest slide
 		 *
@@ -12,7 +17,6 @@ jQuery( document ).ready(function($){
 		 * for markup other than what the plugin currently produces (e.g. video, custom HTML).
 		 */
 		 /*Updated to allow for captions below slides*/
-
 		function bu_resize_slideshow() {
 			$('.bu-slideshow-navigation').css( 'height', 0 );
 			$('.bu-slideshow-container').each(function(){
@@ -29,7 +33,92 @@ jQuery( document ).ready(function($){
 				//loop through each element of the slide
 				slides.find('*').each(function(i, el) {
 					$el = $(el);
+					if ( $(window).width() < 401 ) {
 
+						if ( $el.is('div') && $el.hasClass('bu-slide-caption') ) {
+							console.log( 'bu-slide-caption.');
+							if ($el.hasClass('caption-bottom-right')) {
+								$el.removeClass('caption-bottom-right')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-bottom-right');
+							}
+							if ($el.hasClass('caption-bottom-left')) {
+								$el.removeClass('caption-bottom-left')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-bottom-left');
+							}
+							if ($el.hasClass('caption-bottom-center')) {
+								$el.removeClass('caption-bottom-center')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-bottom-center');
+							}
+							if ($el.hasClass('caption-top-right')) {
+								$el.removeClass('caption-top-right')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-top-right');
+							}
+							if ($el.hasClass('caption-top-left')) {
+								$el.removeClass('caption-top-left')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-top-left');
+							}
+							if ($el.hasClass('caption-top-center')) {
+								$el.removeClass('caption-top-center')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-top-center');
+							}
+							if ($el.hasClass('caption-center-center')) {
+								$el.removeClass('caption-center-center')
+								$el.addClass('caption-under-slide');
+								$el.addClass('reset-center-center');
+							}
+						}
+						/*if ($el.removeClass('[class^="caption-"]')) {
+							$el.addClass('caption-under-slide');
+						}*/
+
+						console.log( $(window).width() + ' class added.');
+					} else {
+						if ( $el.is('div') && $el.hasClass('bu-slide-caption') ) {
+							console.log( 'bu-slide-caption.');
+							if ($el.hasClass('reset-bottom-right')) {
+								$el.removeClass('reset-bottom-right');
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-bottom-right');
+							}
+							if ($el.hasClass('reset-bottom-left')) {
+								$el.removeClass('reset-bottom-left');
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-bottom-left');
+							}
+							if ($el.hasClass('reset-bottom-center')) {
+								$el.removeClass('reset-bottom-center');
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-bottom-center');
+							}
+							if ($el.hasClass('reset-top-right')) {
+								$el.removeClass('reset-top-right');
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-top-right');
+							}
+							if ($el.hasClass('reset-top-left')) {
+								$el.removeClass('reset-top-left');
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-top-left');
+							}
+							if ($el.hasClass('reset-top-center')) {
+								$el.removeClass('reset-top-center')
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-top-center');
+							}
+							if ($el.hasClass('reset-center-center')) {
+								$el.removeClass('reset-center-center')
+								$el.removeClass('caption-under-slide');
+								$el.addClass('caption-center-center');
+							}
+						}
+						console.log( $(window).width());
+					}
 					/*if there is a caption below any slide we need to ge the tallest image to position the navigation, the caption, and calculate the total slideshow height*/
 					if ( $el.find("img") && $el.attr('src') ){
 						currentImageHeight = $el.height();
@@ -37,6 +126,10 @@ jQuery( document ).ready(function($){
 							imageHeight = currentImageHeight;
 						}
 					}
+					/*If we're on mobile switch all caption to below the slide*/
+					
+
+
 					/*we need the height of the tallest caption below slide to calculate the total slideshow height and a consistent size for those captions*/
 					if ( $el.hasClass('caption-under-slide') ) {
 						/*the padding of the height property needs to be ironed out

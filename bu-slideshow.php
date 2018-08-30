@@ -23,7 +23,7 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '.min');
+	define('BU_SSHOW_MIN', ''/*'.min'*/);
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
