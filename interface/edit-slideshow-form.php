@@ -9,12 +9,12 @@
 
 	<select name="bu_slideshow_template">
 		<option value="">Default template</option>
-		<?php 
+		<?php
 			foreach ($valid_templates as $i => $t){
 				if( is_array( $t ) && array_key_exists( 'name', $t ) ){
 					printf( '<option value="%s" %s>%s</option>', $i, selected( $i, $template_id, false ), $t['name'] );
 				}
-			} 
+			}
 		?>
 	</select>
 </p>
@@ -26,7 +26,7 @@
 </p>
 <div id="bu-slideshow-slidelist">
 	<ul>
-	<?php 
+	<?php
 	if ( count($slides) > 0 ) {
 		foreach ($slides as $index => $slide) {
 			$slide->set_order($index);

@@ -14,16 +14,17 @@ define('BU_SLIDESHOW_VERSION', '2.3.10');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-// define('SCRIPT_DEBUG', true);
+define('SCRIPT_DEBUG', false);
 
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
 
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
+
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '.min');
+	define('BU_SSHOW_MIN', ''/*'.min'*/);
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -48,7 +49,8 @@ class BU_Slideshow {
 		'Middle Center' => 'caption-center-center',
 		'Bottom Right'  => 'caption-bottom-right',
 		'Bottom Center' => 'caption-bottom-center',
-		'Bottom Left'   => 'caption-bottom-left'
+		'Bottom Left'   => 'caption-bottom-left',
+		'Under Slide'   => 'caption-under-slide'
 	);
 	static $slide_templates = array();
 
@@ -593,7 +595,7 @@ class BU_Slideshow {
 					'title'         => wp_kses_data($arr['caption']['title']),
 					'link'          => esc_attr(wp_kses_data($arr['caption']['link'])),
 					'text'          => wp_kses_data($arr['caption']['text']),
-					'position'      => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-bottom-right' : $arr['caption']['position']
+					'position'      => ( FALSE === array_search($arr['caption']['position'], $caption_positions) ) ? 'caption-under-slide' : $arr['caption']['position']
 				),
 				'template_id'       => $template,
 				'additional_styles' => esc_attr(wp_kses_data($arr['additional_styles'])),
@@ -659,7 +661,6 @@ class BU_Slideshow {
 	 */
 	static public function manage_slideshow_page() {
 		$slideshows = self::get_slideshows();
-
 		if(isset($_GET['msg'])){
 			$msg = filter_var( $_GET['msg'], FILTER_SANITIZE_STRING );
 		}

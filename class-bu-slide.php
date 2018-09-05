@@ -14,7 +14,7 @@ class BU_Slide {
 		'title'    => '',
 		'link'     => '',
 		'text'     => '',
-		'position' => 'caption-bottom-right'
+		'position' => 'caption-under-slide'
 	);
 	public $order = 0;
 	public $template_id = '';
@@ -147,7 +147,7 @@ class BU_Slide {
 			return $html;
 		}
 
-		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
+		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'" id="'.$this->caption['position'].'">';
 
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';
