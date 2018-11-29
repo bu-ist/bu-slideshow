@@ -1,0 +1,34 @@
+.bu-slideshow-selector {
+	overflow: hidden;
+	padding: 1em;
+	border: 1px solid #dfdfdf;
+	border-radius: 4px 4px 4px 4px;
+
+	p {
+		max-width: 220px;
+		margin-bottom: 1em;
+	}
+
+	.col1 {
+		float: left;
+		width: 44%;
+		margin-right: 5%;
+	}
+
+	.col2 {
+		float: left;
+	}
+
+	select {
+		min-width: 14em;
+	}
+}
+
+.bu-slideshow-selector-basic {
+	overflow: hidden;
+}
+
+html body .bu-slideshow-selector label {
+	margin-left: 0;
+	font-style: normal;
+}

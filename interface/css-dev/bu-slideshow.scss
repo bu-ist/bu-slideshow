@@ -1,0 +1,407 @@
+@import "bu-slideshow-library";
+
+.mediumTransition {
+	@extend %mediumTransition;
+}
+.slowTransition {
+	@extend %slowTransition;
+}
+
+@include keyframes(spin) {
+	from {
+		opacity: 0.2;
+		transform: rotate(0deg);
+	}
+	50% {
+		opacity: 1;
+		transform: rotate(180deg);
+	}
+	to {
+		opacity: 0.2;
+		transform: rotate(360deg);
+	}
+}
+
+.bu-slideshow-container {
+	position: relative;
+	overflow: hidden;
+	min-height: 100px;
+}
+.bu-slideshow {
+	position: relative;
+	width: 100%;
+	height: auto;
+	background: none;
+}
+ul.bu-slideshow {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.bu-slideshow-slide {
+	width: 100%;
+	height: auto;
+	padding: 0;
+	margin-right: 0;
+	margin-left: 0;
+	background: none;
+}
+li.bu-slideshow-slide {
+	left: 0 !important; // Flexi override
+	list-style-type: none !important; // Flexi override
+}
+
+$tb-position: 15%;
+$lr-position: 6%;
+
+%caption-shared-top {
+	top: $tb-position;
+	bottom: auto;
+}
+%caption-shared-bottom {
+	bottom: $tb-position;
+}
+%caption-shared-left {
+	left: $lr-position;
+}
+%caption-shared-right {
+	right: $lr-position;
+}
+%caption-shared-center {
+	left: 50%;
+	margin: 0 auto;
+	margin-left: -19%;
+	text-align: center;
+}
+
+// these styles are the base values from which animate-in values animate
+.bu-slide-container {
+	width: 100%;
+	height: auto;
+
+	// Slide animations
+	.transition-slide & {
+		@extend %animate-slide-default;
+	}
+	.transition-slide .animate-in & {
+		@extend %animate-slide-in;
+	}
+	.transition-slide .animate-out & {
+		@extend %animate-slide-out;
+	}
+
+	// Fade animations
+	.transition-fade & {
+		@extend %animate-fade-default;
+	}
+	.transition-fade .animate-in & {
+		@extend %animate-fade-in;
+	}
+	.transition-fade .animate-out & {
+		@extend %animate-fade-out;
+	}
+
+	img {
+		display: inline;
+		max-width: 100%;
+	}
+
+	// have to stay in here as classes are not specific enough to move out on own level
+	.caption-bottom-right {
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-right;
+	}
+	.caption-bottom-center {
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-center;
+	}
+	.caption-bottom-left {
+		@extend %caption-shared-bottom;
+		@extend %caption-shared-left;
+	}
+	.caption-top-left {
+		@extend %caption-shared-top;
+		@extend %caption-shared-left;
+	}
+	.caption-top-center {
+		@extend %caption-shared-top;
+		@extend %caption-shared-center;
+	}
+	.caption-top-right {
+		@extend %caption-shared-top;
+		@extend %caption-shared-right;
+	}
+}
+.bu-slide-caption {
+	position: absolute;
+	right: 6%;
+	bottom: 20%;
+	z-index: 12;
+	display: inline;
+	width: 35%;
+	padding: 1%;
+	margin: 0;
+	background: $semi-opaque-fallback;
+	background: $semi-opaque;
+	list-style: none;
+
+	a {
+		color: #bcbcbc;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+.bu-slide-caption-title,
+.bu-slide-caption-text {
+	font-size: 1em;
+	line-height: 1.4;
+	color: #ffffff;
+}
+.bu-slide-caption-title {
+	padding: 0;
+	margin-bottom: 0.5em;
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-size: 1.3em;
+	color: #bcbcbc;
+}
+
+.bu-slide-caption-text {
+	margin: 0;
+	font-size: 0.85em;
+}
+
+.bu-slideshow-navigation {
+	position: absolute;
+	bottom: 1em;
+	left: 0;
+	z-index: 13;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	text-align: center;
+
+	li {
+		left: 0; // flexi indents lists with left positioning, so.
+		display: inline;
+		margin: 0; // make sure theme list styles don't accidentally separate
+		background: none;
+	}
+	a {
+		display: inline-block;
+		padding: 2px;
+
+		&:hover,
+		&:active,
+		&.active {
+			span {
+				@extend %mediumTransition;
+				background-color: $semi-opaque-fallback-fade;
+				background-color: $semi-opaque-fade;
+				-webkit-transition-property: background-color;
+				   -moz-transition-property: background-color;
+				        transition-property: background-color;
+			}
+		}
+	}
+	span {
+		@extend %mediumTransition;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	&.nav-icon {
+		a {
+			width: 0.8em;
+			height: 0.8em;
+			border: 3px solid;
+			border-color: $semi-opaque-fallback-fade;
+			border-color: $semi-opaque-fade;
+			border-radius: 50%;
+			background: $white-fallback-fade;
+			background: $white-fade;
+			text-indent: -9999em;
+		}
+	}
+	&.nav-number {
+		li {
+			margin-left: 0.3em;
+			list-style-type: none;
+		}
+		a {
+			@extend %mediumTransition;
+			display: inline-block;
+			padding: 0.5em 0.7em 0.25em;
+			background-color: $semi-opaque-fallback-fade;
+			background-color: $semi-opaque-fade;
+			font-size: 0.9em;
+			line-height: normal;
+			color: $white-fallback-fade;
+			color: $white-fade;
+			text-decoration: none;
+			opacity: 0.75;
+
+			&:hover,
+			&.active {
+				@extend %mediumTransition;
+				background-color: $semi-opaque-fallback;
+				background-color: $semi-opaque;
+				color: $white-fallback;
+				color: $white;
+				opacity: 1;
+				-webkit-transition-property: background-color color opacity;
+				   -moz-transition-property: background-color color opacity;
+				        transition-property: background-color color opacity;
+			}
+		}
+	}
+}
+
+.arrowBgStyles {
+	@extend %arrowBgStyles;
+}
+.arrowStyles {
+	@extend %arrowStyles;
+}
+
+.bu-slideshow-arrow-left {
+	@extend %arrowBgStyles;
+	left: 0;
+	border-right-color: $semi-opaque-fallback-fade;
+	border-right-color: $semi-opaque-fade;
+	border-radius: 0 4px 4px 0;
+	-webkit-transition-property: border-right-color;
+	   -moz-transition-property: border-right-color;
+	        transition-property: border-right-color;
+
+	&:hover {
+		border-right-color: $white-fallback-fade;
+		border-right-color: $white-fade;
+	}
+	&:after {
+		@extend %arrowStyles;
+		right: 1em;
+		border-right-color: inherit;
+		border-left-color: transparent;
+	}
+}
+
+.bu-slideshow-arrow-right {
+	@extend %arrowBgStyles;
+	right: 0;
+	border-left-color: $semi-opaque-fallback-fade;
+	border-left-color: $semi-opaque-fade;
+	border-radius: 4px 0 0 4px;
+	-webkit-transition-property: border-left-color;
+	   -moz-transition-property: border-left-color;
+	        transition-property: border-left-color;
+
+	&:hover {
+		border-left-color: $white-fallback-fade;
+		border-left-color: $white-fade;
+	}
+	&:after {
+		@extend %arrowStyles;
+		left: 1em;
+		border-right-color: transparent;
+		border-left-color: inherit;
+	}
+}
+.slideshow-loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: none;
+	height: 80px;
+	margin: -40px;
+	color: #cc0000;
+	text-align: center;
+
+	.loader-animation {
+		@include animation(spin 0.8s linear infinite);
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		margin: auto;
+		border: 8px solid #cc0000;
+		border-right-color: transparent;
+		border-radius: 50%;
+	}
+
+	&.active {
+		display: block;
+	}
+
+	p {
+		display: none;
+		padding: 10px;
+	}
+}
+
+// make left/right arrows obvious on touchscreens
+.touch {
+	.bu-slideshow-arrow-left,
+	.bu-slideshow-arrow-right {
+		background-color: $semi-opaque-fallback;
+		background-color: $semi-opaque;
+	}
+	.bu-slideshow-arrow-left {
+		border-right-color: $white-fallback-fade;
+		border-right-color: $white-fade;
+	}
+	.bu-slideshow-arrow-right {
+		border-left-color: $white-fallback-fade;
+		border-left-color: $white-fade;
+	}
+}
+
+// for BU's Content Banner
+.banner-container {
+	.bu-slide-caption-title {
+		font-size: 14.4px;
+	}
+	.bu-slide-caption-text {
+		font-size: 12px;
+	}
+}
+
+// ie7 hacks
+* + html {
+	.bu-slideshow-navigation-container {
+		.nav-icon {
+			li {
+				a {
+					display: block;
+					float: left;
+					margin-right: 0.6em;
+				}
+			}
+		}
+		.nav-number {
+			li {
+				a {
+					color: $white-fallback-fade;
+				}
+			}
+		}
+	}
+	.bu-slideshow-arrow-right {
+		background: url("../img/arrows.png") no-repeat scroll 0 6px transparent;
+
+		&:hover {
+			background: url("../img/arrows.png") no-repeat scroll 0 -24px transparent;
+		}
+	}
+	.bu-slideshow-arrow-left {
+		background: url("../img/arrows.png") no-repeat scroll -100px 6px transparent;
+
+		&:hover {
+			background: url("../img/arrows.png") no-repeat scroll -100px -24px transparent;
+		}
+	}
+}
