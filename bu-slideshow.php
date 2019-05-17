@@ -1083,6 +1083,10 @@ class BU_Slideshow {
 	 */
 	static public function using_editor() {
 
+		if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
+			return false;
+		}
+
 		global $current_screen;
 
 		if (!$current_screen || !$current_screen->id) {
