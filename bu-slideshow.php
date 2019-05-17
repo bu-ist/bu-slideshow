@@ -1083,8 +1083,11 @@ class BU_Slideshow {
 	 */
 	static public function using_editor() {
 
-		if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
-			return false;
+	/**
+	 * To be removed - Don't load plugin admin pages if Gutrenberg Editor.
+	 */
+	if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
+				return false;
 		}
 
 		global $current_screen;
