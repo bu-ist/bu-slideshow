@@ -132,6 +132,7 @@ class BU_Slideshow {
 			'publicly_queryable' => false,
 			'show_ui'            => false,
 			'show_in_menu'       => false,
+			'show_in_rest'       => true,
 			'query_var'          => false,
 			'rewrite'            => false,
 			'capability_type'    => 'post',
@@ -1106,7 +1107,7 @@ class BU_Slideshow {
 	/**
 	 * Adds modal UI to footer, for display in thickbox.
 	 */
-	static public function admin_footer() {
+	/*static public function admin_footer() {
 		if (self::using_editor()):   ?>
 			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
@@ -1118,6 +1119,11 @@ class BU_Slideshow {
 		<?php
 		endif;
 	}
+*/
+	/**
+	 * Try using get_selector in a metabox below the post blocks.
+	 */
+	
 
 	/**
 	 * Adds 'Insert Slideshow' button above editor
@@ -1135,9 +1141,91 @@ class BU_Slideshow {
 
 	}
 
+
+
+
+
+
 }
 
 BU_Slideshow::add_plugins_loaded_hook();
+
+
+	function wporg_add_custom_box()
+{
+    $screens = ['post', 'page'];
+    foreach ($screens as $screen) {
+        add_meta_box(
+            'wporg_box_id',           // Unique ID
+            'SlideShow Meta Box',  // Box title
+            'wporg_custom_box_html',  // Content callback, must be of type callable
+            $screen                   // Post type
+        );
+    }
+}
+add_action('add_meta_boxes', 'wporg_add_custom_box');
+
+function wporg_custom_box_html($post)
+{
+	$args['show_id'] = '2360';
+   $html = BU_Slideshow::shortcode_handler($args);
+   echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
+
+				echo "<h2>";
+				_e('Insert Slideshow', BU_SSHOW_LOCAL);
+				echo "</h2>";
+				echo BU_Slideshow::get_selector();
+				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
+				_e('Insert Slideshow', BU_SSHOW_LOCAL);
+				echo "</a></p>
+			</div>
+			<script>
+			// bu_slideshow_nav_style
+
+			$('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
+				var options, html;
+				var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
+				//selector.ui.parent().find('.error').remove();bu_slideshow_select_transition
+				slide_id = jQuery('.bu-slideshow-selector option:selected' ).val();
+				transition_type = jQuery('.bu_slideshow_select_transition option:selected' ).val();
+				show_nav = $(\"input[name='bu_slideshow_show_nav']:checked\").val();
+				nav_style = $(\"input[name='bu_slideshow_show_nav']:checked\").val();
+				bu_slideshow_shuffle = $(\"input[name='bu_slideshow_shuffle']:checked\").val();
+				
+				html = \"[bu_slideshow show_id='\" + slide_id + \"' show_nav='\" + show_nav + \"'  transition='\" + transition_type + \"' transition_delay='' shuffle='\" + bu_slideshow_shuffle + \"']\";
+				console.log(html);
+				jQuery('.slide-show-generated-shortcode').text(html);
+				jQuery('.slide-show-generated-shortcode-lable').css('display', 'block');
+				//selector.reset();
+				return false;
+			});
+			</script>";
+
+
+			/*
+			#block-a2bc8c5d-2fa1-469a-9c87-93e7053894ce > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
+
+
+#block-be6507e6-46fb-4445-93a5-6ed74930a7f8 > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
+
+
+#block-3840d697-4e7d-4148-913f-24a335864d29 > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
+
+			if (!function_exists('bu_get_slideshow')) {
+	function bu_get_slideshow($args) {
+		if (!isset($args['show_id']) || empty($args['show_id']) ) {
+			return '';
+		}
+
+		$html = BU_Slideshow::shortcode_handler($args);
+
+		return $html;
+	}
+}*/
+
+			/*//*[@id="block-ea04d58a-7c72-48a3-a99e-9f2d6dd1b92a"]/div[3]/div[2]/div/textarea*/
+}
+
 
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler
@@ -1163,3 +1251,4 @@ if (!function_exists('bu_enqueue_slideshow_selector')) {
 		BU_Slideshow::selector_scripts_styles();
 	}
 }
+
