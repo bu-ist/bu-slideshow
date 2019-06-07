@@ -14,8 +14,8 @@ define('BU_SLIDESHOW_VERSION', '2.3.10');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-// define('SCRIPT_DEBUG', true);
-
+define('SCRIPT_DEBUG', true);
+//var_export(SCRIPT_DEBUG);
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
@@ -23,9 +23,10 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
+	
 	define('BU_SSHOW_MIN', '');/*.min*/
 }
-
+//define('BU_SSHOW_MIN', '');
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
