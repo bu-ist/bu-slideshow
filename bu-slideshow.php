@@ -23,7 +23,7 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '.min');
+	define('BU_SSHOW_MIN', '');/*.min*/
 }
 
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -1167,7 +1167,7 @@ add_action('add_meta_boxes', 'wporg_add_custom_box');
 
 function wporg_custom_box_html($post)
 {
-	$args['show_id'] = '2360';
+
    $html = BU_Slideshow::shortcode_handler($args);
    echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
 
@@ -1178,28 +1178,7 @@ function wporg_custom_box_html($post)
 				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
 				_e('Insert Slideshow', BU_SSHOW_LOCAL);
 				echo "</a></p>
-			</div>
-			<script>
-			// bu_slideshow_nav_style
-
-			$('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
-				var options, html;
-				var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
-				//selector.ui.parent().find('.error').remove();bu_slideshow_select_transition
-				slide_id = jQuery('.bu-slideshow-selector option:selected' ).val();
-				transition_type = jQuery('.bu_slideshow_select_transition option:selected' ).val();
-				show_nav = $(\"input[name='bu_slideshow_show_nav']:checked\").val();
-				nav_style = $(\"input[name='bu_slideshow_show_nav']:checked\").val();
-				bu_slideshow_shuffle = $(\"input[name='bu_slideshow_shuffle']:checked\").val();
-				
-				html = \"[bu_slideshow show_id='\" + slide_id + \"' show_nav='\" + show_nav + \"'  transition='\" + transition_type + \"' transition_delay='' shuffle='\" + bu_slideshow_shuffle + \"']\";
-				console.log(html);
-				jQuery('.slide-show-generated-shortcode').text(html);
-				jQuery('.slide-show-generated-shortcode-lable').css('display', 'block');
-				//selector.reset();
-				return false;
-			});
-			</script>";
+			</div>";
 
 
 			/*

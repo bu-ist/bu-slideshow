@@ -39,8 +39,9 @@
 			<p>
 				<input type="checkbox" name="bu_slideshow_shuffle" id="bu_slideshow_shuffle" value="true"<?php echo $args['shuffle'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_shuffle"><?php _e('Shuffle slides', BU_SSHOW_LOCAL); ?></label>
 			</p>
-	</div>
-	
+			
+		</div>
+			
 	<p>
 		<a href="#" class="bu-slideshow-advanced-toggle"><?php _e('Show advanced'); ?></a>
 	</p>
@@ -66,11 +67,7 @@
 				<em><small>Number of seconds between slide transitions.</small></em>
 			</p>
 	</div>
-	<div class='slide-show-generated-shortcode-lable' style='display: none;'>
-		Copy and paste the following snippet into a Shortcode block
-		<div class='slide-show-generated-shortcode'>
-		</div>
-	</div>
+	
 	<?php else: ?>
 	
 	<p><?php _e('No slideshows found.', BU_SSHOW_LOCAL); ?> <a href="<?php echo BU_Slideshow::$add_url; ?>" title="<?php _e('Create a new slideshow', BU_SSHOW_LOCAL); ?>"><?php _e('Add a Slideshow', BU_SSHOW_LOCAL); ?></a></p>
