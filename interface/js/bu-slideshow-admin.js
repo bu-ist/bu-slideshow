@@ -215,7 +215,7 @@
 				//[bu_slideshow show_id="406" show_nav="1" transition="slide" nav_style="icon" autoplay="1" transition_delay="5" width="auto" show_arrows="true" shuffle="0"]
 				
 				var slide_id = jQuery('.bu-slideshow-selector option:selected' ).val();
-				slide_id = (slide_id == '') ? slide_id = slide_id : slide_id = 0;
+				//slide_id = (slide_id == '') ? slide_id = slide_id : slide_id = 0;
 				var bu_slideshow_custom_trans = jQuery("#bu_slideshow_custom_trans" ).val();
 				if ( bu_slideshow_custom_trans == '' ) {
 					var transition_type = jQuery('#bu_slideshow_select_transition option:selected' ).val();
@@ -235,10 +235,10 @@
 				} else {
 					var bu_slideshow_shuffle = '1';
 				}
-				html = "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "'  transition='" + transition_type + "' transition_delay=" + transition_delay + " shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "']";
+				html = "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "'  transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "']";
 				console.log(html);
 				jQuery('.slide-show-generated-shortcode').text(html);
-				jQuery('.slide-show-generated-shortcode-lable').css('display', 'block');
+				jQuery('.slide-show-generated-shortcode-label').css('display', 'block');
 				//selector.reset();
 				return false;
 			});
