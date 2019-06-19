@@ -235,12 +235,12 @@
 				} else {
 					var bu_slideshow_shuffle = '1';
 				}
-				html = "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "'  transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "']";
+				html = "<p>Copy and paste the following snippet into a Shortcode block</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "'  transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "']";
 				console.log(html);
-				jQuery('.slide-show-generated-shortcode').text(html);
-				jQuery('.slide-show-generated-shortcode-label').css('display', 'block');
+				jQuery('.slide-show-generated-shortcode').html(html);
+				//jQuery('.slide-show-generated-shortcode-label').css('display', 'block');
 				//selector.reset();
-				return false;
+				return true;
 			});
 
 

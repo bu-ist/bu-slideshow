@@ -1173,11 +1173,11 @@ function wporg_custom_box_html($post)
    echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
 
 				echo "<h2>";
-				_e('Insert Slideshow', BU_SSHOW_LOCAL);
+				_e('Generate Slideshow Shortcode', BU_SSHOW_LOCAL);
 				echo "</h2>";
 				echo BU_Slideshow::get_selector();
 				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
-				_e('Insert Slideshow', BU_SSHOW_LOCAL);
+				_e('Generate Slideshow Shortcode', BU_SSHOW_LOCAL);
 				echo "</a></p>
 			</div>";
 

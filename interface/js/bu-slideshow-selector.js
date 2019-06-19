@@ -1,13 +1,17 @@
 jQuery(document).ready(function($){
-	
 	window.SlideshowSelector = function SlideshowSelector(el) {
-		
+		console.dir(el);
 		if ( !(this instanceof SlideshowSelector)) {
 			return new SlideshowSelector(el);
 		}
+
+		document.querySelector("#bu_slideshow_modal_wrap > div > p:nth-child(2) > a");
+	console.log(document.querySelector("#bu_slideshow_modal_wrap > div > p:nth-child(2) > a"));
 		
 		this.ui = $(el);
+		console.log($(el));
 		if (!this.ui.length) {
+			console.log(this.ui.length);
 			return new TypeError('No selector element found.');
 		}
 		
@@ -15,6 +19,8 @@ jQuery(document).ready(function($){
 	};
 	
 	SlideshowSelector.prototype.init = function() {
+		console.log(this.ui.find('.bu-slideshow-advanced-toggle'));
+		console.log(this.ui.find('.bu-slideshow-selector-advanced'));
 		this.advancedToggle = this.ui.find('.bu-slideshow-advanced-toggle');
 		this.advanced = this.ui.find('.bu-slideshow-selector-advanced');
 		
@@ -22,10 +28,11 @@ jQuery(document).ready(function($){
 		this.addHandlers();
 	};
 	
+	
 	SlideshowSelector.prototype.addHandlers = function() {
 		var that = this;
 		
-		that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
+		/*that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
 			if (that.advanced.is(':hidden')) {
 				that.advanced.slideDown(200);
 				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
@@ -36,7 +43,7 @@ jQuery(document).ready(function($){
 			}
 
 			return false;
-		});
+		});*/
 	};
 	
 	SlideshowSelector.prototype.getOptions = function() {
