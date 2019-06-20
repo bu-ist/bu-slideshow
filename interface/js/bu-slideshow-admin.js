@@ -212,7 +212,7 @@
             });
         }
 
-        $('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
+        $('#bu_slideshow_mod;al_wrap').on('click', '#bu_insert_slideshow', function(e) {
             var options, html;
             var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 
