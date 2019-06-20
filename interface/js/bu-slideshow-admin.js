@@ -212,7 +212,6 @@
 		$('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
 				var options, html;
 				var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
-				//[bu_slideshow show_id="406" show_nav="1" transition="slide" nav_style="icon" autoplay="1" transition_delay="5" width="auto" show_arrows="true" shuffle="0"]
 				
 				var slide_id = jQuery('.bu-slideshow-selector option:selected' ).val();
 				//slide_id = (slide_id == '') ? slide_id = slide_id : slide_id = 0;
@@ -227,19 +226,28 @@
 				if ( show_nav != '1' ) {
 					var show_nav = '0';
 				}
-				var width = 'auto';
-				var nav_style = $("input[name='bu_slideshow_show_nav']:checked").val();
+				var width = jQuery("#bu_slideshow_width" ).val();
+				var nav_style = jQuery('#bu_slideshow_nav_style option:selected' ).val();
 				var bu_slideshow_shuffle = $("input[name='bu_slideshow_shuffle']:checked").val();
 				if ( bu_slideshow_shuffle != 'true' ) {
 					var bu_slideshow_shuffle = '0';
 				} else {
 					var bu_slideshow_shuffle = '1';
 				}
-				html = "<p>Copy and paste the following snippet into a Shortcode block</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "'  transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "']";
-				console.log(html);
+				var autoplay = $("input[name='bu_slideshow_autoplay']:checked").val();
+				html = "<p>Copy and paste the following snippet into a Shortcode block</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
+
+				jQuery(".bu_slideshow_alignment_loop" ).each(function( index, name, alignment ) {
+					
+					if (jQuery(name).prop('checked')) {
+						html = html + jQuery(name).prop('id').substring(23, 100);
+						return false;
+					} 
+					
+				});
+				html = html + "' autoplay='" + autoplay + "']";
+
 				jQuery('.slide-show-generated-shortcode').html(html);
-				//jQuery('.slide-show-generated-shortcode-label').css('display', 'block');
-				//selector.reset();
 				return true;
 			});
 
