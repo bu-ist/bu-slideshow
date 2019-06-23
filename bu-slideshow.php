@@ -1141,11 +1141,6 @@ class BU_Slideshow {
 
 	}
 
-
-
-
-
-
 }
 
 BU_Slideshow::add_plugins_loaded_hook();
@@ -1153,20 +1148,23 @@ BU_Slideshow::add_plugins_loaded_hook();
 
 function bu_slideshow_meta_box()
 {
-    $screens = ['post', 'page'];
-    foreach ($screens as $screen) {
-        add_meta_box(
-            'wporg_box_id',           // Unique ID
-            'SlideShow Meta Box',  // Box title
-            'wporg_custom_box_html',  // Content callback, must be of type callable
-            $screen                   // Post type
-        );
-    }
+    
+    if ( function_exists( 'has_blocks' ) && has_blocks() ) {
+	    $screens = ['post', 'page'];
+	    foreach ($screens as $screen) {
+	        add_meta_box(
+	            'wporg_box_id',           // Unique ID
+	            'SlideShow Meta Box',  // Box title
+	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
+	            $screen                   // Post type
+	        );
+	    }
+	}
 }
 
 add_action('add_meta_boxes', 'bu_slideshow_meta_box');
 
-function wporg_custom_box_html($post)
+function bu_slideshow_meta_box_html($post)
 {
 
    $html = BU_Slideshow::shortcode_handler($args);
@@ -1199,7 +1197,6 @@ if (!function_exists('bu_get_slideshow')) {
 		}
 
 		$html = BU_Slideshow::shortcode_handler($args);
-
 		return $html;
 	}
 }

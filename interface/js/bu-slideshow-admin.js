@@ -210,9 +210,11 @@
                 modal.close();
                 return false;
             });
-        }
+        } else {
 
-        $('#bu_slideshow_mod;al_wrap').on('click', '#bu_insert_slideshow', function(e) {
+            //when using gutenberg blocks there is no $('#bu_slideshow_modal_button') so write the
+            //functions for the metabox
+            $('#bu_slideshow_moddal_wrap').on('click', '#bu_insert_slideshow', function(e) {
             var options, html;
             var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 
@@ -253,6 +255,8 @@
             jQuery('.slide-show-generated-shortcode').html(html);
             return true;
         });
+        }
+
 
 
         /* Edit Slideshow page */
