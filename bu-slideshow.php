@@ -1145,7 +1145,6 @@ class BU_Slideshow {
 
 BU_Slideshow::add_plugins_loaded_hook();
 
-
 function bu_slideshow_meta_box()
 {
     
@@ -1153,7 +1152,7 @@ function bu_slideshow_meta_box()
 	    $screens = ['post', 'page'];
 	    foreach ($screens as $screen) {
 	        add_meta_box(
-	            'wporg_box_id',           // Unique ID
+	            'bu_slideshow_box_id',           // Unique ID
 	            'SlideShow Meta Box',  // Box title
 	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
 	            $screen                   // Post type
