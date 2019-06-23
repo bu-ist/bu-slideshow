@@ -1106,24 +1106,24 @@ class BU_Slideshow {
 
 	/**
 	 * Adds modal UI to footer, for display in thickbox.
+	 * We need to disable this if the user is using the Gunteberg Editor
 	 */
-	/*static public function admin_footer() {
-		if (self::using_editor()):   ?>
-			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
+	static public function admin_footer() {
+		if ( !function_exists( 'has_blocks' ) && !has_blocks() ) {
+		//using the classic editor so add the modal
+			if (self::using_editor()):   ?>
+				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
-				<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
-				<?php echo self::get_selector(); ?>
-				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
-			</div>
+					<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
+					<?php echo self::get_selector(); ?>
+					<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
+				</div>
 
-		<?php
-		endif;
+			<?php
+			endif;
+		}
 	}
-*/
-	/**
-	 * Try using get_selector in a metabox below the post blocks.
-	 */
-	
+
 
 	/**
 	 * Adds 'Insert Slideshow' button above editor
@@ -1151,7 +1151,7 @@ class BU_Slideshow {
 BU_Slideshow::add_plugins_loaded_hook();
 
 
-	function wporg_add_custom_box()
+function bu_slideshow_meta_box()
 {
     $screens = ['post', 'page'];
     foreach ($screens as $screen) {
@@ -1163,46 +1163,28 @@ BU_Slideshow::add_plugins_loaded_hook();
         );
     }
 }
-add_action('add_meta_boxes', 'wporg_add_custom_box');
+
+add_action('add_meta_boxes', 'bu_slideshow_meta_box');
 
 function wporg_custom_box_html($post)
 {
 
    $html = BU_Slideshow::shortcode_handler($args);
    echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
-
+	if ( function_exists( 'has_blocks' ) && has_blocks() ) {
+		$button_label = 'Generate Slideshow Shortcode';
+	} else {
+		$button_label = 'Add Slideshow';
+	}
 				echo "<h2>";
-				_e('Generate Slideshow Shortcode', BU_SSHOW_LOCAL);
+				_e($button_label, BU_SSHOW_LOCAL);
 				echo "</h2>";
 				echo BU_Slideshow::get_selector();
 				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
-				_e('Generate Slideshow Shortcode', BU_SSHOW_LOCAL);
+				_e($button_label, BU_SSHOW_LOCAL);
 				echo "</a></p>
 			</div>";
 
-
-			/*
-			#block-a2bc8c5d-2fa1-469a-9c87-93e7053894ce > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
-
-
-#block-be6507e6-46fb-4445-93a5-6ed74930a7f8 > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
-
-
-#block-3840d697-4e7d-4148-913f-24a335864d29 > div.editor-block-list__block-edit > div:nth-child(2) > div > textarea
-
-			if (!function_exists('bu_get_slideshow')) {
-	function bu_get_slideshow($args) {
-		if (!isset($args['show_id']) || empty($args['show_id']) ) {
-			return '';
-		}
-
-		$html = BU_Slideshow::shortcode_handler($args);
-
-		return $html;
-	}
-}*/
-
-			/*//*[@id="block-ea04d58a-7c72-48a3-a99e-9f2d6dd1b92a"]/div[3]/div[2]/div/textarea*/
 }
 
 
