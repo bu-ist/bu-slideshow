@@ -23,7 +23,7 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
 	
-	define('BU_SSHOW_MIN', '.min');
+	define('BU_SSHOW_MIN', '');//.min
 }
 //define('BU_SSHOW_MIN', '');
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
@@ -1075,6 +1075,29 @@ class BU_Slideshow {
 		return $html;
 	}
 
+	static public function get_gutenberg_selector($args = array()) {
+		$all_slideshows = self::get_slideshows();
+		$defaults = self::$shortcode_defaults;
+		$empty_ok = array('show_nav', 'autoplay', 'transition_delay');
+
+		foreach ($defaults as $key => $def) {
+			if (in_array($key, $empty_ok)) {
+				if (!isset($args[$key])) {
+					$args[$key] = $def;
+				}
+			} else if (!isset($args[$key]) || !$args[$key]) {
+				$args[$key] = $def;
+			}
+		}
+
+		ob_start();
+		include BU_SLIDESHOW_BASEDIR . 'interface/gutenberg-slideshow-selector.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+
+		return $html;
+	}
+
 	/**
 	 * Returns true if the current screen should integrate the 'insert slideshow'
 	 * button and modal functionality in the WP editor. Allows for filtering of screens.
@@ -1158,6 +1181,16 @@ function bu_slideshow_meta_box()
 	            $screen                   // Post type
 	        );
 	    }
+	} else {
+		$screens = ['post', 'page'];
+	    foreach ($screens as $screen) {
+	        add_meta_box(
+	            'bu_slideshow_box_id',           // Unique ID
+	            'SlideShow Meta Box',  // Box title
+	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
+	            $screen                   // Post type
+	        );
+	    }
 	}
 }
 
@@ -1183,7 +1216,6 @@ function bu_slideshow_meta_box_html($post)
 			</div>";
 
 }
-
 
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler

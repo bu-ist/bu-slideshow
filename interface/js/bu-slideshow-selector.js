@@ -23,8 +23,7 @@ jQuery(document).ready(function($){
 	
 	SlideshowSelector.prototype.addHandlers = function() {
 		var that = this;
-		
-		/*that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
+		that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
 			if (that.advanced.is(':hidden')) {
 				that.advanced.slideDown(200);
 				that.advancedToggle.text(buSlideshowLocalSelector.toggleTextHide);
@@ -35,7 +34,7 @@ jQuery(document).ready(function($){
 			}
 
 			return false;
-		});*/
+		});
 	};
 	
 	SlideshowSelector.prototype.getOptions = function() {
