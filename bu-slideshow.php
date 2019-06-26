@@ -1227,4 +1227,3 @@ if (!function_exists('bu_enqueue_slideshow_selector')) {
 		BU_Slideshow::selector_scripts_styles();
 	}
 }
-
