@@ -187,6 +187,7 @@
         if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
                 /*when using the classic editor we need to hide the Slideshow Metabox. There doesn't seem to be a way check the editor type before the add_metabox action fires
                 */
+            //document.querySelector("#bu_slideshow_box_id").css('display', 'none');
             $('#bu_slideshow_metabox_id').css('display', 'none');
             var modal = new BuModal({ 'el': '#bu_slideshow_modal_wrap', 'height': '80%' }),
                 selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
