@@ -1134,7 +1134,7 @@ class BU_Slideshow {
 	static public function admin_footer() {
 		if ( !function_exists( 'has_blocks' ) && !has_blocks() ) {
 		//using the classic editor so add the modal
-			if (self::using_editor()):   ?>
+			/*if (self::using_editor()):   ?>
 				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
 					<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
@@ -1143,7 +1143,7 @@ class BU_Slideshow {
 				</div>
 
 			<?php
-			endif;
+			endif;*/
 		}
 	}
 
@@ -1154,7 +1154,7 @@ class BU_Slideshow {
 	 * @param string $context
 	 * @return string
 	 */
-	static public function add_media_button() {
+	/*static public function add_media_button() {
 
 		if (self::using_editor()) {
 			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL));
@@ -1162,7 +1162,7 @@ class BU_Slideshow {
 			echo $html;
 		}
 
-	}
+	}*/
 
 }
 
@@ -1171,7 +1171,6 @@ BU_Slideshow::add_plugins_loaded_hook();
 function bu_slideshow_meta_box()
 {
     
-    if ( function_exists( 'has_blocks' ) && has_blocks() ) {
 	    $screens = ['post', 'page'];
 	    foreach ($screens as $screen) {
 	        add_meta_box(
@@ -1181,17 +1180,7 @@ function bu_slideshow_meta_box()
 	            $screen                   // Post type
 	        );
 	    }
-	} else {
-		$screens = ['post', 'page'];
-	    foreach ($screens as $screen) {
-	        add_meta_box(
-	            'bu_slideshow_box_id',           // Unique ID
-	            'SlideShow Meta Box',  // Box title
-	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
-	            $screen                   // Post type
-	        );
-	    }
-	}
+	
 }
 
 add_action('add_meta_boxes', 'bu_slideshow_meta_box');
@@ -1201,11 +1190,9 @@ function bu_slideshow_meta_box_html($post)
 
    $html = BU_Slideshow::shortcode_handler($args);
    echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
-	if ( function_exists( 'has_blocks' ) && has_blocks() ) {
+	
 		$button_label = 'Generate Slideshow Shortcode';
-	} else {
-		$button_label = 'Add Slideshow';
-	}
+	
 				echo "<h2>";
 				_e($button_label, BU_SSHOW_LOCAL);
 				echo "</h2>";

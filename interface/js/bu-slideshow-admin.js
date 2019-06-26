@@ -184,7 +184,10 @@
         }
 
         /* Add Slideshow button and Inserting shortcode into editor */
+
         if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
+            alert($('#bu_slideshow_modal_button').length);
+            //make sure this never happens
                 /*when using the classic editor we need to hide the Slideshow Metabox. There doesn't seem to be a way check the editor type before the add_metabox action fires
                 */
             //document.querySelector("#bu_slideshow_box_id").css('display', 'none');
@@ -208,9 +211,9 @@
 
                 html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" transition_delay="' + options.transition_delay + '" width="' + options.width + '" shuffle="' + options.shuffle + '"]';
 
-                window.send_to_editor("<br />" + html + "<br />");
+                /*window.send_to_editor("<br />" + html + "<br />");
                 selector.reset();
-                modal.close();
+                modal.close();*/
                 return false;
             });
         } else {
@@ -240,7 +243,9 @@
                 var bu_slideshow_shuffle = '1';
             }
             var autoplay = $("input[name='bu_slideshow_autoplay']:checked").val();
-            html = "<p>Copy and paste the following snippet into a Shortcode block:</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
+            html_no_editor = "<p>Copy and paste the following snippet into a Shortcode block:</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
+
+            html_editor = "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
 
             jQuery(".bu_slideshow_alignment_loop").each(function(index, name, alignment) {
 
@@ -250,12 +255,19 @@
                 }
 
             });
-            html = html + "' autoplay='" + autoplay + "']";
+            html_no_editor = html_no_editor + "' autoplay='" + autoplay + "']";
+            html_editor = html_editor + "' autoplay='" + autoplay + "']";
             selector.reset();
             //clear out any previous shortcodes
             jQuery('.slide-show-generated-shortcode').html();
-            jQuery('.slide-show-generated-shortcode').html(html);
-            return true;
+            console.log(jQuery('#wp-content-editor-container').length > 0);
+            if (jQuery('#wp-content-editor-container').length > 0) {
+                window.send_to_editor("<br />" + html_editor + "<br />");
+            } else {
+                jQuery('.slide-show-generated-shortcode').html(html_no_editor);
+            }
+            
+            return false;
         });
         }
 

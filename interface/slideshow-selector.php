@@ -40,14 +40,6 @@
 				<input type="checkbox" name="bu_slideshow_shuffle" id="bu_slideshow_shuffle" value="true"<?php echo $args['shuffle'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_shuffle"><?php _e('Shuffle slides', BU_SSHOW_LOCAL); ?></label>
 			</p>
 			
-			<?php if( !has_blocks()  ) { 
-				echo '</div>	
-			 	<p>	
-					<a href="#" class="bu-slideshow-advanced-toggle">Show advanced</a>	
-				</p>	
-				<div class="bu-slideshow-selector-advanced" style="display: none;">';
-
-	 		} ?>
 			<p>
 				<label for="bu_slideshow_width"><?php _e('Fixed width:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_width" id="bu_slideshow_width" value="<?php echo $args['width'] !== 'auto' ? esc_attr($args['width']) : ''; ?>" />px
