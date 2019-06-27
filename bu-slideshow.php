@@ -1091,7 +1091,7 @@ class BU_Slideshow {
 		}
 
 		ob_start();
-		include BU_SLIDESHOW_BASEDIR . 'interface/gutenberg-slideshow-selector.php';
+		include BU_SLIDESHOW_BASEDIR . 'interface/slideshow-selector.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 
@@ -1132,9 +1132,8 @@ class BU_Slideshow {
 	 * We need to disable this if the user is using the Gunteberg Editor
 	 */
 	static public function admin_footer() {
-		if ( !function_exists( 'has_blocks' ) && !has_blocks() ) {
-		//using the classic editor so add the modal
-			/*if (self::using_editor()):   ?>
+		
+			if (self::using_editor()):   ?>
 				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
 					<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
@@ -1143,8 +1142,8 @@ class BU_Slideshow {
 				</div>
 
 			<?php
-			endif;*/
-		}
+			endif;
+		
 	}
 
 
@@ -1154,7 +1153,7 @@ class BU_Slideshow {
 	 * @param string $context
 	 * @return string
 	 */
-	/*static public function add_media_button() {
+	static public function add_media_button() {
 
 		if (self::using_editor()) {
 			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL));
@@ -1162,11 +1161,12 @@ class BU_Slideshow {
 			echo $html;
 		}
 
-	}*/
+	}
 
 }
 
 BU_Slideshow::add_plugins_loaded_hook();
+
 
 function bu_slideshow_meta_box()
 {
@@ -1182,17 +1182,16 @@ function bu_slideshow_meta_box()
 	    }
 	
 }
-
 add_action('add_meta_boxes', 'bu_slideshow_meta_box');
-
 function bu_slideshow_meta_box_html($post)
 {
-
    $html = BU_Slideshow::shortcode_handler($args);
-   echo '<div id="bu_slideshow_modal_wrap" class="wrap postbox">';
+   echo '<div id="bu_slideshow_metabox_wrap" class="wrap postbox">';
 	
 		$button_label = 'Generate Slideshow Shortcode';
-	
+	//add js to hide modal
+		echo '<script type="text/javascript">
+		</script>';
 				echo "<h2>";
 				_e($button_label, BU_SSHOW_LOCAL);
 				echo "</h2>";
@@ -1201,7 +1200,6 @@ function bu_slideshow_meta_box_html($post)
 				_e($button_label, BU_SSHOW_LOCAL);
 				echo "</a></p>
 			</div>";
-
 }
 
 /**

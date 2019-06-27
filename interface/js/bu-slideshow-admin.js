@@ -186,12 +186,11 @@
         /* Add Slideshow button and Inserting shortcode into editor */
 
         if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
-            alert($('#bu_slideshow_modal_button').length);
-            //make sure this never happens
+            
                 /*when using the classic editor we need to hide the Slideshow Metabox. There doesn't seem to be a way check the editor type before the add_metabox action fires
                 */
             //document.querySelector("#bu_slideshow_box_id").css('display', 'none');
-            $('#bu_slideshow_metabox_id').css('display', 'none');
+            
             var modal = new BuModal({ 'el': '#bu_slideshow_modal_wrap', 'height': '80%' }),
                 selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 
@@ -211,17 +210,14 @@
 
                 html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" transition_delay="' + options.transition_delay + '" width="' + options.width + '" shuffle="' + options.shuffle + '"]';
 
-                /*window.send_to_editor("<br />" + html + "<br />");
+                window.send_to_editor("<br />" + html + "<br />");
                 selector.reset();
-                modal.close();*/
+                modal.close();
                 return false;
             });
-        } else {
-            //when using gutenberg blocks there is no $('#bu_slideshow_modal_button') so write the
-            //functions for the metabox
-            $('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
+             $('#bu_slideshow_metabox_wrap').on('click', '#bu_insert_slideshow', function(e) {
             var options, html;
-            var selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
+            var selector = new SlideshowSelector('#bu_slideshow_metabox_wrap .bu-slideshow-selector');
 
             var slide_id = jQuery('.bu-slideshow-selector option:selected').val();
             if ( jQuery("#bu_slideshow_custom_trans").val() == '') {
@@ -251,6 +247,8 @@
 
                 if (jQuery(name).prop('checked')) {
                     html = html + jQuery(name).prop('id').substring(23, 100);
+                    html_no_editor = html_no_editor + jQuery(name).prop('id').substring(23, 100);
+                    html_editor = html_editor + jQuery(name).prop('id').substring(23, 100);
                     return false;
                 }
 
@@ -261,6 +259,68 @@
             //clear out any previous shortcodes
             jQuery('.slide-show-generated-shortcode').html();
             console.log(jQuery('#wp-content-editor-container').length > 0);
+            console.log(html_editor);
+            if (jQuery('#wp-content-editor-container').length > 0) {
+                window.send_to_editor("<br />" + html_editor + "<br />");
+            } else {
+                jQuery('.slide-show-generated-shortcode').html(html_no_editor);
+            }
+            
+            return false;
+        });
+        } else {
+            if ( $( "#bu_slideshow_modal_button" ).length == 0 )  {
+            console.log(jQuery("#bu_slideshow_modal_wrap").css("visiblilty"));
+            jQuery("#bu_slideshow_modal_wrap").hide();
+            jQuery("#bu_slideshow_modal_wrap").css("visiblilty", "none");
+        }
+            //when using gutenberg blocks there is no $('#bu_slideshow_modal_button') so write the
+            //functions for the metabox
+            $('#bu_slideshow_metabox_wrap').on('click', '#bu_insert_slideshow', function(e) {
+            var options, html;
+            var selector = new SlideshowSelector('#bu_slideshow_metabox_wrap .bu-slideshow-selector');
+
+            var slide_id = jQuery('.bu-slideshow-selector option:selected').val();
+            if ( jQuery("#bu_slideshow_custom_trans").val() == '') {
+                var transition_type = jQuery('#bu_slideshow_select_transition option:selected').val();
+            } else {
+                var transition_type = jQuery("#bu_slideshow_custom_trans").val();
+            }
+            var transition_delay = jQuery("#bu_slideshow_transition_delay").val();
+            if ($("input[name='bu_slideshow_show_nav']:checked").val() != '1') {
+                var show_nav = '0';
+            } else {
+                var show_nav = '1';
+            }
+            var width = jQuery("#bu_slideshow_width").val();
+            var nav_style = jQuery('#bu_slideshow_nav_style option:selected').val();
+            if ($("input[name='bu_slideshow_shuffle']:checked").val() != 'true') {
+                var bu_slideshow_shuffle = '0';
+            } else {
+                var bu_slideshow_shuffle = '1';
+            }
+            var autoplay = $("input[name='bu_slideshow_autoplay']:checked").val();
+            html_no_editor = "<p>Copy and paste the following snippet into a Shortcode block:</p>" + "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
+
+            html_editor = "[bu_slideshow show_id='" + slide_id + "' show_nav='" + show_nav + "' nav_style='" + nav_style + "' transition='" + transition_type + "' transition_delay='" + transition_delay + "' shuffle='" + bu_slideshow_shuffle + "'  width='" + width + "' align='";
+
+            jQuery(".bu_slideshow_alignment_loop").each(function(index, name, alignment) {
+
+                if (jQuery(name).prop('checked')) {
+                    html = html + jQuery(name).prop('id').substring(23, 100);
+                    html_no_editor = html_no_editor + jQuery(name).prop('id').substring(23, 100);
+                    html_editor = html_editor + jQuery(name).prop('id').substring(23, 100);
+                    return false;
+                }
+
+            });
+            html_no_editor = html_no_editor + "' autoplay='" + autoplay + "']";
+            html_editor = html_editor + "' autoplay='" + autoplay + "']";
+            selector.reset();
+            //clear out any previous shortcodes
+            jQuery('.slide-show-generated-shortcode').html();
+            console.log(jQuery('#wp-content-editor-container').length > 0);
+            console.log(html_editor);
             if (jQuery('#wp-content-editor-container').length > 0) {
                 window.send_to_editor("<br />" + html_editor + "<br />");
             } else {
