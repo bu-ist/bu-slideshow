@@ -1106,7 +1106,6 @@ class BU_Slideshow {
 
 	/**
 	 * Adds modal UI to footer, for display in thickbox.
-	 * We need to disable this if the user is using the Gunteberg Editor
 	 */
 	static public function admin_footer() {
 		
