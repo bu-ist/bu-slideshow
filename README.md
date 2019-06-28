@@ -3,7 +3,7 @@
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
 **Tested up to:** 4.9.6  
-**Stable tag:** 2.3.10  
+**Stable tag:** 2.3.11  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -50,8 +50,11 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 
 ## Changelog ##
+
+### 2.3.11 ###
+* Includes fixes for compatability with the Gutenberg editor by adding a metabox UI in addition to the existing modal window UI.
 ### 2.3.10 ###
-* Added 'page_alt' post type support to enable the Slideshow UI wehn using the BU Versions plugin
+* Added 'page_alt' post type support to enable the Slideshow UI when using the BU Versions plugin
 
 ### 2.3.9 ###
 * Fix formatting error in shortcode generation

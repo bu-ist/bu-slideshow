@@ -1,11 +1,9 @@
 jQuery(document).ready(function($){
-	
 	window.SlideshowSelector = function SlideshowSelector(el) {
-		
 		if ( !(this instanceof SlideshowSelector)) {
 			return new SlideshowSelector(el);
 		}
-		
+
 		this.ui = $(el);
 		if (!this.ui.length) {
 			return new TypeError('No selector element found.');
@@ -22,9 +20,9 @@ jQuery(document).ready(function($){
 		this.addHandlers();
 	};
 	
+	
 	SlideshowSelector.prototype.addHandlers = function() {
 		var that = this;
-		
 		that.ui.on('click', '.bu-slideshow-advanced-toggle', function(e) {
 			if (that.advanced.is(':hidden')) {
 				that.advanced.slideDown(200);

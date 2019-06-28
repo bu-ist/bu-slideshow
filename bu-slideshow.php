@@ -14,8 +14,7 @@ define('BU_SLIDESHOW_VERSION', '2.3.10');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
-// define('SCRIPT_DEBUG', true);
-
+//define('SCRIPT_DEBUG', true);
 if (!defined('BU_SSHOW_LOCAL')) {
 	define('BU_SSHOW_LOCAL', 'BU_Slideshow');
 }
@@ -23,9 +22,10 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
-	define('BU_SSHOW_MIN', '.min');
+	
+	define('BU_SSHOW_MIN', '');//.min
 }
-
+//define('BU_SSHOW_MIN', '');
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
@@ -132,6 +132,7 @@ class BU_Slideshow {
 			'publicly_queryable' => false,
 			'show_ui'            => false,
 			'show_in_menu'       => false,
+			'show_in_rest'       => true,
 			'query_var'          => false,
 			'rewrite'            => false,
 			'capability_type'    => 'post',
@@ -1107,17 +1108,20 @@ class BU_Slideshow {
 	 * Adds modal UI to footer, for display in thickbox.
 	 */
 	static public function admin_footer() {
-		if (self::using_editor()):   ?>
-			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
+		
+			if (self::using_editor()):   ?>
+				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
-				<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
-				<?php echo self::get_selector(); ?>
-				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
-			</div>
+					<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
+					<?php echo self::get_selector(); ?>
+					<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
+				</div>
 
-		<?php
-		endif;
+			<?php
+			endif;
+		
 	}
+
 
 	/**
 	 * Adds 'Insert Slideshow' button above editor
@@ -1139,6 +1143,41 @@ class BU_Slideshow {
 
 BU_Slideshow::add_plugins_loaded_hook();
 
+
+function bu_slideshow_meta_box()
+{
+    
+	    $screens = ['post', 'page'];
+	    foreach ($screens as $screen) {
+	        add_meta_box(
+	            'bu_slideshow_box_id',           // Unique ID
+	            'SlideShow Meta Box',  // Box title
+	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
+	            $screen                   // Post type
+	        );
+	    }
+	
+}
+add_action('add_meta_boxes', 'bu_slideshow_meta_box');
+function bu_slideshow_meta_box_html($post)
+{
+   $html = BU_Slideshow::shortcode_handler($args);
+   echo '<div id="bu_slideshow_metabox_wrap" class="wrap postbox">';
+	
+		$button_label = 'Generate Slideshow Shortcode';
+	//add js to hide modal
+		echo '<script type="text/javascript">
+		</script>';
+				echo "<h2>";
+				_e($button_label, BU_SSHOW_LOCAL);
+				echo "</h2>";
+				echo BU_Slideshow::get_selector();
+				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
+				_e($button_label, BU_SSHOW_LOCAL);
+				echo "</a></p>
+			</div>";
+}
+
 /**
  * Function wrapper for adding slideshow display to themes etc. See shortcode handler
  * for expected args.
@@ -1150,7 +1189,6 @@ if (!function_exists('bu_get_slideshow')) {
 		}
 
 		$html = BU_Slideshow::shortcode_handler($args);
-
 		return $html;
 	}
 }

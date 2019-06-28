@@ -39,12 +39,7 @@
 			<p>
 				<input type="checkbox" name="bu_slideshow_shuffle" id="bu_slideshow_shuffle" value="true"<?php echo $args['shuffle'] ? ' checked="checked"' : ''; ?> /> <label for="bu_slideshow_shuffle"><?php _e('Shuffle slides', BU_SSHOW_LOCAL); ?></label>
 			</p>
-	</div>
-	
-	<p>
-		<a href="#" class="bu-slideshow-advanced-toggle"><?php _e('Show advanced'); ?></a>
-	</p>
-	<div class="bu-slideshow-selector-advanced" style="display: none;">
+			
 			<p>
 				<label for="bu_slideshow_width"><?php _e('Fixed width:', BU_SSHOW_LOCAL); ?></label><br />
 				<input type="text" name="bu_slideshow_width" id="bu_slideshow_width" value="<?php echo $args['width'] !== 'auto' ? esc_attr($args['width']) : ''; ?>" />px
@@ -66,7 +61,11 @@
 				<em><small>Number of seconds between slide transitions.</small></em>
 			</p>
 	</div>
-	
+	<p class='slide-show-generated-shortcode-label'>
+				
+				<div class='slide-show-generated-shortcode'>
+				</div>
+			</p>
 	<?php else: ?>
 	
 	<p><?php _e('No slideshows found.', BU_SSHOW_LOCAL); ?> <a href="<?php echo BU_Slideshow::$add_url; ?>" title="<?php _e('Create a new slideshow', BU_SSHOW_LOCAL); ?>"><?php _e('Add a Slideshow', BU_SSHOW_LOCAL); ?></a></p>
