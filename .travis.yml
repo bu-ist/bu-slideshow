@@ -13,12 +13,11 @@ sudo: false
 
 php:
   - 7.1
-  - 7.2
 
 env:
-  - WP_VERSION=4.9.6 WP_MULTISITE=0
-  - WP_VERSION=4.9.6 WP_MULTISITE=1
-
+  - WP_VERSION=4.9.10 WP_MULTISITE=0
+  - WP_VERSION=4.9.10 WP_MULTISITE=1
+  
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
