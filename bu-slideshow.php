@@ -802,16 +802,22 @@ class BU_Slideshow {
 	 */
 	static public function get_slideshows() {
 		$slideshows = array();
-		$slideshow_posts = get_posts( array(
-			'post_type' => 'bu_slideshow',
-			'posts_per_page' => -1,
-			'orderby' => 'title',
-			'order' => 'asc'
+
+		$slideshow_ids = get_posts(
+			array(
+				'post_type'              => 'bu_slideshow',
+				'posts_per_page'         => 500,
+				'orderby'                => 'title',
+				'order'                  => 'asc',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'fields'                 => 'ids',
 			)
 		);
 
-		foreach ($slideshow_posts as $show) {
-			$slideshows[ $show->ID ] = self::get_slideshow( $show->ID );
+		foreach ( $slideshow_ids as $id ) {
+			$slideshows[ $id ] = self::get_slideshow( $id );
 		}
 
 		return $slideshows;
