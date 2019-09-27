@@ -93,7 +93,8 @@ class BU_Slideshow {
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
 		add_action('media_buttons', array(__CLASS__, 'add_media_button'),99);
-		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
+		add_action('admin_footer-post.php', array(__CLASS__, 'admin_footer'));
+		add_action('admin_footer-post-new.php', array(__CLASS__, 'admin_footer'));
 
 		// media upload/insert restrictions
 		if ('media-upload.php' === $pagenow || 'async-upload.php' === $pagenow) {
@@ -1083,17 +1084,11 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function using_editor() {
+		$current_screen  = get_current_screen();
+		$allowed_screens = apply_filters( 'bu_slideshow_insert_slideshow_screens', self::$editor_screens );
+		$screen_id       = $current_screen->id;
 
-		global $current_screen;
-
-		if (!$current_screen || !$current_screen->id) {
-			return false;
-		}
-
-		$allowed_screens = apply_filters('bu_slideshow_insert_slideshow_screens', self::$editor_screens);
-		$screen_id = $current_screen->id;
-
-		if ($screen_id && post_type_supports($screen_id, self::$post_support_slug)) {
+		if ( $screen_id && post_type_supports( $screen_id, self::$post_support_slug ) ) {
 			return true;
 		}
 
