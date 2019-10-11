@@ -93,7 +93,8 @@ class BU_Slideshow {
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts_styles'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'public_scripts_styles'));
 		add_action('media_buttons', array(__CLASS__, 'add_media_button'),99);
-		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
+		add_action('admin_footer-post.php', array(__CLASS__, 'admin_footer'));
+		add_action('admin_footer-post-new.php', array(__CLASS__, 'admin_footer'));
 
 		// media upload/insert restrictions
 		if ('media-upload.php' === $pagenow || 'async-upload.php' === $pagenow) {
@@ -801,16 +802,22 @@ class BU_Slideshow {
 	 */
 	static public function get_slideshows() {
 		$slideshows = array();
-		$slideshow_posts = get_posts( array(
-			'post_type' => 'bu_slideshow',
-			'posts_per_page' => -1,
-			'orderby' => 'title',
-			'order' => 'asc'
+
+		$slideshow_ids = get_posts(
+			array(
+				'post_type'              => 'bu_slideshow',
+				'posts_per_page'         => 500,
+				'orderby'                => 'title',
+				'order'                  => 'asc',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'fields'                 => 'ids',
 			)
 		);
 
-		foreach ($slideshow_posts as $show) {
-			$slideshows[ $show->ID ] = self::get_slideshow( $show->ID );
+		foreach ( $slideshow_ids as $id ) {
+			$slideshows[ $id ] = self::get_slideshow( $id );
 		}
 
 		return $slideshows;
@@ -1083,17 +1090,17 @@ class BU_Slideshow {
 	 * @return boolean
 	 */
 	static public function using_editor() {
+		$current_screen  = get_current_screen();
+		$allowed_screens = apply_filters( 'bu_slideshow_insert_slideshow_screens', self::$editor_screens );
+		$screen_id       = $current_screen->id;
 
-		global $current_screen;
-
-		if (!$current_screen || !$current_screen->id) {
+		// If the current screen is using the block editor,
+		// we don't need to output the button and modal.
+		if ( bu_slideshow_is_block_editor() ) {
 			return false;
 		}
 
-		$allowed_screens = apply_filters('bu_slideshow_insert_slideshow_screens', self::$editor_screens);
-		$screen_id = $current_screen->id;
-
-		if ($screen_id && post_type_supports($screen_id, self::$post_support_slug)) {
+		if ( $screen_id && post_type_supports( $screen_id, self::$post_support_slug ) ) {
 			return true;
 		}
 
@@ -1108,20 +1115,17 @@ class BU_Slideshow {
 	 * Adds modal UI to footer, for display in thickbox.
 	 */
 	static public function admin_footer() {
-		
-			if (self::using_editor()):   ?>
-				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
+		if ( self::using_editor() ) :
+		?>
+			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
+				<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
+				<?php echo self::get_selector(); ?>
+				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
+			</div>
 
-					<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
-					<?php echo self::get_selector(); ?>
-					<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
-				</div>
-
-			<?php
-			endif;
-		
+		<?php
+		endif;
 	}
-
 
 	/**
 	 * Adds 'Insert Slideshow' button above editor
@@ -1130,52 +1134,63 @@ class BU_Slideshow {
 	 * @return string
 	 */
 	static public function add_media_button() {
-
-		if (self::using_editor()) {
-			$html = sprintf('<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __('Add Slideshow', BU_SSHOW_LOCAL), __('Add Slideshow', BU_SSHOW_LOCAL));
-
-			echo $html;
+		if ( self::using_editor() ) {
+			echo sprintf( '<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __( 'Add Slideshow', BU_SSHOW_LOCAL ), __( 'Add Slideshow', BU_SSHOW_LOCAL ) );
 		}
-
 	}
 
 }
 
 BU_Slideshow::add_plugins_loaded_hook();
 
+/**
+ * Determine whether the block editor is loading on the current screen.
+ *
+ * Checks if `get_current_screen()->is_block_editor()` exists (WP 5.x).
+ * Falls back to `is_gutenberg_page` if it exists.
+ *
+ * @return bool
+ */
+function bu_slideshow_is_block_editor() {
+	if ( method_exists( get_current_screen(), 'is_block_editor' ) ) {
+		return get_current_screen()->is_block_editor();
+	} elseif ( function_exists( 'is_gutenberg_page' ) ) {
+		return is_gutenberg_page();
+	}
 
-function bu_slideshow_meta_box()
-{
-    
-	    $screens = ['post', 'page'];
-	    foreach ($screens as $screen) {
-	        add_meta_box(
-	            'bu_slideshow_box_id',           // Unique ID
-	            'SlideShow Meta Box',  // Box title
-	            'bu_slideshow_meta_box_html',  // Content callback, must be of type callable
-	            $screen                   // Post type
-	        );
-	    }
-	
+	return false;
 }
-add_action('add_meta_boxes', 'bu_slideshow_meta_box');
-function bu_slideshow_meta_box_html($post)
-{
-   $html = BU_Slideshow::shortcode_handler($args);
-   echo '<div id="bu_slideshow_metabox_wrap" class="wrap postbox">';
-	
-		$button_label = 'Generate Slideshow Shortcode';
-	//add js to hide modal
-		echo '<script type="text/javascript">
-		</script>';
-				echo "<h2>";
-				_e($button_label, BU_SSHOW_LOCAL);
-				echo "</h2>";
-				echo BU_Slideshow::get_selector();
-				echo '<p><a href="#" id="bu_insert_slideshow" class="button-primary">';
-				_e($button_label, BU_SSHOW_LOCAL);
-				echo "</a></p>
-			</div>";
+
+/**
+ * Add a metabox to block editor pages for compatibility.
+ */
+function bu_slideshow_meta_box() {
+	// If the current screen is not using the block editor,
+	// we don't need to add this metabox.
+	if ( ! bu_slideshow_is_block_editor() ) {
+		return;
+	}
+
+	add_meta_box(
+		'bu_slideshow_box_id',        // Unique ID
+		'SlideShow Meta Box',         // Box title
+		'bu_slideshow_meta_box_html', // Content callback, must be of type callable
+		array( 'post', 'page' )       // Post types
+	);
+}
+add_action( 'add_meta_boxes', 'bu_slideshow_meta_box' );
+
+function bu_slideshow_meta_box_html( $post ) {
+	$button_label = 'Generate Slideshow Shortcode';
+	?>
+	<div id="bu_slideshow_metabox_wrap" class="wrap postbox">
+		<h2><?php _e( $button_label, BU_SSHOW_LOCAL ); ?></h2>
+		<?php echo BU_Slideshow::get_selector(); ?>
+		<p>
+			<a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e( $button_label, BU_SSHOW_LOCAL ); ?></a>
+		</p>
+	</div>
+	<?php
 }
 
 /**
