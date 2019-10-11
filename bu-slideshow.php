@@ -3,14 +3,14 @@
 Plugin Name: BU Slideshow
 Plugin URI: http://developer.bu.edu/bu-slideshow/
 Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
-Version: 2.3.10
+Version: 2.3.12
 Author: Boston University (IS&T)
 Author URI: http://www.bu.edu/tech/
 Requires at least: 3.5
 Tested up to: 4.9.6
 */
 
-define('BU_SLIDESHOW_VERSION', '2.3.10');
+define('BU_SLIDESHOW_VERSION', '2.3.12');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
@@ -22,7 +22,7 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
-	
+
 	define('BU_SSHOW_MIN', '');//.min
 }
 //define('BU_SSHOW_MIN', '');

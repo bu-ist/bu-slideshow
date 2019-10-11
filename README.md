@@ -2,8 +2,9 @@
 **Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99), [awbauer](https://profiles.wordpress.org/awbauer), [clrux](https://profiles.wordpress.org/clrux), [mgburns](https://profiles.wordpress.org/mgburns), [gannondigital](https://profiles.wordpress.org/gannondigital)  
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
-**Tested up to:** 4.9.6  
-**Stable tag:** 2.3.11  
+**Tested up to:** 4.9.10  
+**Stable tag:** 2.3.12  
+
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -50,11 +51,14 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 
 ## Changelog ##
+### 2.3.12 ###
+* Optimize the get_posts call for slideshows
+* Determine if the block editor is in use before loading an interface
+* Use more specific hooks to load the button and modal only when needed
+* Update failing Travis CI tests
 
-### 2.3.11 ###
-* Includes fixes for compatability with the Gutenberg editor by adding a metabox UI in addition to the existing modal window UI.
 ### 2.3.10 ###
-* Added 'page_alt' post type support to enable the Slideshow UI when using the BU Versions plugin
+* Added 'page_alt' post type support to enable slides with BU Versions plugin
 
 ### 2.3.9 ###
 * Fix formatting error in shortcode generation
