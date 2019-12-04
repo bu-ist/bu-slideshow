@@ -618,6 +618,7 @@ class BU_Slideshow {
 		$height = 0;
 		$slides = array();
 		$valid_templates = apply_filters('bu_slideshow_slide_templates', BU_Slideshow::$slide_templates );
+		$template_id = '';
 
 		switch ( $action ) {
 			case 'do_create':
