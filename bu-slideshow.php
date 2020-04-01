@@ -645,7 +645,7 @@ class BU_Slideshow {
 				if ($show->update()) {
 					$url = 'admin.php?page=bu-edit-slideshow&bu_slideshow_id=' . $show->id . "&msg=";
 					$url .= urlencode( __("Slideshow created successfully.", BU_SSHOW_LOCAL) );
-					wp_redirect( admin_url( $url ) );
+					wp_safe_redirect( admin_url( $url ) );
 					exit;
 				} else {
 					require_once(ABSPATH . 'wp-admin/admin-header.php');
