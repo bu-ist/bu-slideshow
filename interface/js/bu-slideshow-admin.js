@@ -1,3 +1,4 @@
+alert('loaded');
 (function($) {
     /* update slide input names so that new order is saved */
     function reindexSlides(event, ui) {
@@ -185,7 +186,7 @@
 
         /* Add Slideshow button and Inserting shortcode into editor */
         if ($('#bu_slideshow_modal_button').length && typeof BuModal === 'function' && typeof SlideshowSelector === 'function') {
-            
+
             var modal = new BuModal({ 'el': '#bu_slideshow_modal_wrap', 'height': '80%' }),
                 selector = new SlideshowSelector('#bu_slideshow_modal_wrap .bu-slideshow-selector');
 
@@ -194,7 +195,7 @@
             });
 
             //we need separate functcions for handling shortcode from the modal vs the metabox
-            //first the modal 
+            //first the modal
             $('#bu_slideshow_modal_wrap').on('click', '#bu_insert_slideshow', function(e) {
                 var options, html;
                 selector.ui.parent().find('.error').remove();
@@ -207,13 +208,18 @@
 
                 html = '[bu_slideshow show_id="' + options.show_id + '" show_nav="' + options.show_nav + '" transition="' + options.transition + '" nav_style="' + options.nav_style + '" autoplay="' + options.autoplay + '" transition_delay="' + options.transition_delay + '" width="' + options.width + '" shuffle="' + options.shuffle + '"]';
 
+                alert(html);
+
                 window.send_to_editor("<br />" + html + "<br />");
                 selector.reset();
                 modal.close();
                 return false;
             });
             //now handle the metabox
-            $('#bu_slideshow_metabox_wrap').on('click', '#bu_insert_slideshow', function(e) {
+            //document.querySelector("#bu_insert_slideshow")
+            var click_button = document.querySelector("#bu_insert_slideshow");
+            alert(click_button);
+            $('#bu_slideshow_metabox_wrap').on('click', click_button, function(e) {
                 var options, html;
                 var selector = new SlideshowSelector('#bu_slideshow_metabox_wrap .bu-slideshow-selector');
 
@@ -262,7 +268,7 @@
                 } else {
                     jQuery('.slide-show-generated-shortcode').html(html_no_editor);
                 }
-                
+
                 return false;
             });
         } else {
@@ -273,7 +279,7 @@
                 jQuery("#bu_slideshow_modal_wrap").hide();
                 jQuery("#bu_slideshow_modal_wrap").css("visiblilty", "none");
             }
-            
+
             $('#bu_slideshow_metabox_wrap').on('click', '#bu_insert_slideshow', function(e) {
                 var options, html;
                 var selector = new SlideshowSelector('#bu_slideshow_metabox_wrap .bu-slideshow-selector');
@@ -323,7 +329,7 @@
                 } else {
                     jQuery('.slide-show-generated-shortcode').html(html_no_editor);
                 }
-                
+
                 return false;
             });
         }

@@ -22,7 +22,7 @@ if (!defined('BU_SSHOW_LOCAL')) {
 if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 	define('BU_SSHOW_MIN', '');
 } else {
-	
+
 	define('BU_SSHOW_MIN', '');//.min
 }
 //define('BU_SSHOW_MIN', '');
@@ -196,7 +196,7 @@ class BU_Slideshow {
 		if (in_array($current_screen->id, $admin_pages) || self::using_editor()) {
 			wp_enqueue_script('bu-modal', $js_url . 'bu-modal/bu-modal' . BU_SSHOW_MIN . '.js', array('jquery'), BU_SLIDESHOW_VERSION, false);
 			wp_enqueue_style('bu-modal', $js_url . 'bu-modal/css/bu-modal.css');
-			wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_MIN . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true);
+			var_dump(wp_register_script('bu-slideshow-admin', $js_url . 'bu-slideshow-admin' . BU_SSHOW_MIN . '.js', array('jquery', 'bu-modal'), BU_SLIDESHOW_VERSION, true));
 
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('bu-slideshow-admin');
@@ -1108,7 +1108,7 @@ class BU_Slideshow {
 	 * Adds modal UI to footer, for display in thickbox.
 	 */
 	static public function admin_footer() {
-		
+
 			if (self::using_editor()):   ?>
 				<div id="bu_slideshow_modal_wrap" class="wrap postbox">
 
@@ -1119,7 +1119,7 @@ class BU_Slideshow {
 
 			<?php
 			endif;
-		
+
 	}
 
 
@@ -1146,7 +1146,7 @@ BU_Slideshow::add_plugins_loaded_hook();
 
 function bu_slideshow_meta_box()
 {
-    
+
 	    $screens = ['post', 'page'];
 	    foreach ($screens as $screen) {
 	        add_meta_box(
@@ -1156,14 +1156,14 @@ function bu_slideshow_meta_box()
 	            $screen                   // Post type
 	        );
 	    }
-	
+
 }
 add_action('add_meta_boxes', 'bu_slideshow_meta_box');
 function bu_slideshow_meta_box_html($post)
 {
    $html = BU_Slideshow::shortcode_handler($args);
    echo '<div id="bu_slideshow_metabox_wrap" class="wrap postbox">';
-	
+
 		$button_label = 'Generate Slideshow Shortcode';
 	//add js to hide modal
 		echo '<script type="text/javascript">
