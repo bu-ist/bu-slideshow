@@ -1,0 +1,4 @@
+{	
+	"themes": ["bu-ist/responsive-framework"],
+	"plugins": [ "." ]
+}

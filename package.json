@@ -1,7 +1,11 @@
 {
 	"name": "bu-slideshow",
 	"version": "2.3.12",
+	"scripts": {
+		"wp-env": "wp-env"
+	},
 	"devDependencies": {
+		"@wordpress/env": "^4.1.1",
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.3.0",
 		"grunt-contrib-cssmin": "^0.12.2",
