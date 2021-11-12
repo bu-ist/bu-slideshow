@@ -30,6 +30,9 @@ require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
 
+// Load block.
+require_once BU_SLIDESHOW_BASEDIR . '/src/block.php';
+
 class BU_Slideshow {
 	static $wp_version;
 
