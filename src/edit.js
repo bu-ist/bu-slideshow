@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { TextControl, SelectControl } from '@wordpress/components';
+import { TextControl, SelectControl, ToggleControl } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
 
@@ -75,6 +75,13 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					]}
 				/>
 			</div>
+			<div>
+				<ToggleControl
+					label={__('Show navigation', 'slideshow-block')}
+					checked={attributes.showNav}
+					onChange={(val) => setAttributes({ showNav: val })}
+				/>
 		</div>
+			</div>
 	);
 }
