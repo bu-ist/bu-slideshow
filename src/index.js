@@ -32,6 +32,11 @@ registerBlockType('bu-slideshow/slideshow-block', {
 		showNav: {
 			type: 'boolean',
 			default: true,
+		},
+		navStyle: {
+			type: 'string',
+			default: 'icon',
+		},
 	},
 	/**
 	 * @see ./edit.js

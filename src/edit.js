@@ -81,7 +81,24 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					checked={attributes.showNav}
 					onChange={(val) => setAttributes({ showNav: val })}
 				/>
-		</div>
 			</div>
+			<div>
+				<SelectControl
+					label={__('Navigation Style', 'slideshow-block')}
+					value={attributes.navStyle}
+					onChange={(val) => setAttributes({ navStyle: val })}
+					options={[
+						{
+							label: __('Icon', 'slideshow-block'),
+							value: 'icon',
+						},
+						{
+							label: __('Number', 'slideshow-block'),
+							value: 'number',
+						},
+					]}
+				/>
+			</div>
+		</div>
 	);
 }
