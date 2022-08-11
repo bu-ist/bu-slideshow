@@ -99,6 +99,13 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					]}
 				/>
 			</div>
+			<div>
+				<ToggleControl
+					label={__('Play automatically', 'slideshow-block')}
+					checked={attributes.autoPlay}
+					onChange={(val) => setAttributes({ autoPlay: val })}
+				/>
+			</div>
 		</div>
 	);
 }

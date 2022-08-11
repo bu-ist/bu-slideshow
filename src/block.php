@@ -55,6 +55,7 @@ function slideshow_block_render_callback( $attributes ) {
 		'transition' => empty( $attributes['transition'] ) ? 'slide' : $attributes['transition'],
 		'show_nav'   => array_key_exists( 'showNav', $attributes ) ? 0 : 1,
 		'nav_style'  => array_key_exists( 'navStyle', $attributes ) ? $attributes['navStyle'] : 'icon',
+		'autoplay'   => array_key_exists( 'autoPlay', $attributes ) ? 0 : 1,
 	);
 
 	// Render the slideshow with the shortcode handler.

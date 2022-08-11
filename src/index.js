@@ -37,6 +37,10 @@ registerBlockType('bu-slideshow/slideshow-block', {
 			type: 'string',
 			default: 'icon',
 		},
+		autoPlay: {
+			type: 'boolean',
+			default: true,
+		},
 	},
 	/**
 	 * @see ./edit.js
