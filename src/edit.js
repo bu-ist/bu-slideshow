@@ -1,11 +1,7 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
-
-import { TextControl } from '@wordpress/components';
+import { TextControl, SelectControl } from '@wordpress/components';
+import apiFetch from '@wordpress/api-fetch';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -21,16 +17,39 @@ import { TextControl } from '@wordpress/components';
  * @return {WPElement} Element to render.
  */
 export default function Edit({ attributes, isSelected, setAttributes }) {
+	const [slideShows, setSlideshows] = useState();
+
+	const [preview, setPreview] = useState('');
+
+	useEffect(() => {
+		getSlideshows();
+	}, []);
+
+	const getSlideshows = async () => {
+		const fetchedSlideshows = await apiFetch({
+			path: 'bu-slideshow/v1/shows',
+		});
+
+		setSlideshows(fetchedSlideshows);
+	};
+
+	// Refresh the block preview markup whenever the attributes change.
+	useEffect(() => {
+		getPreview();
+	}, [attributes]);
+
+	const getPreview = async () => {};
+
 	return (
 		<div className="wp-block-bu-slideshow-slideshow-block">
-			{attributes.message && !isSelected ? (
-				<div>Message: {attributes.message}</div>
+			{attributes.slideshowId && !isSelected ? (
+				<div>SlideshowId: {attributes.slideshowId}</div>
 			) : (
 				<div>
 					<TextControl
-						label={__('Message', 'slideshow-block')}
-						value={attributes.message}
-						onChange={(val) => setAttributes({ message: val })}
+						label={__('SlideshowId', 'slideshow-block')}
+						value={attributes.slideshowId}
+						onChange={(val) => setAttributes({ slideshowId: val })}
 					/>
 				</div>
 			)}

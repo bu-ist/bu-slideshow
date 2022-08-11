@@ -21,9 +21,9 @@ registerBlockType('bu-slideshow/slideshow-block', {
 	icon: 'slides',
 	category: 'widgets',
 	attributes: {
-		message: {
+		slideshowId: {
 			type: 'string',
-			default: '',
+			default: 0,
 		},
 	},
 	/**
