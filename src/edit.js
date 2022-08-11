@@ -41,7 +41,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 	const getPreview = async () => {};
 
 	// Format the slideshows as menu options, or as an empty array if they haven't been loaded yet.
-	const options = slideShows
+	const showOptions = slideShows
 		? slideShows.map((slideshow) => ({
 				label: slideshow.name,
 				value: slideshow.id,
@@ -55,7 +55,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					label={__('Choose a slideshow', 'slideshow-block')}
 					value={attributes.slideshowId}
 					onChange={(val) => setAttributes({ slideshowId: val })}
-					options={options}
+					options={showOptions}
 				/>
 			</div>
 		</div>
