@@ -10,7 +10,7 @@
 		"@babel/plugin-proposal-class-properties": "^7.16.0",
 		"@babel/preset-env": "^7.16.0",
 		"@babel/preset-react": "^7.16.0",
-		"@wordpress/env": "^4.1.1",
+		"@wordpress/env": "^5.1.0",
 		"@wordpress/eslint-plugin": "^9.2.0",
 		"@wordpress/scripts": "^19.1.0",
 		"grunt": "~0.4.1",
