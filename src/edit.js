@@ -106,6 +106,13 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					onChange={(val) => setAttributes({ autoPlay: val })}
 				/>
 			</div>
+			<div>
+				<ToggleControl
+					label={__('Shuffle slides', 'slideshow-block')}
+					checked={attributes.shuffle}
+					onChange={(val) => setAttributes({ shuffle: val })}
+				/>
+			</div>
 		</div>
 	);
 }

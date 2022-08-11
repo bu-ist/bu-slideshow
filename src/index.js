@@ -41,6 +41,10 @@ registerBlockType('bu-slideshow/slideshow-block', {
 			type: 'boolean',
 			default: true,
 		},
+		shuffle: {
+			type: 'boolean',
+			default: false,
+		},
 	},
 	/**
 	 * @see ./edit.js
