@@ -25,6 +25,10 @@ registerBlockType('bu-slideshow/slideshow-block', {
 			type: 'string',
 			default: 0,
 		},
+		transition: {
+			type: 'string',
+			default: 'slide',
+		},
 	},
 	/**
 	 * @see ./edit.js

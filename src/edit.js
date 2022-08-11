@@ -58,6 +58,23 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					options={showOptions}
 				/>
 			</div>
+			<div>
+				<SelectControl
+					label={__('Transition', 'slideshow-block')}
+					value={attributes.transition}
+					onChange={(val) => setAttributes({ transition: val })}
+					options={[
+						{
+							label: __('Slide', 'slideshow-block'),
+							value: 'slide',
+						},
+						{
+							label: __('Fade', 'slideshow-block'),
+							value: 'fade',
+						},
+					]}
+				/>
+			</div>
 		</div>
 	);
 }
