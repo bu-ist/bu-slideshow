@@ -40,19 +40,24 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 
 	const getPreview = async () => {};
 
+	// Format the slideshows as menu options, or as an empty array if they haven't been loaded yet.
+	const options = slideShows
+		? slideShows.map((slideshow) => ({
+				label: slideshow.name,
+				value: slideshow.id,
+		  }))
+		: [];
+
 	return (
 		<div className="wp-block-bu-slideshow-slideshow-block">
-			{attributes.slideshowId && !isSelected ? (
-				<div>SlideshowId: {attributes.slideshowId}</div>
-			) : (
-				<div>
-					<TextControl
-						label={__('SlideshowId', 'slideshow-block')}
-						value={attributes.slideshowId}
-						onChange={(val) => setAttributes({ slideshowId: val })}
-					/>
-				</div>
-			)}
+			<div>
+				<SelectControl
+					label={__('Choose a slideshow', 'slideshow-block')}
+					value={attributes.slideshowId}
+					onChange={(val) => setAttributes({ slideshowId: val })}
+					options={options}
+				/>
+			</div>
 		</div>
 	);
 }
