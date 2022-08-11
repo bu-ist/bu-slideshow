@@ -49,7 +49,16 @@ function slideshow_block_render_callback( $attributes ) {
 		return '<div>No valid slideshow ID</div>';
 	}
 
-	return \BU_Slideshow::shortcode_handler( array( 'show_id' => $slideshow_id ) );
+	// Setup parameters for slideshow rendering.
+	$args = array(
+		'show_id'    => $slideshow_id,
+		'transition' => empty( $attributes['transition'] ) ? 'slide' : $attributes['transition'],
+		'show_nav'   => array_key_exists( 'showNav', $attributes ) ? 0 : 1,
+		'nav_style'  => array_key_exists( 'navStyle', $attributes ) ? $attributes['navStyle'] : 'icon',
+	);
+
+	// Render the slideshow with the shortcode handler.
+	return \BU_Slideshow::shortcode_handler( $args );
 }
 
 /**
