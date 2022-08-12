@@ -45,6 +45,10 @@ registerBlockType('bu-slideshow/slideshow-block', {
 			type: 'boolean',
 			default: false,
 		},
+		width: {
+			type: 'string',
+			default: 'auto',
+		},
 	},
 	/**
 	 * @see ./edit.js

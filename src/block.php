@@ -57,6 +57,7 @@ function slideshow_block_render_callback( $attributes ) {
 		'nav_style'  => array_key_exists( 'navStyle', $attributes ) ? $attributes['navStyle'] : 'icon',
 		'autoplay'   => array_key_exists( 'autoPlay', $attributes ) ? 0 : 1,
 		'shuffle'    => array_key_exists( 'shuffle', $attributes ) ? true : false,
+		'width'      => array_key_exists( 'width', $attributes ) ? $attributes['width'] : 'auto',
 	);
 
 	// Render the slideshow with the shortcode handler.

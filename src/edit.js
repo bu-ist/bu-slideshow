@@ -113,6 +113,15 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					onChange={(val) => setAttributes({ shuffle: val })}
 				/>
 			</div>
+			<div>
+				<TextControl
+					label={__('Fixed width px (optional)', 'slideshow-block')}
+					value={attributes.width === 'auto' ? '' : attributes.width}
+					onChange={(val) =>
+						setAttributes({ width: val === '' ? 'auto' : val })
+					}
+				/>
+			</div>
 		</div>
 	);
 }
