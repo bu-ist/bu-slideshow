@@ -51,13 +51,14 @@ function slideshow_block_render_callback( $attributes ) {
 
 	// Setup parameters for slideshow rendering.
 	$args = array(
-		'show_id'    => $slideshow_id,
-		'transition' => empty( $attributes['transition'] ) ? 'slide' : $attributes['transition'],
-		'show_nav'   => array_key_exists( 'showNav', $attributes ) ? 0 : 1,
-		'nav_style'  => array_key_exists( 'navStyle', $attributes ) ? $attributes['navStyle'] : 'icon',
-		'autoplay'   => array_key_exists( 'autoPlay', $attributes ) ? 0 : 1,
-		'shuffle'    => array_key_exists( 'shuffle', $attributes ) ? true : false,
-		'width'      => array_key_exists( 'width', $attributes ) ? $attributes['width'] : 'auto',
+		'show_id'          => $slideshow_id,
+		'transition'       => empty( $attributes['transition'] ) ? 'slide' : $attributes['transition'],
+		'show_nav'         => array_key_exists( 'showNav', $attributes ) ? 0 : 1,
+		'nav_style'        => array_key_exists( 'navStyle', $attributes ) ? $attributes['navStyle'] : 'icon',
+		'autoplay'         => array_key_exists( 'autoPlay', $attributes ) ? 0 : 1,
+		'shuffle'          => array_key_exists( 'shuffle', $attributes ) ? true : false,
+		'width'            => array_key_exists( 'width', $attributes ) ? $attributes['width'] : 'auto',
+		'transition_delay' => array_key_exists( 'delay', $attributes ) ? $attributes['delay'] : '5',
 	);
 
 	// Render the slideshow with the shortcode handler.

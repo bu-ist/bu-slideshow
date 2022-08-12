@@ -126,6 +126,13 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					}
 				/>
 			</div>
+			<div>
+				<TextControl
+					label={__('Transition delay in seconds', 'slideshow-block')}
+					value={attributes.delay}
+					onChange={(val) => setAttributes({ delay: val })}
+				/>
+			</div>
 		</div>
 	);
 }

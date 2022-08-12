@@ -49,6 +49,10 @@ registerBlockType('bu-slideshow/slideshow-block', {
 			type: 'string',
 			default: 'auto',
 		},
+		delay: {
+			type: 'string',
+			default: '5',
+		},
 	},
 	/**
 	 * @see ./edit.js
