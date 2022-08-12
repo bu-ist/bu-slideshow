@@ -1,5 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { TextControl, SelectControl, ToggleControl } from '@wordpress/components';
+import {
+	TextControl,
+	SelectControl,
+	ToggleControl,
+} from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
 
