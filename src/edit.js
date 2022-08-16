@@ -3,9 +3,11 @@ import {
 	TextControl,
 	SelectControl,
 	ToggleControl,
+	PanelBody
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
+import { InspectorControls } from '@wordpress/block-editor';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -62,77 +64,81 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					options={showOptions}
 				/>
 			</div>
-			<div>
-				<SelectControl
-					label={__('Transition', 'slideshow-block')}
-					value={attributes.transition}
-					onChange={(val) => setAttributes({ transition: val })}
-					options={[
-						{
-							label: __('Slide', 'slideshow-block'),
-							value: 'slide',
-						},
-						{
-							label: __('Fade', 'slideshow-block'),
-							value: 'fade',
-						},
-					]}
-				/>
-			</div>
-			<div>
-				<ToggleControl
-					label={__('Show navigation', 'slideshow-block')}
-					checked={attributes.showNav}
-					onChange={(val) => setAttributes({ showNav: val })}
-				/>
-			</div>
-			<div>
-				<SelectControl
-					label={__('Navigation Style', 'slideshow-block')}
-					value={attributes.navStyle}
-					onChange={(val) => setAttributes({ navStyle: val })}
-					options={[
-						{
-							label: __('Icon', 'slideshow-block'),
-							value: 'icon',
-						},
-						{
-							label: __('Number', 'slideshow-block'),
-							value: 'number',
-						},
-					]}
-				/>
-			</div>
-			<div>
-				<ToggleControl
-					label={__('Play automatically', 'slideshow-block')}
-					checked={attributes.autoPlay}
-					onChange={(val) => setAttributes({ autoPlay: val })}
-				/>
-			</div>
-			<div>
-				<ToggleControl
-					label={__('Shuffle slides', 'slideshow-block')}
-					checked={attributes.shuffle}
-					onChange={(val) => setAttributes({ shuffle: val })}
-				/>
-			</div>
-			<div>
-				<TextControl
-					label={__('Fixed width px (optional)', 'slideshow-block')}
-					value={attributes.width === 'auto' ? '' : attributes.width}
-					onChange={(val) =>
-						setAttributes({ width: val === '' ? 'auto' : val })
-					}
-				/>
-			</div>
-			<div>
-				<TextControl
-					label={__('Transition delay in seconds', 'slideshow-block')}
-					value={attributes.delay}
-					onChange={(val) => setAttributes({ delay: val })}
-				/>
-			</div>
+			<InspectorControls>
+				<PanelBody title={__('Slideshow Options', 'slideshow-block')}>
+					<div>
+						<SelectControl
+							label={__('Transition', 'slideshow-block')}
+							value={attributes.transition}
+							onChange={(val) => setAttributes({ transition: val })}
+							options={[
+								{
+									label: __('Slide', 'slideshow-block'),
+									value: 'slide',
+								},
+								{
+									label: __('Fade', 'slideshow-block'),
+									value: 'fade',
+								},
+							]}
+						/>
+					</div>
+					<div>
+						<ToggleControl
+							label={__('Show navigation', 'slideshow-block')}
+							checked={attributes.showNav}
+							onChange={(val) => setAttributes({ showNav: val })}
+						/>
+					</div>
+					<div>
+						<SelectControl
+							label={__('Navigation Style', 'slideshow-block')}
+							value={attributes.navStyle}
+							onChange={(val) => setAttributes({ navStyle: val })}
+							options={[
+								{
+									label: __('Icon', 'slideshow-block'),
+									value: 'icon',
+								},
+								{
+									label: __('Number', 'slideshow-block'),
+									value: 'number',
+								},
+							]}
+						/>
+					</div>
+					<div>
+						<ToggleControl
+							label={__('Play automatically', 'slideshow-block')}
+							checked={attributes.autoPlay}
+							onChange={(val) => setAttributes({ autoPlay: val })}
+						/>
+					</div>
+					<div>
+						<ToggleControl
+							label={__('Shuffle slides', 'slideshow-block')}
+							checked={attributes.shuffle}
+							onChange={(val) => setAttributes({ shuffle: val })}
+						/>
+					</div>
+					<div>
+						<TextControl
+							label={__('Fixed width px (optional)', 'slideshow-block')}
+							value={attributes.width === 'auto' ? '' : attributes.width}
+							onChange={(val) =>
+								setAttributes({ width: val === '' ? 'auto' : val })
+							}
+						/>
+					</div>
+					<div>
+						<TextControl
+							label={__('Transition delay in seconds', 'slideshow-block')}
+							value={attributes.delay}
+							onChange={(val) => setAttributes({ delay: val })}
+						/>
+					</div>
+				</PanelBody>
+			</InspectorControls>
 		</div>
 	);
 }
