@@ -34,7 +34,22 @@ function get_slideshow_posts() {
 		$slideshow_ids
 	);
 
+	$slideshows = array_reverse( $slideshows );
+
 	return $slideshows;
+}
+
+/**
+ * Returns block markup for editing preview
+ *
+ * Takes block attributes as parameters and returns the current markup output.
+ * Used for block preview.
+ *
+ * @param WP_REST_Request $attributes Parameters from the rest request.
+ * @return string Rendered block markup.
+ */
+function block_markup( $attributes ) {
+	return rest_ensure_response( slideshow_block_render_callback( $attributes ) );
 }
 
 /**
@@ -105,6 +120,19 @@ add_action(
 			array(
 				'methods'             => 'GET',
 				'callback'            => __NAMESPACE__ . '\get_slideshow_posts',
+				'permission_callback' => function () {
+					return current_user_can( 'edit_others_posts' );
+				},
+			)
+		);
+
+		// Endpoint for block preview.
+		register_rest_route(
+			'bu-slideshow/v1',
+			'/markup/',
+			array(
+				'methods'             => 'GET',
+				'callback'            => __NAMESPACE__ . '\block_markup',
 				'permission_callback' => function () {
 					return current_user_can( 'edit_others_posts' );
 				},
