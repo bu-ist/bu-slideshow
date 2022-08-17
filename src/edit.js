@@ -10,8 +10,10 @@ import { useState, useEffect } from '@wordpress/element';
 import { InspectorControls } from '@wordpress/block-editor';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
+ * Edit function for the slideshow block.
+ *
+ * Provides a simple slideshow picker from a select menu. Also provides an Inspector panel to configure the block settings,
+ * and a basic preview of the block for the editor.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
