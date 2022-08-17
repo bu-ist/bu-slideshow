@@ -34,6 +34,8 @@ function get_slideshow_posts() {
 		$slideshow_ids
 	);
 
+	$slideshows = array_reverse( $slideshows );
+
 	return $slideshows;
 }
 
