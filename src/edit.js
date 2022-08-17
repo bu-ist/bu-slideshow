@@ -75,12 +75,15 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 	};
 
 	// Format the slideshows as menu options, or as an empty array if they haven't been loaded yet.
-	const showOptions = slideShows
+	let showOptions = slideShows
 		? slideShows.map((slideshow) => ({
 				label: slideshow.name,
 				value: slideshow.id,
 		  }))
 		: [];
+
+	// Add a label to the zero option, so there's a message to select a slideshow on first load.
+	showOptions = [{ label: 'Select a slideshow', value: 0 }, ...showOptions];
 
 	return (
 		<div className="wp-block-bu-slideshow-slideshow-block">
