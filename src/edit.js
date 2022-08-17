@@ -85,15 +85,29 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 	// Add a label to the zero option, so there's a message to select a slideshow on first load.
 	showOptions = [{ label: 'Select a slideshow', value: 0 }, ...showOptions];
 
+	// Pick the selected slideshow from the options, or the first option if no slideshow is selected.
+	let selectedShow = showOptions.find(
+		(element) => element.value === Number(attributes.slideshowId)
+	);
+	if (!selectedShow) {
+		selectedShow = showOptions[0]; // This is just to give it some kind of value that isn't just undefined.
+	}
+
 	return (
 		<div className="wp-block-bu-slideshow-slideshow-block">
 			<div>
-				<SelectControl
-					label={__('Choose a slideshow', 'slideshow-block')}
-					value={attributes.slideshowId}
-					onChange={(val) => setAttributes({ slideshowId: val })}
-					options={showOptions}
-				/>
+				{Number(attributes.slideshowId) !== 0 && !isSelected ? (
+					<div style={{ fontSize: 15, fontWeigh: 600 }}>
+						<i>Preview: {selectedShow.label}</i>
+					</div>
+				) : (
+					<SelectControl
+						label={__('Choose a slideshow', 'slideshow-block')}
+						value={attributes.slideshowId}
+						onChange={(val) => setAttributes({ slideshowId: val })}
+						options={showOptions}
+					/>
+				)}
 			</div>
 			<InspectorControls>
 				<PanelBody title={__('Slideshow Options', 'slideshow-block')}>
