@@ -3,7 +3,7 @@ import {
 	TextControl,
 	SelectControl,
 	ToggleControl,
-	PanelBody
+	PanelBody,
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
