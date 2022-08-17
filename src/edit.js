@@ -44,7 +44,29 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 		getPreview();
 	}, [attributes]);
 
-	const getPreview = async () => {};
+	const getPreview = async () => {
+		// Convert the block attributes to a query string.
+		const queryString = Object.keys(attributes)
+			.map((key) => key + '=' + attributes[key])
+			.join('&');
+
+		// Fetch the markup output through the API.
+		const fetchedPreview = await apiFetch({
+			path: `bu-slideshow/v1/markup?${queryString}`,
+		});
+
+		// Unfortunately the frontend javascript is designed to only run on document.ready, so it's not easy to ititialize the slideshow.
+		// As a hacky workaround, I'm parsing the markup to an offscreen DOM objects, to be able to run a standard css selector that can isolate the first slide element
+		const offscreenPreview = document.createElement('div');
+		offscreenPreview.innerHTML = fetchedPreview;
+
+		// Get the first slide element.
+		const firstSlide = offscreenPreview.getElementsByClassName('slide')[0];
+
+		// If the frontend js were working, we could just set the preview state to the fetched markup.
+		// It isn't though, so set the preview state to the first slide element.
+		setPreview(firstSlide.innerHTML);
+	};
 
 	// Format the slideshows as menu options, or as an empty array if they haven't been loaded yet.
 	const showOptions = slideShows
@@ -139,6 +161,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					</div>
 				</PanelBody>
 			</InspectorControls>
+			<div dangerouslySetInnerHTML={ { __html: preview } } />
 		</div>
 	);
 }
