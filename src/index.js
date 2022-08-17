@@ -23,7 +23,7 @@ registerBlockType('bu-slideshow/slideshow-block', {
 	attributes: {
 		slideshowId: {
 			type: 'string',
-			default: 0,
+			default: '0',
 		},
 		transition: {
 			type: 'string',
