@@ -170,7 +170,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 					</div>
 				</PanelBody>
 			</InspectorControls>
-			<div dangerouslySetInnerHTML={ { __html: preview } } />
+			<div dangerouslySetInnerHTML={{ __html: preview }} />
 		</div>
 	);
 }
