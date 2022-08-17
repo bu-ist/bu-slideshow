@@ -45,6 +45,12 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 	}, [attributes]);
 
 	const getPreview = async () => {
+		// Bail if the slideshow ID is not set.
+		if (Number(attributes.slideshowId) === 0) {
+			setPreview(`<p>${__('Please select a slideshow.')}</p>`);
+			return;
+		}
+
 		// Convert the block attributes to a query string.
 		const queryString = Object.keys(attributes)
 			.map((key) => key + '=' + attributes[key])
