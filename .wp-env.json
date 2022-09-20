@@ -1,4 +1,5 @@
 {	
+	"core": "WordPress/WordPress#5.4.2",
 	"themes": ["bu-ist/responsive-framework"],
-	"plugins": [ "." ]
+	"plugins": [ ".", "WordPress/classic-editor" ]
 }
