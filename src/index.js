@@ -17,7 +17,7 @@ import Edit from './edit';
  */
 registerBlockType('bu-slideshow/slideshow-block', {
 	apiVersion: 2,
-	title: 'Slideshow Block',
+	title: 'BU Slideshow Block',
 	icon: 'slides',
 	category: 'widgets',
 	attributes: {
