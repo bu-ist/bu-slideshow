@@ -1,6 +1,6 @@
 {
 	"name": "bu-slideshow",
-	"version": "2.3.12",
+	"version": "2.3.13",
 	"scripts": {
 		"wp-env": "wp-env",
 		"start": "wp-scripts start",
