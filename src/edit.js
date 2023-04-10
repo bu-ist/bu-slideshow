@@ -63,7 +63,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 			path: `bu-slideshow/v1/markup?${queryString}`,
 		});
 
-		// Unfortunately the frontend javascript is designed to only run on document.ready, so it's not easy to ititialize the slideshow.
+		// Unfortunately the frontend javascript is designed to only run on document.ready, so it's not easy to initialize the slideshow.
 		// As a hacky workaround, I'm parsing the markup to an offscreen DOM objects, to be able to run a standard css selector that can isolate the first slide element
 		const offscreenPreview = document.createElement('div');
 		offscreenPreview.innerHTML = fetchedPreview;
