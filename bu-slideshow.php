@@ -3,14 +3,14 @@
 Plugin Name: BU Slideshow
 Plugin URI: http://developer.bu.edu/bu-slideshow/
 Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
-Version: 2.3.12
+Version: 2.3.13
 Author: Boston University (IS&T)
 Author URI: http://www.bu.edu/tech/
 Requires at least: 3.5
 Tested up to: 4.9.6
 */
 
-define('BU_SLIDESHOW_VERSION', '2.3.12');
+define('BU_SLIDESHOW_VERSION', '2.3.13');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));
 define('BU_SLIDESHOW_BASEURL', plugin_dir_url(__FILE__));
@@ -29,6 +29,9 @@ if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slideshow.php';
 require_once BU_SLIDESHOW_BASEDIR . 'class-bu-slide.php';
 require_once BU_SLIDESHOW_BASEDIR . 'slideshow-upgrade.php';
+
+// Load block.
+require_once BU_SLIDESHOW_BASEDIR . '/src/block.php';
 
 class BU_Slideshow {
 	static $wp_version;
@@ -1160,38 +1163,6 @@ function bu_slideshow_is_block_editor() {
 	}
 
 	return false;
-}
-
-/**
- * Add a metabox to block editor pages for compatibility.
- */
-function bu_slideshow_meta_box() {
-	// If the current screen is not using the block editor,
-	// we don't need to add this metabox.
-	if ( ! bu_slideshow_is_block_editor() ) {
-		return;
-	}
-
-	add_meta_box(
-		'bu_slideshow_box_id',        // Unique ID
-		'SlideShow Meta Box',         // Box title
-		'bu_slideshow_meta_box_html', // Content callback, must be of type callable
-		array( 'post', 'page' )       // Post types
-	);
-}
-add_action( 'add_meta_boxes', 'bu_slideshow_meta_box' );
-
-function bu_slideshow_meta_box_html( $post ) {
-	$button_label = 'Generate Slideshow Shortcode';
-	?>
-	<div id="bu_slideshow_metabox_wrap" class="wrap postbox">
-		<h2><?php _e( $button_label, BU_SSHOW_LOCAL ); ?></h2>
-		<?php echo BU_Slideshow::get_selector(); ?>
-		<p>
-			<a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e( $button_label, BU_SSHOW_LOCAL ); ?></a>
-		</p>
-	</div>
-	<?php
 }
 
 /**

@@ -1,0 +1,16 @@
+{
+    "name": "bu-ist/bu-slideshow",
+    "description": "Allows for the creation and display of animated slideshows. Uses sequence.js.",
+    "type": "wordpress-plugin",
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "squizlabs/php_codesniffer": "^3.6",
+        "wp-coding-standards/wpcs": "^2.3"
+    },
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

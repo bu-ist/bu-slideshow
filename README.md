@@ -3,7 +3,7 @@
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
 **Tested up to:** 4.9.10  
-**Stable tag:** 2.3.12  
+**Stable tag:** 2.3.13
 
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -22,6 +22,7 @@ BU Slideshow is a plugin for creating and managing image-based slideshows. It is
 * Supports custom templates for slides, including custom slide fields
 * Supports unique CSS classes on a per-slide basis for advanced styling options
 * Integrated with WordPress Media Library for image upload/selection, size options, and image cropping/editing
+* Block interface for the Gutenberg editor
 
 ### Developers ###
 
@@ -32,7 +33,7 @@ For developer documentation, feature roadmaps and more visit the [plugin reposit
 ## Installation ##
 This plugin can be installed automatically through the WordPress admin interface, or by clicking the download link on this page and installing manually.
 
-Once installed, slideshows can be created by accessing the "Slideshows" menu in the admin panel. Slideshows can be dropped into any page by using the "Add Slideshow" button on the post/page edit screen.
+Once installed, slideshows can be created by accessing the "Slideshows" menu in the admin panel. Slideshows can be dropped into any page by using the "Add Slideshow" button on the post/page edit screen in the classic editor, or by using the "BU Slideshow" block in the Gutenberg editor.
 
 ### Manual Installation ###
 1. Upload the bu-slideshow plugin folder to the /wp-content/plugins/ directory
@@ -49,8 +50,15 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 ### 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with. ###
 ![Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.](http://ps.w.org/bu-slideshow/assets/screenshot-3.png)
 
-
 ## Changelog ##
+
+### 2.3.13 ###
+
+* Adds @wordpress/scripts JS build process
+* Adds a "BU Slideshow" block for the Gutenberg editor
+* Adds phpcs and eslint linting
+* Adds wp-env for local development
+
 ### 2.3.12 ###
 * Optimize the get_posts call for slideshows
 * Determine if the block editor is in use before loading an interface
