@@ -96,7 +96,7 @@
 		BuSlideshow.prototype.initPager = function() {
 			var that = this;
 
-			this.pager.find('li a').bind('click', function() {
+			this.pager.find('li a').on('click', function() {
 				var id = $(this).attr('id').replace('pager-', '');
 				that.sequence.nextFrameID = id;
 				that.sequence.goTo(id);
@@ -113,10 +113,10 @@
 		BuSlideshow.prototype.initArrows = function() {
 			var that = this;
 			
-			this.arrows.find('.bu-slideshow-arrow-left').bind('click', function() {
+			this.arrows.find('.bu-slideshow-arrow-left').on('click', function() {
 				that.sequence.prev();
 				return false;
-			}).end().find('.bu-slideshow-arrow-right').bind('click', function() {
+			}).end().find('.bu-slideshow-arrow-right').on('click', function() {
 				that.sequence.next();
 				return false;
 			});
