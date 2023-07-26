@@ -52,6 +52,11 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 ## Changelog ##
 
+### 2.3.14 ###
+* Removed grunt-phplint due to vulnerabilities in dependencies
+* Bump node package versions.
+* Update jquery .bind functions to use .on
+
 ### 2.3.13 ###
 
 * Adds @wordpress/scripts JS build process
