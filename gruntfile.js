@@ -40,16 +40,6 @@ module.exports = function( grunt ) {
 				ext: '.min.css'
 			}
 		},
-		phplint: {
-			options : {
-				phpArgs : {
-					'-lf': null
-				}
-			},
-			all : {
-				src : '**/*.php'
-			}
-		},
 		watch: {
 			scripts: {
 				files: [
@@ -74,13 +64,7 @@ module.exports = function( grunt ) {
 				],
 				tasks: ['cssmin'],
 				options: {  spawn: false, },
-			},
-			phplint : {
-				files : [ '**/*.php' ],
-				tasks : [ 'phplint' ],
-				options : {
-					spawn : false
-				}
+			}
 		},
 
 		wp_readme_to_markdown: {
@@ -98,7 +82,7 @@ module.exports = function( grunt ) {
 	// Build task.
 	grunt.registerTask( 'scripts', [ 'uglify' ] );
 	grunt.registerTask( 'styles', [ 'less', 'cssmin' ] );
-	grunt.registerTask( 'build', [ 'styles', 'scripts', 'phplint' ] );
+	grunt.registerTask( 'build', [ 'styles', 'scripts' ] );
 
 	// readme
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
