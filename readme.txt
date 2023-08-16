@@ -45,6 +45,10 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 3. Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.
 
 == Changelog ==
+= 2.3.14 =
+* Removed grunt-phplint due to vulnerabilities in dependencies
+* Bump node package versions.
+* Update jquery .bind functions to use .on
 = 2.3.12 =
 * Optimize the get_posts call for slideshows
 * Determine if the block editor is in use before loading an interface
