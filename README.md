@@ -2,8 +2,8 @@
 **Contributors:** [inderpreet99](https://profiles.wordpress.org/inderpreet99), [awbauer](https://profiles.wordpress.org/awbauer), [clrux](https://profiles.wordpress.org/clrux), [mgburns](https://profiles.wordpress.org/mgburns), [gannondigital](https://profiles.wordpress.org/gannondigital)  
 **Tags:** slideshow, images, boston university, bu  
 **Requires at least:** 3.5  
-**Tested up to:** 4.9.10  
-**Stable tag:** 2.3.13
+**Tested up to:** 6.5.2  
+**Stable tag:** 2.3.14
 
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -51,6 +51,9 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 ![Full integration with the WordPress Media Library allows you to bulk-upload your images and select them from the Media Library, or upload individually as you build slides. Easily remove and/or select a different image using the WordPress tools you are familiar with.](http://ps.w.org/bu-slideshow/assets/screenshot-3.png)
 
 ## Changelog ##
+
+### 2.3.14 ###
+* Added output escaping to resolve xss security vulnerability and errors found by WordPress plugin-checker plugin
 
 ### 2.3.14 ###
 * Removed grunt-phplint due to vulnerabilities in dependencies
