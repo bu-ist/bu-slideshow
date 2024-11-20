@@ -77,7 +77,7 @@ class BU_Slideshow {
 	static $nav_styles = array('icon', 'number');
 
 	static $image_mimes = array('jpg|jpeg|jpe', 'png', 'gif');
-	static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
+	//static $upload_error = 'That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.';
 
 	static public function add_plugins_loaded_hook(){
 		add_action('plugins_loaded', array(__CLASS__, 'init'));
@@ -87,7 +87,7 @@ class BU_Slideshow {
 		global $pagenow;
 
 		self::$wp_version = get_bloginfo('version');
-		self::$upload_error = __(self::$upload_error, BU_SSHOW_LOCAL);
+		$upload_error = __('That does not appear to be a valid image. Please upload a JPEG, PNG or GIF file.', 'bu-slideshow');
 
 		add_action('init', array(__CLASS__, 'register_cpt'), 6);
 		add_action('init', array(__CLASS__, 'custom_thumb_size'));
@@ -321,7 +321,7 @@ class BU_Slideshow {
 		);
 		if (isset($_POST['url'])) {
 			if (array_key_exists($_POST['url'], $urls)) {
-				echo $urls[$_POST['url']];
+				echo esc_url($urls[$_POST['url']]);
 			}
 		}
 		exit;
@@ -627,7 +627,7 @@ class BU_Slideshow {
 			case 'do_create':
 				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
 					require_once(ABSPATH . 'wp-admin/admin-header.php');
-					wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
+					wp_die(esc_html__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
 					exit;
 				}
 
@@ -725,15 +725,15 @@ class BU_Slideshow {
 	static public function delete_slideshow_ajax() {
 
 		if (!isset($_POST['bu_slideshow_nonce'])) {
-			wp_die(__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
+			wp_die(esc_html__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
 		}
 
 		if (!wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_delete_slideshow')) {
-			wp_die(__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
+			wp_die(esc_html__("You are not authorized to perform that action.", BU_SSHOW_LOCAL));
 		}
 
 		if (!current_user_can(self::$min_cap)) {
-			wp_die(__("You do not have the necessary permissions to delete slideshows.", BU_SSHOW_LOCAL));
+			wp_die(esc_html__("You do not have the necessary permissions to delete slideshows.", BU_SSHOW_LOCAL));
 		}
 
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
@@ -742,7 +742,7 @@ class BU_Slideshow {
 
 		$id = intval($_POST['id']);
 
-		echo self::delete_slideshow($id);
+		echo wp_kses_post(self::delete_slideshow($id));
 		exit;
 	}
 
@@ -838,12 +838,12 @@ class BU_Slideshow {
 		switch ( $action ) {
 			case 'save':
 				if ( !isset($_POST['bu_slideshow_nonce']) || !wp_verify_nonce($_POST['bu_slideshow_nonce'], 'bu_update_slideshow') || !current_user_can(self::$min_cap) ) {
-					wp_die(__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
+					wp_die(esc_html__('You are not authorized to perform this action.', BU_SSHOW_LOCAL));
 					exit;
 				}
 
 				if( !self::slideshow_exists( intval( $_POST['bu_slideshow_id'] ) ) ){
-					wp_die(__('Invalid slideshow.', BU_SSHOW_LOCAL));
+					wp_die(esc_html__('Invalid slideshow.', BU_SSHOW_LOCAL));
 					exit;
 				}
 
@@ -866,20 +866,20 @@ class BU_Slideshow {
 
 			case 'view':
 				if ( !isset($_GET['bu_slideshow_id']) || empty($_GET['bu_slideshow_id']) ) {
-					wp_die(__('Invalid slideshow', BU_SSHOW_LOCAL));
+					wp_die(esc_html__('Invalid slideshow', BU_SSHOW_LOCAL));
 					exit;
 				}
 
 				$show = self::get_slideshow( intval( $_GET['bu_slideshow_id'] ) );
 				if( !$show || is_wp_error($show) ){
-					wp_die(__('Error getting slideshow', BU_SSHOW_LOCAL));
+					wp_die(esc_html__('Error getting slideshow', BU_SSHOW_LOCAL));
 					exit;
 				}
 				break;
 		}
 
 		$show->set_view('admin');
-		echo $show->get(array('msg' => $msg));
+		echo wp_kses_post($show->get(array('msg' => $msg)));
 	}
 
 	/**
@@ -893,7 +893,7 @@ class BU_Slideshow {
 
 		$show = self::get_slideshow($id);
 		$show->set_view('admin');
-		echo $show->get(array('msg' => $msg));
+		echo wp_kses_post($show->get(array('msg' => $msg)));
 	}
 
 	/**
@@ -906,7 +906,7 @@ class BU_Slideshow {
 		}
 
 		$slide = new BU_Slide(array('view' => 'admin', 'order' => $_POST['order']));
-		echo $slide->get();
+		echo wp_kses_post($slide->get());
 		exit;
 	}
 
@@ -921,7 +921,7 @@ class BU_Slideshow {
 
 		$img_info = self::get_slide_image_thumb(intval($_POST['image_id']));
 
-		echo $img_info;
+		echo wp_kses_post($img_info);
 		exit;
 	}
 
@@ -1122,9 +1122,9 @@ class BU_Slideshow {
 		if ( self::using_editor() ) :
 		?>
 			<div id="bu_slideshow_modal_wrap" class="wrap postbox">
-				<h2><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
-				<?php echo self::get_selector(); ?>
-				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php _e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
+				<h2><?php esc_html_e('Insert Slideshow', BU_SSHOW_LOCAL); ?></h2>
+				<?php echo wp_kses_post(self::get_selector()); ?>
+				<p><a href="#" id="bu_insert_slideshow" class="button-primary"><?php esc_html_e('Insert Slideshow', BU_SSHOW_LOCAL); ?></a></p>
 			</div>
 
 		<?php
@@ -1139,7 +1139,7 @@ class BU_Slideshow {
 	 */
 	static public function add_media_button() {
 		if ( self::using_editor() ) {
-			echo sprintf( '<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __( 'Add Slideshow', BU_SSHOW_LOCAL ), __( 'Add Slideshow', BU_SSHOW_LOCAL ) );
+			echo wp_kses_post(sprintf( '<a class="button" id="bu_slideshow_modal_button" title="%s" href="#">%s</a>', __( 'Add Slideshow', BU_SSHOW_LOCAL ), __( 'Add Slideshow', BU_SSHOW_LOCAL ) ) );
 		}
 	}
 
