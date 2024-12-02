@@ -1,6 +1,6 @@
 <div class="wrap">
-	<p><a href="<?php echo esc_url(BU_Slideshow::$manage_url); ?>">&laquo; <?php esc_html_e('Back to Manage Slideshows', BU_SSHOW_LOCAL); ?></a></p>
-	<h2><?php esc_html_e("Add Slideshow", BU_SSHOW_LOCAL); ?></h2>
+	<p><a href="<?php echo esc_url(BU_Slideshow::$manage_url); ?>">&laquo; <?php esc_html_e('Back to Manage Slideshows', 'bu-slideshow'); ?></a></p>
+	<h2><?php esc_html_e("Add Slideshow", 'bu-slideshow'); ?></h2>
 	
 	<?php if ( $msg ): ?>
 	<div class="updated"><p><?php echo wp_kses_post($msg); ?></p></div>
@@ -14,7 +14,7 @@
 				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.php'; 
 			?>
 			<p>
-				<input type="submit" value="<?php esc_html_e('Create Slideshow', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
+				<input type="submit" value="<?php esc_html_e('Create Slideshow', 'bu-slideshow'); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
 			</p>
 		</form>
 	</div>

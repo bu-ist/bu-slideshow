@@ -3,14 +3,14 @@
 		<div class="menu-item-handle ui-sortable-handle accordion-section-title" style="width:auto;">
 			<p><span class="bu-slide-header-thumb"><?php echo wp_kses_post($img_thumb); ?></span></p>
 			<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
-			<a href="#" class="bu-slide-expand bu-slide-control" title="<?php esc_html_e('Click to edit this slide', BU_SSHOW_LOCAL); ?>">edit</a>
+			<a href="#" class="bu-slide-expand bu-slide-control" title="<?php esc_html_e('Click to edit this slide', 'bu-slideshow'); ?>">edit</a>
 		</div>
 	</div>
 	<div class="bu-slide-edit-container">
-		<a class="bu-slide-delete-button" href="#"><?php esc_html_e('delete slide', BU_SSHOW_LOCAL); ?></a>
+		<a class="bu-slide-delete-button" href="#"><?php esc_html_e('delete slide', 'bu-slideshow'); ?></a>
 		<div class="bu-slide-thumb-container">
-			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&amp;type=bu_slideshow&amp;post_id=0&amp;TB_iframe=true"><?php esc_html_e('Select Image', BU_SSHOW_LOCAL); ?></a>
-			<a class="button bu-slideshow-remove-img" href="#"<?php echo wp_kses_post($img_thumb) ? '' : ' style="display:none;"'; ?>><?php esc_html_e('Remove Image', BU_SSHOW_LOCAL); ?></a>
+			<a class="button thickbox bu-slideshow-add-img" href="media-upload.php?referer=bu_slideshow&amp;type=bu_slideshow&amp;post_id=0&amp;TB_iframe=true"><?php esc_html_e('Select Image', 'bu-slideshow'); ?></a>
+			<a class="button bu-slideshow-remove-img" href="#"<?php echo wp_kses_post($img_thumb) ? '' : ' style="display:none;"'; ?>><?php esc_html_e('Remove Image', 'bu-slideshow'); ?></a>
 			<input type="hidden" class="bu-slideshow-img-id" name="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" id="bu_slides[<?php echo esc_attr($this->order); ?>][image_id]" value="<?php echo esc_attr($this->image_id); ?>" />
 
 			<span class="bu-slide-thumb"><?php echo wp_kses_post($img_thumb); ?></span>
@@ -44,18 +44,18 @@
 		</div>
 		<div class="bu-slide-caption-container">
 			<p>
-				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]"><?php esc_html_e('Title', BU_SSHOW_LOCAL); ?></label>
+				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]"><?php esc_html_e('Title', 'bu-slideshow'); ?></label>
 				<input type="text" class="bu-slideshow-title-input" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][title]" value="<?php echo esc_textarea($this->caption["title"]); ?>" />
 			</p>
 			<p>
-				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php esc_html_e('Link', BU_SSHOW_LOCAL); ?></label>
+				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]"><?php esc_html_e('Link', 'bu-slideshow'); ?></label>
 				<input type="text" id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][link]" value="<?php echo esc_url($this->caption["link"]); ?>" />
 			</p>
 			<p>
-				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php esc_html_e('Caption', BU_SSHOW_LOCAL); ?></label>
+				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php esc_html_e('Caption', 'bu-slideshow'); ?></label>
 				<textarea id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][text]"><?php echo esc_textarea($this->caption["text"]); ?></textarea>
 			</p>
-			<p><label><?php esc_html_e('Caption Position', BU_SSHOW_LOCAL); ?></label>
+			<p><label><?php esc_html_e('Caption Position', 'bu-slideshow'); ?></label>
 			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >
 				<?php
 				foreach($caption_positions as $l=>$v){
@@ -66,7 +66,7 @@
 			</select>
 			</p>
 			<p>
-				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][additional_styles]"><?php esc_html_e('Additional CSS Class(es)', BU_SSHOW_LOCAL); ?></label>
+				<label for="bu_slides[<?php echo esc_attr($this->order); ?>][additional_styles]"><?php esc_html_e('Additional CSS Class(es)', 'bu-slideshow'); ?></label>
 				<input type="text" id="bu_slides[<?php echo esc_attr($this->order); ?>][additional_styles]" name="bu_slides[<?php echo esc_attr($this->order); ?>][additional_styles]" value="<?php echo wp_kses_post($this->additional_styles); ?>" />
 			</p>
 
