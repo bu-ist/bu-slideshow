@@ -1,9 +1,9 @@
 <div class="wrap">
-	<p><a href="<?php echo BU_Slideshow::$manage_url; ?>">&laquo; <?php _e('Back to Manage Slideshows', BU_SSHOW_LOCAL); ?></a></p>
-	<h2><?php _e(sprintf("Edit Slideshow: %s", esc_html(stripslashes($this->name))), BU_SSHOW_LOCAL); ?></h2>
+	<p><a href="<?php echo esc_url(BU_Slideshow::$manage_url); ?>">&laquo; <?php esc_html_e('Back to Manage Slideshows', 'bu-slideshow'); ?></a></p>
+	<h2><?php esc_html_e("Edit Slideshow: " . esc_html(stripslashes($this->name)); ?></h2>
 	
 	<?php if ( $msg ): ?>
-	<div class="updated"><p><?php echo $msg; ?></p></div>
+	<div class="updated"><p><?php echo wp_kses_post($msg); ?></p></div>
 	<?php endif; ?>
 	
 	<div id="bu-slideshow-edit">
@@ -15,7 +15,7 @@
 				require_once plugin_dir_path(__FILE__) . 'edit-slideshow-form.php'; 
 			?>
 			<p>
-				<input type="submit" value="<?php _e('Save Changes', BU_SSHOW_LOCAL); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
+				<input type="submit" value="<?php esc_html_e('Save Changes', 'bu-slideshow'); ?>" id="bu-slideshow-editform-submit" class="button-primary" />
 			</p>
 		</form>
 	</div>

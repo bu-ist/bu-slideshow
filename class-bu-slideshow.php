@@ -27,7 +27,7 @@ class BU_Slideshow_Instance {
 			$args = array();
 		}
 
-		$this->name = __('Untitled Slideshow', BU_SSHOW_LOCAL);
+		$this->name = __('Untitled Slideshow', 'bu-slideshow');
 
 		if (isset($args['view'])) {
 			$this->set_view($args['view']);
@@ -211,7 +211,7 @@ class BU_Slideshow_Instance {
 				$name_att = $show_name ? sprintf(' data-slideshow-name="%s" data-slideshow-delay="%d"', $show_name, $args['transition_delay']) : '';
 
 				$html = sprintf('<div class="%s" id="%s"%s%s>', esc_attr($container_class), esc_attr(self::$id_prefix . 'container-' . $this->id), $name_att, $styles);
-				$html .= "<div class='slideshow-loader active'><div class='loader-animation'></div><p>" . __("loading slideshow...") . "</p></div>";
+				$html .= "<div class='slideshow-loader active'><div class='loader-animation'></div><p>" . __("loading slideshow...", 'bu-slideshow') . "</p></div>";
 				$html .= sprintf('<div class="bu-slideshow-slides"><ul class="%s" id="%s">', $ul_class_str, $show_id);
 
 				if( $args['shuffle'] ){
