@@ -1,6 +1,6 @@
 <div class="wrap">
 	<p><a href="<?php echo esc_url(BU_Slideshow::$manage_url); ?>">&laquo; <?php esc_html_e('Back to Manage Slideshows', 'bu-slideshow'); ?></a></p>
-	<h2><?php esc_html_e("Edit Slideshow: " . esc_html(stripslashes($this->name)), 'bu-slideshow'); ?></h2>
+	<h2><?php esc_html_e("Edit Slideshow New Version: ", 'bu-slideshow'); echo wp_kses_post($this->name); ?></h2>
 	
 	<?php if ( $msg ): ?>
 	<div class="updated"><p><?php echo wp_kses_post($msg); ?></p></div>
