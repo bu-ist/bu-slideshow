@@ -7,7 +7,10 @@ Version: 2.3.13
 Author: Boston University (IS&T)
 Author URI: http://www.bu.edu/tech/
 Requires at least: 3.5
-Tested up to: 4.9.6
+Tested up to: 6.5.2
+
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 define('BU_SLIDESHOW_VERSION', '2.3.13');
