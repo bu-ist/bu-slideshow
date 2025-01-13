@@ -2,7 +2,7 @@
 Contributors: inderpreet99, awbauer, clrux, mgburns, gannondigital
 Tags: slideshow, images, boston university, bu
 Requires at least: 3.5
-Tested up to: 6.5.2
+Tested up to: 6.7.1
 Stable tag: 2.3.13
 
 License: GPLv2 or later
