@@ -1,6 +1,6 @@
 <li class="bu-slideshow-slide control-section">
 	<div class="bu-slide-header menu-item-bar">
-		<div class="menu-item-handle ui-sortable-handle accordion-section-title" style="width:auto;">
+		<div class="bu-slide-header-menu-handle menu-item-handle ui-sortable-handle accordion-section-title" style="width:auto;">
 			<p><span class="bu-slide-header-thumb"><?php echo wp_kses_post($img_thumb); ?></span></p>
 			<p><span class="bu-slide-title"><?php echo esc_attr($this->caption["title"]); ?></span></p>
 			<a href="#" class="bu-slide-expand bu-slide-control" title="<?php esc_html_e('Click to edit this slide', 'bu-slideshow'); ?>">edit</a>
