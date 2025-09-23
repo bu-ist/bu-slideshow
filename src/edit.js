@@ -102,7 +102,7 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 		<div {...blockProps}>
 			<div>
 				{Number(attributes.slideshowId) !== 0 && !isSelected ? (
-					<div style={{ fontSize: 15, fontWeigh: 600 }}>
+					<div style={{ fontSize: 15, fontWeight: 600 }}>
 						<i>Preview: {selectedShow.label}</i>
 					</div>
 				) : (
