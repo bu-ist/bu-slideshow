@@ -7,7 +7,7 @@ import {
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Edit function for the slideshow block.
@@ -25,6 +25,9 @@ import { InspectorControls } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function Edit({ attributes, isSelected, setAttributes }) {
+	const blockProps = useBlockProps({
+		className: 'wp-block-bu-slideshow-slideshow-block'
+	});
 	const [slideShows, setSlideshows] = useState();
 
 	const [preview, setPreview] = useState('');
@@ -96,10 +99,10 @@ export default function Edit({ attributes, isSelected, setAttributes }) {
 	}
 
 	return (
-		<div className="wp-block-bu-slideshow-slideshow-block">
+		<div {...blockProps}>
 			<div>
 				{Number(attributes.slideshowId) !== 0 && !isSelected ? (
-					<div style={{ fontSize: 15, fontWeigh: 600 }}>
+					<div style={{ fontSize: 15, fontWeight: 600 }}>
 						<i>Preview: {selectedShow.label}</i>
 					</div>
 				) : (

@@ -3,16 +3,17 @@
 Plugin Name: BU Slideshow
 Plugin URI: http://developer.bu.edu/bu-slideshow/
 Description: Allows for the creation and display of animated slideshows. Uses sequence.js.
-Version: 2.3.13
+Version: 2.4.0
 Author: Boston University (IS&T)
 Author URI: http://www.bu.edu/tech/
-Requires at least: 3.5
+Requires at least: 5.6
 Tested up to: 6.5.2
 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+// The version declared here is for database versioning, I think this can fall behind the plugin version if there have been no db changes.
 define('BU_SLIDESHOW_VERSION', '2.3.13');
 
 define('BU_SLIDESHOW_BASEDIR', plugin_dir_path(__FILE__));

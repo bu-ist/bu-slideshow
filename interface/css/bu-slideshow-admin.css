@@ -47,6 +47,15 @@
 	right:15px;
 }
 
+/* Slideshow Edit Form Header: override WP core style in 5.7.12 */
+#bu-slideshow-editform .bu-slide-header .bu-slide-header-menu-handle {
+	max-width: none;
+}
+/* Slideshow Edit Form Select Field for Image Size: override WP core style in 5.7.12 */
+#bu-slideshow-editform select.bu-slideshow-img-size {
+	max-width: 100%;
+}
+
 #bu-slideshow-editform > p {margin: 2em 0;}
 li.bu-slideshow-slide {
 	background:#fff;
