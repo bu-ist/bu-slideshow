@@ -42,6 +42,9 @@ require_once BU_SLIDESHOW_BASEDIR . '/src/block.php';
 // Load admin page.
 require_once BU_SLIDESHOW_BASEDIR . '/src/admin-page.php';
 
+// Load REST API endpoints.
+require_once BU_SLIDESHOW_BASEDIR . '/src/rest-api.php';
+
 class BU_Slideshow {
 	static $wp_version;
 
