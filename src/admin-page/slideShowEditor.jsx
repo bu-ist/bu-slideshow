@@ -3,6 +3,8 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreDataStore } from '@wordpress/core-data';
 
+import SlideShowItem from './slideShowEditor/slideShowItem';
+
 function SlideShowEditor() {
     const [slideShows, setSlideshows] = useState();
 
@@ -30,7 +32,7 @@ function SlideShowEditor() {
             <h1>Slideshow Editor</h1>
             <ul>
                 {slideShows.map((slideShow) => (
-                    <li key={slideShow.id}>{slideShow.slug}</li>
+                    <SlideShowItem key={slideShow.id} id={slideShow.id} />
                 ))}
             </ul>
         </div>
