@@ -1,40 +1,56 @@
 import { useState, useEffect } from '@wordpress/element';
-
-import { useSelect } from '@wordpress/data';
-import { store as coreDataStore } from '@wordpress/core-data';
-
+import apiFetch from '@wordpress/api-fetch';
 import SlideShowItem from './slideShowEditor/slideShowItem';
 
 function SlideShowEditor() {
-    const [slideShows, setSlideshows] = useState();
-
-    const fetchedSlideShows = useSelect(
-        ( select ) => select( coreDataStore ).getEntityRecords(
-            'postType', // Entity kind
-            'bu_slideshow', // Custom post type slug
-            { per_page: -1 } // Query arguments (e.g., -1 for all, or specify number)
-        ),
-        [] // Dependencies array, empty means it runs once on mount
-    );
+    const [slideshows, setSlideshows] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (fetchedSlideShows) {
-            setSlideshows(fetchedSlideShows);
+        async function fetchAllSlideshows() {
+            try {
+                // Fetch all slideshows in a single request
+                const data = await apiFetch({ 
+                    path: '/bu-slideshow/v1/slideshows'
+                });
+                
+                setSlideshows(data);
+            } catch (err) {
+                console.error('Error fetching slideshows:', err);
+                setError('Failed to load slideshows');
+            } finally {
+                setLoading(false);
+            }
         }
-    }, [fetchedSlideShows]);
 
-    if (!slideShows) {
-        return <div>Loading...</div>;
+        fetchAllSlideshows();
+    }, []);
+
+    if (loading) {
+        return <div>Loading slideshows...</div>;
+    }
+
+    if (error) {
+        return <div className="error-message">{error}</div>;
     }
 
     return (
         <div>
             <h1>Slideshow Editor</h1>
-            <ul>
-                {slideShows.map((slideShow) => (
-                    <SlideShowItem key={slideShow.id} id={slideShow.id} />
-                ))}
-            </ul>
+            {slideshows.length === 0 ? (
+                <p>No slideshows found.</p>
+            ) : (
+                <ul className="slideshow-list">
+                    {slideshows.map((item) => (
+                        <SlideShowItem 
+                            key={item.id} 
+                            id={item.id}
+                            slideshowData={item.slideshow} 
+                        />
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }
