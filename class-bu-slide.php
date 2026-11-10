@@ -147,7 +147,10 @@ class BU_Slide {
 			return $html;
 		}
 
-		$html .= '<div class="bu-slide-caption '.$this->caption['position'].'">';
+		// Some saved slides have no caption position.
+		$position = isset( $this->caption['position'] ) ? $this->caption['position'] : '';
+
+		$html .= '<div class="bu-slide-caption '.$position.'">';
 
 		if (isset($this->caption['title']) && !empty($this->caption['title'])) {
 			$html .= '<p class="bu-slide-caption-title">';

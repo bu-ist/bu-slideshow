@@ -52,6 +52,9 @@ Once installed, slideshows can be created by accessing the "Slideshows" menu in 
 
 ## Changelog ##
 
+### 2.4.1 ###
+* Fix PHP 8 warning for slide captions saved without a position
+
 ### 2.4.0 ###
 * Add useBlockProps to the block editor component
 * Minor markup and CSS adjustments for the admin interface
