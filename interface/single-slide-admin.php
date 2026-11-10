@@ -58,8 +58,9 @@
 			<p><label><?php esc_html_e('Caption Position', 'bu-slideshow'); ?></label>
 			<select id="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" name="bu_slides[<?php echo esc_attr($this->order); ?>][caption][position]" >
 				<?php
+				$caption_position = isset( $this->caption['position'] ) ? $this->caption['position'] : '';
 				foreach($caption_positions as $l=>$v){
-					$maybe_selected = ($v === $this->caption["position"]) ? "selected" : "";
+					$maybe_selected = ($v === $caption_position) ? "selected" : "";
 					printf("<option value='%s' %s>%s</option>", esc_attr($v), esc_attr($maybe_selected), esc_attr($l));
 				}
 				?>
